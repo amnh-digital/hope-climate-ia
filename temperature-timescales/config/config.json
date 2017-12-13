@@ -1,8 +1,11 @@
 {
   "dataURL": "data/188001-201612.json",
-  "canvas": {
-    "el": "#canvas",
-    "minYearsDisplay": 1
+  "graphics": {
+    "el": "#graphics",
+    "minYearsDisplay": 1,
+    "monthYearsDisplay": 4,
+    "targetWidth": 1920,
+    "targetHeight": 1080
   },
   "sound": {
     "enable": 1,

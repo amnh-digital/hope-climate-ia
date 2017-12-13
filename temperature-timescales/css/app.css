@@ -1,0 +1,16 @@
+.content.left.introduction {
+  height: 60%;
+  top: 28%;
+  font-size: 2rem;
+  line-height: 1.4;
+}
+
+.content.right.graphics {
+  width: 56%;
+  height: 60%;
+  top: 20%;
+  left: auto;
+  right: 4rem;
+  box-sizing: border-box;
+  border: 0.5rem solid #222;
+}

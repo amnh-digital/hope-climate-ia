@@ -73,32 +73,32 @@ App.prototype.onDataLoaded = function(d){
 App.prototype.onReady = function(){
   var d = this.data;
 
-  var opt = _.extend({}, this.opt.canvas, this.data);
+  var opt = _.extend({}, this.opt.graphics, this.data);
 
   // Initialize viz
-  this.canvas = new Canvas(opt);
+  this.graphics = new Graphics(opt);
 
   this.loadListeners();
   this.render();
 };
 
 App.prototype.onResize = function(){
-  this.canvas.onResize();
+  this.graphics.onResize();
 };
 
 App.prototype.onScaleChange = function(value) {
   var scale = UTIL.easeInOutSin(value);
-  this.canvas.onScaleChange(scale);
+  this.graphics.onScaleChange(scale);
 };
 
 App.prototype.onTimeChange = function(value) {
-  this.canvas.onTimeChange(value);
+  this.graphics.onTimeChange(value);
 };
 
 App.prototype.render = function(){
   var _this = this;
 
-  this.canvas.render();
+  this.graphics.render();
 
   requestAnimationFrame(function(){ _this.render(); });
 };
