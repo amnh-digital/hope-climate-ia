@@ -1,0 +1,17 @@
+{
+  "dataURL": "data/188001-201612.json",
+  "canvas": {
+    "el": "#canvas",
+    "minYearsDisplay": 1
+  },
+  "sound": {
+    "enable": 1
+  },
+  "controls": {
+    "mode": "gamepad",
+    "gamepadMappings": {
+      "verticalSlider": 0,
+      "horizontalSlider": 1
+    }
+  }
+}
