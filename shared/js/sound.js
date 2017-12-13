@@ -41,11 +41,12 @@ var Sound = (function() {
   };
 
   Sound.prototype.loadListeners = function(){
-    var playPercent = this.playPercent;
+    var _this = this;
+    var playPercent = function(e, value){
+      _this.playPercent(value);
+    };
 
-    $(document).on("sound.play.percent", function(e, value) {
-      playPercent(value);
-    });
+    $(document).on("sound.play.percent", playPercent);
   };
 
   Sound.prototype.playPercent = function(percent){

@@ -5,7 +5,16 @@
     "minYearsDisplay": 1,
     "monthYearsDisplay": 4,
     "targetWidth": 1920,
-    "targetHeight": 1080
+    "targetHeight": 1080,
+    "margin": [0.1, 0.1, 0.1, 0.1],
+    "time": 0.5,
+    "scale": 0.5,
+    "xAxis": {
+      "width": 0.2
+    },
+    "yAxis": {
+      "height": 0.2
+    }
   },
   "sound": {
     "enable": 1,
