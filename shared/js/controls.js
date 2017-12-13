@@ -7,17 +7,7 @@ var Controls = (function() {
     this.init();
   }
 
-  Controls.prototype.init = function(){
-
-    // initialize gamepad state
-    var gamepadMappings = this.opt.gamepadMappings;
-    var gamepadState = {};
-    $.each(_.keys(gamepadMappings), function(key){
-      gamepadState[key] = -1;
-    });
-    this.gamepadState = gamepadState;
-    this.gamepadMappings = gamepadMappings;
-  };
+  Controls.prototype.init = function(){};
 
   Controls.prototype.load = function(){
     this.deferred = $.Deferred();
@@ -35,6 +25,16 @@ var Controls = (function() {
 
   Controls.prototype.loadGamepad = function(){
     var _this = this;
+
+    // initialize gamepad state
+    var gamepadMappings = this.opt.gamepadMappings;
+    var gamepadState = {};
+    $.each(_.keys(gamepadMappings), function(key){
+      gamepadState[key] = -1;
+    });
+    this.gamepadState = gamepadState;
+    this.gamepadMappings = gamepadMappings;
+
     var gamepads = navigator.getGamepads();
 
     if (gamepads && gamepads.length && gamepads[0]) {
@@ -79,7 +79,7 @@ var Controls = (function() {
       // state has changed, execute callback
       if (prevState[key] != state) {
         // console.log("State change", key, state)
-        $(document).trigger("gamepad.axes.change", [key, state]);
+        $(document).trigger("controls.axes.change", [key, state]);
         _this.gamepadState[key] = state;
       }
     });

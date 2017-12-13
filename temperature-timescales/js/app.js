@@ -39,12 +39,12 @@ App.prototype.loadData = function(){
 App.prototype.loadListeners = function(){
   var _this = this;
 
-  $(document).on("gamepad.axes.change", function(e, key, value) {
+  $(document).on("controls.axes.change", function(e, key, value) {
     switch(key) {
-      case "horizontalSlider":
+      case "horizontal":
         _this.onTimeChange(value);
         break;
-      case "verticalSlider":
+      case "vertical":
         _this.onScaleChange(value);
         break;
       default:
