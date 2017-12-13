@@ -46,24 +46,24 @@ monthlyData = [d for d in monthlyData if START_YEAR <= d["Year"] <= END_YEAR]
 annualData = [d for d in annualData if START_YEAR <= d["Date"] <= END_YEAR]
 
 # define domain and range
-values = [d["Abs"] for d in monthlyData] + [d["Abs"] for d in annualData]
+values = [d["Value"] for d in monthlyData] + [d["Value"] for d in annualData]
 dataDomain = [START_YEAR, END_YEAR]
 dataRange = [math.floor(min(values)), math.ceil(max(values))]
 
 # get colors
 for i,d in enumerate(monthlyData):
-    n = norm(d["Abs"], dataRange[0], dataRange[1])
+    n = norm(d["Value"], dataRange[0], dataRange[1])
     monthlyData[i]["Norm"] = n
     monthlyData[i]["Color"] = getColor(GRADIENT, n)
 
 for i,d in enumerate(annualData):
-    n = norm(d["Abs"], dataRange[0], dataRange[1])
+    n = norm(d["Value"], dataRange[0], dataRange[1])
     annualData[i]["Norm"] = n
     annualData[i]["Color"] = getColor(GRADIENT, n)
 
 # minimize data
-monthlyData = [(round(d["Abs"],3), d["Color"]) for d in monthlyData]
-annualData = [(round(d["Abs"],3), d["Color"]) for d in annualData]
+monthlyData = [(round(d["Value"],3), d["Color"]) for d in monthlyData]
+annualData = [(round(d["Value"],3), d["Color"]) for d in annualData]
 
 # format data
 jsonData = {
