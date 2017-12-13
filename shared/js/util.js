@@ -6,6 +6,12 @@
     return Math.ceil(value / nearest) * nearest;
   };
 
+  UTIL.clamp = function(value, min, max) {
+    value = Math.min(value, max);
+    value = Math.max(value, min);
+    return value;
+  };
+
   UTIL.easeInOutCubic = function (t) {
     return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1;
   };
@@ -79,7 +85,7 @@
   };
 
   UTIL.round = function(value, precision) {
-    return value.toFixed(precision);
+    return +value.toFixed(precision);
   };
 
   UTIL.within = function(num, min, max) {

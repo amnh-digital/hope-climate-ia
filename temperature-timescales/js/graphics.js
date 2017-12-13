@@ -7,6 +7,24 @@ var Graphics = (function() {
     this.init();
   }
 
+  function dataToPoint(dx, dy, domain, range, bounds){
+    var px = UTIL.norm(dx, domain[0], domain[1]);
+    var py = UTIL.norm(dy, range[0], range[1]);
+    return percentToPoint(px, py, bounds);
+  };
+
+  function percentToPoint(px, py, bounds){
+    var bx = bounds[0];
+    var by = bounds[1];
+    var bw = bounds[2];
+    var bh = bounds[3];
+
+    var x = px * bw + bx;
+    var y = by + bh - (py * bh);
+
+    return [x, y];
+  };
+
   Graphics.prototype.init = function(){
     this.$el = $(this.opt.el);
 
@@ -14,6 +32,9 @@ var Graphics = (function() {
     this.range = this.opt.range;
     this.minYearsDisplay = this.opt.minYearsDisplay;
     this.monthYearsDisplay = this.opt.monthYearsDisplay;
+    this.yAxisLabelCount = this.opt.yAxis.labelCount;
+    this.yAxisStep = this.opt.yAxis.step;
+    this.yAxisMinBounds = this.opt.yAxis.minBounds;
 
     // initialize data
     var d0 = this.domain[0];
@@ -21,6 +42,7 @@ var Graphics = (function() {
       return {
         year: d0 + i,
         value: d[0],
+        valueF: d[0] * 1.8,
         color: d[1],
         index: i,
         active: false
@@ -33,6 +55,7 @@ var Graphics = (function() {
         year: year,
         month: month,
         value: d[0],
+        valueF: d[0] * 1.8,
         color: d[1],
         index: i,
         active: false
@@ -138,10 +161,11 @@ var Graphics = (function() {
       }
     });
 
-    var yAxisStep = this.opt.yAxisStep;
+    var yAxisStep = this.yAxisStep;
+    var yAxisMinBounds = this.yAxisMinBounds;
     var minRange = UTIL.floorToNearest(_.min(values), yAxisStep);
     var maxRange = UTIL.ceilToNearest(_.max(values), yAxisStep);
-    this.plotRange = [minRange, maxRange];
+    this.plotRange = [Math.min(yAxisMinBounds[0], minRange), Math.max(maxRange, yAxisMinBounds[1])];
 
     this.onTimeChange(this.time, false);
 
@@ -182,13 +206,43 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.refreshDimensions = function(){
-    this.width = this.$el.width();
-    this.height = this.$el.height();
+    var w = this.$el.width();
+    var h = this.$el.height();
+
+    this.width = w;
+    this.height = h;
 
     var m = this.opt.margin;
-    this.margin = [m[0]*this.height, m[1]*this.width, m[2]*this.height, m[3]*this.width];
-    this.xAxisWidth = this.opt.xAxis.width * this.width;
-    this.yAxisHeight = this.opt.yAxis.height * this.height;
+    m = [m[0]*h, m[1]*w, m[2]*h, m[3]*w];
+
+    // make calculations for x and y axes
+    var xAxisH = this.opt.xAxis.height * h;
+    var yAxisW = this.opt.yAxis.width * w;
+    var yAxisH = h - m[0] - m[2] - xAxisH;
+    var yAxisX = m[3];
+    var yAxisY = m[0];
+    var xAxisX = yAxisX + yAxisW;
+    var xAxisY = yAxisY + yAxisH;
+    var xAxisW = w - m[1] - m[3] - yAxisW;
+    this.xAxisDimensions = [xAxisX, xAxisY, xAxisW, xAxisH];
+    this.yAxisDimensions = [yAxisX, yAxisY, yAxisW, yAxisH];
+
+    var xAxisTextStyle = _.extend({}, this.opt.xAxis.textStyle);
+    var yAxisTextStyle = _.extend({}, this.opt.yAxis.textStyle);
+    var yAxissubextStyle = _.extend({}, this.opt.yAxis.subtextStyle);
+    xAxisTextStyle.fontSize *= h;
+    yAxissubextStyle.fontSize *= h;
+    yAxisTextStyle.fontSize *= h;
+    this.xAxisTextStyle = xAxisTextStyle;
+    this.yAxissubextStyle = yAxissubextStyle;
+    this.yAxisTextStyle = yAxisTextStyle;
+
+    // make calculations for plot
+    var plotX = xAxisX + xAxisW;
+    var plotY = yAxisY;
+    var plotW = xAxisW;
+    var plotH = yAxisH;
+    this.plotDimensions = [plotX, plotY, plotW, plotH];
   };
 
   Graphics.prototype.render = function(){
@@ -196,7 +250,151 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.renderAxes = function(){
+    var _this = this;
+    var domain = this.plotDomain;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var xAxisBounds = this.xAxisDimensions;
+    var yAxisBounds = this.yAxisDimensions;
+    var xAxisTextStyle = this.xAxisTextStyle;
+    var yAxisTextStyle = this.yAxisTextStyle;
+    var yAxissubextStyle = this.yAxissubextStyle;
 
+    this.axes.clear();
+    while(this.axes.children[0]) {
+      this.axes.removeChild(this.axes.children[0]);
+    }
+
+    // determine labels and ticks for y axis
+    var delta = range[1] - range[0];
+    var yAxisStep = this.yAxisStep;
+    var count = delta / yAxisStep;
+    var showEvery = 1;
+    if (count > 16) showEvery = 4;
+    else if (count > 8) showEvery = 2;
+
+    var i = 0;
+    var value = range[1];
+    var xLabel = yAxisBounds[0] + yAxisBounds[2] * 0.667;
+    var lineX0 = xAxisBounds[0];
+    var lineX1 = xAxisBounds[0] + xAxisBounds[2];
+
+    // draw y axis
+
+    while(value >= range[0]) {
+
+      var p = dataToPoint(0, value, domain, range, yAxisBounds);
+      var y = p[1];
+      var dc = UTIL.round(value, 1);
+      var df = UTIL.round(value * 1.8, 1);
+
+      if (dc===0) {
+        var text = "20th century average";
+        var label = new PIXI.Text("20th century", yAxissubextStyle);
+        label.x = xLabel;
+        label.y = y;
+        label.anchor.set(1.0, 1.0);
+        this.axes.addChild(label);
+
+        label = new PIXI.Text("average", yAxissubextStyle);
+        label.x = xLabel;
+        label.y = y;
+        label.anchor.set(1.0, 0);
+        this.axes.addChild(label);
+
+      } else if (i % showEvery === 0) {
+        var text = dc + "°C";
+        var label = new PIXI.Text(text, yAxisTextStyle);
+        label.x = xLabel;
+        label.y = y;
+        label.anchor.set(1.0, 1.0);
+
+        var subtext = "(" + df + " °F)";
+        var sublabel = new PIXI.Text(subtext, yAxissubextStyle);
+        sublabel.x = xLabel;
+        sublabel.y = y;
+        sublabel.anchor.set(1.0, 0);
+
+        this.axes.addChild(label);
+        this.axes.addChild(sublabel);
+      }
+
+      if (dc===0) this.axes.lineStyle(3, 0xffffff, 0.6);
+      else this.axes.lineStyle(1, 0xffffff, 0.2);
+      this.axes.moveTo(lineX0, y).lineTo(lineX1, y);
+
+      value -= yAxisStep;
+      i += 1;
+    }
+
+    // // draw x axis
+    // count = domain[1] - domain[0];
+    // showEvery = 1;
+    // var tickEvery = 1;
+    // if (count > 10) {
+    //   showEvery = 5;
+    //   tickEvery = 1;
+    // }
+    // if (count > 30) {
+    //   showEvery = 10;
+    //   tickEvery = 5;
+    // }
+    // if (count > 80) {
+    //   showEvery = 20;
+    //   tickEvery = 5;
+    // }
+    // value = domain[0];
+    // i = 0;
+    // var cw = w - mx0 - mx1;
+    // var dataW = cw / (domainp[1]-domainp[0]+1);
+    // this.axes.lineStyle(4, 0x444444, 1);
+    // while (value <= domain[1]) {
+    //   var delta1 = domain[1] - value;
+    //   var delta2 = value - domain[0];
+    //   var showLabel = (value === domain[0] || value === domain[1] || value % showEvery === 0) && (delta1 >= showEvery/2 || delta1 <= 0) && (delta2 >= showEvery/2 || delta2 <= 0);
+    //   var showTick = (value % tickEvery === 0);
+    //
+    //   var p, px, x;
+    //
+    //   if (showLabel || showTick) {
+    //     p = _this._dataToPoint(value, range[0], domain, range);
+    //     px = UTIL.norm(value, domainp[0], domainp[1]+1);
+    //     x = px * cw + mx0 + dataW * 0.5;
+    //   }
+    //   if (showLabel) {
+    //     var text = value;
+    //     var ts = _.clone(textStyle);
+    //     var xAnchor = 0.5;
+    //     ts.fontSize = 22;
+    //     var label = new PIXI.Text(text, ts);
+    //     if (count > 10) {
+    //       if (value == domain[0]) {
+    //         x = mx0;
+    //         xAnchor = 0;
+    //       } else if (value==domain[1]) {
+    //         x = mx0+cw;
+    //         xAnchor = 1;
+    //       }
+    //     }
+    //     label.x = x;
+    //     label.y = p[1] + m[3] * h / 5;
+    //     label.anchor.set(xAnchor, 0);
+    //     this.axes.addChild(label);
+    //   }
+    //   if (showTick) {
+    //     this.axes.moveTo(x, p[1]).lineTo(x, p[1]+ m[3] * h / 8);
+    //   }
+    //   value++;
+    //   i++;
+    // }
+    //
+    // var lw = h * 0.0075;
+    // var lh = m[3] * h * 0.2;
+    // var ly0 = h - lw * 0.5 - m[3]*h*0.4;
+    // var ly1 = h - lw * 0.5 - lh;
+    // this.axes.lineStyle(lw, 0x2a2a2a, 1);
+    // this.axes.moveTo(mx0, ly0).lineTo(mx0, ly1).lineTo(mx0+cw, ly1).lineTo(mx0+cw, ly0);
+    // this.axes.moveTo(mx0 + cw*0.5, ly1).lineTo(mx0 + cw*0.5, h);
   };
 
   Graphics.prototype.renderHighlight = function(){
