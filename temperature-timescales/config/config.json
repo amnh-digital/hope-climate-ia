@@ -10,7 +10,7 @@
     "time": 0.5,
     "scale": 0.5,
     "xAxis": {
-      "height": 0.1,
+      "height": 0.0667,
       "textStyle": {
         "fill": "#d2d1dd",
         "fontSize": 0.03
