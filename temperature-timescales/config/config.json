@@ -2,13 +2,20 @@
   "dataURL": "data/188001-201612.json",
   "graphics": {
     "el": "#graphics",
-    "minYearsDisplay": 1,
+    "minYearsDisplay": 5,
     "monthYearsDisplay": 4,
     "targetWidth": 1920,
     "targetHeight": 1080,
     "margin": [0.075, 0.05, 0.05, 0.05],
     "time": 0.5,
     "scale": 0.5,
+    "highlightMs": 1000,
+    "marker": {
+      "textStyle": {
+        "fill": "#d2d1dd",
+        "fontSize": 0.03
+      }
+    },
     "xAxis": {
       "height": 0.0667,
       "textStyle": {

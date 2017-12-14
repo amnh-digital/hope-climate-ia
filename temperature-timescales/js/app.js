@@ -45,7 +45,7 @@ App.prototype.loadListeners = function(){
         _this.onTimeChange(value);
         break;
       case "vertical":
-        _this.onScaleChange(value);
+        _this.onScaleChange(1.0-value);
         break;
       default:
         break;

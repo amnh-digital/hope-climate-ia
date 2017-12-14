@@ -94,11 +94,10 @@ var Graphics = (function() {
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     this.axes = new PIXI.Graphics();
     this.plot = new PIXI.Graphics();
-    this.highlight = new PIXI.Graphics();
     this.trend = new PIXI.Graphics();
     this.marker = new PIXI.Graphics();
 
-    this.app.stage.addChild(this.plot, this.highlight, this.axes, this.trend, this.marker);
+    this.app.stage.addChild(this.plot, this.axes, this.trend, this.marker);
 
     this.$el.append(this.app.view);
   };
@@ -238,15 +237,20 @@ var Graphics = (function() {
     this.yAxisTextStyle = yAxisTextStyle;
 
     // make calculations for plot
-    var plotX = xAxisX + xAxisW;
+    var plotX = yAxisX + yAxisW;
     var plotY = yAxisY;
     var plotW = xAxisW;
     var plotH = yAxisH;
     this.plotDimensions = [plotX, plotY, plotW, plotH];
+
+    // marker
+    var markerTextStyle = _.extend({}, this.opt.marker.textStyle);
+    markerTextStyle.fontSize *= h;
+    this.markerTextStyle = markerTextStyle;
   };
 
   Graphics.prototype.render = function(){
-
+    this.transition();
   };
 
   Graphics.prototype.renderAxes = function(){
@@ -329,9 +333,21 @@ var Graphics = (function() {
 
     // draw x axis
     count = domain[1] - domain[0];
+    var showMonths = (count <= this.monthYearsDisplay);
     showEvery = 1;
     var tickEvery = 1;
-    if (count > 80) {
+    var start = domain[0];
+    var end = domain[1];
+    var step = 1;
+
+    if (showMonths) {
+      step = 1.0 / 12.0;
+      domain[1] += 1;
+      showEvery = 12;
+      start = domain[0] - Math.ceil((domain[0] - domainp[0]) * 12) / 12.0;
+      end = domain[1] + Math.floor((domainp[1] - domain[1]) * 12) / 12.0;
+
+    } else if (count > 80) {
       showEvery = 20;
       tickEvery = 5;
 
@@ -341,74 +357,152 @@ var Graphics = (function() {
 
     } else if (count > 10) {
       showEvery = 5;
-      tickEvery = 1;
     }
-    value = domain[0];
-    i = 0;
+    value = start;
     var cw = xAxisBounds[2];
     var dataW = cw / (domainp[1]-domainp[0]+1);
     var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
     var lineY0 = xAxisBounds[1];
     var lineY1 = labelY - xAxisTextStyle.fontSize * 0.5;
 
-    while (value <= domain[1]) {
-      var delta1 = domain[1] - value;
-      var delta2 = value - domain[0];
-      var showLabel = (value === domain[0] || value === domain[1] || value % showEvery === 0) && (delta1 >= showEvery/2 || delta1 <= 0) && (delta2 >= showEvery/2 || delta2 <= 0);
+    while (value <= end) {
+      var showLabel = (value % showEvery === 0) || (showEvery > 10 && (value==domain[0] || value==domain[1]));
       var showTick = (value % tickEvery === 0);
+
+      if (showMonths) {
+        var v = Math.round(value % 1 * 12);
+        showLabel = (v % showEvery === 0);
+        showTick = (v % tickEvery === 0);
+      }
+
       var p, px, x;
 
       if (showLabel || showTick) {
-        p = dataToPoint(value, range[0], domain, range, xAxisBounds);
         px = UTIL.norm(value, domainp[0], domainp[1]+1);
         x = px * cw + lineX0 + dataW * 0.5;
       }
       this.axes.lineStyle(2, 0x444444, 1);
       if (showLabel) {
         this.axes.lineStyle(3, 0x888888, 1);
-        var text = value;
-        var xAnchor = 0.5;
+        var text = parseInt(Math.round(value));
         var label = new PIXI.Text(text, xAxisTextStyle);
-        if (count > 10) {
-          if (value == domain[0]) {
-            x = lineX0;
-            xAnchor = 0;
-          } else if (value==domain[1]) {
-            x = lineX0+cw;
-            xAnchor = 1;
-          }
-        }
         label.x = x;
         label.y = labelY;
-        label.anchor.set(xAnchor, 0);
+        label.anchor.set(0.5, 0);
         this.axes.addChild(label);
       }
       if (showTick) {
         this.axes.moveTo(x, lineY0).lineTo(x, lineY1);
       }
-      value++;
-      i++;
+      value += step;
     }
-
-    // var lw = h * 0.0075;
-    // var lh = m[3] * h * 0.2;
-    // var ly0 = h - lw * 0.5 - m[3]*h*0.4;
-    // var ly1 = h - lw * 0.5 - lh;
-    // this.axes.lineStyle(lw, 0x2a2a2a, 1);
-    // this.axes.moveTo(mx0, ly0).lineTo(mx0, ly1).lineTo(mx0+cw, ly1).lineTo(mx0+cw, ly0);
-    // this.axes.moveTo(mx0 + cw*0.5, ly1).lineTo(mx0 + cw*0.5, h);
-  };
-
-  Graphics.prototype.renderHighlight = function(){
-
   };
 
   Graphics.prototype.renderMarker = function(){
+    // draw plot marker
+    var year = this.plotYear;
+    var pd = this.plotDimensions;
 
+    this.marker.clear();
+    while(this.marker.children[0]) {
+      this.marker.removeChild(this.marker.children[0]);
+    }
+
+    var cx = pd[0];
+    var cy = pd[1];
+    var cw = pd[2];
+    var ch = pd[3]
+    var x = pd[0] + cw * this.time;
+    var marginX = cw * 0.01;
+
+    // label bg
+    var labelW = cw * 0.18;
+    var thresholdX = cw + cx - labelW;
+    // var labelH = ch * 0.1;
+    // this.marker.beginFill(0x777070, 0.2);
+    // this.marker.drawRect(x, cy, labelW, labelH);
+    // this.marker.endFill();
+
+    this.marker.lineStyle(5, 0xf1a051, 0.7);
+    this.marker.moveTo(x, cy).lineTo(x, cy + ch);
+
+    var textStyle = this.markerTextStyle;
+    var dc = UTIL.round(year.value, 1);
+    var df = UTIL.round(year.valueF, 1);
+    var text = dc + "°C ("+df+" °F)";
+    var label = new PIXI.Text(text, textStyle);
+
+    var anchorX = 0.0;
+    var lx = x + marginX;
+    if (x > thresholdX) {
+      anchorX = 1.0;
+      lx = x - marginX;
+    }
+
+    label.x = lx;
+    label.y = cy;
+    label.anchor.set(anchorX, 0.0);
+    this.marker.addChild(label);
+
+    textStyle = _.clone(textStyle);
+    textStyle.fontSize *= 0.9;
+    label = new PIXI.Text(year.year, textStyle);
+    label.x = lx;
+    label.y = cy + textStyle.fontSize * 1.5;
+    label.anchor.set(anchorX, 0.0);
+    this.marker.addChild(label);
   };
 
   Graphics.prototype.renderPlot = function(){
+    var _this = this;
+    var data = this.annualData;
+    var domain = this.plotDomain;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var pd = this.plotDimensions;
 
+    this.plot.clear();
+
+    var cw = pd[2];
+    var ch = pd[3];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+    var dataMargin = 0.5;
+    var mx0 = pd[0];
+    var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
+    var y0 = p0[1];
+
+    _.each(data, function(d, i){
+      if (d.active) {
+        var value = d.value;
+        if (d.highlighting) {
+          var delta = 0.25;
+          if (value < 0) delta *= -1;
+          value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
+          if (isNaN(value)) value = d.value;
+        }
+        var p = dataToPoint(d.year, value, domainp, range, pd);
+        var px = UTIL.norm(d.year, domainp[0], domainp[1]+1);
+        var y = p[1];
+        var x = px * cw + mx0;
+        var w = dataW - dataMargin * 2;
+        // clip the sides off the edges
+        if (x < mx0) {
+          w -= (mx0 - x);
+          x = mx0;
+        }
+        if (x > (mx0 + cw - dataW)) {
+          w -= (x - (mx0 + cw - dataW));
+        }
+        _this.plot.beginFill(d.color);
+
+        if (y < y0) {
+          _this.plot.drawRect(x+dataMargin, y, w, y0-y);
+
+        } else if (y > y0) {
+          _this.plot.drawRect(x+dataMargin, y0, w, y-y0);
+        }
+      }
+    });
   };
 
   Graphics.prototype.renderTrend = function(){
@@ -416,7 +510,32 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.transition = function(){
+    if (!this.transitioning) return false;
 
+    var _this = this;
+    var range = this.plotRange;
+    var highlightMs = this.opt.highlightMs;
+    var transitioning = false;
+    var now = new Date();
+
+    _.each(this.annualData, function(d, i){
+      if (d.highlighting && d.highlightStart) {
+        var diff = now - d.highlightStart;
+        if (diff >= highlightMs) {
+          diff = highlightMs;
+          _this.annualData[i].highlighting = false;
+        } else {
+          transitioning = true;
+        }
+        var progress = diff / highlightMs;
+        progress = Math.max(progress, 0);
+        progress = Math.min(progress, 1);
+        _this.annualData[i].highlightValue = progress;
+      }
+    });
+
+    this.transitioning = transitioning;
+    this.renderPlot();
   };
 
   return Graphics;
