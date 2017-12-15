@@ -1,9 +1,9 @@
 import csv
 from datetime import datetime, timedelta
 import math
+import numpy as np
 import os
 import sys
-
 
 def dateToSeconds(date):
     (year, month, day) = date
@@ -56,6 +56,17 @@ def readCSV(filename):
             rows = parseRows(rows)
     return rows
 
+def getColor(grad, amount):
+    gradLen = len(grad)
+    i = (gradLen-1) * amount
+    remainder = i % 1
+    rgb = (0,0,0)
+    if remainder > 0:
+        rgb = lerpColor(grad[int(i)], grad[int(i)+1], remainder)
+    else:
+        rgb = grad[int(i)]
+    return int(rgb2hex(rgb), 16)
+
 # Add colors
 def hex2rgb(hex):
   # "#FFFFFF" -> [255,255,255]
@@ -82,13 +93,25 @@ def norm(value, a, b):
     n = max(n, 0)
     return n
 
-def getColor(grad, amount):
-    gradLen = len(grad)
-    i = (gradLen-1) * amount
-    remainder = i % 1
-    rgb = (0,0,0)
-    if remainder > 0:
-        rgb = lerpColor(grad[int(i)], grad[int(i)+1], remainder)
-    else:
-        rgb = grad[int(i)]
-    return int(rgb2hex(rgb), 16)
+def savitzkyGolay(y, window_size, order=3, deriv=0, rate=1):
+    try:
+        window_size = np.abs(np.int(window_size))
+        order = np.abs(np.int(order))
+    except ValueError, msg:
+        raise ValueError("window_size and order have to be of type int")
+    if window_size % 2 != 1 or window_size < 1:
+        raise TypeError("window_size size must be a positive odd number")
+    if window_size < order + 2:
+        raise TypeError("window_size is too small for the polynomials order")
+    y = np.array(y)
+    order_range = range(order+1)
+    half_window = (window_size -1) // 2
+    # precompute coefficients
+    b = np.mat([[k**i for i in order_range] for k in range(-half_window, half_window+1)])
+    m = np.linalg.pinv(b).A[deriv] * rate**deriv * math.factorial(deriv)
+    # pad the signal at the extremes with
+    # values taken from the signal itself
+    firstvals = y[0] - np.abs( y[1:half_window+1][::-1] - y[0] )
+    lastvals = y[-1] + np.abs(y[-half_window-1:-1][::-1] - y[-1])
+    y = np.concatenate((firstvals, y, lastvals))
+    return np.convolve( m[::-1], y, mode='valid')

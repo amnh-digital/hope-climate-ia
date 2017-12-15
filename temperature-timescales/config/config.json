@@ -10,6 +10,8 @@
     "time": 0.5,
     "scale": 0.5,
     "highlightMs": 1000,
+    "fiveYearTrendYearsDisplay": 30,
+    "tenYearTrendYearsDisplay": 60,
     "marker": {
       "textStyle": {
         "fill": "#d2d1dd",

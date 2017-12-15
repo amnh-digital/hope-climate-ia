@@ -37,9 +37,13 @@ var Graphics = (function() {
     this.range = this.opt.range;
     this.minYearsDisplay = this.opt.minYearsDisplay;
     this.monthYearsDisplay = this.opt.monthYearsDisplay;
+    this.fiveYearTrend = this.opt.fiveYearTrend;
+    this.tenYearTrend = this.opt.tenYearTrend;
     this.yAxisLabelCount = this.opt.yAxis.labelCount;
     this.yAxisStep = this.opt.yAxis.step;
     this.yAxisMinBounds = this.opt.yAxis.minBounds;
+    this.fiveYearTrendYearsDisplay = this.opt.fiveYearTrendYearsDisplay;
+    this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
 
     // initialize data
     var d0 = this.domain[0];
@@ -520,6 +524,45 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.renderTrend = function(){
+    var domain = this.plotDomain;
+    var count = domain[1]-domain[0];
+    var fiveYearTrendYearsDisplay = this.fiveYearTrendYearsDisplay;
+    var tenYearTrendYearsDisplay = this.tenYearTrendYearsDisplay;
+    var trend = this.trend;
+
+    trend.clear();
+
+    if (count < tenYearTrendYearsDisplay) return false;
+
+    var pd = this.plotDimensions;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var cw = pd[2];
+    var ch = pd[3];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+    var data = this.annualData;
+    var trendData = this.tenYearTrend;
+
+    // var trendData = this.fiveYearTrend;
+    // if (count >= tenYearTrendYearsDisplay) trendData = this.tenYearTrend;
+
+    trend.lineStyle(3, 0xffffff, 0.4);
+    var first = true;
+    _.each(data, function(d, i){
+      if (d.active) {
+        var x = d.x + dataW * 0.5;
+        var value = trendData[i];
+        var p = dataToPoint(d.year, value, domainp, range, pd);
+        var y = p[1];
+        if (first) {
+          trend.moveTo(x, y);
+          first = false;
+        } else {
+          trend.lineTo(x, y);
+        }
+      }
+    });
+
 
   };
 
