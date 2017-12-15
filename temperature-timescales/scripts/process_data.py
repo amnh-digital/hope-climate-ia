@@ -20,7 +20,7 @@ END_YEAR = 2016
 MONTHLY_DATA_FILE = "../data/188001-201710.csv"
 ANNUAL_DATA_FILE = "../data/1880-2017.csv"
 OUTPUT_FILE = "../data/188001-201612.json"
-GRADIENT = ["#8ac1f2", "#7c597c", "#ff3f3f"]
+GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
 
 # Convert colors to RGB
 GRADIENT = [hex2rgb(g) for g in GRADIENT]
@@ -57,8 +57,11 @@ for i,d in enumerate(monthlyData):
     monthlyData[i]["Color"] = getColor(GRADIENT, n)
 
 for i,d in enumerate(annualData):
-    n = norm(d["Value"], dataRange[0], dataRange[1])
-    annualData[i]["Norm"] = n
+    v = d["Value"]
+    if v >= 0:
+        n = v / dataRange[1] * 0.5 + 0.5
+    else:
+        n = 0.5 - v / dataRange[0] * 0.5
     annualData[i]["Color"] = getColor(GRADIENT, n)
 
 # minimize data

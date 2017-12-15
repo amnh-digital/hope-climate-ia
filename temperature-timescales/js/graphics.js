@@ -175,8 +175,8 @@ var Graphics = (function() {
 
     var yAxisStep = this.yAxisStep;
     var yAxisMinBounds = this.yAxisMinBounds;
-    var minRange = UTIL.floorToNearest(_.min(values), yAxisStep);
-    var maxRange = UTIL.ceilToNearest(_.max(values), yAxisStep);
+    var minRange = UTIL.floorToNearest(_.min(values)-0.05, yAxisStep);
+    var maxRange = UTIL.ceilToNearest(_.max(values)+0.05, yAxisStep);
     this.plotRange = [Math.min(yAxisMinBounds[0], minRange), Math.max(maxRange, yAxisMinBounds[1])];
 
     var domain = [newDomainPrecise[0], newDomainPrecise[1]+1];
