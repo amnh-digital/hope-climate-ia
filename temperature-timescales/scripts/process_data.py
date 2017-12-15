@@ -76,7 +76,7 @@ annualData = [(round(d["Value"],3), d["Color"]) for d in annualData]
 jsonData = {
     "monthlyData": monthlyData,
     "annualData": annualData,
-    "fiveYearTrend": fiveYearTrend.tolist(),
+    # "fiveYearTrend": fiveYearTrend.tolist(),
     "tenYearTrend": tenYearTrend.tolist(),
     "domain": dataDomain,
     "range": dataRange

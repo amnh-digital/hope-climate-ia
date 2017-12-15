@@ -37,12 +37,10 @@ var Graphics = (function() {
     this.range = this.opt.range;
     this.minYearsDisplay = this.opt.minYearsDisplay;
     this.monthYearsDisplay = this.opt.monthYearsDisplay;
-    this.fiveYearTrend = this.opt.fiveYearTrend;
     this.tenYearTrend = this.opt.tenYearTrend;
     this.yAxisLabelCount = this.opt.yAxis.labelCount;
     this.yAxisStep = this.opt.yAxis.step;
     this.yAxisMinBounds = this.opt.yAxis.minBounds;
-    this.fiveYearTrendYearsDisplay = this.opt.fiveYearTrendYearsDisplay;
     this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
 
     // initialize data
@@ -526,7 +524,6 @@ var Graphics = (function() {
   Graphics.prototype.renderTrend = function(){
     var domain = this.plotDomain;
     var count = domain[1]-domain[0];
-    var fiveYearTrendYearsDisplay = this.fiveYearTrendYearsDisplay;
     var tenYearTrendYearsDisplay = this.tenYearTrendYearsDisplay;
     var trend = this.trend;
 
@@ -542,9 +539,6 @@ var Graphics = (function() {
     var dataW = cw / (domainp[1]-domainp[0]+1);
     var data = this.annualData;
     var trendData = this.tenYearTrend;
-
-    // var trendData = this.fiveYearTrend;
-    // if (count >= tenYearTrendYearsDisplay) trendData = this.tenYearTrend;
 
     trend.lineStyle(3, 0xffffff, 0.4);
     var first = true;
@@ -562,8 +556,6 @@ var Graphics = (function() {
         }
       }
     });
-
-
   };
 
   Graphics.prototype.transition = function(){
