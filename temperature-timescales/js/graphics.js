@@ -7,10 +7,15 @@ var Graphics = (function() {
     this.init();
   }
 
-  function dataToPoint(dx, dy, domain, range, bounds){
+  function dataToPercent(dx, dy, domain, range){
     var px = UTIL.norm(dx, domain[0], domain[1]);
     var py = UTIL.norm(dy, range[0], range[1]);
-    return percentToPoint(px, py, bounds);
+    return [px, py];
+  };
+
+  function dataToPoint(dx, dy, domain, range, bounds){
+    var p = dataToPercent(dx, dy, domain, range);
+    return percentToPoint(p[0], p[1], bounds);
   };
 
   function percentToPoint(px, py, bounds){
@@ -45,7 +50,9 @@ var Graphics = (function() {
         valueF: d[0] * 1.8,
         color: d[1],
         index: i,
-        active: false
+        active: false,
+        x: 0,
+        y: 0
       };
     });
     this.monthlyData = _.map(this.opt.monthlyData, function(d,i){
@@ -58,7 +65,9 @@ var Graphics = (function() {
         valueF: d[0] * 1.8,
         color: d[1],
         index: i,
-        active: false
+        active: false,
+        x: 0,
+        y: 0
       };
     });
 
@@ -155,6 +164,9 @@ var Graphics = (function() {
     _.each(data, function(d, i){
       if (d.year >= Math.floor(domainStart) && d.year <= Math.ceil(domainEnd)) {
         data[i].active = true;
+        data[i].x = 0;
+        data[i].y = 0;
+
         values.push(d.value);
       } else {
         data[i].active = false;
@@ -167,8 +179,18 @@ var Graphics = (function() {
     var maxRange = UTIL.ceilToNearest(_.max(values), yAxisStep);
     this.plotRange = [Math.min(yAxisMinBounds[0], minRange), Math.max(maxRange, yAxisMinBounds[1])];
 
-    this.onTimeChange(this.time, false);
+    var domain = [newDomainPrecise[0], newDomainPrecise[1]+1];
+    var range = this.plotRange;
+    var pd = this.plotDimensions;
+    _.each(data, function(d, i){
+      if (d.active) {
+        var p = dataToPoint(d.year, d.value, domain, range, pd);
+        data[i].x = p[0];
+        data[i].y = p[1];
+      }
+    });
 
+    this.onTimeChange(this.time, false);
     this.renderAxes();
     this.renderTrend();
     this.renderMarker();
@@ -335,22 +357,21 @@ var Graphics = (function() {
     }
 
     // draw x axis
+    var data = this.annualData;
+    var cw = xAxisBounds[2];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+    var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
+    var lineY0 = xAxisBounds[1];
+    var lineY1 = labelY - xAxisTextStyle.fontSize * 0.5;
+    var boundLeft = xAxisBounds[0];
+    var boundRight = xAxisBounds[0] + xAxisBounds[2];
+
     count = domain[1] - domain[0];
     var showMonths = (count <= this.monthYearsDisplay);
     showEvery = 1;
     var tickEvery = 1;
-    var start = domain[0];
-    var end = domain[1];
-    var step = 1;
 
-    if (showMonths) {
-      step = 1.0 / 12.0;
-      domain[1] += 1;
-      showEvery = 12;
-      start = domain[0] - Math.ceil((domain[0] - domainp[0]) * 12) / 12.0;
-      end = domain[1] + Math.floor((domainp[1] - domain[1]) * 12) / 12.0;
-
-    } else if (count > 80) {
+    if (count > 80) {
       showEvery = 20;
       tickEvery = 5;
 
@@ -361,44 +382,30 @@ var Graphics = (function() {
     } else if (count > 10) {
       showEvery = 5;
     }
-    value = start;
-    var cw = xAxisBounds[2];
-    var dataW = cw / (domainp[1]-domainp[0]+1);
-    var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
-    var lineY0 = xAxisBounds[1];
-    var lineY1 = labelY - xAxisTextStyle.fontSize * 0.5;
 
-    while (value <= end) {
-      var showLabel = (value % showEvery === 0) || (showEvery > 10 && (value==domain[0] || value==domain[1]));
-      var showTick = (value % tickEvery === 0);
+    _.each(data, function(d, i){
+      var x = d.x + dataW * 0.5;
+      if (d.active && x >= boundLeft && x <= boundRight) {
 
-      if (showMonths) {
-        var v = Math.round(value % 1 * 12);
-        showLabel = (v % showEvery === 0);
-        showTick = (v % tickEvery === 0);
-      }
+        axes.lineStyle(2, 0x444444, 1);
+        var value = parseInt(Math.round(d.year));
+        var showLabel = (value % showEvery === 0) || (count >= 130 && value==domain[1]);
+        var showTick = (value % tickEvery === 0);
+        if (showLabel) {
+          axes.lineStyle(3, 0x888888, 1);
+          var text = value;
+          var label = new PIXI.Text(text, xAxisTextStyle);
+          label.x = x;
+          label.y = labelY;
+          label.anchor.set(0.5, 0);
+          axes.addChild(label);
+        }
+        if (showTick) {
+          axes.moveTo(x, lineY0).lineTo(x, lineY1);
+        }
 
-      var p, px, x;
-
-      if (showLabel || showTick) {
-        px = UTIL.norm(value, domainp[0], domainp[1]+1);
-        x = px * cw + lineX0 + dataW * 0.5;
       }
-      axes.lineStyle(2, 0x444444, 1);
-      if (showLabel) {
-        axes.lineStyle(3, 0x888888, 1);
-        var text = parseInt(Math.round(value));
-        var label = new PIXI.Text(text, xAxisTextStyle);
-        label.x = x;
-        label.y = labelY;
-        label.anchor.set(0.5, 0);
-        axes.addChild(label);
-      }
-      if (showTick) {
-        axes.moveTo(x, lineY0).lineTo(x, lineY1);
-      }
-      value += step;
-    }
+    });
   };
 
   Graphics.prototype.renderMarker = function(){
@@ -479,16 +486,18 @@ var Graphics = (function() {
     _.each(data, function(d, i){
       if (d.active) {
         var value = d.value;
+        var x = d.x;
+        var y = d.y;
+        // bounce when we are highlighting bar
         if (d.highlighting) {
           var delta = 0.25;
           if (value < 0) delta *= -1;
           value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
-          if (isNaN(value)) value = d.value;
+          if (!isNaN(value)) {
+            var p = dataToPoint(d.year, value, domainp, range, pd);
+            y = p[1];
+          }
         }
-        var p = dataToPoint(d.year, value, domainp, range, pd);
-        var px = UTIL.norm(d.year, domainp[0], domainp[1]+1);
-        var y = p[1];
-        var x = px * cw + mx0;
         var w = dataW - dataMargin * 2;
         // clip the sides off the edges
         if (x < mx0) {
