@@ -52,8 +52,11 @@ dataRange = [math.floor(min(values)), math.ceil(max(values))]
 
 # get colors
 for i,d in enumerate(monthlyData):
-    n = norm(d["Value"], dataRange[0], dataRange[1])
-    monthlyData[i]["Norm"] = n
+    v = d["Value"]
+    if v >= 0:
+        n = v / dataRange[1] * 0.5 + 0.5
+    else:
+        n = 0.5 - v / dataRange[0] * 0.5
     monthlyData[i]["Color"] = getColor(GRADIENT, n)
 
 for i,d in enumerate(annualData):
@@ -68,13 +71,16 @@ ys = [d["Value"] for d in annualData]
 fiveYearTrend = savitzkyGolay(ys, 5)
 tenYearTrend = savitzkyGolay(ys, 11)
 
-# minimize data
+# minimize monthly data
 monthlyData = [(round(d["Value"],3), d["Color"]) for d in monthlyData]
-annualData = [(round(d["Value"],3), d["Color"]) for d in annualData]
+
+# add monthly data to annual data and minimize
+for i,d in enumerate(annualData):
+    annualData[i]["monthlyData"] = monthlyData[i*12:i*12+12]
+annualData = [(round(d["Value"],3), d["Color"], d["monthlyData"]) for d in annualData]
 
 # format data
 jsonData = {
-    "monthlyData": monthlyData,
     "annualData": annualData,
     # "fiveYearTrend": fiveYearTrend.tolist(),
     "tenYearTrend": tenYearTrend.tolist(),

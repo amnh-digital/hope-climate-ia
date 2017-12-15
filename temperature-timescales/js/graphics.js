@@ -7,6 +7,8 @@ var Graphics = (function() {
     this.init();
   }
 
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
   function dataToPercent(dx, dy, domain, range){
     var px = UTIL.norm(dx, domain[0], domain[1]);
     var py = UTIL.norm(dy, range[0], range[1]);
@@ -46,6 +48,18 @@ var Graphics = (function() {
     // initialize data
     var d0 = this.domain[0];
     this.annualData = _.map(this.opt.annualData, function(d,i){
+      var monthlyData = _.map(d[2], function(dd, j){
+        return {
+          month: j,
+          value: dd[0],
+          valueF: dd[0] * 1.8,
+          color: dd[1],
+          index: j,
+          active: false,
+          x: 0,
+          y: 0
+        };
+      });
       return {
         year: d0 + i,
         value: d[0],
@@ -54,22 +68,8 @@ var Graphics = (function() {
         index: i,
         active: false,
         x: 0,
-        y: 0
-      };
-    });
-    this.monthlyData = _.map(this.opt.monthlyData, function(d,i){
-      var year = d0 + Math.floor(i/12);
-      var month = i % 12;
-      return {
-        year: year,
-        month: month,
-        value: d[0],
-        valueF: d[0] * 1.8,
-        color: d[1],
-        index: i,
-        active: false,
-        x: 0,
-        y: 0
+        y: 0,
+        monthlyData: monthlyData
       };
     });
 

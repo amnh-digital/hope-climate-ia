@@ -2,8 +2,8 @@
   "dataURL": "data/188001-201612.json",
   "graphics": {
     "el": "#graphics",
-    "minYearsDisplay": 5,
-    "monthYearsDisplay": 4,
+    "minYearsDisplay": 1,
+    "monthYearsDisplay": 2,
     "targetWidth": 1920,
     "targetHeight": 1080,
     "margin": [0.075, 0.05, 0.05, 0.05],
