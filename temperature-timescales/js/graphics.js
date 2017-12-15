@@ -151,12 +151,13 @@ var Graphics = (function() {
     this.plotDomainPrecise = newDomainPrecise;
 
     var values = [];
-    _.each(this.annualData, function(d, i){
+    var data = this.annualData;
+    _.each(data, function(d, i){
       if (d.year >= Math.floor(domainStart) && d.year <= Math.ceil(domainEnd)) {
-        _this.annualData[i].active = true;
+        data[i].active = true;
         values.push(d.value);
       } else {
-        _this.annualData[i].active = false;
+        data[i].active = false;
       }
     });
 
@@ -183,19 +184,20 @@ var Graphics = (function() {
     var domainPrecise = this.plotDomainPrecise;
     var yearPrecise = UTIL.lerp(domainPrecise[0], domainPrecise[1], time);
     var prevIndex = this.plotIndex;
+    var data = this.annualData;
 
     this.dataIndex = UTIL.norm(yearPrecise, domain[0], domain[1]);
     var plotIndex = Math.round(UTIL.lerp(domain[0], domain[1], this.dataIndex)) - domain[0];
     this.plotIndex = plotIndex;
-    this.plotYear = this.annualData[this.plotIndex];
+    this.plotYear = data[this.plotIndex];
     // console.log(this.plotYear.year)
 
     // add transition for index and play sound
     if ((prevIndex < plotIndex || time > prevTime && prevTime <= 0) && withSound !== false) {
-      this.annualData[plotIndex].highlighting = true;
-      this.annualData[plotIndex].highlightStart = new Date();
-      this.annualData[plotIndex].highlightValue = 0;
-      var mu = UTIL.norm(this.annualData[plotIndex].value, this.range[0], this.range[1]);
+      data[plotIndex].highlighting = true;
+      data[plotIndex].highlightStart = new Date();
+      data[plotIndex].highlightValue = 0;
+      var mu = UTIL.norm(data[plotIndex].value, this.range[0], this.range[1]);
       $(document).trigger("sound.play.percent", [mu]);
     }
 
@@ -263,10 +265,11 @@ var Graphics = (function() {
     var xAxisTextStyle = this.xAxisTextStyle;
     var yAxisTextStyle = this.yAxisTextStyle;
     var yAxissubextStyle = this.yAxissubextStyle;
+    var axes = this.axes;
 
-    this.axes.clear();
-    while(this.axes.children[0]) {
-      this.axes.removeChild(this.axes.children[0]);
+    axes.clear();
+    while(axes.children[0]) {
+      axes.removeChild(axes.children[0]);
     }
 
     // determine labels and ticks for y axis
@@ -298,13 +301,13 @@ var Graphics = (function() {
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 1.0);
-        this.axes.addChild(label);
+        axes.addChild(label);
 
         label = new PIXI.Text("average", yAxissubextStyle);
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 0);
-        this.axes.addChild(label);
+        axes.addChild(label);
 
       } else if (i % showEvery === 0) {
         var text = dc + "°C";
@@ -319,13 +322,13 @@ var Graphics = (function() {
         sublabel.y = y;
         sublabel.anchor.set(1.0, 0);
 
-        this.axes.addChild(label);
-        this.axes.addChild(sublabel);
+        axes.addChild(label);
+        axes.addChild(sublabel);
       }
 
-      if (dc===0) this.axes.lineStyle(3, 0xffffff, 0.6);
-      else this.axes.lineStyle(1, 0xffffff, 0.2);
-      this.axes.moveTo(lineX0, y).lineTo(lineX1, y);
+      if (dc===0) axes.lineStyle(3, 0xffffff, 0.6);
+      else axes.lineStyle(1, 0xffffff, 0.2);
+      axes.moveTo(lineX0, y).lineTo(lineX1, y);
 
       value -= yAxisStep;
       i += 1;
@@ -381,18 +384,18 @@ var Graphics = (function() {
         px = UTIL.norm(value, domainp[0], domainp[1]+1);
         x = px * cw + lineX0 + dataW * 0.5;
       }
-      this.axes.lineStyle(2, 0x444444, 1);
+      axes.lineStyle(2, 0x444444, 1);
       if (showLabel) {
-        this.axes.lineStyle(3, 0x888888, 1);
+        axes.lineStyle(3, 0x888888, 1);
         var text = parseInt(Math.round(value));
         var label = new PIXI.Text(text, xAxisTextStyle);
         label.x = x;
         label.y = labelY;
         label.anchor.set(0.5, 0);
-        this.axes.addChild(label);
+        axes.addChild(label);
       }
       if (showTick) {
-        this.axes.moveTo(x, lineY0).lineTo(x, lineY1);
+        axes.moveTo(x, lineY0).lineTo(x, lineY1);
       }
       value += step;
     }
@@ -402,10 +405,11 @@ var Graphics = (function() {
     // draw plot marker
     var year = this.plotYear;
     var pd = this.plotDimensions;
+    var marker = this.marker;
 
-    this.marker.clear();
-    while(this.marker.children[0]) {
-      this.marker.removeChild(this.marker.children[0]);
+    marker.clear();
+    while(marker.children[0]) {
+      marker.removeChild(marker.children[0]);
     }
 
     var cx = pd[0];
@@ -419,12 +423,12 @@ var Graphics = (function() {
     var labelW = cw * 0.18;
     var thresholdX = cw + cx - labelW;
     // var labelH = ch * 0.1;
-    // this.marker.beginFill(0x777070, 0.2);
-    // this.marker.drawRect(x, cy, labelW, labelH);
-    // this.marker.endFill();
+    // marker.beginFill(0x777070, 0.2);
+    // marker.drawRect(x, cy, labelW, labelH);
+    // marker.endFill();
 
-    this.marker.lineStyle(5, 0xf1a051, 0.7);
-    this.marker.moveTo(x, cy).lineTo(x, cy + ch);
+    marker.lineStyle(5, 0xf1a051, 0.7);
+    marker.moveTo(x, cy).lineTo(x, cy + ch);
 
     var textStyle = this.markerTextStyle;
     var dc = UTIL.round(year.value, 1);
@@ -442,7 +446,7 @@ var Graphics = (function() {
     label.x = lx;
     label.y = cy;
     label.anchor.set(anchorX, 0.0);
-    this.marker.addChild(label);
+    marker.addChild(label);
 
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
@@ -450,7 +454,7 @@ var Graphics = (function() {
     label.x = lx;
     label.y = cy + textStyle.fontSize * 1.5;
     label.anchor.set(anchorX, 0.0);
-    this.marker.addChild(label);
+    marker.addChild(label);
   };
 
   Graphics.prototype.renderPlot = function(){
@@ -460,8 +464,7 @@ var Graphics = (function() {
     var domainp = this.plotDomainPrecise;
     var range = this.plotRange;
     var pd = this.plotDimensions;
-
-    this.plot.clear();
+    var plot = this.plot;
 
     var cw = pd[2];
     var ch = pd[3];
@@ -470,6 +473,8 @@ var Graphics = (function() {
     var mx0 = pd[0];
     var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
     var y0 = p0[1];
+
+    plot.clear();
 
     _.each(data, function(d, i){
       if (d.active) {
@@ -493,13 +498,13 @@ var Graphics = (function() {
         if (x > (mx0 + cw - dataW)) {
           w -= (x - (mx0 + cw - dataW));
         }
-        _this.plot.beginFill(d.color);
+        plot.beginFill(d.color);
 
         if (y < y0) {
-          _this.plot.drawRect(x+dataMargin, y, w, y0-y);
+          plot.drawRect(x+dataMargin, y, w, y0-y);
 
         } else if (y > y0) {
-          _this.plot.drawRect(x+dataMargin, y0, w, y-y0);
+          plot.drawRect(x+dataMargin, y0, w, y-y0);
         }
       }
     });
@@ -517,20 +522,21 @@ var Graphics = (function() {
     var highlightMs = this.opt.highlightMs;
     var transitioning = false;
     var now = new Date();
+    var data = this.annualData;
 
-    _.each(this.annualData, function(d, i){
+    _.each(data, function(d, i){
       if (d.highlighting && d.highlightStart) {
         var diff = now - d.highlightStart;
         if (diff >= highlightMs) {
           diff = highlightMs;
-          _this.annualData[i].highlighting = false;
+          data[i].highlighting = false;
         } else {
           transitioning = true;
         }
         var progress = diff / highlightMs;
         progress = Math.max(progress, 0);
         progress = Math.min(progress, 1);
-        _this.annualData[i].highlightValue = progress;
+        data[i].highlightValue = progress;
       }
     });
 
