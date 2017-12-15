@@ -66,12 +66,12 @@ var Graphics = (function() {
     this.time = this.opt.time;
     this.scale = this.opt.scale;
 
-    this.plotDomain = [];
-    this.plotDomainPrecise = [];
-    this.plotRange = [];
-    this.dataIndex = 0;
-    this.plotIndex = 0;
-    this.plotYear = {};
+    this.plotDomain = []; // the current visible domain, e.g. [1900, 1950]
+    this.plotDomainPrecise = []; // like above but precise to the decimal, e.g. [1899.5, 1950.25]
+    this.plotRange = []; // the current visible range in Celsius departure from average, e.g. [-1, 1.5]
+    this.dataCurrentPercent = 0; // number between 0 and 1 indicating where the marker is relative to the entire dataset
+    this.plotCurrentIndex = 0; // current active index of dataset
+    this.plotCurrentValue = {}; // current active value
 
     this.refreshDimensions();
     this.initView();
@@ -85,9 +85,9 @@ var Graphics = (function() {
 
     var i = Math.round((domain[1]-domain[0]) * time);
 
-    this.dataIndex = time;
-    this.plotIndex = i;
-    this.plotYear = this.annualData[i];
+    this.dataCurrentPercent = time;
+    this.plotCurrentIndex = i;
+    this.plotCurrentValue = this.annualData[i];
   };
 
   Graphics.prototype.initView = function(){
@@ -119,14 +119,14 @@ var Graphics = (function() {
     var _this = this;
 
     var time = this.time;
-    var dataIndex = this.dataIndex;
+    var dataCurrentPercent = this.dataCurrentPercent;
     var minDomainCount = this.minYearsDisplay;
     var maxDomainCount = this.yearCount;
     var domainCount = UTIL.lerp(minDomainCount, maxDomainCount, scale);
 
     var domainCountP = domainCount / maxDomainCount;
-    var domainStartP = dataIndex - (domainCountP * time);
-    var domainEndP = dataIndex + (domainCountP * (1-time));
+    var domainStartP = dataCurrentPercent - (domainCountP * time);
+    var domainEndP = dataCurrentPercent + (domainCountP * (1-time));
 
     // adjust edges
     if (domainStartP < 0) {
@@ -183,21 +183,21 @@ var Graphics = (function() {
     var domain = this.domain;
     var domainPrecise = this.plotDomainPrecise;
     var yearPrecise = UTIL.lerp(domainPrecise[0], domainPrecise[1], time);
-    var prevIndex = this.plotIndex;
+    var prevIndex = this.plotCurrentIndex;
     var data = this.annualData;
 
-    this.dataIndex = UTIL.norm(yearPrecise, domain[0], domain[1]);
-    var plotIndex = Math.round(UTIL.lerp(domain[0], domain[1], this.dataIndex)) - domain[0];
-    this.plotIndex = plotIndex;
-    this.plotYear = data[this.plotIndex];
-    // console.log(this.plotYear.year)
+    this.dataCurrentPercent = UTIL.norm(yearPrecise, domain[0], domain[1]);
+    var plotCurrentIndex = Math.round(UTIL.lerp(domain[0], domain[1], this.dataCurrentPercent)) - domain[0];
+    this.plotCurrentIndex = plotCurrentIndex;
+    this.plotCurrentValue = data[this.plotCurrentIndex];
+    // console.log(this.plotCurrentValue.year)
 
     // add transition for index and play sound
-    if ((prevIndex < plotIndex || time > prevTime && prevTime <= 0) && withSound !== false) {
-      data[plotIndex].highlighting = true;
-      data[plotIndex].highlightStart = new Date();
-      data[plotIndex].highlightValue = 0;
-      var mu = UTIL.norm(data[plotIndex].value, this.range[0], this.range[1]);
+    if ((prevIndex < plotCurrentIndex || time > prevTime && prevTime <= 0) && withSound !== false) {
+      data[plotCurrentIndex].highlighting = true;
+      data[plotCurrentIndex].highlightStart = new Date();
+      data[plotCurrentIndex].highlightValue = 0;
+      var mu = UTIL.norm(data[plotCurrentIndex].value, this.range[0], this.range[1]);
       $(document).trigger("sound.play.percent", [mu]);
     }
 
@@ -403,7 +403,7 @@ var Graphics = (function() {
 
   Graphics.prototype.renderMarker = function(){
     // draw plot marker
-    var year = this.plotYear;
+    var current = this.plotCurrentValue;
     var pd = this.plotDimensions;
     var marker = this.marker;
 
@@ -431,8 +431,8 @@ var Graphics = (function() {
     marker.moveTo(x, cy).lineTo(x, cy + ch);
 
     var textStyle = this.markerTextStyle;
-    var dc = UTIL.round(year.value, 1);
-    var df = UTIL.round(year.valueF, 1);
+    var dc = UTIL.round(current.value, 1);
+    var df = UTIL.round(current.valueF, 1);
     var text = dc + "°C ("+df+" °F)";
     var label = new PIXI.Text(text, textStyle);
 
@@ -450,7 +450,7 @@ var Graphics = (function() {
 
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
-    label = new PIXI.Text(year.year, textStyle);
+    label = new PIXI.Text(current.year, textStyle);
     label.x = lx;
     label.y = cy + textStyle.fontSize * 1.5;
     label.anchor.set(anchorX, 0.0);
