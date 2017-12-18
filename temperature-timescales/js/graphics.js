@@ -38,8 +38,8 @@ var Graphics = (function() {
     this.domain = this.opt.domain;
     this.range = this.opt.range;
     this.minYearsDisplay = this.opt.minYearsDisplay;
-    this.monthYearsDisplayTransitionEnd = this.opt.monthYearsDisplayTransitionEnd;
     this.monthYearsDisplay = this.opt.monthYearsDisplay;
+    this.monthTransitionStep = this.opt.monthTransitionStep;
     this.tenYearTrend = this.opt.tenYearTrend;
     this.yAxisLabelCount = this.opt.yAxis.labelCount;
     this.yAxisStep = this.opt.yAxis.step;
@@ -51,23 +51,26 @@ var Graphics = (function() {
     this.annualData = _.map(this.opt.annualData, function(d,i){
       var monthlyData = _.map(d[2], function(dd, j){
         return {
+          year: d0 + i + j/12.0,
           month: j,
           value: dd[0],
           valueF: dd[0] * 1.8,
           color: dd[1],
           index: j,
-          active: false,
           x: 0,
-          y: 0
+          y: 0,
+          highlighting: false,
+          highlightStart: 0,
+          highlightValue: 0
         };
       });
       return {
         year: d0 + i,
+        month: -1,
         value: d[0],
         valueF: d[0] * 1.8,
         color: d[1],
         index: i,
-        active: false,
         x: 0,
         y: 0,
         highlighting: false,
@@ -87,6 +90,10 @@ var Graphics = (function() {
     this.dataCurrentPercent = 0; // number between 0 and 1 indicating where the marker is relative to the entire dataset
     this.plotCurrentIndex = 0; // current active index of dataset
     this.plotCurrentValue = {}; // current active value
+    this.plotData = [];
+
+    this.isMonthView = false; // are we viewing months?
+    this.monthTransitionValue = 0; // 1=month view, 0=year view
 
     this.refreshDimensions();
     this.initView();
@@ -165,17 +172,32 @@ var Graphics = (function() {
     this.plotDomain = newDomain;
     this.plotDomainPrecise = newDomainPrecise;
 
-    var values = [];
-    var data = this.annualData;
-    _.each(data, function(d, i){
-      if (d.year >= Math.floor(domainStart) && d.year <= Math.ceil(domainEnd)) {
-        data[i].active = true;
-        data[i].x = 0;
-        data[i].y = 0;
+    // check if we are viewing months
+    var monthYearsDisplay = this.monthYearsDisplay;
+    var delta = newDomainPrecise[1]-newDomainPrecise[0];
+    var isMonthView = (delta <= monthYearsDisplay);
+    this.isMonthView = isMonthView;
 
-        values.push(d.value);
-      } else {
-        data[i].active = false;
+    var values = [];
+    var plotData = [];
+    var data = this.annualData;
+    var yStart = Math.floor(domainStart);
+    var yEnd = Math.ceil(domainEnd);
+    var mStart = domainStart - 1.0/12.0;
+    var mEnd = domainEnd + 1.0/12.0;
+    _.each(data, function(d, i){
+      if (d.year >= yStart && d.year <= yEnd) {
+        if (isMonthView) {
+          _.each(d.monthlyData, function(md, j){
+            if (md.year >= mStart && md.year <= mEnd) {
+              plotData.push(data[i].monthlyData[j]);
+              values.push(md.value);
+            }
+          });
+        } else {
+          plotData.push(data[i]);
+          values.push(d.value);
+        }
       }
     });
 
@@ -186,15 +208,15 @@ var Graphics = (function() {
     this.plotRange = [Math.min(yAxisMinBounds[0], minRange), Math.max(maxRange, yAxisMinBounds[1])];
 
     var domain = [newDomainPrecise[0], newDomainPrecise[1]+1];
+    if (isMonthView) domain = [newDomainPrecise[0], newDomainPrecise[1]+1.0/12.0];
     var range = this.plotRange;
     var pd = this.plotDimensions;
-    _.each(data, function(d, i){
-      if (d.active) {
-        var p = dataToPoint(d.year, d.value, domain, range, pd);
-        data[i].x = p[0];
-        data[i].y = p[1];
-      }
+    _.each(plotData, function(d, i){
+      var p = dataToPoint(d.year, d.value, domain, range, pd);
+      plotData[i].x = p[0];
+      plotData[i].y = p[1];
     });
+    this.plotData = plotData;
 
     this.onTimeChange(this.time, false);
     this.renderAxes();
@@ -209,23 +231,24 @@ var Graphics = (function() {
     this.time = time;
 
     var domain = this.domain;
+    var range = this.range;
     var domainPrecise = this.plotDomainPrecise;
     var yearPrecise = UTIL.lerp(domainPrecise[0], domainPrecise[1], time);
     var prevIndex = this.plotCurrentIndex;
-    var data = this.annualData;
+    var plotData = this.plotData;
+    var plotDataLen = plotData.length;
 
     this.dataCurrentPercent = UTIL.norm(yearPrecise, domain[0], domain[1]);
-    var plotCurrentIndex = Math.round(UTIL.lerp(domain[0], domain[1], this.dataCurrentPercent)) - domain[0];
+    var plotCurrentIndex = Math.round(this.time*(plotDataLen-1));
     this.plotCurrentIndex = plotCurrentIndex;
-    this.plotCurrentValue = data[this.plotCurrentIndex];
-    // console.log(this.plotCurrentValue.year)
+    this.plotCurrentValue = plotData[plotCurrentIndex];
 
     // add transition for index and play sound
     if ((prevIndex < plotCurrentIndex || time > prevTime && prevTime <= 0) && withSound !== false) {
-      data[plotCurrentIndex].highlighting = true;
-      data[plotCurrentIndex].highlightStart = new Date();
-      data[plotCurrentIndex].highlightValue = 0;
-      var mu = UTIL.norm(data[plotCurrentIndex].value, this.range[0], this.range[1]);
+      plotData[plotCurrentIndex].highlighting = true;
+      plotData[plotCurrentIndex].highlightStart = new Date();
+      plotData[plotCurrentIndex].highlightValue = 0;
+      var mu = UTIL.norm(plotData[plotCurrentIndex].value, range[0], range[1]);
       $(document).trigger("sound.play.percent", [mu]);
     }
 
@@ -257,13 +280,16 @@ var Graphics = (function() {
     this.yAxisDimensions = [yAxisX, yAxisY, yAxisW, yAxisH];
 
     var xAxisTextStyle = _.extend({}, this.opt.xAxis.textStyle);
+    var xAxisSubtextStyle = _.extend({}, this.opt.xAxis.subtextStyle);
     var yAxisTextStyle = _.extend({}, this.opt.yAxis.textStyle);
-    var yAxissubextStyle = _.extend({}, this.opt.yAxis.subtextStyle);
+    var yAxisSubtextStyle = _.extend({}, this.opt.yAxis.subtextStyle);
     xAxisTextStyle.fontSize *= h;
-    yAxissubextStyle.fontSize *= h;
+    xAxisSubtextStyle.fontSize *= h;
+    yAxisSubtextStyle.fontSize *= h;
     yAxisTextStyle.fontSize *= h;
     this.xAxisTextStyle = xAxisTextStyle;
-    this.yAxissubextStyle = yAxissubextStyle;
+    this.xAxisSubtextStyle = xAxisSubtextStyle;
+    this.yAxisSubtextStyle = yAxisSubtextStyle;
     this.yAxisTextStyle = yAxisTextStyle;
 
     // make calculations for plot
@@ -291,8 +317,9 @@ var Graphics = (function() {
     var xAxisBounds = this.xAxisDimensions;
     var yAxisBounds = this.yAxisDimensions;
     var xAxisTextStyle = this.xAxisTextStyle;
+    var xAxisSubtextStyle = this.xAxisSubtextStyle;
     var yAxisTextStyle = this.yAxisTextStyle;
-    var yAxissubextStyle = this.yAxissubextStyle;
+    var yAxisSubtextStyle = this.yAxisSubtextStyle;
     var axes = this.axes;
 
     axes.clear();
@@ -325,13 +352,13 @@ var Graphics = (function() {
 
       if (dc===0) {
         var text = "20th century average";
-        var label = new PIXI.Text("20th century", yAxissubextStyle);
+        var label = new PIXI.Text("20th century", yAxisSubtextStyle);
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 1.0);
         axes.addChild(label);
 
-        label = new PIXI.Text("average", yAxissubextStyle);
+        label = new PIXI.Text("average", yAxisSubtextStyle);
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 0);
@@ -345,7 +372,7 @@ var Graphics = (function() {
         label.anchor.set(1.0, 1.0);
 
         var subtext = "(" + df + " °F)";
-        var sublabel = new PIXI.Text(subtext, yAxissubextStyle);
+        var sublabel = new PIXI.Text(subtext, yAxisSubtextStyle);
         sublabel.x = xLabel;
         sublabel.y = y;
         sublabel.anchor.set(1.0, 0);
@@ -363,9 +390,11 @@ var Graphics = (function() {
     }
 
     // draw x axis
-    var data = this.annualData;
+    var isMonthView = this.isMonthView;
+    var plotData = this.plotData;
     var cw = xAxisBounds[2];
     var dataW = cw / (domainp[1]-domainp[0]+1);
+    if (isMonthView) dataW = dataW / 12.0;
     var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
     var lineY0 = xAxisBounds[1];
     var lineY1 = labelY - xAxisTextStyle.fontSize * 0.5;
@@ -373,11 +402,20 @@ var Graphics = (function() {
     var boundRight = xAxisBounds[0] + xAxisBounds[2];
 
     count = domain[1] - domain[0];
-    var showMonths = (count <= this.monthYearsDisplay);
+
     showEvery = 1;
     var tickEvery = 1;
 
-    if (count > 80) {
+    if (isMonthView) {
+      showEvery = 6; // in months
+      tickEvery = 2;
+
+      if (count < 15) {
+        showEvery = 3;
+        tickEvery = 1;
+      }
+
+    } else if (count > 80) {
       showEvery = 20;
       tickEvery = 5;
 
@@ -389,18 +427,27 @@ var Graphics = (function() {
       showEvery = 5;
     }
 
-    _.each(data, function(d, i){
+    _.each(plotData, function(d, i){
       var x = d.x + dataW * 0.5;
-      if (d.active && x >= boundLeft && x <= boundRight) {
+      var textStyle = xAxisTextStyle;
+      if (x >= boundLeft && x <= boundRight) {
 
         axes.lineStyle(2, 0x444444, 1);
+        var label = d.year;
         var value = parseInt(Math.round(d.year));
+        if (d.month >= 0) {
+          value = d.month;
+          label = parseInt(Math.floor(d.year));
+          if (value > 0) {
+            textStyle = xAxisSubtextStyle;
+            label = MONTHS[d.month];
+          }
+        }
         var showLabel = (value % showEvery === 0) || (count >= 130 && value==domain[1]);
         var showTick = (value % tickEvery === 0);
         if (showLabel) {
           axes.lineStyle(3, 0x888888, 1);
-          var text = value;
-          var label = new PIXI.Text(text, xAxisTextStyle);
+          var label = new PIXI.Text(label, textStyle);
           label.x = x;
           label.y = labelY;
           label.anchor.set(0.5, 0);
@@ -463,7 +510,11 @@ var Graphics = (function() {
 
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
-    label = new PIXI.Text(current.year, textStyle);
+    var text = current.year;
+    if (current.month >= 0) {
+      text = MONTHS[current.month] + " " + parseInt(current.year);
+    }
+    label = new PIXI.Text(text, textStyle);
     label.x = lx;
     label.y = cy + textStyle.fontSize * 1.5;
     label.anchor.set(anchorX, 0.0);
@@ -472,63 +523,71 @@ var Graphics = (function() {
 
   Graphics.prototype.renderPlot = function(){
     var _this = this;
-    var data = this.annualData;
+    var plotData = this.plotData;
     var domain = this.plotDomain;
     var domainp = this.plotDomainPrecise;
     var range = this.plotRange;
     var pd = this.plotDimensions;
     var plot = this.plot;
+    var isMonthView = this.isMonthView;
+
+    var monthTransitionValue = this.monthTransitionValue;
+    var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
 
     var cw = pd[2];
     var ch = pd[3];
     var dataW = cw / (domainp[1]-domainp[0]+1);
+    if (isMonthView) dataW = dataW / 12.0;
+
     var dataMargin = 0.5;
     var mx0 = pd[0];
     var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
     var y0 = p0[1];
+    var leftBoundX = mx0-dataW;
+    var rightBoundX = mx0+cw;
 
     plot.clear();
 
-    _.each(data, function(d, i){
-      if (d.active) {
-        var value = d.value;
-        var x = d.x;
-        var y = d.y;
-        // bounce when we are highlighting bar
-        if (d.highlighting) {
-          var delta = 0.25;
-          if (value < 0) delta *= -1;
-          value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
-          if (!isNaN(value)) {
-            var p = dataToPoint(d.year, value, domainp, range, pd);
-            y = p[1];
-          }
-        }
-        var w = dataW - dataMargin * 2;
-        // clip the sides off the edges
-        if (x < mx0) {
-          w -= (mx0 - x);
-          x = mx0;
-        }
-        if (x > (mx0 + cw - dataW)) {
-          w -= (x - (mx0 + cw - dataW));
-        }
-        plot.beginFill(d.color);
+    _.each(plotData, function(d, i){
+      var value = d.value;
+      var x = d.x;
+      var y = d.y;
+      if (x < leftBoundX || x > rightBoundX) return;
 
-        var ry = y;
-        var rh = y0-y;
-        if (y > y0) {
-          ry = y0;
-          rh = y-y0;
+      // bounce when we are highlighting bar
+      if (d.highlighting) {
+        var delta = 0.25;
+        if (value < 0) delta *= -1;
+        value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
+        if (!isNaN(value)) {
+          var p = dataToPoint(d.year, value, domainp, range, pd);
+          y = p[1];
         }
+      }
+      var w = dataW - dataMargin * 2;
+      // clip the sides off the edges
+      if (x < mx0) {
+        w -= (mx0 - x);
+        x = mx0;
+      }
+      if (x > (mx0 + cw - dataW)) {
+        w -= (x - (mx0 + cw - dataW));
+      }
+      plot.beginFill(d.color);
 
-        if (rh > 0) {
+      var ry = y;
+      var rh = y0-y;
+      if (y > y0) {
+        ry = y0;
+        rh = y-y0;
+      }
+
+      if (rh > 0) {
+        plot.drawRect(x+dataMargin, ry, w, rh);
+        if (d.highlighting && d.highlightValue > 0 && d.highlightValue < 0.25) {
+          var highlightValue = 1.0 - d.highlightValue * 4;
+          plot.beginFill(0xFFFFFF, highlightValue*0.1);
           plot.drawRect(x+dataMargin, ry, w, rh);
-          if (d.highlighting && d.highlightValue > 0 && d.highlightValue < 0.25) {
-            var highlightValue = 1.0 - d.highlightValue * 4;
-            plot.beginFill(0xFFFFFF, highlightValue*0.1);
-            plot.drawRect(x+dataMargin, ry, w, rh);
-          }
         }
       }
     });
@@ -550,54 +609,66 @@ var Graphics = (function() {
     var cw = pd[2];
     var ch = pd[3];
     var dataW = cw / (domainp[1]-domainp[0]+1);
-    var data = this.annualData;
+    var plotData = this.plotData;
     var trendData = this.tenYearTrend;
 
     trend.lineStyle(3, 0xffffff, 0.4);
     var first = true;
-    _.each(data, function(d, i){
-      if (d.active) {
-        var x = d.x + dataW * 0.5;
-        var value = trendData[i];
-        var p = dataToPoint(d.year, value, domainp, range, pd);
-        var y = p[1];
-        if (first) {
-          trend.moveTo(x, y);
-          first = false;
-        } else {
-          trend.lineTo(x, y);
-        }
+    _.each(plotData, function(d, i){
+      var x = d.x + dataW * 0.5;
+      var value = trendData[d.index];
+      var p = dataToPoint(d.year, value, domainp, range, pd);
+      var y = p[1];
+      if (first) {
+        trend.moveTo(x, y);
+        first = false;
+      } else {
+        trend.lineTo(x, y);
       }
     });
   };
 
   Graphics.prototype.transition = function(){
-    if (!this.transitioning) return false;
+    this.monthTransitioning = (this.monthTransitionValue > 0 && this.monthTransitionValue < 1);
 
-    var _this = this;
-    var range = this.plotRange;
-    var highlightMs = this.opt.highlightMs;
-    var transitioning = false;
-    var now = new Date();
-    var data = this.annualData;
+    if (!this.transitioning && !this.monthTransitioning) return false;
 
-    _.each(data, function(d, i){
-      if (d.highlighting && d.highlightStart) {
-        var diff = now - d.highlightStart;
-        if (diff >= highlightMs) {
-          diff = highlightMs;
-          data[i].highlighting = false;
-        } else {
-          transitioning = true;
+    // bar highlight transition
+    if (this.transitioning) {
+      var _this = this;
+      var range = this.plotRange;
+      var highlightMs = this.opt.highlightMs;
+      var transitioning = false;
+      var now = new Date();
+      var plotData = this.plotData;
+      _.each(plotData, function(d, i){
+        if (d.highlighting && d.highlightStart) {
+          var diff = now - d.highlightStart;
+          if (diff >= highlightMs) {
+            diff = highlightMs;
+            plotData[i].highlighting = false;
+          } else {
+            transitioning = true;
+          }
+          var progress = diff / highlightMs;
+          progress = Math.max(progress, 0);
+          progress = Math.min(progress, 1);
+          plotData[i].highlightValue = progress;
         }
-        var progress = diff / highlightMs;
-        progress = Math.max(progress, 0);
-        progress = Math.min(progress, 1);
-        data[i].highlightValue = progress;
-      }
-    });
+      });
+      this.transitioning = transitioning;
+    }
 
-    this.transitioning = transitioning;
+    // month transition
+    if (this.monthTransitioning) {
+      var step = this.monthTransitionStep;
+      var value = this.monthTransitionValue;
+      if (this.isMonthView) value += step;
+      else value -= step;
+      value = UTIL.clamp(value, 0, 1);
+      this.monthTransitionValue = value;
+    }
+
     this.renderPlot();
   };
 
