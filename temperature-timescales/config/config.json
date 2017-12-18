@@ -4,7 +4,7 @@
     "el": "#graphics",
     "minYearsDisplay": 1,
     "monthYearsDisplay": 3,
-    "monthTransitionStep": 0.01,
+    "monthTransitionStep": 0.06,
     "targetWidth": 1920,
     "targetHeight": 1080,
     "margin": [0.075, 0.05, 0.05, 0.05],

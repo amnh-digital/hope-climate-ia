@@ -55,6 +55,7 @@ var Graphics = (function() {
           month: j,
           value: dd[0],
           valueF: dd[0] * 1.8,
+          yearValue: d[0],
           color: dd[1],
           index: j,
           x: 0,
@@ -177,6 +178,14 @@ var Graphics = (function() {
     var delta = newDomainPrecise[1]-newDomainPrecise[0];
     var isMonthView = (delta <= monthYearsDisplay);
     this.isMonthView = isMonthView;
+    var monthTransitionValue = this.monthTransitionValue;
+    if (monthTransitionValue <= 0.0 && isMonthView) {
+      monthTransitionValue = 0.001;
+    } else if (monthTransitionValue >= 1.0 && !isMonthView) {
+      monthTransitionValue = 0.999;
+    }
+    this.monthTransitionValue = monthTransitionValue;
+    var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
 
     var values = [];
     var plotData = [];
@@ -187,7 +196,7 @@ var Graphics = (function() {
     var mEnd = domainEnd + 1.0/12.0;
     _.each(data, function(d, i){
       if (d.year >= yStart && d.year <= yEnd) {
-        if (isMonthView) {
+        if (isMonthView || monthTransitioning) {
           _.each(d.monthlyData, function(md, j){
             if (md.year >= mStart && md.year <= mEnd) {
               plotData.push(data[i].monthlyData[j]);
@@ -208,7 +217,7 @@ var Graphics = (function() {
     this.plotRange = [Math.min(yAxisMinBounds[0], minRange), Math.max(maxRange, yAxisMinBounds[1])];
 
     var domain = [newDomainPrecise[0], newDomainPrecise[1]+1];
-    if (isMonthView) domain = [newDomainPrecise[0], newDomainPrecise[1]+1.0/12.0];
+    if (isMonthView || monthTransitioning) domain = [newDomainPrecise[0], newDomainPrecise[1]+1.0/12.0];
     var range = this.plotRange;
     var pd = this.plotDimensions;
     _.each(plotData, function(d, i){
@@ -391,10 +400,12 @@ var Graphics = (function() {
 
     // draw x axis
     var isMonthView = this.isMonthView;
+    var monthTransitionValue = this.monthTransitionValue;
+    var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
     var plotData = this.plotData;
     var cw = xAxisBounds[2];
     var dataW = cw / (domainp[1]-domainp[0]+1);
-    if (isMonthView) {
+    if (isMonthView || monthTransitioning) {
       dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
     }
     var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
@@ -409,7 +420,7 @@ var Graphics = (function() {
     showEvery = 1;
     var tickEvery = 1;
 
-    if (isMonthView) {
+    if (isMonthView || monthTransitioning) {
       showEvery = 6; // in months
       tickEvery = 2;
 
@@ -544,12 +555,7 @@ var Graphics = (function() {
     var cw = pd[2];
     var ch = pd[3];
     var dataW = cw / (domainp[1]-domainp[0]+1);
-
-    // if (monthTransitioning) {
-    //
-    // } else if (isMonthView) dataW = dataW / 12.0;
-
-    if (isMonthView) {
+    if (monthTransitioning || isMonthView) {
       dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
     }
 
@@ -566,7 +572,15 @@ var Graphics = (function() {
       var value = d.value;
       var x = d.x;
       var y = d.y;
+      var p;
       if (x < leftBoundX || x > rightBoundX) return;
+
+      if (monthTransitioning && d.month >= 0) {
+        var yearValue = d.yearValue;
+        value = UTIL.lerp(yearValue, value, monthTransitionValue);
+        p = dataToPoint(d.year, value, domainp, range, pd);
+        y = p[1];
+      }
 
       // bounce when we are highlighting bar
       if (d.highlighting) {
@@ -574,7 +588,7 @@ var Graphics = (function() {
         if (value < 0) delta *= -1;
         value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
         if (!isNaN(value)) {
-          var p = dataToPoint(d.year, value, domainp, range, pd);
+          p = dataToPoint(d.year, value, domainp, range, pd);
           y = p[1];
         }
       }
@@ -681,6 +695,9 @@ var Graphics = (function() {
       else value -= step;
       value = UTIL.clamp(value, 0, 1);
       this.monthTransitionValue = value;
+      if (value <= 0) {
+        this.onScaleChange(this.scale);
+      }
     }
 
     this.renderPlot();
