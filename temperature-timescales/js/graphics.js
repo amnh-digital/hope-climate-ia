@@ -394,7 +394,9 @@ var Graphics = (function() {
     var plotData = this.plotData;
     var cw = xAxisBounds[2];
     var dataW = cw / (domainp[1]-domainp[0]+1);
-    if (isMonthView) dataW = dataW / 12.0;
+    if (isMonthView) {
+      dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
+    }
     var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
     var lineY0 = xAxisBounds[1];
     var lineY1 = labelY - xAxisTextStyle.fontSize * 0.5;
@@ -402,6 +404,7 @@ var Graphics = (function() {
     var boundRight = xAxisBounds[0] + xAxisBounds[2];
 
     count = domain[1] - domain[0];
+    var countp = domainp[1] - domainp[0];
 
     showEvery = 1;
     var tickEvery = 1;
@@ -410,7 +413,11 @@ var Graphics = (function() {
       showEvery = 6; // in months
       tickEvery = 2;
 
-      if (count < 15) {
+      if (countp < 1.1) {
+        showEvery = 1;
+        tickEvery = 1;
+
+      } else if (countp < 2.1) {
         showEvery = 3;
         tickEvery = 1;
       }
@@ -537,7 +544,14 @@ var Graphics = (function() {
     var cw = pd[2];
     var ch = pd[3];
     var dataW = cw / (domainp[1]-domainp[0]+1);
-    if (isMonthView) dataW = dataW / 12.0;
+
+    // if (monthTransitioning) {
+    //
+    // } else if (isMonthView) dataW = dataW / 12.0;
+
+    if (isMonthView) {
+      dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
+    }
 
     var dataMargin = 0.5;
     var mx0 = pd[0];
