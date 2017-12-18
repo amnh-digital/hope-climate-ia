@@ -38,6 +38,7 @@ var Graphics = (function() {
     this.domain = this.opt.domain;
     this.range = this.opt.range;
     this.minYearsDisplay = this.opt.minYearsDisplay;
+    this.monthYearsDisplayTransitionEnd = this.opt.monthYearsDisplayTransitionEnd;
     this.monthYearsDisplay = this.opt.monthYearsDisplay;
     this.tenYearTrend = this.opt.tenYearTrend;
     this.yAxisLabelCount = this.opt.yAxis.labelCount;
@@ -69,6 +70,9 @@ var Graphics = (function() {
         active: false,
         x: 0,
         y: 0,
+        highlighting: false,
+        highlightStart: 0,
+        highlightValue: 0,
         monthlyData: monthlyData
       };
     });
@@ -511,11 +515,20 @@ var Graphics = (function() {
         }
         plot.beginFill(d.color);
 
-        if (y < y0) {
-          plot.drawRect(x+dataMargin, y, w, y0-y);
+        var ry = y;
+        var rh = y0-y;
+        if (y > y0) {
+          ry = y0;
+          rh = y-y0;
+        }
 
-        } else if (y > y0) {
-          plot.drawRect(x+dataMargin, y0, w, y-y0);
+        if (rh > 0) {
+          plot.drawRect(x+dataMargin, ry, w, rh);
+          if (d.highlighting && d.highlightValue > 0 && d.highlightValue < 0.25) {
+            var highlightValue = 1.0 - d.highlightValue * 4;
+            plot.beginFill(0xFFFFFF, highlightValue*0.1);
+            plot.drawRect(x+dataMargin, ry, w, rh);
+          }
         }
       }
     });
