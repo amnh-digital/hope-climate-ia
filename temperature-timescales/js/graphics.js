@@ -564,7 +564,7 @@ var Graphics = (function() {
       dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
     }
 
-    var dataMargin = 0.5;
+    var dataMargin = dataW * 0.05;
     var mx0 = pd[0];
     var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
     var y0 = p0[1];
@@ -572,6 +572,14 @@ var Graphics = (function() {
     var rightBoundX = mx0+cw;
 
     plot.clear();
+    while(plot.children[0]) {
+      plot.removeChild(plot.children[0]);
+    }
+
+    var textStyle = {
+      fontSize: dataW * 0.25,
+      fill: 0xFFFFFF
+    };
 
     _.each(plotData, function(d, i){
       var value = d.value;
@@ -624,6 +632,20 @@ var Graphics = (function() {
           plot.beginFill(0xFFFFFF, highlightValue*0.1);
           plot.drawRect(x+dataMargin, ry, w, rh);
         }
+      }
+
+      if ((monthTransitioning || isMonthView) && d.month >= 0) {
+        var label = new PIXI.Text(MONTHS[d.month], textStyle);
+        label.x = x + dataW * 0.5;
+        label.alpha = monthTransitionValue;
+        if (y > y0) {
+          label.y = y + dataMargin;
+          label.anchor.set(0.5, 0);
+        } else {
+          label.y = ry - dataMargin;
+          label.anchor.set(0.5, 1);
+        }
+        plot.addChild(label);
       }
     });
   };
