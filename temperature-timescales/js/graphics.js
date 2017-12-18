@@ -55,8 +55,9 @@ var Graphics = (function() {
           month: j,
           value: dd[0],
           valueF: dd[0] * 1.8,
-          yearValue: d[0],
           color: dd[1],
+          yearValue: d[0],
+          yearColor: d[1],
           index: j,
           x: 0,
           y: 0,
@@ -183,6 +184,10 @@ var Graphics = (function() {
       monthTransitionValue = 0.001;
     } else if (monthTransitionValue >= 1.0 && !isMonthView) {
       monthTransitionValue = 0.999;
+    }
+    // if user zooms out quickly, don't show transition
+    if (delta > monthYearsDisplay*2) {
+      monthTransitionValue = 0;
     }
     this.monthTransitionValue = monthTransitionValue;
     var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
@@ -572,6 +577,7 @@ var Graphics = (function() {
       var value = d.value;
       var x = d.x;
       var y = d.y;
+      var color = d.color;
       var p;
       if (x < leftBoundX || x > rightBoundX) return;
 
@@ -580,6 +586,7 @@ var Graphics = (function() {
         value = UTIL.lerp(yearValue, value, monthTransitionValue);
         p = dataToPoint(d.year, value, domainp, range, pd);
         y = p[1];
+        color = UTIL.lerpColor(d.yearColor, color, monthTransitionValue);
       }
 
       // bounce when we are highlighting bar
@@ -601,7 +608,7 @@ var Graphics = (function() {
       if (x > (mx0 + cw - dataW)) {
         w -= (x - (mx0 + cw - dataW));
       }
-      plot.beginFill(d.color);
+      plot.beginFill(color);
 
       var ry = y;
       var rh = y0-y;
