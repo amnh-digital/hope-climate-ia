@@ -89,10 +89,20 @@
     }
   },
   "controls": {
-    "mode": "gamepad",
     "gamepadMappings": {
       "vertical": 0,
       "horizontal": 1
+    },
+    "mouseMappings": {
+      "wheel": {
+        "el": "#graphics",
+        "values": ["vertical"],
+        "factor": 0.1
+      },
+      "position": {
+        "el": "#graphics",
+        "values": ["horizontal"]
+      }
     }
   }
 }

@@ -102,11 +102,3 @@ App.prototype.render = function(){
 
   requestAnimationFrame(function(){ _this.render(); });
 };
-
-
-$(function() {
-  $.getJSON("config/config.json", function(data) {
-    console.log('Config loaded.');
-    var app = new App(data);
-  });
-});
