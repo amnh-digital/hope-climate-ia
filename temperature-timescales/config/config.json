@@ -97,7 +97,7 @@
       "wheel": {
         "el": "#graphics",
         "values": ["vertical"],
-        "factor": 0.1
+        "factor": 0.02
       },
       "position": {
         "el": "#graphics",

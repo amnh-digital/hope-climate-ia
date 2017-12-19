@@ -9,16 +9,23 @@ var Graphics = (function() {
 
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+  function addLabelBuffers(g, labelBufferCount) {
+    for (var i=0; i<labelBufferCount; i++) {
+      var label = new PIXI.Text("");
+      g.addChild(label);
+    }
+  }
+
   function dataToPercent(dx, dy, domain, range){
     var px = UTIL.norm(dx, domain[0], domain[1]);
     var py = UTIL.norm(dy, range[0], range[1]);
     return [px, py];
-  };
+  }
 
   function dataToPoint(dx, dy, domain, range, bounds){
     var p = dataToPercent(dx, dy, domain, range);
     return percentToPoint(p[0], p[1], bounds);
-  };
+  }
 
   function percentToPoint(px, py, bounds){
     var bx = bounds[0];
@@ -116,12 +123,24 @@ var Graphics = (function() {
 
   Graphics.prototype.initView = function(){
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
-    this.axes = new PIXI.Graphics();
-    this.plot = new PIXI.Graphics();
-    this.trend = new PIXI.Graphics();
-    this.marker = new PIXI.Graphics();
+    var axes = new PIXI.Graphics();
+    var plot = new PIXI.Graphics();
+    var trend = new PIXI.Graphics();
+    var marker = new PIXI.Graphics();
 
-    this.app.stage.addChild(this.plot, this.axes, this.trend, this.marker);
+    this.app.stage.addChild(plot, axes, trend, marker);
+
+    // add label buffers to axes
+    // increase this if you are getting "Cannot set property 'text' of undefined" error
+    addLabelBuffers(axes, 30);
+    addLabelBuffers(plot, 30);
+    addLabelBuffers(marker, 2);
+
+    this.axes = axes;
+    this.plot = plot;
+    this.trend = trend;
+    this.marker = marker;
+
 
     this.$el.append(this.app.view);
   };
@@ -335,11 +354,9 @@ var Graphics = (function() {
     var yAxisTextStyle = this.yAxisTextStyle;
     var yAxisSubtextStyle = this.yAxisSubtextStyle;
     var axes = this.axes;
+    var labelCount = axes.children.length;
 
     axes.clear();
-    while(axes.children[0]) {
-      axes.removeChild(axes.children[0]);
-    }
 
     // determine labels and ticks for y axis
     var delta = range[1] - range[0];
@@ -350,6 +367,7 @@ var Graphics = (function() {
     else if (count > 8) showEvery = 2;
 
     var i = 0;
+    var labelIndex = 0;
     var value = range[1];
     var xLabel = yAxisBounds[0] + yAxisBounds[2] * 0.667;
     var lineX0 = xAxisBounds[0];
@@ -363,36 +381,41 @@ var Graphics = (function() {
       var y = p[1];
       var dc = UTIL.round(value, 1);
       var df = UTIL.round(value * 1.8, 1);
+      var label;
 
       if (dc===0) {
-        var text = "20th century average";
-        var label = new PIXI.Text("20th century", yAxisSubtextStyle);
+        label = axes.children[labelIndex];
+        label.text = "20th century";
+        label.style = yAxisSubtextStyle;
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 1.0);
-        axes.addChild(label);
+        labelIndex += 1;
 
-        label = new PIXI.Text("average", yAxisSubtextStyle);
+        label = axes.children[labelIndex];
+        label.text = "average";
+        label.style = yAxisSubtextStyle;
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 0);
-        axes.addChild(label);
+        labelIndex += 1;
 
       } else if (i % showEvery === 0) {
-        var text = dc + "°C";
-        var label = new PIXI.Text(text, yAxisTextStyle);
+        label = axes.children[labelIndex];
+        label.text = dc + "°C";
+        label.style = yAxisTextStyle;
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 1.0);
+        labelIndex += 1;
 
-        var subtext = "(" + df + " °F)";
-        var sublabel = new PIXI.Text(subtext, yAxisSubtextStyle);
-        sublabel.x = xLabel;
-        sublabel.y = y;
-        sublabel.anchor.set(1.0, 0);
-
-        axes.addChild(label);
-        axes.addChild(sublabel);
+        label = axes.children[labelIndex];
+        label.text = "(" + df + " °F)";
+        label.style = yAxisSubtextStyle;
+        label.x = xLabel;
+        label.y = y;
+        label.anchor.set(1.0, 0);
+        labelIndex += 1;
       }
 
       if (dc===0) axes.lineStyle(3, 0xffffff, 0.6);
@@ -456,25 +479,27 @@ var Graphics = (function() {
       if (x >= boundLeft && x <= boundRight) {
 
         axes.lineStyle(2, 0x444444, 1);
-        var label = d.year;
+        var text = d.year;
         var value = parseInt(Math.round(d.year));
         if (d.month >= 0) {
           value = d.month;
-          label = parseInt(Math.floor(d.year));
+          text = parseInt(Math.floor(d.year));
           if (value > 0) {
             textStyle = xAxisSubtextStyle;
-            label = MONTHS[d.month];
+            text = MONTHS[d.month];
           }
         }
         var showLabel = (value % showEvery === 0) || (count >= 130 && value==domain[1]);
         var showTick = (value % tickEvery === 0);
-        if (showLabel) {
+        if (showLabel && labelIndex < labelCount) {
           axes.lineStyle(3, 0x888888, 1);
-          var label = new PIXI.Text(label, textStyle);
+          var label = axes.children[labelIndex];
+          label.text = text;
+          label.style = textStyle;
           label.x = x;
           label.y = labelY;
           label.anchor.set(0.5, 0);
-          axes.addChild(label);
+          labelIndex += 1;
         }
         if (showTick) {
           axes.moveTo(x, lineY0).lineTo(x, lineY1);
@@ -482,6 +507,11 @@ var Graphics = (function() {
 
       }
     });
+
+    // hide the remainder of labels
+    for (var i=labelIndex; i<labelCount; i++) {
+      axes.children[i].text="";
+    }
   };
 
   Graphics.prototype.renderMarker = function(){
@@ -489,11 +519,10 @@ var Graphics = (function() {
     var current = this.plotCurrentValue;
     var pd = this.plotDimensions;
     var marker = this.marker;
+    var label = marker.children[0];
+    var sublabel = marker.children[1];
 
     marker.clear();
-    while(marker.children[0]) {
-      marker.removeChild(marker.children[0]);
-    }
 
     var cx = pd[0];
     var cy = pd[1];
@@ -517,7 +546,8 @@ var Graphics = (function() {
     var dc = UTIL.round(current.value, 1);
     var df = UTIL.round(current.valueF, 1);
     var text = dc + "°C ("+df+" °F)";
-    var label = new PIXI.Text(text, textStyle);
+    label.text = text;
+    label.style = textStyle;
 
     var anchorX = 0.0;
     var lx = x + marginX;
@@ -529,7 +559,6 @@ var Graphics = (function() {
     label.x = lx;
     label.y = cy;
     label.anchor.set(anchorX, 0.0);
-    marker.addChild(label);
 
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
@@ -537,11 +566,11 @@ var Graphics = (function() {
     if (current.month >= 0) {
       text = MONTHS[current.month] + " " + parseInt(current.year);
     }
-    label = new PIXI.Text(text, textStyle);
-    label.x = lx;
-    label.y = cy + textStyle.fontSize * 1.5;
-    label.anchor.set(anchorX, 0.0);
-    marker.addChild(label);
+    sublabel.text = text;
+    sublabel.style = textStyle;
+    sublabel.x = lx;
+    sublabel.y = cy + textStyle.fontSize * 1.5;
+    sublabel.anchor.set(anchorX, 0.0);
   };
 
   Graphics.prototype.renderPlot = function(){
@@ -553,6 +582,7 @@ var Graphics = (function() {
     var pd = this.plotDimensions;
     var plot = this.plot;
     var isMonthView = this.isMonthView;
+    var labelCount = plot.children.length;
 
     var monthTransitionValue = this.monthTransitionValue;
     var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
@@ -572,15 +602,12 @@ var Graphics = (function() {
     var rightBoundX = mx0+cw;
 
     plot.clear();
-    while(plot.children[0]) {
-      plot.removeChild(plot.children[0]);
-    }
 
     var textStyle = {
       fontSize: dataW * 0.25,
       fill: 0xFFFFFF
     };
-
+    var labelIndex = 0;
     _.each(plotData, function(d, i){
       var value = d.value;
       var x = d.x;
@@ -608,13 +635,16 @@ var Graphics = (function() {
         }
       }
       var w = dataW - dataMargin * 2;
+      var showLabel = true;
       // clip the sides off the edges
       if (x < mx0) {
         w -= (mx0 - x);
         x = mx0;
+        showLabel = false;
       }
       if (x > (mx0 + cw - dataW)) {
         w -= (x - (mx0 + cw - dataW));
+        showLabel = false;
       }
       plot.beginFill(color);
 
@@ -634,8 +664,10 @@ var Graphics = (function() {
         }
       }
 
-      if ((monthTransitioning || isMonthView) && d.month >= 0) {
-        var label = new PIXI.Text(MONTHS[d.month], textStyle);
+      if (showLabel && (monthTransitioning || isMonthView) && d.month >= 0 && labelIndex < labelCount) {
+        var label = plot.children[labelIndex];
+        label.text = MONTHS[d.month];
+        label.style = textStyle;
         label.x = x + dataW * 0.5;
         label.alpha = monthTransitionValue;
         if (y > y0) {
@@ -645,9 +677,16 @@ var Graphics = (function() {
           label.y = ry - dataMargin;
           label.anchor.set(0.5, 1);
         }
-        plot.addChild(label);
+        labelIndex += 1;
       }
     });
+
+    // hide the remainder of labels
+    if (labelIndex < labelCount) {
+      for (var i=labelIndex; i<labelCount; i++) {
+        plot.children[i].text="";
+      }
+    }
   };
 
   Graphics.prototype.renderTrend = function(){
