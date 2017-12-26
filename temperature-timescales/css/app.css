@@ -5,7 +5,8 @@
   line-height: 1.4;
 }
 
-.content.right.graphics {
+.content.right.graphics,
+.content.right.sleepMode {
   width: 56%;
   height: 60%;
   top: 20%;

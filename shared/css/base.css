@@ -46,7 +46,8 @@ h1 {
   right: 0;
 }
 
-.graphics {
+.graphics,
+.sleepMode {
   position: absolute;
   top: 0;
   left: 0;
@@ -54,6 +55,33 @@ h1 {
   height: 100%;
 }
 
+.sleepMode {
+  display: none;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 1rem;
+  background: rgba(0,0,0,0.8);
+  text-shadow: 2px 2px #000000;
+}
+.sleepMode.active,
+#app.sleeping .sleepMode {
+  display: block;
+}
+.sleepMode.active p,
+#app.sleeping .sleepMode p {
+  animation: blink 3s infinite;
+  font-size: 2rem;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
 
 /* Minimum aspect ratio (for very wide screens) */
 @media (min-aspect-ratio: 1920/1080) {

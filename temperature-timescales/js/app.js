@@ -78,6 +78,10 @@ App.prototype.onReady = function(){
   // Initialize viz
   this.graphics = new Graphics(opt);
 
+  // Init sleep mode utilitys
+  opt = _.extend({}, this.opt.sleep);
+  this.sleep = new Sleep(opt);
+
   this.loadListeners();
   this.render();
 };
@@ -89,10 +93,12 @@ App.prototype.onResize = function(){
 App.prototype.onScaleChange = function(value) {
   var scale = UTIL.easeInOutSin(value);
   this.graphics.onScaleChange(scale);
+  this.sleep.wakeUp();
 };
 
 App.prototype.onTimeChange = function(value) {
   this.graphics.onTimeChange(value);
+  this.sleep.wakeUp();
 };
 
 App.prototype.render = function(){
