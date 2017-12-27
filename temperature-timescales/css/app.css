@@ -5,13 +5,47 @@
   line-height: 1.4;
 }
 
-.content.right.graphics,
-.content.right.sleepMode {
-  width: 56%;
+.content.right.graphics {
   height: 60%;
-  top: 20%;
-  left: auto;
-  right: 4rem;
-  box-sizing: border-box;
+  top: 16%;
   /*border: 0.5rem solid #222;*/
+}
+.content.right.title {
+  height: 80%;
+  top: 8%;
+}
+
+.content.right.messages {
+  top: auto;
+  bottom: 12%;
+  height: 10%;
+  text-align: center;
+  letter-spacing: 0.05rem;
+
+}
+.content.right.messages > div {
+  width: 80%;
+  margin-left: 14%;
+  padding: 0.8rem 1.5rem;
+  background: #181818;
+  box-sizing: border-box;
+}
+.content.right.messages p {
+  margin: 0;
+  color: #999;
+  line-height: 1.4;
+}
+.content.right.messages p.highlight {
+  font-size: 1.5rem;
+  margin-bottom: 0.667rem;
+  padding-bottom: 0.667rem;
+  border-bottom: 2px solid #333;
+  color: #fff;
+}
+p.highlight strong {
+  color: #f1a051;
+}
+
+.title h2 {
+  font-weight: normal;
 }

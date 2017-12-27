@@ -16,8 +16,16 @@ h1 {
   letter-spacing: 0.05rem;
 }
 
+.introduction {
+  color: #ccc;
+}
+
 .title {
   text-align: center;
+}
+.title h1,
+.title h2 {
+  font-size: 2rem;
 }
 
 .view {
@@ -39,11 +47,12 @@ h1 {
 .content.left {
   width: 40%;
   left: 0;
-  padding: 0 1rem 0 4rem;
+  padding: 0 1rem 0 5%;
 }
 .content.right {
-  width: 60%;
-  right: 0;
+  width: 50%;
+  right: 5%;
+  left: auto;
 }
 
 .graphics,
@@ -60,7 +69,7 @@ h1 {
   text-align: center;
   box-sizing: border-box;
   padding: 1rem;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.9);
   text-shadow: 2px 2px #000000;
 }
 .sleepMode.active,

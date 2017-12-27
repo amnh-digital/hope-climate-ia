@@ -82,6 +82,10 @@ App.prototype.onReady = function(){
   opt = _.extend({}, this.opt.sleep);
   this.sleep = new Sleep(opt);
 
+  // Init messages
+  opt = _.extend({}, this.opt.messages, {domain: this.data.domain, scale: this.opt.graphics.scale, minYearsDisplay: this.opt.graphics.minYearsDisplay});
+  this.messages = new Messages(opt);
+
   this.loadListeners();
   this.render();
 };
@@ -93,6 +97,7 @@ App.prototype.onResize = function(){
 App.prototype.onScaleChange = function(value) {
   var scale = UTIL.easeInOutSin(value);
   this.graphics.onScaleChange(scale);
+  this.messages.onScaleChange(scale);
   this.sleep.wakeUp();
 };
 
