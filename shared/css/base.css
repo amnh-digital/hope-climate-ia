@@ -12,8 +12,11 @@ body {
   overflow: hidden;
 }
 h1 {
-  font-size: 2.8rem;
+  font-size: 5vh;
   letter-spacing: 0.05rem;
+}
+h2 {
+  font-size: 4vh;
 }
 
 .introduction {
@@ -22,10 +25,12 @@ h1 {
 
 .title {
   text-align: center;
+  white-space: nowrap;
 }
 .title h1,
 .title h2 {
-  font-size: 2rem;
+  font-size: 2.667vh;
+  font-weight: normal;
 }
 
 .view {
@@ -47,7 +52,7 @@ h1 {
 .content.left {
   width: 40%;
   left: 0;
-  padding: 0 1rem 0 5%;
+  padding: 0 1vw 0 5vw;
 }
 .content.right {
   width: 50%;
@@ -68,7 +73,7 @@ h1 {
   display: none;
   text-align: center;
   box-sizing: border-box;
-  padding: 1rem;
+  padding: 0.5vw;
   background: rgba(0,0,0,0.9);
   text-shadow: 2px 2px #000000;
 }
@@ -79,7 +84,7 @@ h1 {
 .sleepMode.active p,
 #app.sleeping .sleepMode p {
   animation: blink 3s infinite;
-  font-size: 2rem;
+  font-size: 3vh;
   position: relative;
   top: 50%;
   transform: translateY(-50%);

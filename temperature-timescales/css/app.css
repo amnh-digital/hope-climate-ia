@@ -1,7 +1,7 @@
 .content.left.introduction {
   height: 60%;
   top: 28%;
-  font-size: 2rem;
+  font-size: 3vh;
   line-height: 1.4;
 }
 
@@ -13,6 +13,10 @@
 .content.right.title {
   height: 80%;
   top: 8%;
+  z-index: 10;
+}
+.content.right.sleepMode {
+  z-index: 100;
 }
 
 .content.right.messages {
@@ -26,7 +30,7 @@
 .content.right.messages > div {
   width: 80%;
   margin-left: 14%;
-  padding: 0.8rem 1.5rem;
+  padding: 1vh 2vh;
   background: #181818;
   box-sizing: border-box;
 }
@@ -36,9 +40,9 @@
   line-height: 1.4;
 }
 .content.right.messages p.highlight {
-  font-size: 1.5rem;
-  margin-bottom: 0.667rem;
-  padding-bottom: 0.667rem;
+  font-size: 2vh;
+  margin-bottom: 1vh;
+  padding-bottom: 1vh;
   border-bottom: 2px solid #333;
   color: #fff;
 }

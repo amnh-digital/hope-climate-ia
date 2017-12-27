@@ -107,7 +107,7 @@ var Graphics = (function() {
     this.refreshDimensions();
     this.initView();
     this.initTime();
-    this.onScaleChange(this.scale)
+    this.onScaleChange(this.scale);
   };
 
   Graphics.prototype.initTime = function(){
@@ -141,13 +141,13 @@ var Graphics = (function() {
     this.trend = trend;
     this.marker = marker;
 
-
     this.$el.append(this.app.view);
   };
 
   Graphics.prototype.onResize = function(){
     this.refreshDimensions();
     this.app.renderer.resize(this.width, this.height);
+    this.onScaleChange(this.scale);
 
     this.renderAxes();
     this.renderPlot();
@@ -297,7 +297,7 @@ var Graphics = (function() {
     this.width = w;
     this.height = h;
 
-    var m = this.opt.margin;
+    var m = this.opt.margin.slice(0);
     m = [m[0]*h, m[1]*w, m[2]*h, m[3]*w];
 
     // make calculations for x and y axes
