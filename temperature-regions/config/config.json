@@ -1,0 +1,51 @@
+{
+  "dataURL": "data/1880-2016.json",
+  "graphics": {
+    "el": "#graphics",
+    "time": 0.5,
+    "zone": 0.5,
+    "margin": [0.075, 0.05, 0.05, 0.05],
+    "marker": {
+      "textStyle": {
+        "fill": "#d2d1dd",
+        "fontSize": 0.03
+      }
+    },
+    "xAxis": {
+      "height": 0.0667,
+      "textStyle": {
+        "fill": "#d2d1dd",
+        "fontSize": 0.03
+      },
+      "subtextStyle": {
+        "fill": "#7f7f87",
+        "fontSize": 0.024
+      }
+    },
+    "yAxis": {
+      "width": 0.0667,
+      "labelCount": 6,
+      "step": 0.1,
+      "minBounds": [-0.2, 0.2],
+      "textStyle": {
+        "fill": "#d2d1dd",
+        "fontSize": 0.03
+      },
+      "subtextStyle": {
+        "fill": "#7f7f87",
+        "fontSize": 0.024
+      }
+    }
+  },
+  "controls": {
+    "gamepadMappings": {
+      "vertical": 0,
+      "horizontal": 1
+    }
+  },
+  "sleep": {
+    "enable": 1,
+    "checkInterval": 5,
+    "sleepAfter": 15
+  }
+}
