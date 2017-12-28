@@ -37,6 +37,13 @@
       }
     }
   },
+  "map": {
+    "dir": "img/frames/",
+    "el": "#map",
+    "imgEl": "#temperature-map",
+    "helperEl": "#map-helper",
+    "clipImgEl": "#worldmap"
+  },
   "controls": {
     "gamepadMappings": {
       "vertical": 0,

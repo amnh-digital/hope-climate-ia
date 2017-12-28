@@ -44,7 +44,7 @@ App.prototype.loadListeners = function(){
         _this.onTimeChange(value);
         break;
       case "vertical":
-        _this.onZoneChange(value);
+        _this.onZoneChange(1.0-value);
         break;
       default:
         break;
@@ -69,32 +69,29 @@ App.prototype.onReady = function(){
   // Initialize viz
   this.graphics = new Graphics(opt);
 
+  opt = _.extend({}, this.opt.map, this.data, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
+  this.map = new Map(opt);
+
   // Init sleep mode utilitys
   opt = _.extend({}, this.opt.sleep);
   this.sleep = new Sleep(opt);
 
   this.loadListeners();
-  this.render();
 };
 
 App.prototype.onResize = function(){
   this.graphics.onResize();
+  this.map.onResize();
 };
 
 App.prototype.onTimeChange = function(value) {
   this.graphics.onTimeChange(value);
+  this.map.onTimeChange(value);
   this.sleep.wakeUp();
 };
 
 App.prototype.onZoneChange = function(value) {
   this.graphics.onZoneChange(value);
+  this.map.onZoneChange(value);
   this.sleep.wakeUp();
-};
-
-App.prototype.render = function(){
-  var _this = this;
-
-  this.graphics.render();
-
-  requestAnimationFrame(function(){ _this.render(); });
 };
