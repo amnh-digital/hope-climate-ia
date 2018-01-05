@@ -3,7 +3,7 @@
   width: 60vw;
   height: 30vw;
   top: 50%;
-  transform: translateY(-66.6667%);
+  transform: translateY(-70%);
   background: url(../img/worldmap.png) 0 0 no-repeat;
   background-size: 100% auto;
   margin-left: 10vw;
@@ -15,6 +15,38 @@
   position: absolute;
   top: 0;
   left: 0;
+}
+.map-label {
+  position: absolute;
+  width: 100%;
+  height: 10vh;
+  top: -9vh;
+  text-align: center;
+}
+.map-label h2 {
+  font-size: 3vh;
+  color: #f1a051;
+  font-weight: normal;
+  display: inline-block;
+}
+.map-label h2 .map-year {
+  color: #fff;
+  display: inline-block;
+  padding: 0.2vh 0;
+  font-weight: bold;
+  border-bottom: 0.4vh solid #fff;
+}
+.map-key {
+  position: absolute;
+  width: 100%;
+  height: 12vh;
+  bottom: -15vh;
+}
+.map-key img {
+  display: block;
+  width: 97%;
+  height: auto;
+  margin: 0 auto;
 }
 .helper {
   width: 100%;
@@ -50,9 +82,23 @@
   box-sizing: border-box;
   text-align: center;
 }
+.graph .graph-title {
+  display: block;
+  position: absolute;
+  height: 2.33vh;
+  line-height: 2.33vh;
+  left: 0;
+  top: -3vh;
+  text-align: center;
+}
 .graph h2 {
-  font-size: 1.33vh;
+  font-size: 1.5vh;
   font-weight: normal;
+  margin: 0;
+  color: #f1a051;
+}
+.graph h2 span {
+  color: #fff;
 }
 .worldmap {
   z-index: -1;

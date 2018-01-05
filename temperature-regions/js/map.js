@@ -14,6 +14,7 @@ var Map = (function() {
     this.$img = $(this.opt.imgEl);
     this.$helper = $(this.opt.helperEl);
     this.$clipImg = $(this.opt.clipImgEl);
+    this.$year = $(this.opt.yearEl);
 
     var zoneCount = this.opt.zoneData.length;
 
@@ -39,6 +40,7 @@ var Map = (function() {
     var domain = this.domain;
     var year = Math.round(UTIL.lerp(domain[0], domain[1], value));
     this.$img[0].src = this.opt.dir + 'frame' + year + '.png';
+    this.$year.text(year);
   };
 
   Map.prototype.onZoneChange = function(value){

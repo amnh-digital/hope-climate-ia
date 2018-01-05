@@ -42,7 +42,8 @@
     "el": "#map",
     "imgEl": "#temperature-map",
     "helperEl": "#map-helper",
-    "clipImgEl": "#worldmap"
+    "clipImgEl": "#worldmap",
+    "yearEl": ".map-year"
   },
   "controls": {
     "gamepadMappings": {
