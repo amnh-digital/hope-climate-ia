@@ -33,7 +33,7 @@ START_YEAR = args.START_YEAR
 END_YEAR = args.END_YEAR
 ZONES = args.ZONES
 RANGE = (-3.5, 3.5) # Celsius
-GRAPH_RANGE = (-2, 6)
+GRAPH_RANGE = (-1.5, 3.5)
 
 GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
 
