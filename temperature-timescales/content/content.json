@@ -1,5 +1,5 @@
 {
-  "content": [
+  "messages": [
     {"text": "In a single year, temperature jumps around from month to month with no particular pattern.", "years": 1.2},
     {"text": "The average global temperature jumps around from year to year. It's hard to see any pattern when looking at only a handful of years.", "years": 10},
     {"text": "Several decades of temperature records don't always show whether the planet is warming or cooling.", "years": 30},
