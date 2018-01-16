@@ -51,9 +51,10 @@ var Graphics = (function() {
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var axes = new PIXI.Graphics();
     var plot = new PIXI.Graphics();
+    var cords = new PIXI.Graphics();
     var observed = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, observed, plot);
+    this.app.stage.addChild(axes, cords, observed, plot);
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
@@ -61,10 +62,16 @@ var Graphics = (function() {
     addLabelBuffers(axes, 20);
 
     this.axes = axes;
+    this.cords = cords;
     this.observed = observed;
     this.plot = plot;
 
     this.$el.append(this.app.view);
+
+    this.renderAxes();
+    this.renderObserved();
+    this.renderPlot();
+    this.renderCords();
   };
 
   Graphics.prototype.forcingOff = function(value){
@@ -82,6 +89,7 @@ var Graphics = (function() {
     this.renderAxes();
     this.renderObserved();
     this.renderPlot();
+    this.renderCords();
   };
 
   Graphics.prototype.refreshDimensions = function(){
@@ -146,12 +154,23 @@ var Graphics = (function() {
 
     axes.clear();
 
+    // draw y axis
     var labelIndex = 0;
+    var value = range[1];
+    var showEvery = 1;
+    var tickEvery = 0.25;
+    while(value >= range[0]) {
+
+    }
 
     // hide the remainder of labels
     for (var i=labelIndex; i<labelCount; i++) {
       axes.children[i].text="";
     }
+  };
+
+  Graphics.prototype.renderCords = function(){
+
   };
 
   Graphics.prototype.renderObserved = function(){

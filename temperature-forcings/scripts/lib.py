@@ -40,12 +40,27 @@ def parseNumbers(arr):
             arr[i][key] = parseNumber(item[key])
     return arr
 
-def readCSV(filename):
+def readCsv(filename):
     rows = []
     if os.path.isfile(filename):
         with open(filename, 'rb') as f:
             lines = [line for line in f if not line.startswith("#")]
             reader = csv.DictReader(lines, skipinitialspace=True)
             rows = list(reader)
+            rows = parseNumbers(rows)
+    return rows
+
+def readTxt(filename):
+    rows = []
+    if os.path.isfile(filename):
+        with open(filename, 'rb') as f:
+            lines = [line.split() for line in f if not line.startswith("#")]
+            header = lines.pop(0)
+            rows = []
+            for line in lines:
+                row = {}
+                for i,h in enumerate(header):
+                    row[h] = line[i]
+                rows.append(row)
             rows = parseNumbers(rows)
     return rows

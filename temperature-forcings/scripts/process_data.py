@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 
-# Sources:
+# Source for forcings:
 # https://data.giss.nasa.gov/modelforce/
-# NASA GISS ModelE2: https://data.giss.nasa.gov/modelE/
-# Via: https://www.bloomberg.com/graphics/2015-whats-warming-the-world/
+# NASA GISS CMIP5 simulations (1850-2012): https://data.giss.nasa.gov/modelE/ar5/
+# Miller et al. (2014): https://pubs.giss.nasa.gov/abs/mi08910y.html
+
+# Source for temperature anomaly
+# NOAA / Global Surface Temperature Anomalies / Monthly / (1880 - present)
+# https://www.ncdc.noaa.gov/monitoring-references/faq/anomalies.php
+# Baseline: 20th century average (1901-2000)
 
 import argparse
 import json
@@ -13,54 +18,77 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-forcings', dest="FORCINGS_FILE", default="../data/forcings.csv", help="Forcings input file")
-parser.add_argument('-observed', dest="OBSERVED_FILE", default="../data/observed.csv", help="Observed input file")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/forcings1880-2005.json", help="JSON output file")
+parser.add_argument('-forcings', dest="FORCINGS_FILE", default="../data/Fi_Miller_et_al14_upd.txt", help="Forcings input file")
+parser.add_argument('-net', dest="NET_FORCINGS_FILE", default="../data/Fi_net_Miller_et_al14_upd.txt", help="Net forcings input file")
+parser.add_argument('-observed', dest="OBSERVED_FILE", default="../data/1880-2016.csv", help="Observed input file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/forcings1880-2012.json", help="JSON output file")
 
 args = parser.parse_args()
 
+# 20the century average temperature in °C
+# https://www.ncdc.noaa.gov/sotc/global/201613
+BASELINE = 13.9
+
 START_YEAR = 1880
-END_YEAR = 2005
-BASELINE_YEAR_START = 1880
-BASELINE_YEAR_END = 1910
-RANGE = (-1, 2)
+END_YEAR = 2012
+BASELINE_YEAR_START = 1900
+BASELINE_YEAR_END = 1999
+RANGE = (-3, 3)
 FORCING_HEADERS = {
-    "Anthropogenic tropospheric aerosol": "aerosols",
-    "Greenhouse gases": "ghgs",
-    "Land use": "land_use",
-    "Orbital changes": "orbital",
+    "TropAerInd": "aerosols",
+    "WMGHG": "ghgs",
+    "Land_Use": "land_use",
+    "Orbital": "orbital",
     "Ozone": "ozone",
     "Solar": "solar",
-    "Volcanic": "volcanic"
+    "StratAer": "volcanic"
 }
 
 # Retrieve data
-observed = readCSV(args.OBSERVED_FILE)
-forcings = readCSV(args.FORCINGS_FILE)
+observed = readCsv(args.OBSERVED_FILE)
+forcings = readTxt(args.FORCINGS_FILE)
+netForcings = readTxt(args.NET_FORCINGS_FILE)
 
-# convert celsius to fahrenheit
-# for i, r in enumerate(observed):
-#     observed[i]["Annual_Mean"] = (9.0/5.0 * r["Annual_Mean"] + 32)
+# Convert forcings from w/m^2 to celsius
+# Fast-feedback sensitivity is 0.75 °C ± 0.125 °C per W m−2
+# https://pubs.giss.nasa.gov/docs/2011/2011_Hansen_ha06510a.pdf
+for i, f in enumerate(forcings):
+    for h in FORCING_HEADERS:
+        value = f[h] * 0.75
+        low = value - 0.125
+        high = value + 0.125
+        forcings[i][h] = value
 
-# convert kelvin to fahrenheit
-for i, r in enumerate(forcings):
-    headers = ["All forcings"] + [h for h in FORCING_HEADERS]
-    for h in headers:
-        forcings[i][h] = r[h] - 273.15
+for i, f in enumerate(netForcings):
+    netForcings[i]["All_Forcings_Together"] = f["All_Forcings_Together"] * 0.75
 
-fBaseline = getBaseline(forcings, "All forcings", BASELINE_YEAR_START, BASELINE_YEAR_END)
-oBaseline = getBaseline(observed, "Annual_Mean", BASELINE_YEAR_START, BASELINE_YEAR_END)
+fBaseline = getBaseline(netForcings, "All_Forcings_Together", BASELINE_YEAR_START, BASELINE_YEAR_END)
+oBaseline = getBaseline(observed, "Value", BASELINE_YEAR_START, BASELINE_YEAR_END)
 
-# process data
+print "Forcings baseline: %s°C" % fBaseline
+print "Observed baseline: %s°C" % oBaseline
+
+# process observed data
 items = {}
+data = getData(observed, "Value", START_YEAR, END_YEAR, oBaseline)
 items["observed"] = {
-    "data": getData(observed, "Annual_Mean", START_YEAR, END_YEAR, oBaseline)
+    "data": data
 }
+values = [d[1] for d in data]
+
+# process forcings data
 for header in FORCING_HEADERS:
     key = FORCING_HEADERS[header]
+    data = getData(forcings, header, START_YEAR, END_YEAR, oBaseline)
     items[key] = {
-        "data": getData(forcings, header, START_YEAR, END_YEAR, fBaseline)
+        "data": data
     }
+    values += [d[1] for d in data]
+
+# calculate range
+minValue = min(values)
+maxValue = max(values)
+print "Range: [%s, %s] °C" % (minValue, maxValue)
 
 jsonOut = {
     "domain": (START_YEAR, END_YEAR),
