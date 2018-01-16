@@ -36,6 +36,14 @@
         "#66a0ff",
         "#0061ff"
       ]
+    },
+    "transitionStep": 0.025,
+    "cord": {
+      "curveRatio": 0.45,
+      "ampMin": 0.1,
+      "oscRange": [0.005, 0.01],
+      "tensityRange": [0.05, 0.1],
+      "ampRange": [10, 50]
     }
   },
   "sound": {

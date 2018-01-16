@@ -133,14 +133,14 @@ var Controls = (function() {
       var key = String.fromCharCode(e.which);
       if (_.indexOf(keys, key) >= 0 && !state[key]) {
         state[key] = true;
-        $document.trigger("controls.button.down", [keys[key]]);
+        $document.trigger("controls.button.down", [mappings[key]]);
       }
     };
     var onKeyUp = function(e){
       var key = String.fromCharCode(e.which);
       if (_.indexOf(keys, key) >= 0) {
         state[key] = false;
-        $document.trigger("controls.button.up", [keys[key]]);
+        $document.trigger("controls.button.up", [mappings[key]]);
       }
     };
 

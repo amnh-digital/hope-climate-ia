@@ -43,6 +43,31 @@ var Graphics = (function() {
     this.domain = this.opt.domain;
     this.range = this.opt.range;
     this.observedData = this.opt.observed;
+    this.forcingsContent = this.opt.forcings;
+    this.forcingsData = this.opt.data;
+    this.transitionStep = this.opt.transitionStep;
+    this.cordConfig = this.opt.cord;
+
+    // cord config details:
+    // curveRatio: 0.45,
+    // ampMin: 0.1, // min oscillation height in px
+    // oscRange: [0.005, 0.01], // frequency / oscillation speed; lower means slower
+    // tensityRange: [0.05, 0.1], // how tense the string is; lower means less tense
+    // ampRange: [10, 50] // starting perpendicular height of oscillating string in px
+
+    this.forcingsState = _.mapObject(this.forcingsContent, function(val, key) {
+      return {
+        state: false,
+        progress: 0
+      };
+    });
+
+    this.forcingsColors = _.mapObject(this.forcingsContent, function(val, key){
+      return parseInt("0x"+val.color.slice(1), 16);
+    });
+
+    this.cordsActive = false;
+    this.plotActive = false;
 
     this.refreshDimensions();
     this.initView();
@@ -76,11 +101,13 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.forcingOff = function(value){
-
+    this.forcingsState[value].state = -1;
+    this.plotActive = true;
   };
 
   Graphics.prototype.forcingOn = function(value){
-
+    this.forcingsState[value].state = 1;
+    this.plotActive = true;
   };
 
   Graphics.prototype.onResize = function(){
@@ -134,10 +161,22 @@ var Graphics = (function() {
     var plotW = xAxisW;
     var plotH = yAxisH;
     this.plotDimensions = [plotX, plotY, plotW, plotH];
+
+    this.pointRadius = h * 0.01;
   };
 
   Graphics.prototype.render = function(){
 
+
+    if (this.plotActive) {
+      this.transitionPlot();
+      this.renderPlot();
+    }
+
+    if (this.cordsActive) {
+      this.transitionCords();
+      this.renderCords();
+    }
   };
 
   Graphics.prototype.renderAxes = function(){
@@ -302,7 +341,97 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.renderPlot = function(){
+    var forcingsState = this.forcingsState;
+    var forcingsData = this.forcingsData;
+    var plot = this.plot;
+    var domain = this.domain;
+    var range = this.range;
+    var pd = this.plotDimensions;
+    var forcingsColors = this.forcingsColors;
+    var len = domain[1] - domain[0];
+    var pointRadius = this.pointRadius;
 
+    plot.clear();
+
+    _.each(forcingsState, function(value, key){
+      if (value.state !== false) {
+        var progress = value.progress;
+        var data = forcingsData[key].data;
+        var color = forcingsColors[key];
+
+        // draw line
+        plot.lineStyle(3, color);
+        _.each(data, function(v, i){
+          var p = 1.0 * i / len;
+
+          if (p <= progress) {
+            var dx = domain[0] + i;
+            var dy = v;
+            var point = dataToPoint(dx, dy, domain, range, pd);
+
+            if (i<=0) {
+              plot.moveTo(point[0], point[1]);
+            } else {
+              plot.lineTo(point[0], point[1]);
+            }
+          }
+
+        });
+
+        // draw point
+        var i = parseInt(Math.round(progress * len));
+        var v = data[i];
+        var dx = domain[0] + i;
+        var dy = v;
+        var point = dataToPoint(dx, dy, domain, range, pd);
+        plot.beginFill(color);
+        plot.drawCircle(point[0], point[1], pointRadius);
+        plot.endFill();
+
+      }
+    });
+  };
+
+  Graphics.prototype.transitionCords = function(){};
+
+  Graphics.prototype.transitionPlot = function(){
+    var _this = this;
+    var transitionStep = this.transitionStep;
+
+    var plotActive = false;
+    _.each(this.forcingsState, function(value, key){
+      var state = value.state;
+      var progress = value.progress;
+      if (state !== true && state !==false) {
+
+        // line going forward
+        if (state > 0) {
+          // reached the end
+          if (progress >= 1.0) {
+            _this.forcingsState[key].state = true;
+            _this.forcingsState[key].progress = 1.0;
+          // still transitioning
+          } else {
+            _this.forcingsState[key].progress += transitionStep;
+            plotActive = true;
+          }
+
+        // line going backward
+        } else {
+          // reached the beginning
+          if (progress <= 0.0) {
+            _this.forcingsState[key].state = false;
+            _this.forcingsState[key].progress = 0.0;
+          // still transitioning
+          } else {
+            _this.forcingsState[key].progress -= transitionStep;
+            plotActive = true;
+          }
+        }
+      }
+    });
+
+    this.plotActive = plotActive;
   };
 
   return Graphics;

@@ -39,18 +39,21 @@ App.prototype.loadData = function(){
 
 App.prototype.loadListeners = function(){
   var _this = this;
+  var $document = $(document);
 
-  $(document).on("controls.button.down", function(e, value) {
+  var buttonDown = function(e, value) {
     _this.onButtonDown(value);
-  });
-
-  $(document).on("controls.button.up", function(e, value) {
+  };
+  var buttonUp = function(e, value) {
     _this.onButtonUp(value);
-  });
-
-  $(window).on('resize', function(){
+  };
+  var resize = function(){
     _this.onResize();
-  });
+  };
+
+  $document.on("controls.button.down", buttonDown);
+  $document.on("controls.button.up", buttonUp);
+  $(window).on('resize', resize);
 
 };
 
@@ -69,7 +72,7 @@ App.prototype.onDataLoaded = function(d){
 App.prototype.onReady = function(){
   var d = this.data;
 
-  var opt = _.extend({}, this.opt.graphics, this.data);
+  var opt = _.extend({}, this.opt.graphics, this.data, {forcings: this.forcings});
 
   // Initialize viz
   this.graphics = new Graphics(opt);
@@ -83,7 +86,7 @@ App.prototype.onReady = function(){
   this.messages = new Messages(opt);
 
   this.loadListeners();
-  // this.render();
+  this.render();
 };
 
 App.prototype.onResize = function(){
