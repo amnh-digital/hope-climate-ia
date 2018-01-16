@@ -27,6 +27,7 @@ h2 {
   text-align: center;
   white-space: nowrap;
   z-index: 200;
+  position: relative;
 }
 .title h2 {
   font-size: 2.667vh;

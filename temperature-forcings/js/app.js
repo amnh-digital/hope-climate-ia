@@ -83,7 +83,7 @@ App.prototype.onReady = function(){
   this.messages = new Messages(opt);
 
   this.loadListeners();
-  this.render();
+  // this.render();
 };
 
 App.prototype.onResize = function(){
@@ -91,13 +91,17 @@ App.prototype.onResize = function(){
 };
 
 App.prototype.onButtonDown = function(value) {
+  console.log("Button down " + value);
   this.graphics.forcingOn(value);
   this.messages.forcingOn(value);
+  this.sleep.wakeUp();
 };
 
 App.prototype.onButtonUp = function(value) {
+  console.log("Button up " + value);
   this.graphics.forcingOff(value);
   this.messages.forcingOff(value);
+  this.sleep.wakeUp();
 };
 
 App.prototype.render = function(){

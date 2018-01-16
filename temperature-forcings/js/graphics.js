@@ -59,7 +59,7 @@ var Graphics = (function() {
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(observed, 1);
-    addLabelBuffers(axes, 20);
+    addLabelBuffers(axes, 36);
 
     this.axes = axes;
     this.cords = cords;
@@ -143,6 +143,7 @@ var Graphics = (function() {
     var _this = this;
     var domain = this.domain;
     var range = this.range;
+    var pd = this.plotDimensions;
     var xAxisBounds = this.xAxisDimensions;
     var yAxisBounds = this.yAxisDimensions;
     var xAxisTextStyle = this.xAxisTextStyle;
@@ -151,16 +152,104 @@ var Graphics = (function() {
     var yAxisSubtextStyle = this.yAxisSubtextStyle;
     var axes = this.axes;
     var labelCount = axes.children.length;
+    var yAxisGradient = this.opt.yAxis.gradient;
 
     axes.clear();
 
+    var cx = pd[0];
+    var cy = pd[1];
+    var cw = pd[2];
+    var ch = pd[3];
+
     // draw y axis
+    axes.lineStyle(1, 0xc4ced4);
+    axes.moveTo(cx, cy).lineTo(cx, cy + ch);
+
     var labelIndex = 0;
     var value = range[1];
-    var showEvery = 1;
-    var tickEvery = 0.25;
+    var labelEvery = 1.0;
+    var tickEvery = 0.5;
+    var xLabel = cx - yAxisBounds[2] * 0.1667;
+    var xLine = cx - yAxisBounds[2] * 0.1;
     while(value >= range[0]) {
+      var p = dataToPoint(0, value, domain, range, yAxisBounds);
+      var y = p[1];
 
+      if (value % labelEvery === 0.0) {
+        var label = axes.children[labelIndex];
+        var sublabel = axes.children[labelIndex+1];
+        labelIndex += 2;
+
+        var colorIndex = parseInt(range[1]-value);
+        var fill = yAxisGradient[colorIndex];
+
+        var text = UTIL.round(value, 1) + "°C";
+        var subtext = UTIL.round(value * 1.8, 1) + "°F";
+
+        if (value === 0.0) {
+          text = "20th century";
+          subtext = "average";
+        } else if (value > 0) {
+          text = "+" + text;
+          subtext = "+" + subtext;
+        }
+
+        if (value !== 0.0) subtext = "(" +subtext+ ")";
+
+        var style = _.extend({}, yAxisTextStyle, {fill: fill});
+        var subStyle = _.extend({}, yAxisSubtextStyle, {fill: fill});
+        if (value === 0.0) subStyle = _.extend({}, yAxisTextStyle, {fill: fill});
+
+        label.text = text;
+        label.style = style;
+        label.anchor.set(1.0, 1.0);
+        label.x = xLabel;
+        label.y = y;
+
+        sublabel.text = subtext;
+        sublabel.anchor.set(1.0, 0);
+        sublabel.x = xLabel;
+        sublabel.y = y;
+        sublabel.style = subStyle;
+      }
+
+      if (value === 0.0) axes.lineStyle(3, 0xffffff);
+      else axes.lineStyle(1, 0xffffff);
+      axes.moveTo(xLine, y).lineTo(cx, y);
+
+      value -= tickEvery;
+    }
+
+    value = domain[0];
+    labelEvery = 20;
+    tickEvery = 5;
+    var yLabel = cy + ch + yAxisBounds[2] * 0.25;
+    var yLine = cy + ch + yAxisBounds[2] * 0.1;
+
+    while(value <= domain[1]) {
+      var showTick = (value % tickEvery === 0.0 || value === domain[0] || value === domain[1]);
+      var showLabel = (value % labelEvery === 0.0 || value === domain[0] || value === domain[1]);
+
+      if (showTick || showLabel) {
+        var p = dataToPoint(value, 0, domain, range, xAxisBounds);
+        var x = p[0];
+
+        if (showLabel) {
+          var label = axes.children[labelIndex];
+          labelIndex++;
+
+          label.text = value;
+          label.style = xAxisTextStyle;
+          label.anchor.set(0.5, 0);
+          label.x = x;
+          label.y = yLabel;
+        }
+
+        axes.lineStyle(1, 0xffffff);
+        axes.moveTo(x, cy + ch).lineTo(x, yLine);
+      }
+
+      value ++;
     }
 
     // hide the remainder of labels

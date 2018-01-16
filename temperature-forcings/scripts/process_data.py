@@ -64,26 +64,24 @@ for i, f in enumerate(netForcings):
 
 fBaseline = getBaseline(netForcings, "All_Forcings_Together", BASELINE_YEAR_START, BASELINE_YEAR_END)
 oBaseline = getBaseline(observed, "Value", BASELINE_YEAR_START, BASELINE_YEAR_END)
+oBaseline = 0.0 # override this for now
 
 print "Forcings baseline: %s°C" % fBaseline
 print "Observed baseline: %s°C" % oBaseline
 
 # process observed data
-items = {}
-data = getData(observed, "Value", START_YEAR, END_YEAR, oBaseline)
-items["observed"] = {
-    "data": data
-}
-values = [d[1] for d in data]
+observedData = getData(observed, "Value", START_YEAR, END_YEAR, oBaseline)
+values = observedData[:]
 
 # process forcings data
+items = {}
 for header in FORCING_HEADERS:
     key = FORCING_HEADERS[header]
     data = getData(forcings, header, START_YEAR, END_YEAR, oBaseline)
     items[key] = {
         "data": data
     }
-    values += [d[1] for d in data]
+    values += data[:]
 
 # calculate range
 minValue = min(values)
@@ -93,7 +91,8 @@ print "Range: [%s, %s] °C" % (minValue, maxValue)
 jsonOut = {
     "domain": (START_YEAR, END_YEAR),
     "range": RANGE,
-    "data": items
+    "data": items,
+    "observed": observedData
 }
 
 # Write to file

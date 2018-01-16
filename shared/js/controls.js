@@ -124,8 +124,29 @@ var Controls = (function() {
     $el.on('mousewheel', onMouseWheel);
   };
 
-  Controls.prototype.loadKeyboardListeners = function(){
-    // TODO
+  Controls.prototype.loadKeyboardListeners = function(mappings){
+    var keys = _.keys(mappings);
+    var $document = $(document);
+    var state = _.mapObject(mappings, function(val, key) { return false; });
+
+    var onKeyDown = function(e){
+      var key = String.fromCharCode(e.which);
+      if (_.indexOf(keys, key) >= 0 && !state[key]) {
+        state[key] = true;
+        $document.trigger("controls.button.down", [keys[key]]);
+      }
+    };
+    var onKeyUp = function(e){
+      var key = String.fromCharCode(e.which);
+      if (_.indexOf(keys, key) >= 0) {
+        state[key] = false;
+        $document.trigger("controls.button.up", [keys[key]]);
+      }
+    };
+
+    $(window).keypress(onKeyDown);
+    $(window).keyup(onKeyUp);
+
   };
 
   return Controls;

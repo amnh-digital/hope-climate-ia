@@ -1,4 +1,5 @@
 $(function() {
+  console.log("Initializing...")
   $.when(
     $.getJSON("config/config.json"),
     $.getJSON("content/content.json")

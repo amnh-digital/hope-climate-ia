@@ -10,10 +10,7 @@ def getBaseline(rows, colName, startYear, endYear):
 
 # retrieve data
 def getData(rows, colName, startYear, endYear, baseline):
-    d = []
-    for row in rows:
-        if startYear <= row["Year"] <= endYear:
-            d.append((row["Year"], row[colName]-baseline))
+    d = [row[colName]-baseline for row in rows if startYear <= row["Year"] <= endYear]
     return d
 
 # Mean of list
