@@ -42,6 +42,7 @@ var Graphics = (function() {
 
     this.domain = this.opt.domain;
     this.range = this.opt.range;
+    this.observedData = this.opt.observed;
 
     this.refreshDimensions();
     this.initView();
@@ -54,7 +55,7 @@ var Graphics = (function() {
     var cords = new PIXI.Graphics();
     var observed = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, cords, observed, plot);
+    this.app.stage.addChild(observed, cords, axes, plot);
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
@@ -263,7 +264,41 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.renderObserved = function(){
+    var _this = this;
 
+    var data = this.observedData;
+    var len = data.length;
+    var range = this.range;
+    var pd = this.plotDimensions;
+    var observed = this.observed;
+
+    var cx = pd[0];
+    var cy = pd[1];
+    var cw = pd[2];
+    var ch = pd[3];
+
+    observed.clear();
+
+    var barW = cw / len;
+    var rangeRatio = range[1] / (range[1]-range[0]);
+    observed.lineStyle(1, 0x000000);
+
+    _.each(data, function(value, i){
+      var x = i * barW + cx;
+      var y = 0;
+      var barH = 0;
+
+      if (value > 0) {
+        barH = (value / range[1]) * ch * rangeRatio;
+        y = cy + ch * rangeRatio - barH;
+      } else {
+        barH = (value / range[0] )* ch * (1-rangeRatio);
+        y = cy + ch * rangeRatio;
+      }
+
+      observed.beginFill(0x333333);
+      observed.drawRect(x, y, barW, barH);
+    });
   };
 
   Graphics.prototype.renderPlot = function(){
