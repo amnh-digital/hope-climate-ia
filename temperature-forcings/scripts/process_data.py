@@ -13,6 +13,7 @@
 import argparse
 import json
 from lib import *
+import math
 import os
 import sys
 
@@ -33,7 +34,7 @@ START_YEAR = 1880
 END_YEAR = 2012
 BASELINE_YEAR_START = 1900
 BASELINE_YEAR_END = 1999
-RANGE = (-3, 3)
+RANGE = (-1.0, 1.0)
 FORCING_HEADERS = {
     "TropAerInd": "aerosols",
     "WMGHG": "ghgs",
@@ -52,19 +53,30 @@ netForcings = readTxt(args.NET_FORCINGS_FILE)
 # Convert forcings from w/m^2 to celsius
 # Fast-feedback sensitivity is 0.75 °C ± 0.125 °C per W m−2
 # https://pubs.giss.nasa.gov/docs/2011/2011_Hansen_ha06510a.pdf
+#
+# Without any feedbacks, a doubling of CO2 (which amounts to a forcing of 3.7 W/m2) would
+# result in 1°C global warming, which is easy to calculate and is undisputed.1
+# http://www.pik-potsdam.de/~stefan/Publications/Book_chapters/Rahmstorf_Zedillo_2008.pdf
+def wm2c(value):
+    if value == 0:
+        return 0
+    m = 1.0
+    if value < 0:
+        m = -1.0
+        value *= -1.0
+    # return m * math.sqrt(value) * 0.75
+    return m * value / 3.7
+
 for i, f in enumerate(forcings):
     for h in FORCING_HEADERS:
-        value = f[h] * 0.75
-        low = value - 0.125
-        high = value + 0.125
-        forcings[i][h] = value
+        forcings[i][h] = wm2c(f[h])
 
 for i, f in enumerate(netForcings):
-    netForcings[i]["All_Forcings_Together"] = f["All_Forcings_Together"] * 0.75
+    netForcings[i]["All_Forcings_Together"] = wm2c(f["All_Forcings_Together"])
 
 fBaseline = getBaseline(netForcings, "All_Forcings_Together", BASELINE_YEAR_START, BASELINE_YEAR_END)
 oBaseline = getBaseline(observed, "Value", BASELINE_YEAR_START, BASELINE_YEAR_END)
-oBaseline = 0.0 # override this for now
+# oBaseline = 0.0 # override this for now
 
 print "Forcings baseline: %s°C" % fBaseline
 print "Observed baseline: %s°C" % oBaseline

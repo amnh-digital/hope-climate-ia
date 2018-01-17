@@ -207,10 +207,11 @@ var Graphics = (function() {
 
     var labelIndex = 0;
     var value = range[1];
-    var labelEvery = 1.0;
-    var tickEvery = 0.5;
+    var labelEvery = 0.5;
+    var tickEvery = 0.25;
     var xLabel = cx - yAxisBounds[2] * 0.1667;
     var xLine = cx - yAxisBounds[2] * 0.1;
+    var colorIndex = 0;
     while(value >= range[0]) {
       var p = dataToPoint(0, value, domain, range, yAxisBounds);
       var y = p[1];
@@ -220,8 +221,8 @@ var Graphics = (function() {
         var sublabel = axes.children[labelIndex+1];
         labelIndex += 2;
 
-        var colorIndex = parseInt(range[1]-value);
         var fill = yAxisGradient[colorIndex];
+        colorIndex += 1;
 
         var text = UTIL.round(value, 1) + "°C";
         var subtext = UTIL.round(value * 1.8, 1) + "°F";
