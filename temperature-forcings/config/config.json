@@ -80,6 +80,9 @@
       "6": "ghgs"
     }
   },
+  "messages": {
+    "el": "#messages"
+  },
   "sleep": {
     "enable": 1,
     "checkInterval": 5,

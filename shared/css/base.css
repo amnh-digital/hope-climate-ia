@@ -18,6 +18,9 @@ h1 {
 h2 {
   font-size: 4vh;
 }
+p {
+  font-size: 2vh;
+}
 
 .introduction {
   color: #ccc;

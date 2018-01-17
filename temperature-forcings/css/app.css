@@ -1,6 +1,24 @@
-.graphics {
+.graphics,
+.messages {
   top: 10vh;
   left: 10vw;
   width: 80vw;
   height: 90vh;
+}
+
+.messages {
+  position: absolute;
+}
+.message {
+  position: absolute;
+  width: 20%;
+  height: auto;
+  box-sizing: border-box;
+  padding: 0 1.5vh;
+  border-radius: 1vh;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.message.active {
+  opacity: 1;
 }
