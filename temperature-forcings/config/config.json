@@ -5,6 +5,8 @@
     "margin": [0.1, 0.05, 0.1, 0.05],
     "xAxis": {
       "height": 0.0667,
+      "labelEvery": 20,
+      "tickEvery": 5,
       "textStyle": {
         "fill": "#d2d1dd",
         "fontSize": 0.03
@@ -19,6 +21,8 @@
       "labelCount": 6,
       "step": 0.1,
       "minBounds": [-0.2, 0.2],
+      "labelEvery": 0.5,
+      "tickEvery": 0.25,
       "textStyle": {
         "fill": "#d2d1dd",
         "fontSize": 0.03
@@ -38,9 +42,9 @@
     "transitionStep": 0.025,
     "cord": {
       "curveRatio": 0.45,
-      "ampMin": 0.1,
+      "ampMin": 0.05,
       "oscRange": [0.005, 0.01],
-      "tensityRange": [0.05, 0.1],
+      "tensityRange": [0.04, 0.08],
       "ampRange": [10, 50]
     }
   },

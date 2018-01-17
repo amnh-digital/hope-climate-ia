@@ -25,6 +25,27 @@ var Graphics = (function() {
     return percentToPoint(p[0], p[1], bounds);
   }
 
+  function getIntersections(data, dy) {
+    var intersections = [];
+    var len = data.length - 1;
+    _.each(data, function(y, i){
+      if (i > 0) {
+        var x = 1.0 * i / len;
+        var prevX = 1.0 * (i-1) / len;
+        var prevY = data[i-1];
+        var a = {x: prevX, y: prevY};
+        var b = {x: x, y: y};
+        var c = {x: 0, y: dy};
+        var d = {x: len, y: dy};
+        var intersection = UTIL.lineIntersect(a, b, c, d);
+        if (intersection) {
+          intersections.push(intersection[0]);
+        }
+      }
+    });
+    return intersections;
+  }
+
   function percentToPoint(px, py, bounds){
     var bx = bounds[0];
     var by = bounds[1];
@@ -55,22 +76,73 @@ var Graphics = (function() {
     // tensityRange: [0.05, 0.1], // how tense the string is; lower means less tense
     // ampRange: [10, 50] // starting perpendicular height of oscillating string in px
 
-    this.forcingsState = _.mapObject(this.forcingsContent, function(val, key) {
+    this.initForcings();
+
+    this.cordsActive = false;
+    this.plotActive = false;
+
+    this.refreshDimensions();
+    this.initCords();
+    this.initView();
+  };
+
+  Graphics.prototype.initCords = function(){
+    var tickEvery = this.opt.yAxis.tickEvery;
+    var domain = this.domain;
+    var range = this.range;
+    var cordCount = parseInt(1.0*(range[1]-range[0])/tickEvery) + 1;
+    var len = cordCount - 1;
+    var bounds = this.plotDimensions;
+    var oscRange = this.opt.cord.oscRange;
+    var tensityRange = this.opt.cord.tensityRange;
+
+    var cords = _.range(cordCount);
+    cords = _.map(cords, function(i){
+      var dy = i * tickEvery + range[0];
+      var progress = i/len;
+      var pp = dataToPercent(0, dy, domain, range);
+      var p = dataToPoint(0, dy, domain, range, bounds);
+      var freq = UTIL.lerp(oscRange[0], oscRange[1], progress);
+      var tensity = UTIL.lerp(tensityRange[0], tensityRange[1], progress);
+      return {
+        i: i,
+        y: p[1],
+        py: pp[1],
+        dy: dy,
+        plucked: false,
+        pluckedAt: false,
+        amplitude: 0,
+        frequency: freq,
+        tensity: tensity
+      }
+    });
+    this.cordStates = cords;
+  };
+
+  Graphics.prototype.initForcings = function(){
+    var range = this.range;
+    var incr = this.opt.yAxis.tickEvery;
+
+    this.forcingsState = _.mapObject(this.forcingsData, function(d, key) {
+      // calculate intersections
+      var intersections = [];
+      var data = d.data;
+      for (var dy=range[0]; dy<=range[1]; dy+=incr) {
+        var cordIntersections = getIntersections(data, dy);
+        intersections.push(cordIntersections);
+      }
+      // console.log(intersections)
       return {
         state: false,
-        progress: 0
+        prevProgress: 0,
+        progress: 0,
+        intersections: intersections
       };
     });
 
     this.forcingsColors = _.mapObject(this.forcingsContent, function(val, key){
       return parseInt("0x"+val.color.slice(1), 16);
     });
-
-    this.cordsActive = false;
-    this.plotActive = false;
-
-    this.refreshDimensions();
-    this.initView();
   };
 
   Graphics.prototype.initView = function(){
@@ -100,6 +172,38 @@ var Graphics = (function() {
     this.renderCords();
   };
 
+  Graphics.prototype.checkForPluck = function() {
+    var _this = this;
+    var data = this.forcingsData;
+    var states = this.forcingsState;
+    var domain = this.domain;
+    var ampRange = this.opt.cord.ampRange;
+    var cordStates = this.cordStates;
+
+    _.each(states, function(s, key){
+      var state = s.state;
+      if (state !== false && state !== true && state > 0) {
+        var curr = s.progress;
+        var prev = s.prevProgress;
+        var amp = UTIL.lerp(ampRange[0], ampRange[1], curr-prev);
+        var intersections = s.intersections;
+
+        // check to see if we crossed cords
+        _.each(cordStates, function(c, j){
+          var cIntersections = intersections[c.i];
+          _.each(cIntersections, function(intersection){
+            if (intersection > prev && intersection < curr) {
+              _this.cordStates[c.i].plucked = true;
+              _this.cordStates[c.i].pluckedAt = new Date();
+              _this.cordStates[c.i].amplitude = amp;
+              _this.cordsActive = true;
+            }
+          });
+        });
+      }
+    });
+  };
+
   Graphics.prototype.forcingOff = function(value){
     this.forcingsState[value].state = -1;
     this.plotActive = true;
@@ -118,6 +222,18 @@ var Graphics = (function() {
     this.renderObserved();
     this.renderPlot();
     this.renderCords();
+  };
+
+  Graphics.prototype.pluck = function(){
+    var _this = this;
+    var cordStates = this.cordStates;
+
+    _.each(cordStates, function(c, i){
+      if (c.plucked) {
+        // TODO: play sound
+        _this.cordStates[i].plucked = false;
+      }
+    });
   };
 
   Graphics.prototype.refreshDimensions = function(){
@@ -170,13 +286,16 @@ var Graphics = (function() {
 
     if (this.plotActive) {
       this.transitionPlot();
+      this.checkForPluck();
       this.renderPlot();
     }
 
     if (this.cordsActive) {
-      this.transitionCords();
+      this.pluck();
       this.renderCords();
     }
+
+
   };
 
   Graphics.prototype.renderAxes = function(){
@@ -207,8 +326,8 @@ var Graphics = (function() {
 
     var labelIndex = 0;
     var value = range[1];
-    var labelEvery = 0.5;
-    var tickEvery = 0.25;
+    var labelEvery = this.opt.yAxis.labelEvery;
+    var tickEvery = this.opt.yAxis.tickEvery;
     var xLabel = cx - yAxisBounds[2] * 0.1667;
     var xLine = cx - yAxisBounds[2] * 0.1;
     var colorIndex = 0;
@@ -262,8 +381,8 @@ var Graphics = (function() {
     }
 
     value = domain[0];
-    labelEvery = 20;
-    tickEvery = 5;
+    labelEvery = this.opt.xAxis.labelEvery;
+    tickEvery = this.opt.xAxis.tickEvery;
     var yLabel = cy + ch + yAxisBounds[2] * 0.25;
     var yLine = cy + ch + yAxisBounds[2] * 0.1;
 
@@ -299,8 +418,61 @@ var Graphics = (function() {
     }
   };
 
-  Graphics.prototype.renderCords = function(){
+  Graphics.prototype.renderCord = function(g, c){
+    if (c.dy===0) g.lineStyle(4, 0xc4ced4);
+    else g.lineStyle(3, 0x45474c, 0.5);
 
+    // get plot bounds
+    var pd = this.plotDimensions;
+    var x0 = pd[0];
+    var pw = pd[2];
+    var ampMin = this.opt.cord.ampMin;
+
+    // check if cord is oscillating
+    var oscillating = false;
+
+    // we are oscillating, draw curve
+    if (c.amplitude > ampMin) {
+      var d1 = new Date();
+      var d0 = c.pluckedAt;
+      var td = (d1 - d0) * c.frequency;
+      var a = 2 * Math.PI * td;
+      var ex = Math.exp(td * c.tensity); // exponential function; gets bigger over time
+      var amp = c.amplitude / ex; // the current amplitude; gets smaller over time
+      var yc = Math.cos(a) * amp; // the oscillating y-coordinate
+
+      // set new amplitude
+      this.cordStates[c.i].amplitude = amp;
+
+      // build bezier curve
+      var curveRatio = this.opt.cord.curveRatio;
+      var xc = x0 + pw * 0.5;
+      var dx = xc - x0;
+      var dy = yc - c.y;
+      var dxBez = curveRatio * Math.sqrt(dx * dx + dy * dy);
+
+      // draw bezier curve
+      g.moveTo(x0, c.y).bezierCurveTo(xc - dxBez, c.y + yc, xc + dxBez, c.y + yc, x0 + pw, c.y);
+
+      this.cordsActive = true;
+
+    // not oscillating, just draw a straight line
+    } else {
+      g.moveTo(x0, c.y).lineTo(x0 + pw, c.y);
+    }
+
+  };
+
+  Graphics.prototype.renderCords = function(){
+    var _this = this;
+    var cords = this.cords;
+
+    cords.clear();
+    this.cordsActive = false;
+
+    _.each(this.cordStates, function(c,i){
+      _this.renderCord(cords, c);
+    });
   };
 
   Graphics.prototype.renderObserved = function(){
@@ -393,8 +565,6 @@ var Graphics = (function() {
     });
   };
 
-  Graphics.prototype.transitionCords = function(){};
-
   Graphics.prototype.transitionPlot = function(){
     var _this = this;
     var transitionStep = this.transitionStep;
@@ -403,6 +573,7 @@ var Graphics = (function() {
     _.each(this.forcingsState, function(value, key){
       var state = value.state;
       var progress = value.progress;
+      var prevProgress = progress;
       if (state !== true && state !==false) {
 
         // line going forward
@@ -430,6 +601,7 @@ var Graphics = (function() {
           }
         }
       }
+      _this.forcingsState[key].prevProgress = prevProgress;
     });
 
     this.plotActive = plotActive;

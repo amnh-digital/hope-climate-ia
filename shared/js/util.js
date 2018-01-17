@@ -45,6 +45,38 @@
     return false;
   };
 
+  // Calculates line segment intersection
+  UTIL.lineIntersect = function(A, B, E, F) {
+    var ip, a1, a2, b1, b2, c1, c2;
+    // calculate
+    a1 = B.y-A.y; a2 = F.y-E.y;
+    b1 = A.x-B.x; b2 = E.x-F.x;
+    c1 = B.x*A.y - A.x*B.y; c2 = F.x*E.y - E.x*F.y;
+    // det
+    var det=a1*b2 - a2*b1;
+    // if lines are parallel
+    if (det == 0) { return false; }
+    // find point of intersection
+    var xip = (b1*c2 - b2*c1)/det;
+    var yip = (a2*c1 - a1*c2)/det;
+    // now check if that point is actually on both line
+    // segments using distance
+    if (Math.pow(xip - B.x, 2) + Math.pow(yip - B.y, 2) >
+        Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2))
+    { return false; }
+    if (Math.pow(xip - A.x, 2) + Math.pow(yip - A.y, 2) >
+        Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2))
+    { return false; }
+    if (Math.pow(xip - F.x, 2) + Math.pow(yip - F.y, 2) >
+        Math.pow(E.x - F.x, 2) + Math.pow(E.y - F.y, 2))
+    { return false; }
+    if (Math.pow(xip - E.x, 2) + Math.pow(yip - E.y, 2) >
+        Math.pow(E.x - F.x, 2) + Math.pow(E.y - F.y, 2))
+    { return false; }
+    // else it's on both segments, return it
+    return [xip, yip];
+  };
+
   UTIL.lerp = function(a, b, percent) {
     return (1.0*b - a) * percent + a;
   };
