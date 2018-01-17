@@ -247,6 +247,7 @@ var Graphics = (function() {
 
     var m = this.opt.margin.slice(0);
     m = [m[0]*h, m[1]*w, m[2]*h, m[3]*w];
+    this.margin = m;
 
     // make calculations for x and y axes
     var xAxisH = this.opt.xAxis.height * h;
@@ -485,6 +486,8 @@ var Graphics = (function() {
     var range = this.range;
     var pd = this.plotDimensions;
     var observed = this.observed;
+    var textStyle = _.extend({}, this.xAxisSubtextStyle, {wordWrap: true});
+    var label = observed.children[0];
 
     var cx = pd[0];
     var cy = pd[1];
@@ -513,6 +516,15 @@ var Graphics = (function() {
       observed.beginFill(0x333333);
       observed.drawRect(x, y, barW, barH);
     });
+
+    // draw label
+    var m = this.margin;
+    label.text = "Observed Global Temperature";
+    textStyle.wordWrapWidth = m[1] * 2;
+    label.style = textStyle;
+    label.anchor.set(0, 0);
+    label.x = cx + cw * 0.95;
+    label.y = cy + ch * 0.01;
   };
 
   Graphics.prototype.renderPlot = function(){
