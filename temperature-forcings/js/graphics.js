@@ -218,6 +218,7 @@ var Graphics = (function() {
     this.refreshDimensions();
     this.app.renderer.resize(this.width, this.height);
 
+    this.initCords();
     this.renderAxes();
     this.renderObserved();
     this.renderPlot();
