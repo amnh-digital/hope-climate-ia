@@ -5,7 +5,8 @@ var Sound = (function() {
     var defaults = {
       "enable": 1,
       "volume": 0.4,
-      "limitLastPlayedMs": 10
+      "limitLastPlayedMs": 10,
+      "limitSameLastPlayedMs": 10
     };
     this.opt = _.extend({}, defaults, options);
     this.init();
@@ -14,6 +15,7 @@ var Sound = (function() {
   Sound.prototype.init = function(){
     this.enabled = this.opt.enable;
     this.limitLastPlayedMs = this.opt.limitLastPlayedMs;
+    this.limitSameLastPlayedMs = this.opt.limitSameLastPlayedMs;
     this.lastPlayed = new Date();
   };
 
@@ -30,6 +32,7 @@ var Sound = (function() {
       volume: this.opt.volume
     });
     this.notes = _.keys(sprites);
+    this.notesLastPlayed = _.mapObject(sprites, function(val, key){ return 0; });
 
     this.sound.once('load', function(){
       console.log("Sound loaded.");
@@ -60,8 +63,14 @@ var Sound = (function() {
     var len = this.notes.length;
     var i = Math.floor((len - 1) * percent);
     var sprite = this.notes[i];
+
+    // limit same sound played again
+    lastPlayed = this.notesLastPlayed[sprite];
+    if (now - lastPlayed < this.limitSameLastPlayedMs) return false;
+
     this.sound.play(sprite);
     this.lastPlayed = now;
+    this.notesLastPlayed[sprite] = now;
   };
 
   return Sound;

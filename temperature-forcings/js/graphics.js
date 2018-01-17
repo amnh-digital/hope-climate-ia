@@ -227,10 +227,11 @@ var Graphics = (function() {
   Graphics.prototype.pluck = function(){
     var _this = this;
     var cordStates = this.cordStates;
+    var $document = $(document);
 
     _.each(cordStates, function(c, i){
       if (c.plucked) {
-        // TODO: play sound
+        $document.trigger("sound.play.percent", [c.py]);
         _this.cordStates[i].plucked = false;
       }
     });

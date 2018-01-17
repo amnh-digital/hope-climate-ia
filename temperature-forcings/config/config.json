@@ -52,7 +52,8 @@
     "enable": 1,
     "audio": ["../shared/audio/orchestral_harp.mp3"],
     "volume": 1.0,
-    "limitLastPlayedMs": 10,
+    "limitLastPlayedMs": 50,
+    "limitSameLastPlayedMs": 200,
     "sprites": {
       "Db3": [60725, 2429],
       "E3": [70441, 2429],
