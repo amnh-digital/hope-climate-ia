@@ -402,6 +402,10 @@ var Graphics = (function() {
 
       } else if (i % showEvery === 0) {
         label = axes.children[labelIndex];
+        if (dc > 0) {
+          dc = "+" + dc;
+          df = "+" + df;
+        }
         label.text = dc + "°C";
         label.style = yAxisTextStyle;
         label.x = xLabel;
@@ -545,6 +549,10 @@ var Graphics = (function() {
     var textStyle = this.markerTextStyle;
     var dc = UTIL.round(current.value, 1);
     var df = UTIL.round(current.valueF, 1);
+    if (dc > 0) {
+      dc = "+" + dc;
+      df = "+" + df;
+    }
     var text = dc + "°C ("+df+" °F)";
     label.text = text;
     label.style = textStyle;
