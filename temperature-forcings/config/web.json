@@ -1,0 +1,12 @@
+{
+  "controls": {
+    "keyboardMappings": {
+      "1": "orbital",
+      "2": "solar",
+      "3": "volcanic",
+      "4": "land_use",
+      "5": "ghgs",
+      "6": "aerosols"
+    }
+  }
+}

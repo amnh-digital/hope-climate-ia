@@ -1,5 +1,4 @@
 {
-  "dataURL": "data/forcings1880-2012.json",
   "graphics": {
     "el": "#graphics",
     "margin": [0.1, 0.05, 0.1, 0.05],
@@ -68,16 +67,6 @@
       "A4": [4858, 2429],
       "B4": [24290, 2429],
       "Db5": [65583, 2429]
-    }
-  },
-  "controls": {
-    "keyboardMappings": {
-      "1": "orbital",
-      "2": "solar",
-      "3": "volcanic",
-      "4": "land_use",
-      "5": "ghgs",
-      "6": "aerosols"
     }
   },
   "messages": {

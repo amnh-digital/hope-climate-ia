@@ -1,5 +1,4 @@
 {
-  "dataURL": "data/1880-2016.json",
   "graphics": {
     "el": "#graphics",
     "time": 0.5,
@@ -42,12 +41,6 @@
     "helperEl": "#map-helper",
     "clipImgEl": "#worldmap",
     "yearEl": ".map-year"
-  },
-  "controls": {
-    "gamepadMappings": {
-      "vertical": 0,
-      "horizontal": 1
-    }
   },
   "sleep": {
     "enable": 1,

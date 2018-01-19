@@ -22,7 +22,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-forcings', dest="FORCINGS_FILE", default="../data/Fi_Miller_et_al14_upd.txt", help="Forcings input file")
 parser.add_argument('-net', dest="NET_FORCINGS_FILE", default="../data/Fi_net_Miller_et_al14_upd.txt", help="Net forcings input file")
 parser.add_argument('-observed', dest="OBSERVED_FILE", default="../data/1880-2016.csv", help="Observed input file")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/forcings1880-2012.json", help="JSON output file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/current.json", help="JSON output file")
 
 args = parser.parse_args()
 

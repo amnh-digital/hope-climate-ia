@@ -1,24 +1,26 @@
 'use strict';
 
-function App(options) {
+function AppRegions(config, content, data) {
   var defaults = {};
-  this.opt = _.extend({}, defaults, options);
+  this.opt = _.extend({}, defaults, config);
+  this.content = content;
+  this.data = data;
+
   this.init();
 }
 
-App.prototype.init = function(){
+AppRegions.prototype.init = function(){
   var _this = this;
 
-  var dataPromise = this.loadData();
   var controlPromise = this.loadControls();
 
-  $.when.apply($, [dataPromise, controlPromise]).then(function(){
+  $.when.apply($, [controlPromise]).then(function(){
     _this.onReady();
   });
 
 };
 
-App.prototype.loadControls = function(){
+AppRegions.prototype.loadControls = function(){
   var _this = this;
 
   var controls = new Controls(this.opt.controls);
@@ -26,16 +28,7 @@ App.prototype.loadControls = function(){
   return controls.load();
 };
 
-App.prototype.loadData = function(){
-  var _this = this;
-
-  return $.getJSON(this.opt.dataURL, function(data) {
-    console.log('Data loaded.');
-    _this.onDataLoaded(data);
-  });
-};
-
-App.prototype.loadListeners = function(){
+AppRegions.prototype.loadListeners = function(){
   var _this = this;
 
   $(document).on("controls.axes.change", function(e, key, value) {
@@ -57,11 +50,7 @@ App.prototype.loadListeners = function(){
 
 };
 
-App.prototype.onDataLoaded = function(d){
-  this.data = d;
-};
-
-App.prototype.onReady = function(){
+AppRegions.prototype.onReady = function(){
   var d = this.data;
 
   var opt = _.extend({}, this.opt.graphics, this.data);
@@ -79,18 +68,18 @@ App.prototype.onReady = function(){
   this.loadListeners();
 };
 
-App.prototype.onResize = function(){
+AppRegions.prototype.onResize = function(){
   this.graphics.onResize();
   this.map.onResize();
 };
 
-App.prototype.onTimeChange = function(value) {
+AppRegions.prototype.onTimeChange = function(value) {
   this.graphics.onTimeChange(value);
   this.map.onTimeChange(value);
   this.sleep.wakeUp();
 };
 
-App.prototype.onZoneChange = function(value) {
+AppRegions.prototype.onZoneChange = function(value) {
   this.graphics.onZoneChange(value);
   this.map.onZoneChange(value);
   this.sleep.wakeUp();

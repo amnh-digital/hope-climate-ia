@@ -19,7 +19,7 @@ START_YEAR = 1880
 END_YEAR = 2016
 MONTHLY_DATA_FILE = "../data/188001-201710.csv"
 ANNUAL_DATA_FILE = "../data/1880-2017.csv"
-OUTPUT_FILE = "../data/188001-201612.json"
+OUTPUT_FILE = "../data/current.json"
 GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
 
 # Convert colors to RGB

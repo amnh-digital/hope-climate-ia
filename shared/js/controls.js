@@ -15,6 +15,7 @@ var Controls = (function() {
     var _this = this;
     var mouseMappings = this.opt.mouseMappings;
     var keyboardMappings = this.opt.keyboardMappings;
+    var gamepadMappings = this.opt.gamepadMappings;
 
     if (mouseMappings) {
       this.loadMouseListeners(mouseMappings);
@@ -24,12 +25,42 @@ var Controls = (function() {
       this.loadKeyboardListeners(keyboardMappings);
     }
 
-    setTimeout(function(){
-      console.log("Controls loaded.");
-      _this.deferred.resolve();
-    }, 10);
+    if (gamepadMappings) {
+      this.loadGamepad(gamepadMappings);
+
+    // don't need to wait for anything if we're not using gamepad controllers
+    } else {
+      setTimeout(function(){
+        console.log("Controls loaded.");
+        _this.deferred.resolve();
+      }, 10);
+    }
 
     return this.deferred.promise();
+  };
+
+  Controls.prototype.loadGamepad = function(gamepadMappings){
+    var _this = this;
+
+    var gamepads = navigator.getGamepads();
+
+    if (gamepads && gamepads.length && gamepads[0]) {
+      console.log("Gamepad found");
+      var gamepadState = {};
+      _.each(_.keys(gamepadMappings), function(key){
+        gamepadState[key] = -1;
+      });
+
+      this.gamepadState = gamepadState;
+      this.gamepadMappings = gamepadMappings;
+      this.deferred.resolve();
+      this.pollGamepad();
+
+    // no gamepad found, keep listening...
+    } else {
+      requestAnimationFrame(function(){ _this.loadGamepad(gamepadMappings); });
+    }
+
   };
 
   Controls.prototype.loadMouseListeners = function(mappings){
@@ -147,6 +178,36 @@ var Controls = (function() {
     $(window).keypress(onKeyDown);
     $(window).keyup(onKeyUp);
 
+  };
+
+  Controls.prototype.pollGamepad = function(){
+    var _this = this;
+
+    var gamepad = navigator.getGamepads()[0];
+    if (!gamepad) {
+      this.loadGamepad(this.gamepadMappings);
+      return false;
+    }
+
+    var prevState = this.gamepadState;
+    var axes = gamepad.axes;
+    var gamepadMappings = this.gamepadMappings;
+    var $document = $(document);
+
+    $.each(gamepadMappings, function(key, index){
+      var state = (axes[index] + 1) / 2; // convert from [-1,1] to [0,1]
+      state = +state.toFixed(2);
+      state = Math.min(state, 1);
+      state = Math.max(state, 0);
+      // state has changed, execute callback
+      if (prevState[key] != state) {
+        // console.log("State change", key, state)
+        $document.trigger("controls.axes.change", [key, state]);
+        _this.gamepadState[key] = state;
+      }
+    });
+
+    requestAnimationFrame(function(){ _this.pollGamepad(); });
   };
 
   return Controls;

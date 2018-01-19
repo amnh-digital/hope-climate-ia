@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Where is climate change most dramatic?</title>
+    <title>What's warming the planet?</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -15,21 +15,13 @@
 
     <div id="app" class="app">
       <div id="view" class="view">
-        <div class="title"><h2>Where is climate change most dramatic?</h2></div>
-        <div id="map" class="map">
-          <div id="map-label" class="map-label"></div>
-          <div class="map-key"><img src="img/zonal_color_key.png" alt="Color key for temperature map" /></div>
-          <img id="worldmap" class="worldmap" src="img/worldmap_highlight.png" />>
-          <img id="temperature-image" class="temperature" src="img/map/frame00034.png" />
-          <div class="helper">
-            <div id="graph" class="graph">
-              <h2>Temperature differences from average in this region</h2>
-              <div id="graphics" class="graphics"></div>
-            </div>
-          </div>
+        <div class="title"><h1>What's warming the planet?</h1></div>
+        <div id="graphics" class="graphics content"></div>
+        <div class="sleepMode content">
+          <p>Press buttons below to start!</p>
         </div>
-        <div class="sleepMode content right">
-          <p>Move the sliders below to start!</p>
+        <div id="messages" class="messages content">
+
         </div>
       </div>
     </div>
@@ -37,14 +29,17 @@
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/pixi-4.6.2.min.js"></script>
+    <script src="../shared/js/vendor/howler-2.0.7.min.js"></script>
 
     <!-- use standard controls -->
     <script src="../shared/js/controls.js"></script>
     <script src="../shared/js/util.js"></script>
+    <script src="../shared/js/sound.js"></script>
     <script src="../shared/js/sleep.js"></script>
 
     <script src="js/graphics.js"></script>
+    <script src="js/messages.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/init.js"></script>
+    <script src="js/init-web.js"></script>
   </body>
 </html>

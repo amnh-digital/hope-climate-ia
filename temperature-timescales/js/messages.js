@@ -9,7 +9,7 @@ var Messages = (function() {
 
   Messages.prototype.init = function(){
     this.$el = $(this.opt.el);
-    this.messages = this.opt.content;
+    this.messages = this.opt.messages;
     this.domain = this.opt.domain;
     this.maxDomainCount = this.domain[1] - this.domain[0] + 1;
     this.minYearsDisplay = this.opt.minYearsDisplay;
