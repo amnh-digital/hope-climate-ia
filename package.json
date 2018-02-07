@@ -1,0 +1,10 @@
+{
+  "name": "hope-climate-ia",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {
+    "connect": "^3.6.5",
+    "serve-static": "^1.13.2"
+  }
+}
