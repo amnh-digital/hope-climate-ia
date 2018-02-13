@@ -1,0 +1,25 @@
+.content.left.introduction {
+  height: 60%;
+  top: 28%;
+}
+.content.left.introduction p {
+  font-size: 3vh;
+  line-height: 1.4;
+}
+
+.content.right.slideshow {
+  height: 60%;
+  top: 16%;
+}
+.content.right.title {
+  height: 80%;
+  top: 8%;
+  z-index: 10;
+}
+.content.right.sleepMode {
+  z-index: 100;
+}
+
+.title h2 {
+  font-weight: normal;
+}

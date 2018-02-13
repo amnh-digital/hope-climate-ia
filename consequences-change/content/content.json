@@ -1,0 +1,45 @@
+{
+  "slideshow": [
+    {
+      "before": "img/pederson_glacier_1930.jpg",
+      "after": "img/pederson_glacier_2005.jpg",
+      "labelBefore": "1930",
+      "labelAfter": "2005",
+      "caption": "Pedersen Glacier melt, Alaska, summer",
+      "lon": -149.7893318,
+      "lat": 59.8927771,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=212#212-pedersen-glacier-melt-alaska"
+    },{
+      "before": "img/samoa_coral_2014.jpg",
+      "after": "img/samoa_coral_2015.jpg",
+      "labelBefore": "Dec 2014",
+      "labelAfter": "Feb 2015",
+      "caption": "Coral bleaching in American Samoa",
+      "lon": -171.1410828,
+      "lat": -14.174928,
+      "credit": "XL Catlin Seaview Survey",
+      "creditUrl": "http://www.globalcoralbleaching.org/#images"
+    },{
+      "before": "img/neumayer_glacier_2005.jpg",
+      "after": "img/neumayer_glacier_2016.jpg",
+      "labelBefore": "2005",
+      "labelAfter": "2016",
+      "caption": "Neumayer Glacier shrinks on South Georgia Island",
+      "lon": -36.7187762,
+      "lat": -54.2444436,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=601#601-neumayer-glacier-shrinks-on-south-georgia-island"
+    },{
+      "before": "img/virgin_islands_before.jpg",
+      "after": "img/virgin_islands_after.jpg",
+      "labelBefore": "August 25, 2017",
+      "labelAfter": "September 10, 2017",
+      "caption": "Hurricane Irma turns Virgin Islands brown",
+      "lon": -65.2991647,
+      "lat": 18.065972,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=628#628-hurricane-irma-turns-virgin-islands-brown"
+    }
+  ]
+}
