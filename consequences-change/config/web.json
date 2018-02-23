@@ -3,6 +3,10 @@
     "gamepadMappings": {
       "vertical": 0,
       "horizontal": 1
+    },
+    "keyboardMappings": {
+      " ": "next",
+      "1": "next"
     }
   }
 }

@@ -12,11 +12,9 @@ function AppChange(config, content, data) {
 AppChange.prototype.init = function(){
   var _this = this;
 
-  var controlPromise = this.loadControls();
-
-  $.when.apply($, [controlPromise]).then(function(){
-    _this.onReady();
-  });
+  this.onReady();
+  this.loadListeners();
+  this.loadControls();
 };
 
 AppChange.prototype.loadControls = function(){
@@ -61,14 +59,12 @@ AppChange.prototype.onReady = function(){
   this.slideshow = new Slideshow(opt);
 
   // Init globe
-  opt = _.extend({}, this.opt.globe, this.content, {"geojson": this.data});
+  opt = _.extend({}, this.opt.globe, this.content, {"geojson": d});
   this.globe = new Globe(opt);
 
   // Init sleep mode utilitys
   opt = _.extend({}, this.opt.sleep);
   this.sleep = new Sleep(opt);
-
-  this.loadListeners();
 };
 
 AppChange.prototype.onResize = function(){

@@ -1,6 +1,7 @@
 {
   "slideshow": {
     "el": "#slideshow",
+    "captionsEl": "#captions",
     "width": 1366,
     "height": 768
   },
@@ -16,12 +17,13 @@
       "horizontal": 1
     },
     "keyboardMappings": {
-      " ": "next"
+      " ": "next",
+      "1": "next"
     }
   },
   "sleep": {
     "enable": 1,
-    "checkInterval": 5,
-    "sleepAfter": 60
+    "checkInterval": 15,
+    "sleepAfter": 120
   }
 }

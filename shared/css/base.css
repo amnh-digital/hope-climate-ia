@@ -21,6 +21,9 @@ h2 {
 p {
   font-size: 2vh;
 }
+a {
+  color: #fff;
+}
 
 .introduction {
   color: #ccc;

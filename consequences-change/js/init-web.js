@@ -9,6 +9,7 @@ $(function() {
     baseConfig = baseConfig[0];
     config = _.extend({}, baseConfig, config[0]);
     content = content[0];
+    data = data[0];
 
     console.log('Config loaded.');
     var app = new AppChange(config, content, data);
