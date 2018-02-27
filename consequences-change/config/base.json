@@ -3,14 +3,15 @@
     "el": "#slideshow",
     "captionsEl": "#captions",
     "width": 1366,
-    "height": 768
+    "height": 768,
+    "animationMs": 1000
   },
   "globe": {
     "el": "#globe",
-    "landColor": "#595b5e",
-    "borderColor": "#cccccc",
-    "oceanColor": "#1e1f21",
-    "highlightColor": "#ffe100"
+    "borderColor": "#777777",
+    "oceanColor": "#33353a",
+    "highlightColor": "#ffe100",
+    "animationMs": 1000
   },
   "controls": {
     "gamepadMappings": {

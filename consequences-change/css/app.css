@@ -18,7 +18,7 @@
   top: 24%;
   overflow: hidden;
 }
-.content.right.captions {
+.content.right.slideshow-captions {
   width: 46%;
   right: 9%;
   top: auto;
@@ -74,6 +74,7 @@
   overflow: hidden;
 }
 .slide .image.after {
+  width: 50%;
   left: auto;
   right: 0;
   background-position: top right;
@@ -91,7 +92,23 @@
   right: 1vh;
 }
 
-.captions {}
+.globe,
+.captions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: auto;
+}
+.globe {
+  width: 15vh;
+  height: 15vh;
+}
+.captions {
+  left: 18vh;
+  width: calc(100% - 18vh);
+  height: 15vh;
+}
 .caption {
   position: absolute;
   width: 100%;
@@ -102,18 +119,17 @@
 .caption.active {
   opacity: 1;
 }
-.caption .text {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 55%;
+.caption p {
+  margin: 0.5rem 0;
+  font-size: 0.8rem;
+  max-height: 2.8rem;
+  overflow: hidden;
+}
+.caption h2 {
+  font-size: 1rem;
 }
 .caption .credit {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 35%;
-  text-align: right;
+
 }
 
 

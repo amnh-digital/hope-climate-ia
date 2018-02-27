@@ -13,7 +13,7 @@ var Slideshow = (function() {
   Slideshow.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.$captions = $(this.opt.captionsEl);
-    this.slides = this.opt.slideshow;
+    this.slides = this.opt.slideshow.slice(0);
     this.aspectRatio = this.opt.width / this.opt.height;
     this.slideCount = this.slides.length;
 
@@ -30,8 +30,9 @@ var Slideshow = (function() {
     var slides = this.slides;
     _.each(slides, function(slide, i){
       var $caption = $('<div class="caption"></div>');
-      $caption.append('<div class="text">'+slide.caption+'</div>');
-      $caption.append('<div class="credit">Image credit: <a href="'+slide.creditUrl+'">'+slide.credit+'</a></div>');
+      $caption.append('<h2>'+slide.caption+'</h2>');
+      $caption.append('<p class="text">'+slide.longDescription+'</p>');
+      $caption.append('<p class="credit">Image credit: <a href="'+slide.creditUrl+'">'+slide.credit+'</a></p>');
       if (i===0) $caption.addClass("active");
       $wrapper.append($caption);
     });
@@ -101,7 +102,7 @@ var Slideshow = (function() {
     this.transitioning = true;
     setTimeout(function(){
       _this.transitioning = false;
-    }, 1000);
+    }, this.opt.animationMs);
   };
 
   Slideshow.prototype.onResize = function(){

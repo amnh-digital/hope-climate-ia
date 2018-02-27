@@ -48,6 +48,7 @@ AppChange.prototype.loadListeners = function(){
 AppChange.prototype.onButtonUp = function(){
   this.globe.next();
   this.slideshow.next();
+  this.sleep.wakeUp();
 };
 
 AppChange.prototype.onReady = function(){
@@ -65,6 +66,8 @@ AppChange.prototype.onReady = function(){
   // Init sleep mode utilitys
   opt = _.extend({}, this.opt.sleep);
   this.sleep = new Sleep(opt);
+
+  this.render();
 };
 
 AppChange.prototype.onResize = function(){
@@ -74,4 +77,12 @@ AppChange.prototype.onResize = function(){
 AppChange.prototype.onSlide = function(value) {
   this.slideshow.onSlide(value);
   this.sleep.wakeUp();
+};
+
+AppChange.prototype.render = function() {
+  var _this = this;
+
+  this.globe.render();
+
+  requestAnimationFrame(function(){ _this.render(); });
 };
