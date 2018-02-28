@@ -1,0 +1,33 @@
+{
+  "calendar": {
+    "marker": "#marker"
+  },
+  "colorKey": {
+    "el": "#color-key-canvas"
+  },
+  "globe": {
+    "videos": [
+      {"url": "video/ocean_atmosphere.mp4", "type": "video/mp4"}
+    ]
+  },
+  "globes": [
+    {
+      "el": "#ocean-currents",
+      "title": "Ocean surface currents and<br />sea surface temperature",
+      "viewAngle": 45,
+      "near": 0.01,
+      "far": 1000,
+      "radius": 0.5,
+      "geojsonLineColor": "#555555"
+    },{
+      "el": "#atmosphere-wind",
+      "title": "Wind and temperature<br />10 meters above sea level",
+      "videoOffset": 0.5,
+      "viewAngle": 45,
+      "near": 0.01,
+      "far": 1000,
+      "radius": 0.5,
+      "geojsonLineColor": "#443820"
+    }
+  ]
+}

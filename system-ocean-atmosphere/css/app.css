@@ -1,0 +1,102 @@
+.globes,
+.calendar {
+  width: 100%;
+  position: absolute;
+  left: 0;
+}
+.globes {
+  height: 60vh;
+  bottom: 12vh;
+}
+.globe {
+  position: absolute;
+  width: 33.33333%;
+  height: 100%;
+  top: 0;
+  left: 16.66667%;
+  text-align: center;
+}
+.globe:last-child {
+  left: auto;
+  right: 16.66667%;
+}
+.globe h2 {
+  color: #aaa;
+  font-weight: normal;
+  display: block;
+  position: absolute;
+  top: 50%;
+  font-size: 1rem;
+}
+.globe:first-child h2 {
+  left: -25%;
+  text-align: left;
+}
+.globe:last-child h2 {
+  right: -25%;
+  text-align: right;
+}
+.calendar {
+  width: 80%;
+  left: 10%;
+  height: 10vh;
+  top: 14vh;
+  border-top: 0.5vh solid #222;
+}
+.calendar:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.mo {
+  width: 8.33333333%;
+  box-sizing: border-box;
+  text-align: center;
+  float: left;
+  font-weight: normal;
+  font-size: 2rem;
+  height: 10vh;
+  line-height: 10vh;
+  color: #ccc;
+}
+.marker {
+  position: absolute;
+  width: 5%;
+  height: 10px;
+  background: white;
+  left: 0;
+  bottom: 0;
+  margin-left: 1.8%;
+}
+.loading {
+  text-align: center;
+  font-size: 3rem;
+  white-space: nowrap;
+  height: 20vh;
+  line-height: 20vh;
+}
+.color-key {
+  width: 50%;
+  position: absolute;
+  bottom: 5vh;
+  height: 5vh;
+  left: 50%;
+  margin-left: -25%;
+}
+.color-key-canvas {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  bottom: 0;
+  left: 0;
+}
+.color-key .label {
+  position: absolute;
+  top: 0;
+}
+.color-key .label:first-child {
+  left: 0;
+}
+.color-key .label:last-child {
+  right: 0;
+}
