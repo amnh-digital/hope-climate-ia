@@ -1,3 +1,5 @@
 {
-  "annotations": []
+  "annotations": [
+    {"lat": 40.7789463, "lon": -73.9771144, "width": 10, "height": 10, "text": "Testing", "target": "#ocean-currents"}
+  ]
 }

@@ -52,9 +52,11 @@ AppOceanAtmosphere.prototype.onReady = function(){
   var globes = [];
   var globeOpt = this.opt.globe;
   var globesOpt = this.opt.globes;
+  var annotations = this.content.annotations;
 
   _.each(globesOpt, function(opt){
-    globes.push(new Globe(_.extend({}, opt, globeOpt)));
+    var globeAnnotations = _.where(annotations, {"target": opt.el});
+    globes.push(new Globe(_.extend({}, opt, globeOpt, {"annotations": globeAnnotations})));
   });
 
   this.globes = globes;

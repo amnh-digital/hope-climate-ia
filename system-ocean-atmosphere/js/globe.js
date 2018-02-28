@@ -18,12 +18,15 @@ var Globe = (function() {
     this.$el = $(this.opt.el);
     this.$el.append($('<h2>'+this.opt.title+'</h2>'));
 
+    this.annotations = this.opt.annotations;
+
     this.rotateX = 0;
     this.rotateY = 0;
 
     this.initScene();
     this.loadGeojson(this.opt.geojson);
     this.loadVideo();
+    this.loadAnnotation();
   };
 
   Globe.prototype.initScene = function() {
@@ -47,7 +50,7 @@ var Globe = (function() {
     var near = this.opt.near;
     var far = this.opt.far;
     this.camera = new THREE.PerspectiveCamera(viewAngle, w / h, near, far);
-    this.camera.position.z = radius * 4;
+    this.camera.position.z = radius * 4.5;
 
     // master container, rotate to the angle of the Earth's tilt
     this.container = new THREE.Object3D();
@@ -82,7 +85,57 @@ var Globe = (function() {
     return this.video && this.video.duration;
   };
 
-  Globe.prototype.loadEarth = function(from, to, mu) {
+  Globe.prototype.loadAnnotation = function(){
+    var radius = this.opt.radius * 1.0001;
+    var geo = new THREE.SphereGeometry(radius, 64, 64);
+
+    // create canvas
+    var w = this.opt.bgWidth;
+    var h = this.opt.bgHeight;
+    var canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+
+    // get context
+    var context = canvas.getContext('2d');
+
+    // draw background
+    var bt = this.opt.bgTransparency;
+    context.fillStyle = "rgb("+bt+", "+bt+", "+bt+")"; // slightly transparent
+    context.fillRect(0, 0, w, h);
+
+    // draw rectangle
+    // context.beginPath();
+    // context.rect(w/2, h/2, 100, 100);
+    // context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
+    // context.fill();
+
+    // create texture from canvas
+    var texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true;
+    this.annotationTexture = texture;
+
+    // uniforms
+    var uniforms = {
+      color: { type: "c", value: new THREE.Color( 0x000000 ) },
+      texture: { type: "t", value: texture }
+    };
+    // attributes
+    var attributes = {};
+    // material
+    var mat = new THREE.ShaderMaterial({
+        uniforms: uniforms,
+        vertexShader: document.getElementById('vertex_shader').textContent,
+        fragmentShader: document.getElementById('fragment_shader').textContent
+    });
+    mat.transparent = true;
+    var annotationLayer = new THREE.Mesh(geo, mat);
+
+    this.annotationContext = context;
+    this.xContainer.add(annotationLayer);
+  };
+
+  Globe.prototype.loadEarth = function() {
     var radius = this.opt.radius;
 
     // load video texture
@@ -165,22 +218,45 @@ var Globe = (function() {
     var angle;
 
     if (axis === "vertical") {
+      this.rotateY = value;
       container = this.yContainer;
       range = this.opt.rotateY;
       angle = UTIL.lerp(range[0], range[1], 1.0-value);
       container.rotation.x = angle * Math.PI / 180;
 
     } else {
+      this.rotateX = value;
       container = this.xContainer;
       range = this.opt.rotateX;
       angle = UTIL.lerp(range[0], range[1], value);
       container.rotation.y = angle * Math.PI / 180;
     }
+
+    this.updateAnnotations();
   };
 
   Globe.prototype.render = function(yearProgress){
     this.renderer.render(this.scene, this.camera);
     // this.controls.update();
+  };
+
+  Globe.prototype.updateAnnotations = function(){
+    var context = this.annotationContext;
+    var bt = this.opt.bgTransparency;
+    var w = this.opt.bgWidth;
+    var h = this.opt.bgHeight;
+
+    // draw background
+    context.fillStyle = "rgb("+bt+", "+bt+", "+bt+")"; // slightly transparent
+    context.fillRect(0, 0, w, h);
+
+    context.beginPath();
+    context.rect(w/2, h/2, 100, 100);
+    context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
+    context.fill();
+
+    // this.annotationLayer.material.uniforms.texture.needsUpdate;
+    this.annotationTexture.needsUpdate = true;
   };
 
   return Globe;

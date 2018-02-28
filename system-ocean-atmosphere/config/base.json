@@ -10,7 +10,10 @@
       {"url": "video/ocean_atmosphere.mp4", "type": "video/mp4"}
     ],
     "rotateX": [-20, 380],
-    "rotateY": [-45, 45]
+    "rotateY": [-45, 45],
+    "bgWidth": 1024,
+    "bgHeight": 512,
+    "bgTransparency": 60
   },
   "globes": [
     {

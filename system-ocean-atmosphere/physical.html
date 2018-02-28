@@ -50,6 +50,25 @@
       </div>
     </div>
 
+    <!-- shader for highlighting areas on the globe -->
+    <script id="vertex_shader" type="x-shader/x-vertex">
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+    <script id="fragment_shader" type="x-shader/x-fragment">
+      uniform vec3 color;
+      uniform sampler2D texture;
+      varying vec2 vUv;
+      void main() {
+        vec4 tColor = texture2D( texture, vUv );
+        gl_FragColor = vec4(0.0, 0.0, 0.0, tColor.r);
+      }
+    </script>
+
+
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/three-0.89.0.min.js"></script>
