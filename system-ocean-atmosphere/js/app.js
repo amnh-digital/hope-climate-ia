@@ -10,14 +10,34 @@ function AppOceanAtmosphere(config, content, data) {
 }
 
 AppOceanAtmosphere.prototype.init = function(){
-
   this.onReady();
+  this.loadControls();
+};
+
+AppOceanAtmosphere.prototype.loadControls = function(){
+  var _this = this;
+
+  var controls = new Controls(this.opt.controls);
+
+  return controls.load();
 };
 
 AppOceanAtmosphere.prototype.loadListeners = function(){
   var _this = this;
-
   var globes = this.globes;
+
+  $(document).on("controls.axes.change", function(e, key, value) {
+    switch(key) {
+      case "horizontal":
+        _this.onRotate("horizontal", value);
+        break;
+      case "vertical":
+        _this.onRotate("vertical", value);
+        break;
+      default:
+        break;
+    }
+  });
 
   $(window).on('resize', function(){
     _.each(globes, function(globe){
@@ -43,6 +63,12 @@ AppOceanAtmosphere.prototype.onReady = function(){
   this.loadListeners();
 
   this.render();
+};
+
+AppOceanAtmosphere.prototype.onRotate = function(axis, value){
+  _.each(this.globes, function(globe){
+    globe.onRotate(axis, value);
+  });
 };
 
 AppOceanAtmosphere.prototype.render = function(){

@@ -16,7 +16,10 @@ var Globe = (function() {
 
   Globe.prototype.init = function(){
     this.$el = $(this.opt.el);
-    this.$el.append($('<h2>'+this.opt.title+'</h2>'))
+    this.$el.append($('<h2>'+this.opt.title+'</h2>'));
+
+    this.rotateX = 0;
+    this.rotateY = 0;
 
     this.initScene();
     this.loadGeojson(this.opt.geojson);
@@ -45,6 +48,18 @@ var Globe = (function() {
     var far = this.opt.far;
     this.camera = new THREE.PerspectiveCamera(viewAngle, w / h, near, far);
     this.camera.position.z = radius * 4;
+
+    // master container, rotate to the angle of the Earth's tilt
+    this.container = new THREE.Object3D();
+    this.container.rotation.z = -23.43703 * Math.PI / 180;
+
+    // containers for x and y rotations
+    this.xContainer = new THREE.Object3D();
+    this.yContainer = new THREE.Object3D();
+
+    this.yContainer.add(this.xContainer);
+    this.container.add(this.yContainer);
+    this.scene.add(this.container);
 
     // init controls
     // this.controls = new THREE.OrbitControls(this.camera, $("#globes")[0]);
@@ -101,7 +116,7 @@ var Globe = (function() {
     var southArrow = new THREE.ArrowHelper(dir, origin, length, hex);
     earth.add(southArrow);
 
-    this.scene.add(earth);
+    this.xContainer.add(earth);
   };
 
   Globe.prototype.loadGeojson = function(geojsonData){
@@ -110,7 +125,7 @@ var Globe = (function() {
     };
     var radius = this.opt.radius * 1.001;
 
-    drawThreeGeo(geojsonData, radius, 'sphere', opt, this.scene);
+    drawThreeGeo(geojsonData, radius, 'sphere', opt, this.xContainer);
   };
 
   Globe.prototype.loadVideo = function(){
@@ -142,6 +157,25 @@ var Globe = (function() {
     this.renderer.setSize(w, h);
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
+  };
+
+  Globe.prototype.onRotate = function(axis, value){
+    var container;
+    var range;
+    var angle;
+
+    if (axis === "vertical") {
+      container = this.yContainer;
+      range = this.opt.rotateY;
+      angle = UTIL.lerp(range[0], range[1], 1.0-value);
+      container.rotation.x = angle * Math.PI / 180;
+
+    } else {
+      container = this.xContainer;
+      range = this.opt.rotateX;
+      angle = UTIL.lerp(range[0], range[1], value);
+      container.rotation.y = angle * Math.PI / 180;
+    }
   };
 
   Globe.prototype.render = function(yearProgress){
