@@ -16,6 +16,7 @@ var Controls = (function() {
     var mouseMappings = this.opt.mouseMappings;
     var keyboardMappings = this.opt.keyboardMappings;
     var gamepadMappings = this.opt.gamepadMappings;
+    var uiMappings = this.opt.uiMappings;
 
     if (mouseMappings) {
       this.loadMouseListeners(mouseMappings);
@@ -23,6 +24,10 @@ var Controls = (function() {
 
     if (keyboardMappings) {
       this.loadKeyboardListeners(keyboardMappings);
+    }
+
+    if (uiMappings) {
+      this.loadUIListeners(uiMappings);
     }
 
     if (gamepadMappings) {
@@ -178,6 +183,22 @@ var Controls = (function() {
     $(window).keypress(onKeyDown);
     $(window).keyup(onKeyUp);
 
+  };
+
+  Controls.prototype.loadUIListeners = function(mappings) {
+    var $container = $('<div id="ui" class="ui"></div>');
+    var $document = $(document);
+
+    _.each(mappings, function(opt, key){
+      var $slider = $('<div id="'+opt.el+'"></div>');
+      $slider.slider(opt.options);
+      $slider.on("slide", function(e, ui){
+        $document.trigger("controls.axes.change", [key, ui.value]);
+      });
+      $container.append($slider);
+    });
+
+    $('body').append($container);
   };
 
   Controls.prototype.pollGamepad = function(){

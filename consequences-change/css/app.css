@@ -136,3 +136,8 @@
 .title h2 {
   font-weight: normal;
 }
+
+.ui-slider-horizontal {
+  margin-top: 0;
+  margin-left: 0;
+}

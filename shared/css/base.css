@@ -98,6 +98,56 @@ a {
   margin: 0;
 }
 
+.ui {
+  display: block;
+  padding: 2rem 1rem;
+  /* background: #00676d; */
+  background: rgba(0, 103, 109, 0.9);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  border-radius: 0.5vh;
+}
+.ui:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.ui-slider {
+  display: block;
+  width: 30vh;
+  height: 2vh;
+  position: relative;
+  margin-left: 5vh;
+  background: rgba(0, 0, 0, 0.2);
+  float: left;
+}
+.ui-slider-handle {
+  position: absolute;
+  background: #3fc1be;
+  border-radius: 0.5vh;
+  height: 5vh;
+  width: 2.5vh;
+  top: -1.5vh;
+  margin-left: -1.25vh;
+}
+.ui-slider-vertical {
+  width: 2vh;
+  height: 20vh;
+}
+.ui-slider-horizontal {
+  margin-top: 9vh;
+}
+.ui-slider-vertical .ui-slider-handle {
+  height: 2.5vh;
+  width: 5vh;
+  top: auto;
+  left: -1.5vh;
+  margin-bottom: -1.25vh;
+  margin-left: auto;
+}
+
 @keyframes blink {
   50% {
     opacity: 0.2;

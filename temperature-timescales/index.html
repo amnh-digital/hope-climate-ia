@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Where is climate change most dramatic?</title>
+    <title>What can we say about global temperature at different timescales?</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -15,20 +15,16 @@
 
     <div id="app" class="app">
       <div id="view" class="view">
-        <div class="title"><h1>Where is climate change most dramatic?</h1></div>
-        <div id="map" class="map">
-          <div id="map-label" class="map-label"><h2>Temperature differences from average in <span class="map-year"></span></h2></div>
-          <div class="map-key"><img src="img/zonal_color_key.png" alt="Color key for temperature map" /></div>
-          <img id="worldmap" class="worldmap" src="img/worldmap_highlight.png" />
-          <img id="temperature-map" class="temperature" src="img/frames/frame1948.png" />
-          <div id="map-helper" class="helper">
-            <div id="graph" class="graph">
-              <div class="graph-title"><h2>Temperature differences from average in <span>this region</span></h2></div>
-              <div id="graphics" class="graphics"></div>
-            </div>
-          </div>
+        <div class="introduction content left">
+          <h1>Our Warming World</h1>
+          <p>
+            Global surface temperature has been measured by modern instruments since 1880. Sixteen of the 17 warmest years in the 137-year record all have occurred since 2001, with the exception of 1998. The year 2016 ranks as the warmest on record.
+          </p>
         </div>
-        <div class="sleepMode">
+        <div class="title content right"><h2>What can we say about global temperature at different timescales?</h2></div>
+        <div id="graphics" class="graphics content right"></div>
+        <div id="messages" class="messages content right"></div>
+        <div class="sleepMode content right">
           <p>Move the sliders below to start!</p>
         </div>
       </div>
@@ -37,15 +33,18 @@
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/pixi-4.6.2.min.js"></script>
+    <script src="../shared/js/vendor/howler-2.0.7.min.js"></script>
+    <script src="../shared/js/vendor/jquery.ui.slider-1.12.1.min.js"></script>
 
     <!-- use gamepad controls -->
     <script src="../shared/js/controls.js"></script>
     <script src="../shared/js/util.js"></script>
+    <script src="../shared/js/sound.js"></script>
     <script src="../shared/js/sleep.js"></script>
 
     <script src="js/graphics.js"></script>
-    <script src="js/map.js"></script>
+    <script src="js/messages.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/init-physical.js"></script>
+    <script src="js/init-web.js"></script>
   </body>
 </html>

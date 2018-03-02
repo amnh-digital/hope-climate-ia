@@ -1,8 +1,27 @@
 {
   "controls": {
-    "gamepadMappings": {
-      "vertical": 0,
-      "horizontal": 1
+    "uiMappings": {
+      "vertical": {
+        "label": "Change region",
+        "el": "slider-vertical",
+        "options": {
+          "orientation": "vertical",
+          "min": 0,
+          "max": 1,
+          "step": 0.001,
+          "value": 0.5
+        }
+      },
+      "horizontal": {
+        "label": "Change time",
+        "el": "slider-horizontal",
+        "options": {
+          "min": 0,
+          "max": 1,
+          "step": 0.001,
+          "value": 0.5
+        }
+      }
     }
   }
 }
