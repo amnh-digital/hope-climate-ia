@@ -186,7 +186,7 @@ var Globe = (function() {
     var promise = $.Deferred();
 
     // add video element to document
-    var $video = $('<video id="video" webkit-playsinline style="display: none" autoplay loop></video>');
+    var $video = $('<video id="video" webkit-playsinline style="display: none" autoplay loop crossorigin="anonymous"></video>');
     _.each(this.opt.videos, function(v){
       $video.append($('<source src="'+v.url+'" type="'+v.type+'">'));
     });
