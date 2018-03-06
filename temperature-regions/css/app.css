@@ -110,8 +110,8 @@
   line-height: 1vh;
   vertical-align: middle;
   height: 1vh;
-  margin-left: 0.25vh;
-  margin-top: -0.33vh;
+  margin-left: -0.3vh;
+  margin-top: -0.6vh;
 }
 .city span {
   opacity: 0;
