@@ -24,7 +24,7 @@
   text-align: center;
 }
 .map-label h2 {
-  font-size: 3vh;
+  font-size: 2vh;
   color: #f1a051;
   font-weight: normal;
   display: inline-block;
@@ -85,23 +85,18 @@
   text-align: center;
   border-radius: 0.5vh;
 }
-.graph .graph-title {
+.graph-message {
   display: block;
   position: absolute;
-  height: 2.33vh;
-  line-height: 2.33vh;
-  left: 0;
-  top: -3vh;
-  text-align: center;
+  width: 10vw;
+  height: 12vw;
+  right: -11vw;
+  top: 2vw;
+  text-align: left;
 }
-.graph h2 {
+.graph-message p {
   font-size: 1.5vh;
-  font-weight: normal;
-  margin: 0;
-  color: #f1a051;
-}
-.graph h2 span {
-  color: #fff;
+  line-height: 1.6;
 }
 .worldmap {
   z-index: -1;
