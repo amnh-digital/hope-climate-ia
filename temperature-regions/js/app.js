@@ -58,7 +58,7 @@ AppRegions.prototype.onReady = function(){
   // Initialize viz
   this.graphics = new Graphics(opt);
 
-  opt = _.extend({}, this.opt.map, this.data, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
+  opt = _.extend({}, this.opt.map, this.data, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
   this.map = new Map(opt);
 
   // Init sleep mode utilitys

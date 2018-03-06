@@ -1,7 +1,7 @@
 .map {
   position: relative;
-  width: 60vw;
-  height: 30vw;
+  width: 40vw;
+  height: 20vw;
   top: 50%;
   transform: translateY(-70%);
   background: url(../img/worldmap.png) 0 0 no-repeat;
@@ -59,6 +59,8 @@
   box-sizing: border-box;
   outline: 1px solid transparent;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
+  border-top-left-radius: 0.5vh;
+  border-bottom-left-radius: 0.5vh;
 }
 .helper:after {
   content: " ";
@@ -81,6 +83,7 @@
   border: 2px solid #777c7b;
   box-sizing: border-box;
   text-align: center;
+  border-radius: 0.5vh;
 }
 .graph .graph-title {
   display: block;
@@ -102,4 +105,37 @@
 }
 .worldmap {
   z-index: -1;
+}
+
+.cities {}
+.city {
+  position: absolute;
+  display: block;
+  font-size: 1vh;
+  line-height: 1vh;
+  vertical-align: middle;
+  height: 1vh;
+  margin-left: 0.25vh;
+  margin-top: -0.33vh;
+}
+.city span {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.city:before {
+  content: " ";
+  display: inline-block;
+  width: 0.5vh;
+  height: 0.5vh;
+  background: white;
+  margin-right: 0.5vh;
+  border-radius: 0.25vh;
+  opacity: 0.2;
+  transition: opacity 0.5s ease-in-out;
+}
+.city.active span {
+  opacity: 1;
+}
+.city.active:before {
+  opacity: 1;
 }

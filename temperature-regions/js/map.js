@@ -9,6 +9,7 @@ var Map = (function() {
 
   Map.prototype.init = function(){
     this.domain = this.opt.domain;
+    this.cities = this.opt.cities;
 
     this.$el = $(this.opt.el);
     this.$img = $(this.opt.imgEl);
@@ -17,6 +18,7 @@ var Map = (function() {
     this.$year = $(this.opt.yearEl);
 
     var zoneCount = this.opt.zoneData.length;
+    this.zoneCount = zoneCount;
 
     this.$helper.css({
       height: (1/zoneCount * 100) + "%",
@@ -26,8 +28,27 @@ var Map = (function() {
     this.preloadImages();
     this.onResize();
 
+    this.loadCities();
     this.onTimeChange(this.opt.time);
     this.onZoneChange(this.opt.zone);
+  };
+
+  Map.prototype.loadCities = function(){
+    var _this = this;
+    var cities = this.cities;
+    var $container = $('<div class="cities"></div>');
+
+    _.each(cities, function(city, i){
+      var $city = $('<div class="city"><span>'+city.name+'</span></div>');
+      $city.css({
+        'top': (city.y * 100) + '%',
+        'left': (city.x * 100) + '%'
+      });
+      _this.cities[i].$el = $city;
+      $container.append($city);
+    });
+
+    this.$el.append($container);
   };
 
   Map.prototype.onResize = function(){
@@ -56,6 +77,8 @@ var Map = (function() {
     var y0 = top / 100 * h;
     var y1 = y0 + hh;
     this.$clipImg.css('clip', 'rect('+y0+'px,'+hw+'px,'+y1+'px,0px)');
+
+    this.updateCities(value);
   };
 
   Map.prototype.preloadImages = function(){
@@ -65,6 +88,24 @@ var Map = (function() {
       var img =  new Image();
       img.src = this.opt.dir + 'frame' + year + '.png';
     }
+  };
+
+  Map.prototype.updateCities = function(value){
+    var zoneCount = this.zoneCount;
+    var degrees = 180/zoneCount;
+    var degrees0 = value * (180-degrees);
+    var degrees1 = degrees0 + degrees;
+    var padding = 1;
+    var lat0 = 90 - degrees1 + padding;
+    var lat1 = 90 - degrees0 - padding;
+
+    _.each(this.cities, function(city){
+      if (city.lat > lat0 && city.lat < lat1) {
+        city.$el.addClass('active');
+      } else {
+        city.$el.removeClass('active');
+      }
+    });
   };
 
   return Map;
