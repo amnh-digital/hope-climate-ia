@@ -62,7 +62,7 @@ AppTimescales.prototype.loadSounds = function(){
 AppTimescales.prototype.onReady = function(){
   var d = this.data;
 
-  var opt = _.extend({}, this.opt.graphics, this.data);
+  var opt = _.extend({}, this.opt.graphics, this.content, this.data);
 
   // Initialize viz
   this.graphics = new Graphics(opt);

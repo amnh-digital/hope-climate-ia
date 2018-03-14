@@ -20,7 +20,8 @@ END_YEAR = 2016
 MONTHLY_DATA_FILE = "../data/188001-201710.csv"
 ANNUAL_DATA_FILE = "../data/1880-2017.csv"
 OUTPUT_FILE = "../data/current.json"
-GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
+# GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
+GRADIENT = ["#58e0dc", "#99cccc", "#adada3", "#d67052", "#eb5229", "#ff3300"]
 
 # Convert colors to RGB
 GRADIENT = [hex2rgb(g) for g in GRADIENT]
@@ -46,7 +47,7 @@ monthlyData = [d for d in monthlyData if START_YEAR <= d["Year"] <= END_YEAR]
 annualData = [d for d in annualData if START_YEAR <= d["Date"] <= END_YEAR]
 
 # define domain and range
-values = [d["Value"] for d in monthlyData] + [d["Value"] for d in annualData]
+values = [d["Value"] for d in annualData]
 dataDomain = [START_YEAR, END_YEAR]
 dataRange = [math.floor(min(values)), math.ceil(max(values))]
 
@@ -57,6 +58,7 @@ for i,d in enumerate(monthlyData):
         n = v / dataRange[1] * 0.5 + 0.5
     else:
         n = 0.5 - v / dataRange[0] * 0.5
+    n = clamp(n)
     monthlyData[i]["Color"] = getColor(GRADIENT, n)
 
 for i,d in enumerate(annualData):
@@ -65,6 +67,7 @@ for i,d in enumerate(annualData):
         n = v / dataRange[1] * 0.5 + 0.5
     else:
         n = 0.5 - v / dataRange[0] * 0.5
+    n = clamp(n)
     annualData[i]["Color"] = getColor(GRADIENT, n)
 
 ys = [d["Value"] for d in annualData]

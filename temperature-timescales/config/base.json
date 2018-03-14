@@ -11,9 +11,15 @@
     "scale": 0.5,
     "highlightMs": 1000,
     "tenYearTrendYearsDisplay": 40,
+    "annotationsUI": {
+      "color": "0xc6ad61",
+      "transitionMs": 1000
+    },
     "marker": {
+      "color": "0xe2bb3d",
+      "dotRadius": 0.01,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#e2bb3d",
         "fontSize": 0.03
       }
     },
@@ -33,6 +39,8 @@
       "labelCount": 6,
       "step": 0.1,
       "minBounds": [-0.2, 0.2],
+      "lineWidth": 1,
+      "lineWidthBold": 4,
       "textStyle": {
         "fill": "#d2d1dd",
         "fontSize": 0.03

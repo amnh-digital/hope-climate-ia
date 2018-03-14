@@ -5,6 +5,13 @@ import numpy as np
 import os
 import sys
 
+def clamp(value, low=0.0, high=1.0):
+    if value < low:
+        value = low
+    if value > high:
+        value = high
+    return value
+
 def dateToSeconds(date):
     (year, month, day) = date
     dt = datetime(int(year), month, day)
@@ -61,10 +68,11 @@ def getColor(grad, amount):
     i = (gradLen-1) * amount
     remainder = i % 1
     rgb = (0,0,0)
-    if remainder > 0:
-        rgb = lerpColor(grad[int(i)], grad[int(i)+1], remainder)
-    else:
-        rgb = grad[int(i)]
+    # if remainder > 0:
+    #     rgb = lerpColor(grad[int(i)], grad[int(i)+1], remainder)
+    # else:
+    #     rgb = grad[int(i)]
+    rgb = grad[int(round(i))]
     return int(rgb2hex(rgb), 16)
 
 # Add colors
