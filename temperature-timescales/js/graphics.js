@@ -306,6 +306,7 @@ var Graphics = (function() {
     this.transitioning = true;
     this.transition();
     this.renderMarker();
+    this.renderAnnotations();
   };
 
   Graphics.prototype.refreshDimensions = function(){
