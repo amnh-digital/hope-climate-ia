@@ -411,6 +411,26 @@ var Graphics = (function() {
     var now = new Date();
     var transitionMs = this.opt.annotationsUI.transitionMs;
     var aTransitioning = false;
+    var time = this.time;
+
+    // calculate rectangle
+    var rMargin = cw * 0.015;
+    var rPadding = rMargin;
+    var rX = mx0 + cw * this.time + rMargin;
+    var rW = cw * 0.3;
+    if (time > 0.5) {
+      rX = rX - rMargin * 2 - rW;
+    }
+
+    // calculate text box
+    var tMarkerX = rX + rPadding;
+    var tMarkerW = rW - rPadding * 2;
+    var tTextStyle = {
+      "fill": "#000000",
+      "fontSize": cw * 0.02,
+      "wordWrap": true,
+      "wordWrapWidth": tMarkerW
+    };
 
     _.each(plotData, function(d, i){
       if (!d.annotation) return;
@@ -421,9 +441,9 @@ var Graphics = (function() {
         // already transitioning
         if (d.aTransitioning) {
           transitionProgress = (now - d.aTransitionStart) / transitionMs;
-          if (transitionProgress >= 1) {
-            transitionProgress = 1;
-          } else {
+          if (transitionProgress >= 1) transitionProgress = 1;
+          transitionProgress = UTIL.easeInOutSin(transitionProgress);
+          if (transitionProgress < 1) {
             aTransitioning = true;
           }
 
@@ -444,25 +464,44 @@ var Graphics = (function() {
       var x = d.x;
       var y = d.y;
       if (x < leftBoundX || x > rightBoundX) return;
-      var markerY = y - marginY - markerRadius;
+      var aMarkerY = y - marginY - markerRadius;
       if (y > y0) {
-        markerY = y + marginY + markerRadius;
+        aMarkerY = y + marginY + markerRadius;
       }
-      var markerX = x + dataW / 2;
+      var aMarkerX = x + dataW / 2;
+      var label, alpha;
 
+      // fade out info marker
       if (transitionProgress < 1.0) {
-        var alpha = 1.0 - transitionProgress;
+        alpha = 1.0 - transitionProgress;
         annotations.beginFill(color, alpha);
-        annotations.drawCircle(markerX, markerY, markerRadius);
+        annotations.drawCircle(aMarkerX, aMarkerY, markerRadius);
         annotations.endFill();
-        var label = annotations.children[labelIndex];
+        label = annotations.children[labelIndex];
         label.text = "?";
         label.style = textStyle;
-        label.x = markerX;
-        label.y = markerY;
+        label.x = aMarkerX;
+        label.y = aMarkerY;
         label.anchor.set(0.5, 0.5);
         label.alpha = alpha;
         labelIndex += 1;
+      }
+      // fade in annotation text
+      if (transitionProgress > 0) {
+        var tMarkerY = aMarkerY-markerRadius;
+        alpha = transitionProgress;
+        label = annotations.children[labelIndex];
+        label.text = annotation;
+        label.style = tTextStyle;
+        label.x = tMarkerX;
+        label.y = tMarkerY + rPadding;
+        label.anchor.set(0, 0);
+        label.alpha = alpha;
+        labelIndex += 1;
+
+        annotations.beginFill(color, alpha);
+        annotations.drawRect(rX, tMarkerY, rW, label.height + rPadding * 2);
+        annotations.endFill();
       }
 
     });
