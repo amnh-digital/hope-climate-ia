@@ -13,13 +13,15 @@
     "tenYearTrendYearsDisplay": 40,
     "annotationsUI": {
       "color": "0xc6ad61",
-      "transitionMs": 1000
+      "highlightColor": "0xe2bb3d"
     },
     "marker": {
       "color": "0xe2bb3d",
+      "fill": "0xc6ad61",
       "dotRadius": 0.01,
+      "widthStep": 0.005,
       "textStyle": {
-        "fill": "#e2bb3d",
+        "fill": "#000000",
         "fontSize": 0.03
       }
     },

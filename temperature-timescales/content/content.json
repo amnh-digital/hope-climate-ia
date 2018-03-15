@@ -8,11 +8,11 @@
   ],
   "annotations": [
     {"year": 1950, "text": "From the 1940s to 1975, aerosols from pollution and volcanic eruptions cool planet slightly."},
-    {"year": 1975, "text": "Warming starts to accelerate, driven by human CO2 emissions."},
-    {"year": 1979, "text": "Rate of warming increases to 0.3°C (0.5°F) per decade."},
-    {"year": 1998, "text": "Strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
-    {"year": 2003, "text": "Historic heat wave in Europe kills 70,000 people."},
-    {"year": 2005, "text": "Average temperature breaks the 1998 record."},
-    {"year": 2016, "text": "Hottest year on record."}
+    {"year": 1975, "text": "In 1975, warming starts to accelerate, driven by human CO2 emissions."},
+    {"year": 1979, "text": "Starting around 1979, the rate of warming increases to 0.3°C (0.5°F) per decade."},
+    {"year": 1998, "text": "In 1998 a strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
+    {"year": 2003, "text": "In 2003, a historic heat wave in Europe kills 70,000 people."},
+    {"year": 2005, "text": "In 2005, average temperature breaks the 1998 record."},
+    {"year": 2016, "text": "2016 is the hottest year on record."}
   ]
 }

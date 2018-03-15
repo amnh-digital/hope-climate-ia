@@ -148,8 +148,8 @@ var Graphics = (function() {
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(axes, 30);
     addLabelBuffers(plot, 30);
-    addLabelBuffers(marker, 2);
-    addLabelBuffers(annotations, this.opt.annotations.length * 2);
+    addLabelBuffers(marker, 4);
+    addLabelBuffers(annotations, this.opt.annotations.length);
 
     this.axes = axes;
     this.plot = plot;
@@ -356,6 +356,7 @@ var Graphics = (function() {
     markerTextStyle.fontSize *= h;
     this.markerTextStyle = markerTextStyle;
     this.markerDotRadius = this.opt.marker.dotRadius * h;
+    this.markerWidthStep = this.opt.marker.widthStep * plotW;
   };
 
   Graphics.prototype.render = function(){
@@ -373,6 +374,7 @@ var Graphics = (function() {
     var current = this.plotCurrentValue;
     var isMonthView = this.isMonthView;
     var color = parseInt(this.opt.annotationsUI.color);
+    var highlightColor = parseInt(this.opt.annotationsUI.highlightColor);
     var labelCount = annotations.children.length;
     var labelIndex = 0;
 
@@ -409,104 +411,45 @@ var Graphics = (function() {
       "fontWeight": "bold"
     };
     var now = new Date();
-    var transitionMs = this.opt.annotationsUI.transitionMs;
-    var aTransitioning = false;
-    var time = this.time;
-
-    // calculate rectangle
-    var rMargin = cw * 0.015;
-    var rPadding = rMargin;
-    var rX = mx0 + cw * this.time + rMargin;
-    var rW = cw * 0.3;
-    if (time > 0.5) {
-      rX = rX - rMargin * 2 - rW;
-    }
-
-    // calculate text box
-    var tMarkerX = rX + rPadding;
-    var tMarkerW = rW - rPadding * 2;
-    var tTextStyle = {
-      "fill": "#000000",
-      "fontSize": cw * 0.02,
-      "wordWrap": true,
-      "wordWrapWidth": tMarkerW
-    };
 
     _.each(plotData, function(d, i){
       if (!d.annotation) return;
 
-      // we are hovering over this annotation
-      var transitionProgress = 0;
-      if (current.index == d.index) {
-        // already transitioning
-        if (d.aTransitioning) {
-          transitionProgress = (now - d.aTransitionStart) / transitionMs;
-          if (transitionProgress >= 1) transitionProgress = 1;
-          transitionProgress = UTIL.easeInOutSin(transitionProgress);
-          if (transitionProgress < 1) {
-            aTransitioning = true;
-          }
-
-        // just started to transition
-        } else {
-          _this.plotData[i].aTransitioning = true;
-          _this.plotData[i].aTransitionStart = now;
-          aTransitioning = true;
-        }
-      // not hovering over this annotation
-      } else {
-        _this.plotData[i].aTransitioning = false;
-        _this.plotData[i].aTransitionStart = false;
-      }
-
-      var annotation = d.annotation;
-      var value = d.value;
       var x = d.x;
       var y = d.y;
+      var value = d.value;
       if (x < leftBoundX || x > rightBoundX) return;
+
+      // bounce when we are highlighting bar
+      if (d.highlighting) {
+        var delta = 0.25;
+        if (value < 0) delta *= -1;
+        value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
+        if (!isNaN(value)) {
+          var p = dataToPoint(d.year, value, domainp, range, pd);
+          y = p[1];
+        }
+      }
+
       var aMarkerY = y - marginY - markerRadius;
       if (y > y0) {
         aMarkerY = y + marginY + markerRadius;
       }
       var aMarkerX = x + dataW / 2;
-      var label, alpha;
 
-      // fade out info marker
-      if (transitionProgress < 1.0) {
-        alpha = 1.0 - transitionProgress;
-        annotations.beginFill(color, alpha);
-        annotations.drawCircle(aMarkerX, aMarkerY, markerRadius);
-        annotations.endFill();
-        label = annotations.children[labelIndex];
-        label.text = "?";
-        label.style = textStyle;
-        label.x = aMarkerX;
-        label.y = aMarkerY;
-        label.anchor.set(0.5, 0.5);
-        label.alpha = alpha;
-        labelIndex += 1;
-      }
-      // fade in annotation text
-      if (transitionProgress > 0) {
-        var tMarkerY = aMarkerY-markerRadius;
-        alpha = transitionProgress;
-        label = annotations.children[labelIndex];
-        label.text = annotation;
-        label.style = tTextStyle;
-        label.x = tMarkerX;
-        label.y = tMarkerY + rPadding;
-        label.anchor.set(0, 0);
-        label.alpha = alpha;
-        labelIndex += 1;
-
-        annotations.beginFill(color, alpha);
-        annotations.drawRect(rX, tMarkerY, rW, label.height + rPadding * 2);
-        annotations.endFill();
-      }
-
+      var aColor = color;
+      if (current.index === d.index) aColor = highlightColor;
+      annotations.beginFill(aColor);
+      annotations.drawCircle(aMarkerX, aMarkerY, markerRadius);
+      annotations.endFill();
+      var label = annotations.children[labelIndex];
+      label.text = "?";
+      label.style = textStyle;
+      label.x = aMarkerX;
+      label.y = aMarkerY;
+      label.anchor.set(0.5, 0.5);
+      labelIndex += 1;
     });
-
-    this.aTransitioning = aTransitioning;
 
     // hide the remainder of the labels
     for (var i=labelIndex; i<labelCount; i++) {
@@ -699,12 +642,20 @@ var Graphics = (function() {
 
   Graphics.prototype.renderMarker = function(){
     // draw plot marker
+    var prev = this.prev;
     var current = this.plotCurrentValue;
     var pd = this.plotDimensions;
     var marker = this.marker;
-    var label = marker.children[0];
-    var sublabel = marker.children[1];
+    var yLabel = marker.children[0];
+    var cLabel = marker.children[1];
+    var fLabel = marker.children[2];
+    var aLabel = marker.children[3];
     var markerColor = parseInt(this.opt.marker.color);
+    var markerFill = parseInt(this.opt.marker.fill);
+    var widthStep = this.markerWidthStep;
+    var time = this.time;
+    var markerW = 6;
+    var transitionMs = this.opt.marker.transitionMs;
 
     marker.clear();
 
@@ -712,19 +663,41 @@ var Graphics = (function() {
     var cy = pd[1];
     var cw = pd[2];
     var ch = pd[3]
-    var x = pd[0] + cw * this.time;
+    var x = pd[0] + cw * time;
     var marginX = cw * 0.02;
     var marginY = cw * 0.01;
 
+    var rectW = cw * 0.2;
+    if (current.annotation) rectW = cw * 0.25;
+
+    if (!this.markerRectW) this.markerRectW = rectW;
+    if (this.markerRectW !== rectW) {
+      var direction = rectW - this.markerRectW;
+      direction /= Math.abs(direction);
+      var rectWNew = this.markerRectW + (direction * widthStep);
+      if (direction > 0 && rectWNew > rectW || direction < 0 && rectWNew < rectW) rectWNew = rectW;
+      this.markerTransitioning = true;
+      this.markerRectW = rectWNew;
+      rectW = rectWNew;
+    } else {
+      this.markerTransitioning = false;
+    }
+
+
+    var rectX = x + markerW/2;
+    if (time > 0.5) {
+      rectX = x - rectW - markerW/2;
+    }
+
     // label bg
-    var labelW = cw * 0.18;
-    var thresholdX = cw + cx - labelW;
+    var labelW = rectW - marginX * 2;
+    var labelX = rectX + marginX;
     // var labelH = ch * 0.1;
     // marker.beginFill(0x777070, 0.2);
     // marker.drawRect(x, cy, labelW, labelH);
     // marker.endFill();
 
-    marker.lineStyle(5, markerColor);
+    marker.lineStyle(markerW, markerColor);
     marker.moveTo(x, cy).lineTo(x, cy + ch);
 
     var textStyle = this.markerTextStyle;
@@ -734,36 +707,63 @@ var Graphics = (function() {
       dc = "+" + dc;
       df = "+" + df;
     }
-    var text = dc + "°C ("+df+" °F)";
-    label.text = text;
-    label.style = textStyle;
 
-    var anchorX = 0.0;
-    var lx = x + marginX;
-    if (x > thresholdX) {
-      anchorX = 1.0;
-      lx = x - marginX;
+    var yearText = current.year;
+    if (current.month >= 0) {
+      yearText = MONTHS[current.month] + " " + parseInt(current.year);
     }
 
-    label.x = lx;
-    label.y = cy + marginY;
-    label.anchor.set(anchorX, 0.0);
+    var annotation = "";
+    if (current.annotation) annotation = current.annotation;
 
+    // set text
+    yLabel.text = yearText;
+    cLabel.text = dc + "°C";
+    fLabel.text = df + "°F";
+    aLabel.text = annotation;
+
+    // set style
+    cLabel.style = textStyle;
+    fLabel.style = textStyle;
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
-    var text = current.year;
-    if (current.month >= 0) {
-      text = MONTHS[current.month] + " " + parseInt(current.year);
-    }
-    sublabel.text = text;
-    sublabel.style = textStyle;
-    sublabel.x = lx;
-    sublabel.y = cy + marginY + textStyle.fontSize * 1.5;
-    sublabel.anchor.set(anchorX, 0.0);
+    yLabel.style = textStyle;
+    textStyle = _.clone(textStyle);
+    textStyle.fontSize *= 0.9;
+    textStyle.wordWrap = true;
+    textStyle.wordWrapWidth = labelW;
+    aLabel.style = textStyle;
 
-    // marker.beginFill(markerColor);
-    // marker.drawCircle(x, current.y, this.markerDotRadius);
-    // marker.endFill();
+    // set x position
+    yLabel.x = labelX;
+    cLabel.x = labelX;
+    fLabel.x = labelX + labelW * 0.5 + marginX;
+    aLabel.x = labelX;
+
+    // set y position
+    yLabel.y = cy + marginY;
+    cLabel.y = yLabel.y + yLabel.height + marginY * 2;
+    fLabel.y = cLabel.y;
+    aLabel.y = cLabel.y + cLabel.height + marginY * 2;
+
+    // draw rectangles
+    var rectH = marginY * 4 + yLabel.height + cLabel.height;
+    if (current.annotation) rectH += marginY * 2 + aLabel.height;
+
+    marker.lineStyle(0);
+    marker.beginFill(markerFill);
+    marker.drawRect(rectX, cy, rectW, rectH);
+    marker.endFill();
+
+    marker.beginFill(current.color, 0.5);
+    marker.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 2);
+    marker.endFill();
+
+    marker.lineStyle(1, 0x000000, 0.5);
+    marker.moveTo(labelX + labelW * 0.5, cLabel.y);
+    marker.lineTo(labelX + labelW * 0.5, cLabel.y+cLabel.height);
+
+    this.prev = current;
   };
 
   Graphics.prototype.renderPlot = function(){
@@ -921,7 +921,7 @@ var Graphics = (function() {
   Graphics.prototype.transition = function(){
     this.monthTransitioning = (this.monthTransitionValue > 0 && this.monthTransitionValue < 1);
 
-    if (!this.transitioning && !this.monthTransitioning && !this.aTransitioning) return false;
+    if (!this.transitioning && !this.monthTransitioning && !this.markerTransitioning) return false;
 
     // bar highlight transition
     if (this.transitioning) {
@@ -962,13 +962,13 @@ var Graphics = (function() {
       }
     }
 
-    // annotation transition
-    if (this.aTransitioning) {
+    if (this.transitioning || this.monthTransitioning) {
+      this.renderPlot();
       this.renderAnnotations();
     }
 
-    if (this.transitioning || this.monthTransitioning) {
-      this.renderPlot();
+    if (this.markerTransitioning) {
+      this.renderMarker();
     }
   };
 
