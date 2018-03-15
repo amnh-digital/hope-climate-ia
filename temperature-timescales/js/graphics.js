@@ -189,13 +189,16 @@ var Graphics = (function() {
     var domainEndP = dataCurrentPercent + (domainCountP * (1-time));
 
     // adjust edges
+    var autoScrolled = false;
     if (domainStartP < 0) {
       domainEndP -= domainStartP;
       domainStartP = 0;
+      autoScrolled = true;
     }
     if (domainEndP > 1) {
       domainStartP -= (domainEndP-1)
       domainEndP = 1;
+      autoScrolled = true;
     }
 
     // determine new domain
@@ -268,7 +271,7 @@ var Graphics = (function() {
     });
     this.plotData = plotData;
 
-    this.onTimeChange(this.time, false);
+    if (autoScrolled || monthTransitioning) this.onTimeChange(this.time, false);
     this.renderAxes();
     // this.renderTrend();
     this.renderMarker();
