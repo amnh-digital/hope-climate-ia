@@ -15,10 +15,10 @@ var Messages = (function() {
     var $wrapper = $('<div/>');
     _.each(this.forcings, function(forcing, key){
       var $message = $('<div id="message-'+key+'" class="message"></div>');
-      $message.append('<h3>'+forcing.title+'</h3>');
-      $message.append('<p>'+forcing.sub+'</p>');
+      $message.append('<img src="'+forcing.image+'" alt="'+forcing.title+'" />');
+      $message.append('<div class="text"><h3>'+forcing.title+'</h3><p>'+forcing.sub+'</p></div>');
       $message.css({
-        background: forcing.color,
+        borderColor: forcing.color,
         top: forcing.y * 100 + '%',
         left: forcing.x * 100 + '%'
       });

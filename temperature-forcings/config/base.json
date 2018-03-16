@@ -1,17 +1,17 @@
 {
   "graphics": {
     "el": "#graphics",
-    "margin": [0.1, 0.05, 0.1, 0.05],
+    "margin": [0.1, 0.05, 0.1, 0.1],
     "xAxis": {
       "height": 0.0667,
       "labelEvery": 20,
       "tickEvery": 5,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#7f7f87",
         "fontSize": 0.03
       },
       "subtextStyle": {
-        "fill": "#5e5e66",
+        "fill": "#7f7f87",
         "fontSize": 0.022
       }
     },
@@ -20,23 +20,17 @@
       "labelCount": 6,
       "step": 0.1,
       "minBounds": [-0.2, 0.2],
-      "labelEvery": 0.5,
       "tickEvery": 0.25,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#7f7f87",
         "fontSize": 0.03
       },
       "subtextStyle": {
         "fill": "#7f7f87",
         "fontSize": 0.02
       },
-      "gradient": [
-        "#ff0000",
-        "#ff5e5e",
-        "#ffffff",
-        "#66a0ff",
-        "#0061ff"
-      ]
+      "hotColor": "0xff3300",
+      "coolColor": "0x99cccc"
     },
     "transitionStep": 0.025,
     "cord": {

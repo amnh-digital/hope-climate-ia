@@ -1,9 +1,9 @@
 .graphics,
 .messages {
-  top: 10vh;
-  left: 10vw;
-  width: 80vw;
-  height: 90vh;
+  top: 15vh;
+  left: 20vw;
+  width: 60vw;
+  height: 40vw;
 }
 
 .messages {
@@ -11,13 +11,40 @@
 }
 .message {
   position: absolute;
-  width: 20%;
+  width: 25%;
   height: auto;
   box-sizing: border-box;
   padding: 0 1.5vh;
-  border-radius: 1vh;
+  border-radius: 0.5vh;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  background: #4e5154;
+  border-top: 1vh solid white;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+}
+.message:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.message img {
+  width: 25%;
+  height: auto;
+  display: block;
+  float: left;
+  margin-top: 1vh;
+}
+.message .text {
+  width: 70%;
+  float: right;
+}
+.message h3 {
+  font-size: 1.5vh;
+  margin: 1vh 0 0;;
+}
+.message p {
+  font-size: 1.2vh;
+  line-height: 1.5;
 }
 .message.active {
   opacity: 1;

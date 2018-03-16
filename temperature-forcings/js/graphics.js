@@ -152,7 +152,7 @@ var Graphics = (function() {
     var cords = new PIXI.Graphics();
     var observed = new PIXI.Graphics();
 
-    this.app.stage.addChild(observed, cords, axes, plot);
+    this.app.stage.addChild(axes, observed, cords, plot);
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
@@ -314,7 +314,8 @@ var Graphics = (function() {
     var yAxisSubtextStyle = this.yAxisSubtextStyle;
     var axes = this.axes;
     var labelCount = axes.children.length;
-    var yAxisGradient = this.opt.yAxis.gradient;
+    var hotColor = parseInt(this.opt.yAxis.hotColor);
+    var coolColor = parseInt(this.opt.yAxis.coolColor);
 
     axes.clear();
 
@@ -323,45 +324,55 @@ var Graphics = (function() {
     var cw = pd[2];
     var ch = pd[3];
 
+    axes.beginFill(0x151616);
+    axes.drawRect(cx, cy, cw, ch);
+    axes.endFill();
+
     // draw y axis
-    axes.lineStyle(1, 0xc4ced4);
-    axes.moveTo(cx, cy).lineTo(cx, cy + ch);
+    // axes.lineStyle(1, 0xc4ced4);
+    // axes.moveTo(cx, cy).lineTo(cx, cy + ch);
 
     var labelIndex = 0;
     var value = range[1];
-    var labelEvery = this.opt.yAxis.labelEvery;
     var tickEvery = this.opt.yAxis.tickEvery;
     var xLabel = cx - yAxisBounds[2] * 0.1667;
     var xLine = cx - yAxisBounds[2] * 0.1;
-    var colorIndex = 0;
+    var textColor = this.opt.yAxis.textStyle.fill;
+    var xAxisVerticalCenter = xAxisBounds[0] * 0.85;
+    var arrowLength = ch * 0.04;
+    var arrowHeadW = ch * 0.02;
+    var arrowHeadL = ch * 0.02;
     while(value >= range[0]) {
       var p = dataToPoint(0, value, domain, range, yAxisBounds);
       var y = p[1];
 
-      if (value % labelEvery === 0.0) {
-        var label = axes.children[labelIndex];
-        var sublabel = axes.children[labelIndex+1];
-        labelIndex += 2;
+      var color = textColor;
 
-        var fill = yAxisGradient[colorIndex];
-        colorIndex += 1;
-
-        var text = UTIL.round(value, 1) + "°C";
-        var subtext = UTIL.round(value * 1.8, 1) + "°F";
-
-        if (value === 0.0) {
-          text = "20th century";
-          subtext = "average";
-        } else if (value > 0) {
+      if (value === range[1]) {
+        color = hotColor;
+      }
+      if (value === range[0]) {
+        color = coolColor;
+      }
+      if (value === range[1] || value === range[0] || value === 0) {
+        var text = "20th century";
+        var subtext = "average";
+        if (value !== 0) {
+          text = UTIL.round(value, 1) + "°C";
+          subtext = UTIL.round(value * 1.8, 1) + "°F";
+        }
+        if (value > 0) {
           text = "+" + text;
           subtext = "+" + subtext;
         }
 
-        if (value !== 0.0) subtext = "(" +subtext+ ")";
+        var label = axes.children[labelIndex];
+        var sublabel = axes.children[labelIndex+1];
+        labelIndex += 2;
 
-        var style = _.extend({}, yAxisTextStyle, {fill: fill});
-        var subStyle = _.extend({}, yAxisSubtextStyle, {fill: fill});
-        if (value === 0.0) subStyle = _.extend({}, yAxisTextStyle, {fill: fill});
+        var style = _.extend({}, yAxisTextStyle, {fill: color});
+        var subStyle = _.extend({}, yAxisSubtextStyle, {fill: color});
+        if (value === 0.0) subStyle = _.extend({}, yAxisTextStyle, {fill: color});
 
         label.text = text;
         label.style = style;
@@ -376,15 +387,58 @@ var Graphics = (function() {
         sublabel.style = subStyle;
       }
 
-      if (value === 0.0) axes.lineStyle(3, 0xffffff);
-      else axes.lineStyle(1, 0xffffff);
-      axes.moveTo(xLine, y).lineTo(cx, y);
+      // draw warmer/color text
+
+      if (value === range[0]/2 || value === range[1]/2) {
+        var label = axes.children[labelIndex];
+        labelIndex++;
+        var color = hotColor;
+        var text = "warmer";
+        var yAdjust = y + arrowLength;
+
+        if (value < 0) {
+          color = coolColor;
+          text = "cooler";
+          yAdjust = y - arrowLength;
+        }
+        var style = _.extend({}, yAxisSubtextStyle, {fill: color});
+
+        label.text = text;
+        label.style = style;
+        label.anchor.set(0.5, 0.5);
+        label.x = xAxisVerticalCenter;
+        label.y = yAdjust;
+        label.rotation = -Math.PI / 2;
+
+        var arrowW = 0.6;
+        var arrowY = yAdjust - label.width * arrowW - arrowLength;
+        if (value < 0) {
+          arrowY = yAdjust + label.width * arrowW;
+        }
+        axes.lineStyle(3, color);
+        axes.moveTo(xAxisVerticalCenter, arrowY).lineTo(xAxisVerticalCenter, arrowY+arrowLength);
+
+        axes.lineStyle(0);
+        axes.beginFill(color);
+        if (value > 0) {
+          axes.moveTo(xAxisVerticalCenter-arrowHeadW/2, arrowY).lineTo(xAxisVerticalCenter, arrowY-arrowHeadL).lineTo(xAxisVerticalCenter+arrowHeadW/2, arrowY);
+        } else {
+          axes.moveTo(xAxisVerticalCenter-arrowHeadW/2, arrowY+arrowLength).lineTo(xAxisVerticalCenter, arrowY+arrowLength+arrowHeadL).lineTo(xAxisVerticalCenter+arrowHeadW/2, arrowY+arrowLength);
+        }
+        axes.endFill();
+      }
+
+      // if (value === 0.0) axes.lineStyle(3, 0xffffff);
+      // else axes.lineStyle(1, 0xffffff);
+      // axes.moveTo(xLine, y).lineTo(cx, y);
+
+
 
       value -= tickEvery;
     }
 
     value = domain[0];
-    labelEvery = this.opt.xAxis.labelEvery;
+    var labelEvery = this.opt.xAxis.labelEvery;
     tickEvery = this.opt.xAxis.tickEvery;
     var yLabel = cy + ch + yAxisBounds[2] * 0.25;
     var yLine = cy + ch + yAxisBounds[2] * 0.1;
@@ -408,7 +462,7 @@ var Graphics = (function() {
           label.y = yLabel;
         }
 
-        axes.lineStyle(1, 0xffffff);
+        axes.lineStyle(1, 0x7f7f87);
         axes.moveTo(x, cy + ch).lineTo(x, yLine);
       }
 
@@ -498,7 +552,7 @@ var Graphics = (function() {
 
     var barW = cw / len;
     var rangeRatio = range[1] / (range[1]-range[0]);
-    observed.lineStyle(1, 0x000000);
+    observed.lineStyle(1, 0x151616);
 
     _.each(data, function(value, i){
       var x = i * barW + cx;
