@@ -11,7 +11,7 @@
     {"year": 1975, "text": "In 1975, warming starts to accelerate, driven by human CO2 emissions."},
     {"year": 1979, "text": "Starting around 1979, the rate of warming increases to 0.3°C (0.5°F) per decade."},
     {"year": 1998, "text": "In 1998 a strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
-    {"year": 2003, "text": "In 2003, a historic heat wave in Europe kills 70,000 people."},
+    {"year": 2003, "text": "In 2003, a historic heat wave in Europe kills 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
     {"year": 2005, "text": "In 2005, average temperature breaks the 1998 record."},
     {"year": 2016, "text": "2016 is the hottest year on record."}
   ]

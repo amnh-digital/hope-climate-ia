@@ -54,7 +54,7 @@ var Graphics = (function() {
     this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
 
     var annotations = _.map(this.opt.annotations, function(a){
-      return [""+a.year, a.text];
+      return [""+a.year, a];
     });
     var annotationIndex = _.object(annotations);
 
@@ -135,14 +135,27 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.initView = function(){
+    var _this = this;
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var axes = new PIXI.Graphics();
     var plot = new PIXI.Graphics();
     var trend = new PIXI.Graphics();
     var annotations = new PIXI.Graphics();
+    var images = new PIXI.Container();
     var marker = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, plot, trend, annotations, marker);
+    this.app.stage.addChild(axes, plot, trend, annotations, marker, images);
+
+    // add images as sprites
+    _.each(this.annualData, function(d, i){
+      if (d.annotation && d.annotation.image) {
+        var sprite = PIXI.Sprite.fromImage(d.annotation.image);
+        sprite.visible = false;
+        images.addChild(sprite);
+        _this.annualData[i].annotation.sprite = sprite;
+        _this.annualData[i].annotation.imageRatio = d.annotation.imageW / d.annotation.imageH;
+      }
+    });
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
@@ -156,6 +169,9 @@ var Graphics = (function() {
     this.trend = trend;
     this.annotations = annotations;
     this.marker = marker;
+    this.images = images;
+
+    this.images.visible = false;
 
     this.$el.append(this.app.view);
   };
@@ -403,8 +419,8 @@ var Graphics = (function() {
     var mx0 = pd[0];
     var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
     var y0 = p0[1];
-    var leftBoundX = mx0-dataW;
-    var rightBoundX = mx0+cw;
+    var leftBoundX = mx0+dataW/2;
+    var rightBoundX = mx0+cw-dataW/2;
     var marginY = ch * 0.1 / plotData.length;
     var markerRadius = dataW * 0.4;
     var limit = 10;
@@ -667,6 +683,7 @@ var Graphics = (function() {
     var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
 
     var showAnnotation = (this.scale <= scaleThreshold && current.annotation);
+    var showAnnotationImage = showAnnotation && current.annotation.sprite;
 
     marker.clear();
 
@@ -725,7 +742,7 @@ var Graphics = (function() {
     }
 
     var annotation = "";
-    if (showAnnotation) annotation = current.annotation;
+    if (showAnnotation) annotation = current.annotation.text;
 
     // set text
     yLabel.text = yearText;
@@ -760,6 +777,25 @@ var Graphics = (function() {
     // draw rectangles
     var rectH = marginY * 4 + yLabel.height + cLabel.height;
     if (showAnnotation) rectH += marginY * 2 + aLabel.height;
+    var imageW, imageH;
+    var images = this.images;
+    if (showAnnotationImage) {
+      images.visible = true;
+      for (var i=0; i<images.children.length; i++) {
+        images.children[i].visible = false;
+      }
+      imageW = labelW;
+      imageH = imageW / current.annotation.imageRatio;
+      rectH += marginY + imageH;
+      var sprite = current.annotation.sprite;
+      sprite.width = imageW;
+      sprite.height = imageH;
+      sprite.visible = true;
+      sprite.x = labelX;
+      sprite.y = aLabel.y + aLabel.height + marginY;
+    } else {
+      images.visible = false;
+    }
 
     marker.lineStyle(0);
     marker.beginFill(markerFill);
