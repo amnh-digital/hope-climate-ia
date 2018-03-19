@@ -146,7 +146,7 @@ var Graphics = (function() {
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
-    addLabelBuffers(axes, 30);
+    addLabelBuffers(axes, 24);
     addLabelBuffers(plot, 30);
     addLabelBuffers(marker, 4);
     addLabelBuffers(annotations, this.opt.annotations.length);
@@ -258,7 +258,12 @@ var Graphics = (function() {
     var yAxisMinBounds = this.yAxisMinBounds;
     var minRange = UTIL.floorToNearest(_.min(values)-0.05, yAxisStep);
     var maxRange = UTIL.ceilToNearest(_.max(values)+0.05, yAxisStep);
-    this.plotRange = [Math.min(yAxisMinBounds[0], minRange), Math.max(maxRange, yAxisMinBounds[1])];
+    minRange = Math.min(yAxisMinBounds[0], minRange);
+    maxRange = Math.max(maxRange, yAxisMinBounds[1]);
+    var absMax = Math.max(Math.abs(minRange), maxRange);
+    if (absMax > maxRange) maxRange = absMax;
+    if (-absMax < minRange) minRange = -absMax;
+    this.plotRange = [UTIL.round(minRange, 1), UTIL.round(maxRange, 1)];
 
     var domain = [newDomainPrecise[0], newDomainPrecise[1]+1];
     if (isMonthView || monthTransitioning) domain = [newDomainPrecise[0], newDomainPrecise[1]+1.0/12.0];
@@ -486,10 +491,8 @@ var Graphics = (function() {
     // determine labels and ticks for y axis
     var delta = range[1] - range[0];
     var yAxisStep = this.yAxisStep;
-    var count = delta / yAxisStep;
-    var showEvery = 1;
-    if (count >= 16) showEvery = 4;
-    else if (count >= 8) showEvery = 2;
+    var count = parseInt(Math.round(delta / yAxisStep));
+    var halfRange = [UTIL.round(UTIL.floorToNearest(this.plotRange[0]/2, yAxisStep), 1), UTIL.round(UTIL.ceilToNearest(this.plotRange[1]/2, yAxisStep), 1)];
 
     var i = 0;
     var labelIndex = 0;
@@ -500,7 +503,7 @@ var Graphics = (function() {
 
     // draw y axis
 
-    while(value >= range[0]) {
+    while(i <= count) {
 
       var p = dataToPoint(0, value, domain, range, yAxisBounds);
       var y = p[1];
@@ -508,10 +511,12 @@ var Graphics = (function() {
       var df = UTIL.round(value * 1.8, 1);
       var label;
 
+      var showLabel = (i === 0 || i === count || dc === halfRange[0] || dc === halfRange[1]);
+
       if (dc===0) {
         label = axes.children[labelIndex];
         label.text = "20th century";
-        label.style = yAxisSubtextStyle;
+        label.style = yAxisTextStyle;
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 1.0);
@@ -519,13 +524,13 @@ var Graphics = (function() {
 
         label = axes.children[labelIndex];
         label.text = "average";
-        label.style = yAxisSubtextStyle;
+        label.style = yAxisTextStyle;
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 0);
         labelIndex += 1;
 
-      } else if (i % showEvery === 0) {
+      } else if (showLabel) {
         label = axes.children[labelIndex];
         if (dc > 0) {
           dc = "+" + dc;
@@ -539,7 +544,7 @@ var Graphics = (function() {
         labelIndex += 1;
 
         label = axes.children[labelIndex];
-        label.text = "(" + df + " °F)";
+        label.text = df + " °F";
         label.style = yAxisSubtextStyle;
         label.x = xLabel;
         label.y = y;
@@ -574,7 +579,7 @@ var Graphics = (function() {
     count = domain[1] - domain[0];
     var countp = domainp[1] - domainp[0];
 
-    showEvery = 1;
+    var showEvery = 1;
     var tickEvery = 1;
 
     if (isMonthView || monthTransitioning) {
@@ -607,7 +612,7 @@ var Graphics = (function() {
       var textStyle = xAxisTextStyle;
       if (x >= boundLeft && x <= boundRight) {
 
-        axes.lineStyle(2, 0x444444, 1);
+        axes.lineStyle(2, 0x666666, 1);
         var text = d.year;
         var value = parseInt(Math.round(d.year));
         if (d.month >= 0) {
@@ -706,7 +711,7 @@ var Graphics = (function() {
     var textStyle = this.markerTextStyle;
     var dc = UTIL.round(current.value, 1);
     var df = UTIL.round(current.valueF, 1);
-    if (dc > 0) {
+    if (dc >= 0) {
       dc = "+" + dc;
       df = "+" + df;
     }

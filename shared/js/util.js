@@ -132,6 +132,10 @@
     return +value.toFixed(precision);
   };
 
+  UTIL.roundToNearest = function(value, nearest) {
+    return Math.round(value / nearest) * nearest;
+  };
+
   UTIL.within = function(num, min, max) {
     if (num < min) return false;
     if (num > max) return false;

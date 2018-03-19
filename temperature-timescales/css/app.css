@@ -7,6 +7,7 @@
 }
 .content.sleepMode {
   z-index: 100;
+  top: 0;
 }
 
 .title {
@@ -47,7 +48,7 @@
 .messages > div,
 .messages .bracket {
   width: 80%;
-  margin-left: 13%;
+  margin-left: 14.5%;
 }
 .messages > div {
   padding: 1vh 2vh;

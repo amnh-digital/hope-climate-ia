@@ -6,7 +6,7 @@
     "monthTransitionStep": 0.04,
     "targetWidth": 1920,
     "targetHeight": 1080,
-    "margin": [0.075, 0.05, 0.05, 0.05],
+    "margin": [0.075, 0.05, 0.05, 0.075],
     "time": 0.5,
     "scale": 0.5,
     "highlightMs": 1000,
@@ -28,11 +28,11 @@
     "xAxis": {
       "height": 0.0667,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#505454",
         "fontSize": 0.03
       },
       "subtextStyle": {
-        "fill": "#7f7f87",
+        "fill": "#505454",
         "fontSize": 0.024
       }
     },
@@ -44,11 +44,11 @@
       "lineWidth": 1,
       "lineWidthBold": 4,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#505454",
         "fontSize": 0.03
       },
       "subtextStyle": {
-        "fill": "#7f7f87",
+        "fill": "#505454",
         "fontSize": 0.024
       }
     }
