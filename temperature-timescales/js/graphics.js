@@ -695,8 +695,11 @@ var Graphics = (function() {
     var marginX = cw * 0.02;
     var marginY = cw * 0.01;
 
-    var rectW = cw * 0.2;
-    if (showAnnotation) rectW = cw * 0.28;
+    var rectSmall = 0.2;
+    var rectBig = 0.28;
+    var rectW = cw * rectSmall;
+    if (showAnnotation) rectW = cw * rectBig;
+    var rectThreshold = cw * ((rectBig + rectSmall)/2);
 
     if (!this.markerRectW) this.markerRectW = rectW;
     if (this.markerRectW !== rectW) {
@@ -704,13 +707,19 @@ var Graphics = (function() {
       direction /= Math.abs(direction);
       var rectWNew = this.markerRectW + (direction * widthStep);
       if (direction > 0 && rectWNew > rectW || direction < 0 && rectWNew < rectW) rectWNew = rectW;
+
+      // delay the display of annotation
+      if (direction > 0 && this.markerRectW < rectThreshold) {
+        showAnnotation = false;
+        showAnnotationImage = false;
+      }
+
       this.markerTransitioning = true;
       this.markerRectW = rectWNew;
       rectW = rectWNew;
     } else {
       this.markerTransitioning = false;
     }
-
 
     var rectX = x + markerW/2;
     if (time > 0.5) {
