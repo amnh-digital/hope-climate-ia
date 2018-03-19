@@ -844,10 +844,7 @@ var Graphics = (function() {
 
     plot.clear();
 
-    var textStyle = {
-      fontSize: dataW * 0.25,
-      fill: 0xFFFFFF
-    };
+    var textStyle = _.extend(this.opt.plot.textStyle, {fontSize: dataW * 0.25});
     var labelIndex = 0;
     _.each(plotData, function(d, i){
       var value = d.value;

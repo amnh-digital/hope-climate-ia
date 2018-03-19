@@ -1,6 +1,11 @@
+@font-face {
+  font-family: Balance;
+  src: url(../font/BalanceOffcPro.ttf);
+}
+
 body {
   font-size: 1.6666666667vh;
-  font-family: arial,helvetica,sans-serif;
+  font-family: Balance, arial, helvetica, sans-serif;
 }
 
 .app {

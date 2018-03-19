@@ -16,6 +16,12 @@
       "highlightColor": "0xe2bb3d",
       "scaleThreshold": 0.5
     },
+    "plot": {
+      "textStyle": {
+        "fill": "#ffffff",
+        "fontFamily": "Balance"
+      }
+    },
     "marker": {
       "color": "0xe2bb3d",
       "fill": "0xc6ad61",
@@ -23,18 +29,21 @@
       "widthStep": 0.005,
       "textStyle": {
         "fill": "#000000",
-        "fontSize": 0.03
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
       }
     },
     "xAxis": {
       "height": 0.0667,
       "textStyle": {
         "fill": "#505454",
-        "fontSize": 0.03
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
       },
       "subtextStyle": {
         "fill": "#505454",
-        "fontSize": 0.024
+        "fontSize": 0.024,
+        "fontFamily": "Balance"
       }
     },
     "yAxis": {
@@ -46,11 +55,13 @@
       "lineWidthBold": 4,
       "textStyle": {
         "fill": "#505454",
-        "fontSize": 0.03
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
       },
       "subtextStyle": {
         "fill": "#505454",
-        "fontSize": 0.024
+        "fontSize": 0.024,
+        "fontFamily": "Balance"
       }
     }
   },
