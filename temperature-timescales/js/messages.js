@@ -16,7 +16,17 @@ var Messages = (function() {
 
     this.domainCount = -1;
     this.scale = -1;
+
+    this.loadView();
     this.onScaleChange(this.opt.scale);
+  };
+
+  Messages.prototype.loadView = function(){
+    var $container = $('<div>');
+    $container.html("<h2>You are viewing <strong id=\"yearString\"></strong> of global temperature records.</h2><p id=\"messageString\"></p>");
+    this.$el.prepend($container);
+    this.$year = $("#yearString");
+    this.$message = $("#messageString");
   };
 
   Messages.prototype.onScaleChange = function(scale){
@@ -43,8 +53,9 @@ var Messages = (function() {
     years = Math.round(years);
     var yearString = "year";
     if (years > 1) yearString += "s";
-    message = "<div><p class=\"highlight\">You are viewing <strong>"+years+" "+yearString+"</strong> of global temperature records.</p><p>" + message.text + "</p></div>";
-    this.$el.html(message);
+
+    this.$year.text(years+" "+yearString);
+    this.$message.text(message.text);
   };
 
   return Messages;

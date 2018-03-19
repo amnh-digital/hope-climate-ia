@@ -1,57 +1,81 @@
-.content.left.introduction {
-  height: 60%;
-  top: 28%;
-}
-.content.left.introduction p {
-  font-size: 3vh;
-  line-height: 1.4;
-}
 
-.content.right.graphics {
-  height: 60%;
-  top: 16%;
-  /*border: 0.5rem solid #222;*/
+.content {
+  width: 50vw;
+  left: auto;
+  right: 5vw;
+  top: 9vw;
 }
-.content.right.title {
-  height: 80%;
-  top: 8%;
-  z-index: 10;
-}
-.content.right.sleepMode {
+.content.sleepMode {
   z-index: 100;
 }
 
-.content.right.messages {
-  top: auto;
-  bottom: 12%;
-  height: 10%;
-  text-align: center;
-  letter-spacing: 0.05rem;
-
+.title {
+  position: absolute;
+  width: 26vw;
+  left: 14vw;
+  top: 40vh;
+  text-align: left;
 }
-.content.right.messages > div {
+.title h1 {
+  font-size: 4vh;
+  white-space: nowrap;
+  font-weight: normal;
+  letter-spacing: 0.2vh;
+  margin-bottom: 0;
+}
+.title h2 {
+  font-weight: normal;
+  line-height: 1.5;
+  font-size: 2.25vh;
+  letter-spacing: 0.1vh;
+}
+
+.graphics {
+  height: 30vw;
+  position: relative;
+  top: auto;
+  left: auto;
+}
+
+.messages,
+.messages * {
+  -webkit-transform: translateZ(0);
+}
+.messages {
+  letter-spacing: 0.05rem;
+}
+.messages > div,
+.messages .bracket {
   width: 80%;
-  margin-left: 14%;
+  margin-left: 13%;
+}
+.messages > div {
   padding: 1vh 2vh;
   background: #181818;
   box-sizing: border-box;
 }
-.content.right.messages p {
+.messages p {
   margin: 0;
   color: #999;
-  line-height: 1.4;
+  line-height: 1.6;
+  font-size: 1.5vh;
 }
-.content.right.messages p.highlight {
+.messages h2 {
   font-size: 2vh;
-  margin-bottom: 1vh;
-  padding-bottom: 1vh;
-  border-bottom: 2px solid #333;
+  margin: 1vh 0;
+  /* padding-bottom: 1vh;
+  border-bottom: 2px solid #333; */
   color: #fff;
 }
-p.highlight strong {
+.messages h2 strong {
   color: #e2bb3d;
 }
-
-.title h2 {
-  font-weight: normal;
+.messages .bracket {
+  display: block;
+  width: 80%;
+  height: auto;
+  margin-top: 1vh;
+}
+.messages .bracket path {
+  fill: #3c4242;
 }

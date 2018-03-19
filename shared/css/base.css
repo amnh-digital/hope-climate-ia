@@ -30,8 +30,7 @@ a {
 }
 
 .title {
-  text-align: center;
-  white-space: nowrap;
+  text-align: left;
   z-index: 200;
   position: relative;
 }
@@ -50,8 +49,7 @@ a {
   background: #000;
 }
 
-.content.left,
-.content.right {
+.content {
   position: absolute;
   box-sizing: border-box;
   top: 0;
