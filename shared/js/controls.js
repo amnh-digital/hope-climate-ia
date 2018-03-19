@@ -220,11 +220,16 @@ var Controls = (function() {
       state = +state.toFixed(2);
       state = Math.min(state, 1);
       state = Math.max(state, 0);
+      var prev = prevState[key];
       // state has changed, execute callback
-      if (prevState[key] != state) {
+      if (prev != state) {
         // console.log("State change", key, state)
-        $document.trigger("controls.axes.change", [key, state]);
-        _this.gamepadState[key] = state;
+        // don't trigger if delta is too big
+        var delta = Math.abs(prev-state);
+        if (delta < 0.25 || prev < 0) {
+          $document.trigger("controls.axes.change", [key, state]);
+          _this.gamepadState[key] = state;
+        }
       }
     });
 
