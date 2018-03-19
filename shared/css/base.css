@@ -80,21 +80,24 @@ a {
 }
 
 .sleepMode {
-  display: none;
+  /* display: none; */
   text-align: center;
   box-sizing: border-box;
   padding: 0.5vw;
-  background: rgba(0,0,0,0.9);
+  /* background: rgba(0,0,0,0.9); */
   text-shadow: 2px 2px #000000;
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
 }
 .sleepMode.active,
 #app.sleeping .sleepMode {
-  display: block;
+  /* display: block; */
+  opacity: 1;
 }
 .sleepMode.active p,
 #app.sleeping .sleepMode p {
   animation: blink 3s infinite;
-  font-size: 3vh;
+  font-size: 2vh;
   position: relative;
   top: 50%;
   transform: translateY(-50%);

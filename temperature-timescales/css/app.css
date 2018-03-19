@@ -7,7 +7,9 @@
 }
 .content.sleepMode {
   z-index: 100;
-  top: 0;
+  top: 27vh;
+  height: 5vh;
+  right: 3vw;
 }
 
 .title {
@@ -44,6 +46,11 @@
 }
 .messages {
   letter-spacing: 0.05rem;
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
+}
+.sleeping .messages {
+  opacity: 0;
 }
 .messages > div,
 .messages .bracket {

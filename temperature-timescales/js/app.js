@@ -45,6 +45,14 @@ AppTimescales.prototype.loadListeners = function(){
     }
   });
 
+  $(document).on("sleep.start", function(e, value) {
+    _this.graphics.sleepStart();
+  });
+
+  $(document).on("sleep.end", function(e, value) {
+    _this.graphics.sleepEnd();
+  });
+
   $(window).on('resize', function(){
     _this.onResize();
   });

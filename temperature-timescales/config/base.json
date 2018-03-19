@@ -11,6 +11,7 @@
     "scale": 0.5,
     "highlightMs": 1000,
     "tenYearTrendYearsDisplay": 40,
+    "sleepTransitionMs": 2000,
     "annotationsUI": {
       "color": "0xc6ad61",
       "highlightColor": "0xe2bb3d",
@@ -103,7 +104,7 @@
   "sleep": {
     "enable": 1,
     "checkInterval": 5,
-    "sleepAfter": 60
+    "sleepAfter": 30
   },
   "messages": {
     "el": "#messages"

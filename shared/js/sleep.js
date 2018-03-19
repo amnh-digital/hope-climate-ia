@@ -43,6 +43,7 @@ var Sleep = (function() {
     if (elapsed > this.sleepAfterMs) {
       this.isSleeping = true;
       $('#app').addClass('sleeping');
+      $(document).trigger("sleep.start", [true]);
     }
   };
 
@@ -53,6 +54,7 @@ var Sleep = (function() {
     this.lastActivity = now;
     this.isSleeping = false;
     $('#app').removeClass('sleeping');
+    $(document).trigger("sleep.end", [true]);
   };
 
   return Sleep;

@@ -52,6 +52,7 @@ var Graphics = (function() {
     this.yAxisStep = this.opt.yAxis.step;
     this.yAxisMinBounds = this.opt.yAxis.minBounds;
     this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
+    this.sleepTransitionMs = this.opt.sleepTransitionMs;
 
     var annotations = _.map(this.opt.annotations, function(a){
       return [""+a.year, a];
@@ -139,12 +140,12 @@ var Graphics = (function() {
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var axes = new PIXI.Graphics();
     var plot = new PIXI.Graphics();
-    var trend = new PIXI.Graphics();
+    // var trend = new PIXI.Graphics();
     var annotations = new PIXI.Graphics();
     var images = new PIXI.Container();
     var marker = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, plot, trend, annotations, marker, images);
+    this.app.stage.addChild(axes, plot, annotations, marker, images);
 
     // add images as sprites
     _.each(this.annualData, function(d, i){
@@ -166,12 +167,16 @@ var Graphics = (function() {
 
     this.axes = axes;
     this.plot = plot;
-    this.trend = trend;
+    // this.trend = trend;
     this.annotations = annotations;
     this.marker = marker;
     this.images = images;
 
     this.images.visible = false;
+
+    // for what to show during "sleep mode"
+    this.sleepers = [axes, annotations, marker, images];
+    this.dreamers = [plot];
 
     this.$el.append(this.app.view);
   };
@@ -971,10 +976,43 @@ var Graphics = (function() {
     });
   };
 
+  Graphics.prototype.sleepEnd = function(){
+    if (this.sleeping) {
+      this.sleepTransitionStart = new Date();
+      this.sleepTransitioning = true;
+      this.sleeping = false;
+    }
+  };
+
+  Graphics.prototype.sleepStart = function(){
+    this.sleepTransitionStart = new Date();
+    this.sleepTransitioning = true;
+    this.sleeping = true;
+  };
+
+  Graphics.prototype.sleepTransition = function(){
+    var now = new Date();
+    var transitionMs = this.sleepTransitionMs;
+    var delta = now - this.sleepTransitionStart;
+    var progress = delta / transitionMs;
+
+    if (progress >= 1) {
+      progress = 1.0;
+      this.sleepTransitioning = false;
+    }
+
+    var alpha = 1.0 - progress;
+    if (!this.sleeping) alpha = progress;
+
+    _.each(this.sleepers, function(g){
+      g.alpha = alpha;
+    });
+  };
+
   Graphics.prototype.transition = function(){
     this.monthTransitioning = (this.monthTransitionValue > 0 && this.monthTransitionValue < 1);
 
-    if (!this.transitioning && !this.monthTransitioning && !this.markerTransitioning) return false;
+    if (!this.transitioning && !this.monthTransitioning && !this.markerTransitioning && !this.sleepTransitioning) return false;
 
     // bar highlight transition
     if (this.transitioning) {
@@ -1013,6 +1051,11 @@ var Graphics = (function() {
       if (value <= 0) {
         this.onScaleChange(this.scale);
       }
+    }
+
+    // sleep transition
+    if (this.sleepTransitioning) {
+      this.sleepTransition();
     }
 
     if (this.transitioning || this.monthTransitioning) {
