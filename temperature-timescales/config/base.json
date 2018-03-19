@@ -13,7 +13,8 @@
     "tenYearTrendYearsDisplay": 40,
     "annotationsUI": {
       "color": "0xc6ad61",
-      "highlightColor": "0xe2bb3d"
+      "highlightColor": "0xe2bb3d",
+      "scaleThreshold": 0.5
     },
     "marker": {
       "color": "0xe2bb3d",

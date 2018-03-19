@@ -440,7 +440,7 @@ var Graphics = (function() {
       }
 
       var aMarkerY = y - marginY - markerRadius;
-      if (y > y0) {
+      if (d.y > y0) {
         aMarkerY = y + marginY + markerRadius;
       }
       var aMarkerX = x + dataW / 2;
@@ -664,6 +664,9 @@ var Graphics = (function() {
     var time = this.time;
     var markerW = 6;
     var transitionMs = this.opt.marker.transitionMs;
+    var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
+
+    var showAnnotation = (this.scale <= scaleThreshold && current.annotation);
 
     marker.clear();
 
@@ -676,7 +679,7 @@ var Graphics = (function() {
     var marginY = cw * 0.01;
 
     var rectW = cw * 0.2;
-    if (current.annotation) rectW = cw * 0.25;
+    if (showAnnotation) rectW = cw * 0.28;
 
     if (!this.markerRectW) this.markerRectW = rectW;
     if (this.markerRectW !== rectW) {
@@ -722,7 +725,7 @@ var Graphics = (function() {
     }
 
     var annotation = "";
-    if (current.annotation) annotation = current.annotation;
+    if (showAnnotation) annotation = current.annotation;
 
     // set text
     yLabel.text = yearText;
@@ -756,7 +759,7 @@ var Graphics = (function() {
 
     // draw rectangles
     var rectH = marginY * 4 + yLabel.height + cLabel.height;
-    if (current.annotation) rectH += marginY * 2 + aLabel.height;
+    if (showAnnotation) rectH += marginY * 2 + aLabel.height;
 
     marker.lineStyle(0);
     marker.beginFill(markerFill);
