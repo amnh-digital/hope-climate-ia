@@ -43,12 +43,14 @@
   border-bottom: 0.4vh solid #e2bb3d;
 }
 .map-key {
-  width: 100%;
-  height: 12vh;
+  position: fixed;
+  left: 5vw;
+  bottom: 5vh;
+  width: 25vw;
 }
 .map-key img {
   display: block;
-  width: 80%;
+  width: 100%;
   height: auto;
   margin: 0 auto;
 }
