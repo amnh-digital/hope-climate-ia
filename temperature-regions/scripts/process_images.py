@@ -32,7 +32,9 @@ END_YEAR = args.END_YEAR
 TARGET_WIDTH = args.TARGET_WIDTH
 IMAGE_FORMAT = args.IMAGE_FORMAT
 
-GRADIENT = ["#99cccc", "#7da09f", "#000000", "#eb5229", "#ff3300"]
+# GRADIENT = ["#42a6ff", "#89a2b7", "#000000", "#e05050", "#fc0000"]
+GRADIENT = ["#43fff5", "#88b5b3", "#000000", "#dd6952", "#f92900"]
+
 MIN_VALUE = -3.5
 MAX_VALUE = 3.5
 TARGET_HEIGHT = TARGET_WIDTH / 2

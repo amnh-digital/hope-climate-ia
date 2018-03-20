@@ -20,6 +20,17 @@ def getColor(grad, amount, toInt=False):
     else:
         return rgb
 
+def getColorFixed(grad, amount, toInt=False):
+    gradLen = len(grad)
+    i = (gradLen-1) * amount
+    remainder = i % 1
+    rgb = (0,0,0)
+    rgb = grad[int(round(i))]
+    if toInt:
+        return int(rgb2hex(rgb), 16)
+    else:
+        return rgb
+
 # Add colors
 def hex2rgb(hex):
   # "#FFFFFF" -> [1,1,1]

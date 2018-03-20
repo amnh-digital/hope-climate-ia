@@ -35,7 +35,8 @@ ZONES = args.ZONES
 RANGE = (-3.5, 3.5) # Celsius
 GRAPH_RANGE = (-1.5, 3.5)
 
-GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
+# GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
+GRADIENT = ["#58e0dc", "#99cccc", "#adada3", "#d67052", "#eb5229", "#ff3300"]
 
 # Convert colors to RGB
 GRADIENT = [hex2rgb(g) for g in GRADIENT]
@@ -87,7 +88,7 @@ for i, zoneData in enumerate(data):
         else:
             n = 0.5 - v / RANGE[0] * 0.5
         # n = norm(value, RANGE[0], RANGE[1])
-        color = getColor(GRADIENT, n, toInt=True)
+        color = getColorFixed(GRADIENT, n, toInt=True)
         data[i][j] = (v, color)
 
 jsonData = {
