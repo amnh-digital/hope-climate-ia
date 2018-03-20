@@ -44,6 +44,14 @@ AppRegions.prototype.loadListeners = function(){
     }
   });
 
+  // $(document).on("sleep.start", function(e, value) {
+  //   _this.sleepStart();
+  // });
+  //
+  // $(document).on("sleep.end", function(e, value) {
+  //   _this.sleepEnd();
+  // });
+
   $(window).on('resize', function(){
     _this.onResize();
   });

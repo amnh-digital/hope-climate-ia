@@ -22,6 +22,7 @@ var Messages = (function() {
 
     this.messages = messages;
     this.currentMessage = -1;
+    this.$el = $el;
 
     this.onZoneChange(this.opt.zone);
   };

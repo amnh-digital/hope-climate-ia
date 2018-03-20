@@ -99,6 +99,15 @@ a {
   opacity: 0;
   transition: opacity 3s ease-in-out;
 }
+.sleepMode p {
+  font-size: 2vh;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  line-height: 1.6;
+  letter-spacing: 0.1vh;
+}
 .sleepMode.active,
 #app.sleeping .sleepMode {
   /* display: block; */
@@ -107,11 +116,6 @@ a {
 .sleepMode.active p,
 #app.sleeping .sleepMode p {
   animation: blink 3s infinite;
-  font-size: 2vh;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0;
 }
 
 .ui {

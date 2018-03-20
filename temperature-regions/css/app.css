@@ -156,3 +156,10 @@ svg text {
 .city.active:before {
   opacity: 1;
 }
+
+.map > * {
+  transition: opacity 2s ease-in-out;
+}
+.sleeping .map > * {
+  opacity: 0;
+}
