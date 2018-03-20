@@ -1,14 +1,20 @@
+.title {
+  position: absolute;
+  left: 5vw;
+  top: 5vh;
+  width: 30vw;
+}
+
 .map {
   position: relative;
   width: 40vw;
   height: 20vw;
-  top: 50%;
-  transform: translateY(-70%);
+  top: 28vh;
   background: url(../img/worldmap.png) 0 0 no-repeat;
   background-size: 100% auto;
-  margin-left: 10vw;
+  margin-left: 27vw;
 }
-.map img {
+.map > img {
   display: block;
   width: 100%;
   height: auto;
@@ -17,41 +23,42 @@
   left: 0;
 }
 .map-label {
-  position: absolute;
   width: 100%;
-  height: 10vh;
-  top: -9vh;
+  height: 9vh;
   text-align: center;
+  padding-top: 22vw;
 }
-.map-label h2 {
+.map-label h3 {
   font-size: 2vh;
-  color: #f1a051;
+  color: #575959;
   font-weight: normal;
   display: inline-block;
+  letter-spacing: 0.1vh;
 }
-.map-label h2 .map-year {
-  color: #fff;
+.map-label h3 .map-year {
+  color: #e2bb3d;
   display: inline-block;
   padding: 0.2vh 0;
   font-weight: bold;
-  border-bottom: 0.4vh solid #fff;
+  border-bottom: 0.4vh solid #e2bb3d;
 }
 .map-key {
-  position: absolute;
   width: 100%;
   height: 12vh;
-  bottom: -15vh;
 }
 .map-key img {
   display: block;
-  width: 97%;
+  width: 80%;
   height: auto;
   margin: 0 auto;
+}
+svg text {
+  fill: #fff;
 }
 .helper {
   width: 100%;
   height: 6vh;
-  border: 2px solid #777c7b;
+  border: 0.33vh solid #3f3d3c;
   position: absolute;
   left: 0;
   top: 0;
@@ -66,21 +73,20 @@
   content: " ";
   display: block;
   background: #000;
-  width: 2px;
+  width: 0.33vh;
   height: 100%;
   position: absolute;
-  right: -2px;
+  right: -0.33vh;
   top: 0;
   box-sizing: border-box;
 }
 .graph {
   position: absolute;
-  top: 50%;
+  top: -0.33vh;
   right: -20vw;
   width: 20vw;
   height: 12vw;
-  margin-top: -5.25vw;
-  border: 2px solid #777c7b;
+  border: 0.33vh solid #3f3d3c;
   box-sizing: border-box;
   text-align: center;
   border-radius: 0.5vh;
@@ -99,7 +105,7 @@
   line-height: 1.6;
 }
 .worldmap {
-  z-index: -1;
+  z-index: 0;
 }
 
 .cities {}
@@ -112,6 +118,7 @@
   height: 1vh;
   margin-left: -0.3vh;
   margin-top: -0.6vh;
+  color: #e2bb3d;
 }
 .city span {
   opacity: 0;
@@ -122,7 +129,7 @@
   display: inline-block;
   width: 0.5vh;
   height: 0.5vh;
-  background: white;
+  background: #e2bb3d;
   margin-right: 0.5vh;
   border-radius: 0.25vh;
   opacity: 0.2;

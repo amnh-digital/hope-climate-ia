@@ -15,10 +15,11 @@
 
     <div id="app" class="app">
       <div id="view" class="view">
-        <div class="title"><h1>Where is climate change most dramatic?</h1></div>
+        <div class="title">
+          <h1>Regional temperature</h1>
+          <h2>Where is climate change most dramatic?</h2>
+        </div>
         <div id="map" class="map">
-          <div id="map-label" class="map-label"><h2>Temperature differences from average in <span class="map-year"></span></h2></div>
-          <div class="map-key"><img src="img/zonal_color_key.png" alt="Color key for temperature map" /></div>
           <img id="worldmap" class="worldmap" src="img/worldmap_highlight.png" />
           <img id="temperature-map" class="temperature" src="img/frames/frame1948.png" />
           <div id="map-helper" class="helper">
@@ -27,9 +28,13 @@
               <div id="graphics" class="graphics"></div>
             </div>
           </div>
+          <div id="map-label" class="map-label"><h3>Temperature differences from average in <span class="map-year"></span></h3></div>
+          <div class="map-key">
+            <img src="img/zonal_color_key.png" alt="Temperature key with color gradient" />
+          </div>
         </div>
         <div class="sleepMode">
-          <p>Move the sliders below to start!</p>
+          <p>Move the sliders below to explore the data!</p>
         </div>
       </div>
     </div>

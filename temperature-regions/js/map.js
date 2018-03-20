@@ -53,7 +53,7 @@ var Map = (function() {
 
   Map.prototype.onResize = function(){
     this.height = this.$el.height();
-    this.helperHeight = this.$helper.height();
+    this.helperHeight = this.$helper.outerHeight();
     this.helperWidth = this.$helper.width();
   };
 

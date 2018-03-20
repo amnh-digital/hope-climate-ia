@@ -14,23 +14,10 @@
 
 .title {
   position: absolute;
-  width: 26vw;
-  left: 14vw;
+  width: 36vw;
+  left: 5vw;
   top: 40vh;
   text-align: left;
-}
-.title h1 {
-  font-size: 4vh;
-  white-space: nowrap;
-  font-weight: normal;
-  letter-spacing: 0.2vh;
-  margin-bottom: 0;
-}
-.title h2 {
-  font-weight: normal;
-  line-height: 1.5;
-  font-size: 2.25vh;
-  letter-spacing: 0.1vh;
 }
 
 .graphics {
