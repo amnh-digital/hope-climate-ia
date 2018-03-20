@@ -6,7 +6,7 @@
     "margin": [0.12, 0.06, 0.07, 0.05],
     "marker": {
       "textStyle": {
-        "fill": "#f1a051",
+        "fill": "#e2bb3d",
         "fontSize": 0.05,
         "fontWeight": "bold"
       }
@@ -14,22 +14,22 @@
     "xAxis": {
       "height": 0.08,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#505454",
         "fontSize": 0.05
       },
       "subtextStyle": {
-        "fill": "#7f7f87",
+        "fill": "#505454",
         "fontSize": 0.04
       }
     },
     "yAxis": {
       "width": 0.125,
       "textStyle": {
-        "fill": "#d2d1dd",
+        "fill": "#505454",
         "fontSize": 0.05
       },
       "subtextStyle": {
-        "fill": "#7f7f87",
+        "fill": "#505454",
         "fontSize": 0.04
       }
     }

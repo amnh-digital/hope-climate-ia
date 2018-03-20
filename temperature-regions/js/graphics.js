@@ -70,7 +70,7 @@ var Graphics = (function() {
     var plot = new PIXI.Graphics();
     var marker = new PIXI.Graphics();
 
-    this.app.stage.addChild(plot, axes, marker);
+    this.app.stage.addChild(axes, plot, marker);
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
@@ -211,25 +211,29 @@ var Graphics = (function() {
     // clear axes
     axes.clear();
 
+    axes.beginFill(0x151616);
+    axes.drawRect(pd[0], pd[1], pd[2], pd[3]);
+    axes.endFill();
+
     // draw y axis
-    axes.lineStyle(2, 0xc4ced4);
-    axes.moveTo(pd[0], pd[1]).lineTo(pd[0], pd[1]+pd[3]);
+    // axes.lineStyle(2, 0x2c2d2d);
+    // axes.moveTo(pd[0], pd[1]).lineTo(pd[0], pd[1]+pd[3]);
 
     // draw horizontal lines
     var v = range[0];
     var yStep = 0.5;
     while (v <= range[1]) {
       var p = dataToPoint(0, v, domain, range, pd);
-
-      // draw line
-      if (v!=0) axes.lineStyle(1, 0x56585c);
-      else axes.lineStyle(2, 0xffffff);
-      axes.moveTo(pd[0], p[1]).lineTo(pd[0]+pd[2], p[1]);
       var xLabel = pd[0] * 0.9;
       var y = p[1];
 
       // draw label
       if (v%1===0) {
+        // draw line
+        if (v!=0) axes.lineStyle(1, 0x2c2d2d);
+        else axes.lineStyle(2, 0x2c2d2d);
+        axes.moveTo(pd[0], p[1]).lineTo(pd[0]+pd[2], p[1]);
+
         if (v===0) {
           label = axes.children[labelIndex];
           label.text = "20th century";
@@ -269,12 +273,12 @@ var Graphics = (function() {
 
     // draw x axis
     v = domain[0];
-    var tickEvery = 5;
+    var tickEvery = 10;
     var yLabel = xAxisBounds[1] * 1.12;
     axes.lineStyle(1, 0x56585c);
     while (v <= domain[1]) {
-      var showLabel = (v%20===0 || v===domain[1] || v===domain[0]);
-      var showTick = (v%tickEvery===0);
+      var showLabel = (v===domain[1] || v===domain[0]);
+      var showTick = (v%tickEvery===0 || v===domain[1] || v===domain[0]);
       var px, p;
       if (showLabel || showTick) {
         p = dataToPoint(v, range[0], domain, range, pd);
@@ -329,7 +333,7 @@ var Graphics = (function() {
     var color = zoneData[yearIndex][1];
     // console.log(year, value, color);
 
-    marker.lineStyle(4, 0xf1a051, 0.8);
+    marker.lineStyle(4, 0xe2bb3d, 0.8);
     marker.moveTo(x, cy).lineTo(x, cy + ch);
 
     var textStyle = _.clone(this.markerTextStyle);
@@ -392,7 +396,7 @@ var Graphics = (function() {
 
     var barW = cw / len;
     var rangeRatio = range[1] / (range[1]-range[0]);
-    plot.lineStyle(1, 0x212121);
+    // plot.lineStyle(1, 0x212121);
 
     _.each(data, function(d, i){
       var value = d[0];
