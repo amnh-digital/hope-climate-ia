@@ -17,24 +17,24 @@
       <div id="view" class="view">
         <div class="title">
           <h1>Regional temperature</h1>
-          <h2>Where is climate change most dramatic?</h2>
+          <h2>How Does Warming Change with Location?</h2>
         </div>
         <div id="map" class="map">
           <img id="worldmap" class="worldmap" src="img/worldmap_highlight.png" />
           <img id="temperature-map" class="temperature" src="img/frames/frame1948.png" />
           <div id="map-helper" class="helper">
             <div id="graph" class="graph">
-              <div class="graph-message"><p>Messaging about this region to come...</p></div>
+              <div id="messages" class="graph-messages"></div>
               <div id="graphics" class="graphics"></div>
             </div>
           </div>
-          <div id="map-label" class="map-label"><h3>Temperature differences from average in <span class="map-year"></span></h3></div>
+          <div id="map-label" class="map-label"><h3>Temperature difference from 100-year regional average in: <span class="map-year"></span></h3></div>
           <div class="map-key">
             <img src="img/zonal_color_key.png" alt="Temperature key with color gradient" />
           </div>
         </div>
         <div class="sleepMode">
-          <p>Move the sliders below to explore the data!</p>
+          <p>Where in the world is climate changing the most? Move the sliders below to start.</p>
         </div>
       </div>
     </div>
@@ -50,6 +50,7 @@
 
     <script src="js/graphics.js"></script>
     <script src="js/map.js"></script>
+    <script src="js/messages.js"></script>
     <script src="js/app.js"></script>
     <script src="js/init-physical.js"></script>
   </body>

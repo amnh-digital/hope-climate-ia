@@ -29,7 +29,7 @@
   padding-top: 22vw;
 }
 .map-label h3 {
-  font-size: 2vh;
+  font-size: 1.7vh;
   color: #575959;
   font-weight: normal;
   display: inline-block;
@@ -91,18 +91,33 @@ svg text {
   text-align: center;
   border-radius: 0.5vh;
 }
-.graph-message {
+.graph-messages {
   display: block;
   position: absolute;
   width: 10vw;
   height: 12vw;
   right: -11vw;
-  top: 2vw;
+  top: 0;
   text-align: left;
 }
-.graph-message p {
-  font-size: 1.5vh;
+.message {
+  display: none;
+}
+.message.active {
+  display: block;
+}
+.message h3 {
+  color: #575959;
+  font-size: 1.4vh;
+  margin-top: 2.5vh;
+  letter-spacing: 0.1vh;
+}
+.message p {
+  font-size: 1vh;
   line-height: 1.6;
+  font-weight: normal;
+  letter-spacing: 0.1vh;
+  color: #ccc;
 }
 .worldmap {
   z-index: 0;

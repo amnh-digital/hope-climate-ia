@@ -61,6 +61,9 @@ AppRegions.prototype.onReady = function(){
   opt = _.extend({}, this.opt.map, this.data, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
   this.map = new Map(opt);
 
+  opt = _.extend({}, this.opt.messages, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
+  this.messages = new Messages(opt);
+
   // Init sleep mode utilitys
   opt = _.extend({}, this.opt.sleep);
   this.sleep = new Sleep(opt);
@@ -82,5 +85,6 @@ AppRegions.prototype.onTimeChange = function(value) {
 AppRegions.prototype.onZoneChange = function(value) {
   this.graphics.onZoneChange(value);
   this.map.onZoneChange(value);
+  this.messages.onZoneChange(value);
   this.sleep.wakeUp();
 };
