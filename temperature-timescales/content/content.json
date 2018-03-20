@@ -7,12 +7,16 @@
     {"text": "When viewing over a century of global temperature records, a clear warming trend is observed.", "years": 200}
   ],
   "annotations": [
+    {"year": 1911, "text": "From 1910 to 1940, there is some warming from both human CO2 emissions and natural factors."},
+    {"year": 1940, "text": "Warming trend peaks, slight cooling begins."},
     {"year": 1950, "text": "From the 1940s to 1975, aerosols from pollution and volcanic eruptions cool planet slightly."},
     {"year": 1975, "text": "Warming starts to accelerate, driven by human CO₂ emissions."},
     {"year": 1979, "text": "Rate of warming increases to 0.3°C (0.5°F) per decade."},
+    {"year": 1993, "text": "Sea level rise accelerates to 30 millimeters (1.10 inches) per decade, doubling 1901-1990 mean."},
     {"year": 1998, "text": "A strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
     {"year": 2003, "text": "A historic heat wave in Europe kills 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
     {"year": 2005, "text": "Average temperature breaks the 1998 record."},
+    {"year": 2012, "text": "Lowest recorded Arctic sea ice extent in satellite record.", "image": "img/sea_ice.jpg", "imageW": 400, "imageH": 225},
     {"year": 2016, "text": "Hottest year on record."}
   ]
 }
