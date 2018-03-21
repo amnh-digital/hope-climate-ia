@@ -2,6 +2,7 @@
   "graphics": {
     "el": "#graphics",
     "margin": [0.1, 0.05, 0.1, 0.1],
+    "sleepTransitionMs": 2000,
     "xAxis": {
       "height": 0.0667,
       "labelEvery": 20,
@@ -69,6 +70,6 @@
   "sleep": {
     "enable": 1,
     "checkInterval": 5,
-    "sleepAfter": 60
+    "sleepAfter": 10
   }
 }

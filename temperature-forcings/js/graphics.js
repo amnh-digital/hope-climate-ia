@@ -68,6 +68,7 @@ var Graphics = (function() {
     this.forcingsData = this.opt.data;
     this.transitionStep = this.opt.transitionStep;
     this.cordConfig = this.opt.cord;
+    this.sleepTransitionMs = this.opt.sleepTransitionMs;
 
     // cord config details:
     // curveRatio: 0.45,
@@ -157,12 +158,15 @@ var Graphics = (function() {
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(observed, 1);
-    addLabelBuffers(axes, 36);
+    addLabelBuffers(axes, 20);
 
     this.axes = axes;
     this.cords = cords;
     this.observed = observed;
     this.plot = plot;
+
+    this.sleepers = [axes, cords, plot, observed.children[0]];
+    this.dreamers = [];
 
     this.$el.append(this.app.view);
 
@@ -296,6 +300,10 @@ var Graphics = (function() {
     if (this.cordsActive) {
       this.pluck();
       this.renderCords();
+    }
+
+    if (this.sleepTransitioning) {
+      this.sleepTransition();
     }
 
 
@@ -630,6 +638,39 @@ var Graphics = (function() {
         plot.endFill();
 
       }
+    });
+  };
+
+  Graphics.prototype.sleepEnd = function(){
+    if (this.sleeping) {
+      this.sleepTransitionStart = new Date();
+      this.sleepTransitioning = true;
+      this.sleeping = false;
+    }
+  };
+
+  Graphics.prototype.sleepStart = function(){
+    this.sleepTransitionStart = new Date();
+    this.sleepTransitioning = true;
+    this.sleeping = true;
+  };
+
+  Graphics.prototype.sleepTransition = function(){
+    var now = new Date();
+    var transitionMs = this.sleepTransitionMs;
+    var delta = now - this.sleepTransitionStart;
+    var progress = delta / transitionMs;
+
+    if (progress >= 1) {
+      progress = 1.0;
+      this.sleepTransitioning = false;
+    }
+
+    var alpha = 1.0 - progress;
+    if (!this.sleeping) alpha = progress;
+
+    _.each(this.sleepers, function(g){
+      g.alpha = alpha;
     });
   };
 

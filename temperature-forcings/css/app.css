@@ -7,6 +7,12 @@
   height: 32vw;
 }
 
+.sleepMode {
+  width: 42vw;
+  left: 46vw;
+  top: 0;
+}
+
 .messages {
   position: absolute;
 }

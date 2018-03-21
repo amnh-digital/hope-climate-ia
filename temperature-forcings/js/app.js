@@ -46,6 +46,10 @@ AppForcings.prototype.loadListeners = function(){
   $document.on("controls.button.up", buttonUp);
   $(window).on('resize', resize);
 
+  var sleepStart = function(e, value) { _this.graphics.sleepStart(); };
+  var sleepEnd = function(e, value) { _this.graphics.sleepEnd(); };
+  $(document).on("sleep.start", sleepStart);
+  $(document).on("sleep.end", sleepEnd);
 };
 
 AppForcings.prototype.loadSounds = function(){
