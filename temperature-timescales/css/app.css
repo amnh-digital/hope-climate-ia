@@ -66,3 +66,54 @@
 .messages .bracket path {
   fill: #3c4242;
 }
+
+.sidebar {
+  width: 30vw;
+  left: 5vw;
+  bottom: 10vh;
+  height: 10vh;
+  top: auto;
+  color: #aaa;
+}
+.sidebar h3 {
+  letter-spacing: 0.1vh;
+}
+.sidebar p {
+  font-size: 1.3vh;
+  line-height: 1.8;
+  font-weight: normal;
+  letter-spacing: 0.1vh;
+}
+.sidebar > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.sidebar > div:nth-child(1) {
+  animation: fadeInOut 40s 0s infinite linear;
+}
+
+.sidebar > div:nth-child(2) {
+  animation: fadeInOut 40s 20s infinite linear;
+}
+
+
+@keyframes fadeInOut {
+ 0% {
+   opacity: 0;
+ }
+ 4% {
+   opacity: 1;
+ }
+ 46% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 0;
+ }
+}
