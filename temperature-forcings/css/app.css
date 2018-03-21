@@ -1,9 +1,10 @@
 .graphics,
-.messages {
-  top: 15vh;
-  left: 20vw;
-  width: 60vw;
-  height: 40vw;
+.messages,
+.sleepMode {
+  top: 25vh;
+  left: 40vw;
+  width: 48vw;
+  height: 32vw;
 }
 
 .messages {
@@ -39,11 +40,12 @@
   float: right;
 }
 .message h3 {
-  font-size: 1.5vh;
-  margin: 1vh 0 0;;
+  font-size: 1.2vh;
+  margin: 1vh 0 0;
+  letter-spacing: 0.1vh;
 }
 .message p {
-  font-size: 1.2vh;
+  font-size: 0.9vh;
   line-height: 1.5;
 }
 .message.active {

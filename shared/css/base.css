@@ -37,7 +37,10 @@ a {
 .title {
   text-align: left;
   z-index: 200;
-  position: relative;
+  position: absolute;
+  left: 5vw;
+  top: 5vh;
+  width: 30vw;
 }
 .title h1 {
   font-size: 2.25vh;

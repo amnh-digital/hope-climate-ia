@@ -12,14 +12,6 @@
   right: 3vw;
 }
 
-.title {
-  position: absolute;
-  width: 30vw;
-  left: 5vw;
-  top: 5vh;
-  text-align: left;
-}
-
 .graphics {
   height: 30vw;
   position: relative;
