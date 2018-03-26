@@ -65,7 +65,7 @@ def wm2c(value):
         m = -1.0
         value *= -1.0
     # return m * math.sqrt(value) * 0.75
-    return m * value / 3.7
+    return m * value / 4.0
 
 for i, f in enumerate(forcings):
     for h in FORCING_HEADERS:
@@ -94,6 +94,10 @@ for header in FORCING_HEADERS:
         "data": data
     }
     values += data[:]
+
+items["all"] = {
+    "data": getData(netForcings, "All_Forcings_Together", START_YEAR, END_YEAR, oBaseline)
+}
 
 # calculate range
 minValue = min(values)
