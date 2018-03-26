@@ -10,7 +10,7 @@
     "time": 0.5,
     "scale": 0.5,
     "highlightMs": 1000,
-    "tenYearTrendYearsDisplay": 40,
+    "tenYearTrendYearsDisplay": [5, 80],
     "sleepTransitionMs": 2000,
     "annotationsUI": {
       "color": "0xc6ad61",

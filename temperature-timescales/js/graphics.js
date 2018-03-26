@@ -54,54 +54,7 @@ var Graphics = (function() {
     this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
     this.sleepTransitionMs = this.opt.sleepTransitionMs;
 
-    var annotations = _.map(this.opt.annotations, function(a){
-      return [""+a.year, a];
-    });
-    var annotationIndex = _.object(annotations);
-
-    // initialize data
-    var d0 = this.domain[0];
-    this.annualData = _.map(this.opt.annualData, function(d,i){
-      // retrieve month data
-      var monthlyData = _.map(d[2], function(dd, j){
-        return {
-          year: d0 + i + j/12.0,
-          month: j,
-          value: dd[0],
-          valueF: dd[0] * 1.8,
-          color: dd[1],
-          yearValue: d[0],
-          yearColor: d[1],
-          index: j,
-          x: 0,
-          y: 0,
-          highlighting: false,
-          highlightStart: 0,
-          highlightValue: 0
-        };
-      });
-      // retrieve annotation
-      var annotation = false;
-      var year = d0 + i;
-      if (_.has(annotationIndex, "" + year)) {
-        annotation = annotationIndex["" + year];
-      }
-      return {
-        year: year,
-        month: -1,
-        value: d[0],
-        valueF: d[0] * 1.8,
-        color: d[1],
-        index: i,
-        x: 0,
-        y: 0,
-        highlighting: false,
-        highlightStart: 0,
-        highlightValue: 0,
-        monthlyData: monthlyData,
-        annotation: annotation
-      };
-    });
+    this.parseData();
 
     this.yearCount = this.annualData.length;
     this.time = this.opt.time;
@@ -140,12 +93,12 @@ var Graphics = (function() {
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var axes = new PIXI.Graphics();
     var plot = new PIXI.Graphics();
-    // var trend = new PIXI.Graphics();
+    var trend = new PIXI.Graphics();
     var annotations = new PIXI.Graphics();
     var images = new PIXI.Container();
     var marker = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, plot, annotations, marker, images);
+    this.app.stage.addChild(axes, plot, trend, annotations, marker, images);
 
     // add images as sprites
     _.each(this.annualData, function(d, i){
@@ -167,7 +120,7 @@ var Graphics = (function() {
 
     this.axes = axes;
     this.plot = plot;
-    // this.trend = trend;
+    this.trend = trend;
     this.annotations = annotations;
     this.marker = marker;
     this.images = images;
@@ -175,7 +128,7 @@ var Graphics = (function() {
     this.images.visible = false;
 
     // for what to show during "sleep mode"
-    this.sleepers = [axes, annotations, marker, images];
+    this.sleepers = [axes, trend, annotations, marker, images];
     this.dreamers = [plot];
 
     this.$el.append(this.app.view);
@@ -188,7 +141,7 @@ var Graphics = (function() {
 
     this.renderAxes();
     this.renderPlot();
-    // this.renderTrend();
+    this.renderTrend();
     this.renderMarker();
     this.renderAnnotations();
   };
@@ -299,7 +252,7 @@ var Graphics = (function() {
 
     if (autoScrolled || monthTransitioning) this.onTimeChange(this.time, false);
     this.renderAxes();
-    // this.renderTrend();
+    this.renderTrend();
     this.renderMarker();
     this.renderPlot();
     this.renderAnnotations();
@@ -336,6 +289,64 @@ var Graphics = (function() {
     this.transition();
     this.renderMarker();
     this.renderAnnotations();
+    this.renderTrend();
+  };
+
+  Graphics.prototype.parseData = function(){
+    var annotations = _.map(this.opt.annotations, function(a){
+      return [""+a.year, a];
+    });
+    var annotationIndex = _.object(annotations);
+    var annotationRanges = _.filter(this.opt.annotations, function(a){ return a.years; });
+
+    this.annotationRanges = annotationRanges;
+
+    // initialize data
+    var d0 = this.domain[0];
+    this.annualData = _.map(this.opt.annualData, function(d,i){
+      // retrieve month data
+      var monthlyData = _.map(d[2], function(dd, j){
+        return {
+          year: d0 + i + j/12.0,
+          month: j,
+          value: dd[0],
+          valueF: dd[0] * 1.8,
+          color: dd[1],
+          yearValue: d[0],
+          yearColor: d[1],
+          index: j,
+          x: 0,
+          y: 0,
+          highlighting: false,
+          highlightStart: 0,
+          highlightValue: 0
+        };
+      });
+      // retrieve annotation
+      var annotation = false;
+      var year = d0 + i;
+      if (_.has(annotationIndex, "" + year)) {
+        annotation = annotationIndex["" + year];
+      } else {
+        var foundAnnotationRange = _.filter(annotationRanges, function(a){ return year >= a.years[0] && year <= a.years[1]; });
+        if (foundAnnotationRange.length > 0) annotation = foundAnnotationRange[0];
+      }
+      return {
+        year: year,
+        month: -1,
+        value: d[0],
+        valueF: d[0] * 1.8,
+        color: d[1],
+        index: i,
+        x: 0,
+        y: 0,
+        highlighting: false,
+        highlightStart: 0,
+        highlightValue: 0,
+        monthlyData: monthlyData,
+        annotation: annotation
+      };
+    });
   };
 
   Graphics.prototype.refreshDimensions = function(){
@@ -442,7 +453,7 @@ var Graphics = (function() {
     var now = new Date();
 
     _.each(plotData, function(d, i){
-      if (!d.annotation) return;
+      if (!d.annotation || d.annotation.years) return;
 
       var x = d.x;
       var y = d.y;
@@ -949,8 +960,9 @@ var Graphics = (function() {
 
     trend.clear();
 
-    if (count < tenYearTrendYearsDisplay) return false;
+    if (count < tenYearTrendYearsDisplay[0] || count > tenYearTrendYearsDisplay[1]) return false;
 
+    var current = this.plotCurrentValue;
     var pd = this.plotDimensions;
     var domainp = this.plotDomainPrecise;
     var range = this.plotRange;
@@ -959,8 +971,13 @@ var Graphics = (function() {
     var dataW = cw / (domainp[1]-domainp[0]+1);
     var plotData = this.plotData;
     var trendData = this.tenYearTrend;
+    var annotationRanges = this.annotationRanges;
 
-    trend.lineStyle(3, 0xffffff, 0.4);
+    var findAnnotationRange = function(year, annotations){
+      var found = _.find(annotations, function(a){ return year >= a.years[0] && year <= a.years[1]; });
+      return found;
+    };
+
     var first = true;
     _.each(plotData, function(d, i){
       var x = d.x + dataW * 0.5;
@@ -971,6 +988,21 @@ var Graphics = (function() {
         trend.moveTo(x, y);
         first = false;
       } else {
+        var annRange = findAnnotationRange(d.year, annotationRanges);
+        if (annRange) {
+          // highlight trend if we are currently on this annotation range
+          if (current.year >= annRange.years[0] && current.year <= annRange.years[1]) {
+            trend.lineStyle(4, 0xe2bb3d, 0.8);
+
+          // otherwise, just show it faintly
+          } else {
+            trend.lineStyle(2, 0xffffff, 0.4);
+          }
+
+        // don't show trend where there is no annotation range
+        } else {
+          trend.lineStyle(1, 0xffffff, 0);
+        }
         trend.lineTo(x, y);
       }
     });
