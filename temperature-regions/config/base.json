@@ -48,6 +48,6 @@
   "sleep": {
     "enable": 1,
     "checkInterval": 5,
-    "sleepAfter": 10
+    "sleepAfter": 30
   }
 }

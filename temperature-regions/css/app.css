@@ -85,6 +85,18 @@ svg text {
   box-sizing: border-box;
   text-align: center;
   border-radius: 0.5vh;
+  border-top-left-radius: 0;
+}
+.graph-title {
+  position: absolute;
+  top: -2.4vw;
+  text-align: center;
+  width: 100%;
+}
+.graph-title h3 {
+  font-size: 1.3vh;
+  font-weight: normal;
+  color: #575959;
 }
 .graph-messages {
   display: block;
