@@ -42,6 +42,7 @@
   height: 10vh;
   top: 14vh;
   border-top: 0.5vh solid #222;
+  -webkit-transform: translateZ(0);
 }
 .calendar:after {
   content: "";
@@ -67,6 +68,7 @@
   left: 0;
   bottom: 0;
   margin-left: 1.8%;
+  -webkit-transform: translateZ(0);
 }
 .loading {
   text-align: center;
@@ -99,4 +101,8 @@
 }
 .color-key .label:last-child {
   right: 0;
+}
+
+.content-container {
+  display: none;
 }

@@ -1,5 +1,36 @@
 {
   "annotations": [
-    {"lat": 40.7789463, "lon": -73.9771144, "width": 10, "height": 10, "text": "Testing", "target": "#ocean-currents"}
+    {
+      "lat": 37.0942262,
+      "lon": -60.7623902,
+      "width": 50,
+      "height": 30,
+      "globeEl": ["#ocean-currents", "#atmosphere-wind"],
+      "parentEl": "#content",
+      "id": "content-gulf-stream",
+      "className": "content-both",
+      "title": "Gulf Stream",
+      "text": "This fast-moving current transports warm water from the tropics north along the coast of North America."
+    },{
+      "lat": 35.0308912,
+      "lon": 149.0079868,
+      "width": 50,
+      "height": 30,
+      "globeEl": ["#ocean-currents", "#atmosphere-wind"],
+      "parentEl": "#content",
+      "id": "content-peru-current",
+      "className": "content-both",
+      "title": "Kuroshio Current",
+      "text": "A north-flowing ocean current transports warm, tropical water northward toward the polar region."
+    },{
+      "lat": 0,
+      "lon": 90,
+      "globeEl": "#ocean-currents",
+      "parentEl": "#content",
+      "id": "content-peru-current",
+      "className": "content-atmosphere",
+      "title": "Hadley cells",
+      "text": "Warm air rises from the equator, then cools as it moves toward the poles. Cool air sinks to the surface, creating a loop of air circulation known as a Hadley cell."
+    }
   ]
 }

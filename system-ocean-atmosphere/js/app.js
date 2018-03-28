@@ -55,12 +55,15 @@ AppOceanAtmosphere.prototype.onReady = function(){
   var annotations = this.content.annotations;
 
   _.each(globesOpt, function(opt){
-    var globeAnnotations = _.where(annotations, {"target": opt.el});
+    var globeAnnotations = _.filter(annotations, function(a){
+      return a.globeEl.indexOf(opt.el) >= 0;
+    });
     globes.push(new Globe(_.extend({}, opt, globeOpt, {"annotations": globeAnnotations})));
   });
 
   this.globes = globes;
   this.calendar = new Calendar(_.extend({}, this.opt.calendar));
+  this.content = new Content(_.extend({}, this.content));
 
   this.loadListeners();
 

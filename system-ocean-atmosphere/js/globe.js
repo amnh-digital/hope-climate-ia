@@ -14,19 +14,32 @@ var Globe = (function() {
     this.init();
   }
 
+  function normLat(deg){
+    return deg;
+  }
+
+  // convert 0-360 to -180-180
+  function normLon(deg){
+    // wrap around
+    if (deg > 360) deg = (deg-360);
+    if (deg < 0) deg = 360 + deg;
+    if (deg > 180) return (deg - 360);
+    else return deg;
+  }
+
   Globe.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.$el.append($('<h2>'+this.opt.title+'</h2>'));
 
-    this.annotations = this.opt.annotations;
+    this.loadAnnotations();
 
-    this.rotateX = 0;
-    this.rotateY = 0;
+    this.rotateX = 0.5;
+    this.rotateY = 0.5;
 
     this.initScene();
     this.loadGeojson(this.opt.geojson);
     this.loadVideo();
-    this.loadAnnotation();
+    this.loadAnnotationLayer();
   };
 
   Globe.prototype.initScene = function() {
@@ -85,7 +98,7 @@ var Globe = (function() {
     return this.video && this.video.duration;
   };
 
-  Globe.prototype.loadAnnotation = function(){
+  Globe.prototype.loadAnnotationLayer = function(){
     var radius = this.opt.radius * 1.0001;
     var geo = new THREE.SphereGeometry(radius, 64, 64);
 
@@ -133,6 +146,43 @@ var Globe = (function() {
 
     this.annotationContext = context;
     this.xContainer.add(annotationLayer);
+  };
+
+  Globe.prototype.loadAnnotations = function(){
+    var canvasW = this.opt.bgWidth;
+    var canvasH = this.opt.bgHeight;
+    var annotationLatThreshold = this.opt.annotationLatThreshold;
+    var annotationLonThreshold = this.opt.annotationLonThreshold;
+
+    this.annotations = _.map(this.opt.annotations, function(a){
+      var copy = _.clone(a);
+      copy.latFrom = a.lat - annotationLatThreshold;
+      copy.latTo = a.lat + annotationLatThreshold;
+      copy.lonFrom = a.lon - annotationLonThreshold;
+      copy.lonTo = a.lon + annotationLonThreshold;
+      // Note where x = 0px, lon = -90
+      // where y = 0px, lat = 90
+      var lw = a.width;
+      var lh = a.height;
+      var lx = a.lon;
+      var ly = a.lat;
+      if (lw && lh) {
+        var w = lw/360.0 * canvasW;
+        var h = lh/180.0 * canvasH;
+        lx = a.lon - lw * 0.5;
+        ly = a.lat + lh * 0.5;
+        copy.width = w;
+        copy.height = h;
+      }
+      if (lx < -90) lx = 270 - (-lx - 90);
+
+      copy.x = UTIL.norm(lx, -90, 270) * canvasW;
+      copy.y = UTIL.norm(ly, 90, -90) * canvasH;
+
+      return copy;
+    });
+
+    // console.log(this.annotations)
   };
 
   Globe.prototype.loadEarth = function() {
@@ -241,19 +291,65 @@ var Globe = (function() {
   };
 
   Globe.prototype.updateAnnotations = function(){
+    // Note where x = 0px, lon = -90, and rotateX = 0.25
+    // where y = 0px, lat = 90, and rotateY = 0
+
+    // look for active annotations
+    var lonRange = this.opt.rotateX;
+    var lon = UTIL.lerp(lonRange[0], lonRange[1], 1.0-this.rotateX);
+    lon = normLon(lon);
+
+    var latRange = this.opt.rotateY;
+    var lat = UTIL.lerp(90, -90, this.rotateY);
+
+    var annotations = _.filter(this.annotations, function(a){
+      return lon >= a.lonFrom && lon <= a.lonTo && lat >= a.latFrom && lat <= a.latTo;
+    });
+    // console.log(annotations)
+    var annotation = false;
+
+    // multiple found, sort by distance
+    if (annotations.length > 1) {
+      annotations = _.sortBy(annotations, function(a){
+        return Math.abs(lon-a.lon);
+      });
+    }
+
+    // found annotation
+    if (annotations.length > 0) {
+      annotation = annotations[0];
+    }
+
     var context = this.annotationContext;
     var bt = this.opt.bgTransparency;
     var w = this.opt.bgWidth;
     var h = this.opt.bgHeight;
+
+    // no annotations found, exit
+    if (!annotation || !annotation.width) {
+      context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
+      context.fillRect(0, 0, w, h);
+      this.annotationTexture.needsUpdate = true;
+      return false;
+    }
 
     // draw background
     context.fillStyle = "rgb("+bt+", "+bt+", "+bt+")"; // slightly transparent
     context.fillRect(0, 0, w, h);
 
     context.beginPath();
-    context.rect(w/2, h/2, 100, 100);
+    context.rect(annotation.x, annotation.y, annotation.width, annotation.height);
     context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
     context.fill();
+
+    // check for wrap-around
+    var x1 = annotation.x + annotation.width;
+    if (x1 > w) {
+      context.beginPath();
+      context.rect(0, annotation.y, x1 - w, annotation.height);
+      context.fillStyle = "rgb(0, 0, 0)";
+      context.fill();
+    }
 
     // this.annotationLayer.material.uniforms.texture.needsUpdate;
     this.annotationTexture.needsUpdate = true;
