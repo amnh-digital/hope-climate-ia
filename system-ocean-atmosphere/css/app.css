@@ -117,8 +117,16 @@
 }
 .annotation.content-atmosphere {
   left: auto;
-  right: 0;
+  right: 2%;
   top: 40%;
+}
+.annotation.content-image img {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  top: 0;
+  left: 0;
+  display: block;
 }
 .annotation h3 {
   font-weight: normal;
@@ -135,4 +143,24 @@
 }
 .annotation.active {
   opacity: 1;
+}
+
+#content-hadley-current {
+  top: 50%;
+}
+#image-hadley-current {
+  width: 33.33333%;
+  height: 100%;
+  left: auto;
+  right: 16.66667%;
+  transform-origin: 50% 50%;
+  transform: rotate(23.5deg);
+}
+#image-hadley-current img {
+  position: absolute;
+  width: auto;
+  height: 55%;
+  left: auto;
+  right: 16%;
+  top: 12.5%;
 }

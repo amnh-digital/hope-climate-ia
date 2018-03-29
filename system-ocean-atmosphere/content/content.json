@@ -7,10 +7,14 @@
       "height": 30,
       "globeEl": ["#ocean-currents", "#atmosphere-wind"],
       "parentEl": "#content",
-      "id": "content-gulf-stream",
-      "className": "content-both",
-      "title": "Gulf Stream",
-      "text": "This fast-moving current transports warm water from the tropics north along the coast of North America."
+      "els": [
+        {
+          "id": "content-gulf-stream",
+          "className": "content-both",
+          "title": "Gulf Stream",
+          "text": "This fast-moving current transports warm water from the tropics north along the coast of North America."
+        }
+      ]
     },{
       "lat": 35.0308912,
       "lon": 149.0079868,
@@ -18,19 +22,31 @@
       "height": 30,
       "globeEl": ["#ocean-currents", "#atmosphere-wind"],
       "parentEl": "#content",
-      "id": "content-kuroshio-current",
-      "className": "content-both",
-      "title": "Kuroshio Current",
-      "text": "A north-flowing ocean current transports warm, tropical water northward toward the polar region."
+      "els": [
+        {
+          "id": "content-kuroshio-current",
+          "className": "content-both",
+          "title": "Kuroshio Current",
+          "text": "A warm current running north from the tropics. In the mid-latitudes, it joins the North Pacific current and flows eastward, across the Pacific."
+        }
+      ]
     },{
       "lat": 0,
       "lon": 90,
       "globeEl": ["#ocean-currents", "#atmosphere-wind"],
       "parentEl": "#content",
-      "id": "content-hadley-current",
-      "className": "content-atmosphere",
-      "title": "Hadley cells",
-      "text": "Warm air rises from the equator, then cools as it moves toward the poles. Cool air sinks to the surface, creating a loop of air circulation known as a Hadley cell."
+      "els": [
+        {
+          "id": "content-hadley-current",
+          "className": "content-atmosphere",
+          "title": "Hadley cells",
+          "text": "Warm air rises from the equator, then cools as it moves toward the poles. Cool air sinks to the surface, creating a loop of air circulation known as a Hadley cell."
+        },{
+          "id": "image-hadley-current",
+          "className": "content-image",
+          "image": "img/hadley_cells.png"
+        }
+      ]
     }
   ]
 }

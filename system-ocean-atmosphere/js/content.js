@@ -18,13 +18,18 @@ var Content = (function() {
 
     _.each(this.annotations, function(a, i){
       var $container = $(a.parentEl);
-      var $annotation = $('<div id="'+a.id+'" class="annotation"></div>');
-      if (a.className) $annotation.addClass(a.className);
-      if (a.title) $annotation.append('<h3>'+a.title+'</h3>');
-      if (a.image) $annotation.append('<img src="'+a.image+'" alt="'+a.imageAlt+'" />');
-      if (a.text) $annotation.append('<p>'+a.text+'</p>');
-      $container.append($annotation);
-      _this.annotations[i].$el = $annotation;
+      var $els = [];
+      _.each(a.els, function(el, j){
+        var $annotation = $('<div id="'+el.id+'" class="annotation"></div>');
+        if (el.className) $annotation.addClass(el.className);
+        if (el.title) $annotation.append('<h3>'+el.title+'</h3>');
+        if (el.image) $annotation.append('<img src="'+el.image+'" alt="'+el.imageAlt+'" />');
+        if (el.text) $annotation.append('<p>'+el.text+'</p>');
+        $container.append($annotation);
+        $els.push($annotation)
+      });
+
+      _this.annotations[i].$els = $els;
     });
   };
 
@@ -34,7 +39,9 @@ var Content = (function() {
     if (!annotation) return false;
 
     var i = annotation.index;
-    this.annotations[i].$el.addClass('active');
+    _.each(this.annotations[i].$els, function($el,i){
+      $el.addClass('active');
+    });
   };
 
   return Content;
