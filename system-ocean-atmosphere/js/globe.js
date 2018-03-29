@@ -20,6 +20,14 @@ var Globe = (function() {
 
     this.rotateX = 0.5;
     this.rotateY = 0.5;
+    var annotations = _.map(this.opt.annotations.slice(0), function(a){
+      a.current = 0.0;
+      a.target = 0.0;
+      return [a.id, a];
+    });
+    this.bgCurrent = 0.0;
+    this.bgTarget = 0.0;
+    this.annotationIndex = _.object(annotations);
 
     this.initScene();
     this.loadGeojson(this.opt.geojson);
@@ -66,6 +74,45 @@ var Globe = (function() {
     // this.controls = new THREE.OrbitControls(this.camera, $("#globes")[0]);
   };
 
+  Globe.prototype.drawAnnotation = function(annotation, direction, progress) {
+    var context = this.annotationContext;
+    var bt = this.opt.bgTransparency;
+    var w = this.opt.bgWidth;
+    var h = this.opt.bgHeight;
+
+    var ax = 0;
+    var ay = 0;
+    var aw = w;
+    var ah = h;
+    var at = UTIL.lerp(0, bt, progress);
+    if (direction > 0) at = UTIL.lerp(bt, 0, progress);
+
+    if (annotation && annotation.width) {
+      ax = annotation.x;
+      ay = annotation.y;
+      aw = annotation.width;
+      ah = annotation.height;
+    }
+
+    context.beginPath();
+    context.rect(ax, ay, aw, ah);
+    context.fillStyle = "rgb("+at+", "+at+", "+at+")";
+    context.fill();
+
+    // check for wrap-around
+    if (annotation && annotation.width) {
+      var x1 = ax + aw;
+      if (x1 > w) {
+        context.beginPath();
+        context.rect(0, ay, x1 - w, ah);
+        context.fillStyle = "rgb("+at+", "+at+", "+at+")";
+        context.fill();
+      }
+    }
+
+    this.annotationTexture.needsUpdate = true;
+  };
+
   Globe.prototype.ended = function(){
     return this.video.ended;
   };
@@ -98,8 +145,7 @@ var Globe = (function() {
     var context = canvas.getContext('2d');
 
     // draw background
-    var bt = this.opt.bgTransparency;
-    context.fillStyle = "rgb("+bt+", "+bt+", "+bt+")"; // slightly transparent
+    context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
     context.fillRect(0, 0, w, h);
 
     // draw rectangle
@@ -168,6 +214,9 @@ var Globe = (function() {
     earth.add(southArrow);
 
     this.xContainer.add(earth);
+
+    this.onRotate("vertical", this.rotateY);
+    this.onRotate("horizontal", this.rotateX);
   };
 
   Globe.prototype.loadGeojson = function(geojsonData){
@@ -232,44 +281,94 @@ var Globe = (function() {
   };
 
   Globe.prototype.render = function(yearProgress){
+
+    if (this.transitioning) {
+      this.transition();
+    }
+
     this.renderer.render(this.scene, this.camera);
     // this.controls.update();
   };
 
-  Globe.prototype.updateAnnotation = function(annotation){
+  Globe.prototype.transition = function(){
     var context = this.annotationContext;
     var bt = this.opt.bgTransparency;
     var w = this.opt.bgWidth;
     var h = this.opt.bgHeight;
-
-    // no annotations found, exit
-    if (!annotation || !annotation.width) {
-      context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
-      context.fillRect(0, 0, w, h);
-      this.annotationTexture.needsUpdate = true;
-      return false;
-    }
+    var step = this.opt.transitionStep;
+    var transitioning = false;
 
     // draw background
-    context.fillStyle = "rgb("+bt+", "+bt+", "+bt+")"; // slightly transparent
+    var bgCurrent = this.bgCurrent;
+    var bgTarget = this.bgTarget;
+    var bgStep = step;
+    if (bgTarget <= 0.0) bgStep = -step;
+    bgCurrent += bgStep;
+    bgCurrent = UTIL.clamp(bgCurrent, 0.0, 1.0);
+    if (bgCurrent !== bgTarget) transitioning = true;
+    this.bgCurrent = bgCurrent;
+
+    var t = UTIL.lerp(0, bt, bgCurrent);
+    t = parseInt(t);
+    // console.log(t)
+    context.fillStyle = "rgb("+t+", "+t+", "+t+")"; // 0 = totally transparent
     context.fillRect(0, 0, w, h);
 
-    context.beginPath();
-    context.rect(annotation.x, annotation.y, annotation.width, annotation.height);
-    context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
-    context.fill();
+    // draw annotations
+    var aindex = this.annotationIndex;
+    _.each(aindex, function(a, id){
+      var astep = step;
+      if (a.target <= 0.0) astep = -step;
+      var aCurrent = a.current + astep;
+      aCurrent = UTIL.clamp(aCurrent, 0.0, 1.0);
+      if (aCurrent !== a.target) transitioning = true;
+      aindex[id].current = aCurrent;
 
-    // check for wrap-around
-    var x1 = annotation.x + annotation.width;
-    if (x1 > w) {
-      context.beginPath();
-      context.rect(0, annotation.y, x1 - w, annotation.height);
-      context.fillStyle = "rgb(0, 0, 0)";
-      context.fill();
-    }
+      if (a.width) {
+        var x1 = a.x + a.width;
+        var at = UTIL.lerp(0, bt, aCurrent);
+        context.beginPath();
+        context.rect(a.x, a.y, a.width, a.height);
+        at = parseInt(at);
+        context.fillStyle = "rgb("+at+", "+at+", "+at+")";
+        context.fill();
 
-    // this.annotationLayer.material.uniforms.texture.needsUpdate;
+        // check for wrap-around
+        if (x1 > w) {
+          context.beginPath();
+          context.rect(0, ay, x1 - w, ah);
+          context.fillStyle = "rgb("+at+", "+at+", "+at+")";
+          context.fill();
+        }
+      }
+
+
+    });
+    this.annotationIndex = aindex;
     this.annotationTexture.needsUpdate = true;
+
+  };
+
+  Globe.prototype.updateAnnotation = function(annotation, targetBg){
+    if (targetBg === undefined) targetBg = 0.0;
+    var aindex = this.annotationIndex;
+
+    var transitioning = false;
+    this.annotationIndex = _.mapObject(aindex, function(ann, id) {
+      ann.target = 1.0;
+      if (!annotation || !annotation.width) ann.target = targetBg;
+      if (annotation && annotation.id===id) ann.target = targetBg;
+      if (ann.current !== ann.target) transitioning = true;
+      return ann;
+    });
+
+    // transition background
+    if (annotation && !annotation.width) this.bgTarget = 0.0;
+    else if (annotation) this.bgTarget = 1.0;
+    else this.bgTarget = targetBg;
+    if (this.bgCurrent !== this.bgTarget) transitioning = true;
+
+    this.transitioning = transitioning;
   };
 
   return Globe;

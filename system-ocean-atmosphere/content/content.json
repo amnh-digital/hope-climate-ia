@@ -33,7 +33,7 @@
     },{
       "lat": 0,
       "lon": 90,
-      "globeEl": ["#ocean-currents", "#atmosphere-wind"],
+      "globeEl": ["#atmosphere-wind"],
       "parentEl": "#content",
       "els": [
         {

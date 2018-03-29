@@ -38,6 +38,7 @@ AppOceanAtmosphere.prototype.loadAnnotations = function(){
     var copy = _.clone(a);
 
     copy.index = i;
+    copy.id = ""+i;
 
     copy.latFrom = a.lat - annotationLatThreshold;
     copy.latTo = a.lat + annotationLatThreshold;
@@ -111,7 +112,7 @@ AppOceanAtmosphere.prototype.onReady = function(){
   var annotations = this.content.annotations;
 
   _.each(globesOpt, function(opt){
-    globes.push(new Globe(_.extend({}, opt, globeOpt)));
+    globes.push(new Globe(_.extend({}, opt, globeOpt, content)));
   });
 
   this.globes = globes;
@@ -167,6 +168,7 @@ AppOceanAtmosphere.prototype.onRotate = function(axis, value){
   _.each(this.globes, function(globe){
     globe.onRotate(axis, value);
     if (changed) globe.updateAnnotation(annotation);
+    // else if (changed) globe.updateAnnotation(false, 1.0);
   });
 };
 

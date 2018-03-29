@@ -8,7 +8,7 @@
 .globes,
 .content-container {
   height: 60vh;
-  bottom: 12vh;
+  bottom: 20vh;
 }
 .globe {
   position: absolute;

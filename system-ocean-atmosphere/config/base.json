@@ -13,9 +13,10 @@
     "rotateY": [-45, 45],
     "bgWidth": 1024,
     "bgHeight": 512,
-    "bgTransparency": 60,
+    "bgTransparency": 100,
     "annotationLatThreshold": 45,
-    "annotationLonThreshold": 30
+    "annotationLonThreshold": 30,
+    "transitionStep": 0.1
   },
   "globes": [
     {
