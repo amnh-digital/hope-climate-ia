@@ -14,26 +14,9 @@ var Globe = (function() {
     this.init();
   }
 
-  function normLat(deg){
-    return deg;
-  }
-
-  // convert 0-360 to -180-180
-  function normLon(deg){
-    // wrap around
-    if (deg > 360) deg = (deg-360);
-    if (deg < 0) deg = 360 + deg;
-    if (deg > 180) return (deg - 360);
-    else return deg;
-  }
-
   Globe.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.$el.append($('<h2>'+this.opt.title+'</h2>'));
-    this.$document = $(document);
-
-    this.currentAnnotationId = false;
-    this.loadAnnotations();
 
     this.rotateX = 0.5;
     this.rotateY = 0.5;
@@ -150,46 +133,6 @@ var Globe = (function() {
     this.xContainer.add(annotationLayer);
   };
 
-  Globe.prototype.loadAnnotations = function(){
-    var canvasW = this.opt.bgWidth;
-    var canvasH = this.opt.bgHeight;
-    var annotationLatThreshold = this.opt.annotationLatThreshold;
-    var annotationLonThreshold = this.opt.annotationLonThreshold;
-
-    this.annotations = _.map(this.opt.annotations, function(a, i){
-      var copy = _.clone(a);
-
-      copy.index = i;
-
-      copy.latFrom = a.lat - annotationLatThreshold;
-      copy.latTo = a.lat + annotationLatThreshold;
-      copy.lonFrom = a.lon - annotationLonThreshold;
-      copy.lonTo = a.lon + annotationLonThreshold;
-      // Note where x = 0px, lon = -90
-      // where y = 0px, lat = 90
-      var lw = a.width;
-      var lh = a.height;
-      var lx = a.lon;
-      var ly = a.lat;
-      if (lw && lh) {
-        var w = lw/360.0 * canvasW;
-        var h = lh/180.0 * canvasH;
-        lx = a.lon - lw * 0.5;
-        ly = a.lat + lh * 0.5;
-        copy.width = w;
-        copy.height = h;
-      }
-      if (lx < -90) lx = 270 - (-lx - 90);
-
-      copy.x = UTIL.norm(lx, -90, 270) * canvasW;
-      copy.y = UTIL.norm(ly, 90, -90) * canvasH;
-
-      return copy;
-    });
-
-    // console.log(this.annotations)
-  };
-
   Globe.prototype.loadEarth = function() {
     var radius = this.opt.radius;
 
@@ -286,8 +229,6 @@ var Globe = (function() {
       angle = UTIL.lerp(range[0], range[1], value);
       container.rotation.y = angle * Math.PI / 180;
     }
-
-    this.updateAnnotations();
   };
 
   Globe.prototype.render = function(yearProgress){
@@ -295,44 +236,7 @@ var Globe = (function() {
     // this.controls.update();
   };
 
-  Globe.prototype.updateAnnotations = function(){
-    // Note where x = 0px, lon = -90, and rotateX = 0.25
-    // where y = 0px, lat = 90, and rotateY = 0
-
-    // look for active annotations
-    var lonRange = this.opt.rotateX;
-    var lon = UTIL.lerp(lonRange[0], lonRange[1], 1.0-this.rotateX);
-    lon = normLon(lon);
-
-    var latRange = this.opt.rotateY;
-    var lat = UTIL.lerp(90, -90, this.rotateY);
-
-    var annotations = _.filter(this.annotations, function(a){
-      return lon >= a.lonFrom && lon <= a.lonTo && lat >= a.latFrom && lat <= a.latTo;
-    });
-    // console.log(annotations)
-    var annotation = false;
-    var annotationId = false;
-
-    // multiple found, sort by distance
-    if (annotations.length > 1) {
-      annotations = _.sortBy(annotations, function(a){
-        return Math.abs(lon-a.lon);
-      });
-    }
-
-    // found annotation
-    if (annotations.length > 0) {
-      annotation = annotations[0];
-    }
-
-    // check if we changed annotation
-    if (annotation) annotationId = annotation.id;
-    var changed = (annotationId !== this.currentAnnotationId);
-    if (!changed) return false;
-
-    this.$document.trigger("annotation.update", [annotation]);
-
+  Globe.prototype.updateAnnotation = function(annotation){
     var context = this.annotationContext;
     var bt = this.opt.bgTransparency;
     var w = this.opt.bgWidth;
