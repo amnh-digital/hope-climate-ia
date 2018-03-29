@@ -1,10 +1,12 @@
 .globes,
-.calendar {
+.calendar,
+.content-container {
   width: 100%;
   position: absolute;
   left: 0;
 }
-.globes {
+.globes,
+.content-container {
   height: 60vh;
   bottom: 12vh;
 }
@@ -25,22 +27,16 @@
   font-weight: normal;
   display: block;
   position: absolute;
-  top: 50%;
+  bottom: 0;
+  left: 0;
+  width: 100%;
   font-size: 1rem;
-}
-.globe:first-child h2 {
-  left: -25%;
-  text-align: left;
-}
-.globe:last-child h2 {
-  right: -25%;
-  text-align: right;
 }
 .calendar {
   width: 80%;
   left: 10%;
-  height: 10vh;
-  top: 14vh;
+  height: 7vh;
+  top: 12vh;
   border-top: 0.5vh solid #222;
   -webkit-transform: translateZ(0);
 }
@@ -55,15 +51,15 @@
   text-align: center;
   float: left;
   font-weight: normal;
-  font-size: 2rem;
-  height: 10vh;
-  line-height: 10vh;
+  font-size: 1.2rem;
+  height: 7vh;
+  line-height: 7vh;
   color: #ccc;
 }
 .marker {
   position: absolute;
   width: 5%;
-  height: 10px;
+  height: 0.5vh;
   background: white;
   left: 0;
   bottom: 0;
@@ -104,5 +100,39 @@
 }
 
 .content-container {
-  display: none;
+
+}
+
+.annotation {
+  position: absolute;
+  top: 10%;
+  left: 0;
+  width: 16%;
+  opacity: 0;
+  transition: opacity 1s;
+}
+.annotation.content-both {
+  left: 50%;
+  margin-left: -6.5%;
+}
+.annotation.content-atmosphere {
+  left: auto;
+  right: 0;
+  top: 40%;
+}
+.annotation h3 {
+  font-weight: normal;
+  font-size: 1.6vh;
+  letter-spacing: 0.05vh;
+  margin-bottom: 0;
+}
+.annotation p {
+  font-weight: normal;
+  font-size: 1.2vh;
+  line-height: 1.6;
+  letter-spacing: 0.05vh;
+  margin-top: 1vh;
+}
+.annotation.active {
+  opacity: 1;
 }

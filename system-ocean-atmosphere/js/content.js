@@ -28,6 +28,15 @@ var Content = (function() {
     });
   };
 
+  Content.prototype.update = function(annotation){
+    $(".annotation").removeClass('active');
+
+    if (!annotation) return false;
+
+    var i = annotation.index;
+    this.annotations[i].$el.addClass('active');
+  };
+
   return Content;
 
 })();

@@ -30,7 +30,9 @@ var Globe = (function() {
   Globe.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.$el.append($('<h2>'+this.opt.title+'</h2>'));
+    this.$document = $(document);
 
+    this.currentAnnotationId = false;
     this.loadAnnotations();
 
     this.rotateX = 0.5;
@@ -154,8 +156,11 @@ var Globe = (function() {
     var annotationLatThreshold = this.opt.annotationLatThreshold;
     var annotationLonThreshold = this.opt.annotationLonThreshold;
 
-    this.annotations = _.map(this.opt.annotations, function(a){
+    this.annotations = _.map(this.opt.annotations, function(a, i){
       var copy = _.clone(a);
+
+      copy.index = i;
+
       copy.latFrom = a.lat - annotationLatThreshold;
       copy.latTo = a.lat + annotationLatThreshold;
       copy.lonFrom = a.lon - annotationLonThreshold;
@@ -307,6 +312,7 @@ var Globe = (function() {
     });
     // console.log(annotations)
     var annotation = false;
+    var annotationId = false;
 
     // multiple found, sort by distance
     if (annotations.length > 1) {
@@ -319,6 +325,13 @@ var Globe = (function() {
     if (annotations.length > 0) {
       annotation = annotations[0];
     }
+
+    // check if we changed annotation
+    if (annotation) annotationId = annotation.id;
+    var changed = (annotationId !== this.currentAnnotationId);
+    if (!changed) return false;
+
+    this.$document.trigger("annotation.update", [annotation]);
 
     var context = this.annotationContext;
     var bt = this.opt.bgTransparency;

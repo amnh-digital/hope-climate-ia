@@ -25,6 +25,7 @@ AppOceanAtmosphere.prototype.loadControls = function(){
 AppOceanAtmosphere.prototype.loadListeners = function(){
   var _this = this;
   var globes = this.globes;
+  var $document = $(document);
 
   $(document).on("controls.axes.change", function(e, key, value) {
     switch(key) {
@@ -37,6 +38,10 @@ AppOceanAtmosphere.prototype.loadListeners = function(){
       default:
         break;
     }
+  });
+
+  $(document).on("annotation.update", function(e, annotation){
+    _this.content.update(annotation);
   });
 
   $(window).on('resize', function(){
