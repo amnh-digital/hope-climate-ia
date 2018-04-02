@@ -1,0 +1,47 @@
+{
+  "questions": [
+    {
+      "id": "q-climate-weather",
+      "q": "<p>When I say it’s raining really hard right now, am I talking about the <span class=\"a-color\">climate</span> or the <span class=\"b-color\">weather</span>?</p>",
+      "a": [
+        {
+          "label": "climate",
+          "isCorrect": false,
+          "feedback": "<p>Sorry! One heavy rainstorm is a weather event—but the trend of more intense, more frequent rainstorms is a result of a changing climate.</p>"
+        },{
+          "label": "weather",
+          "isCorrect": true,
+          "feedback": "<p>Correct! Whether it’s hot or cold today, or sunny or rainy is a reflection of daily weather conditions—not climate.</p>"
+        }
+      ]
+    },{
+      "id": "q-sea-level",
+      "q": "<p>Sea level is rising at the same rate around the world.</p>",
+      "a": [
+        {
+          "label": "true",
+          "isCorrect": false,
+          "feedback": "<p>Sorry! Sea level is rising faster in some locations than others. Sea level is affected by changes in ocean currents and by land along the shore, which may sink or rise at different rates.</p>"
+        },{
+          "label": "false",
+          "isCorrect": true,
+          "feedback": "<p>Correct! Sea level is rising faster in some locations than others. Sea level is affected by changes in ocean currents and by land along the shore, which may sink or rise at different rates.</p>"
+        }
+      ]
+    },{
+      "id": "q-ice-melt",
+      "q": "<p>If all the ice in the world melted, how much would sea level rise?</p>",
+      "a": [
+        {
+          "label": "15 meters",
+          "isCorrect": false,
+          "feedback": "<p>Sorry! If all the ice melted, sea level would rise around 70 meters (230 feet), covering coastal cities like New York. That probably won’t happen, though. Even when Earth was much warmer, the Antarctic ice cap never melted before.</p>"
+        },{
+          "label": "70 meters",
+          "isCorrect": true,
+          "feedback": "<p>Correct! If all the ice melted, sea level would rise around 70 meters (230 feet), covering coastal cities like New York. That probably won’t happen, though. Even when Earth was much warmer, the Antarctic ice cap never melted before.</p>"
+        }
+      ]
+    }
+  ]
+}

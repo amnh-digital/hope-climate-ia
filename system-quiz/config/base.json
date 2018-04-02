@@ -1,0 +1,21 @@
+{
+  "quiz": {
+    "el": "#quiz"
+  },
+  "sound": {
+    "enable": 1,
+    "audio": ["../shared/audio/quiz.mp3"],
+    "volume": 1.0,
+    "limitLastPlayedMs": 50,
+    "limitSameLastPlayedMs": 200,
+    "sprites": {
+      "correct": [0, 1400],
+      "incorrect": [1400, 3000]
+    }
+  },
+  "sleep": {
+    "enable": 1,
+    "checkInterval": 5,
+    "sleepAfter": 10
+  }
+}

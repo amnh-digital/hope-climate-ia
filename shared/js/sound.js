@@ -49,7 +49,12 @@ var Sound = (function() {
       _this.playPercent(value);
     };
 
+    var playSprite = function(e, value){
+      _this.playSprite(value);
+    };
+
     $(document).on("sound.play.percent", playPercent);
+    $(document).on("sound.play.sprite", playSprite);
   };
 
   Sound.prototype.playPercent = function(percent){
@@ -71,6 +76,10 @@ var Sound = (function() {
     this.sound.play(sprite);
     this.lastPlayed = now;
     this.notesLastPlayed[sprite] = now;
+  };
+
+  Sound.prototype.playSprite = function(value){
+    this.sound.play(value);
   };
 
   return Sound;
