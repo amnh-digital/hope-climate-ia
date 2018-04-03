@@ -1,0 +1,49 @@
+
+
+.stories {
+  height: 40vh;
+  width: 80vh;
+  position: absolute;
+  left: 50%;
+  margin-left: -40vh;
+  top: 30vh;
+}
+.story-wrapper {
+  position: absolute;
+  width: 16vh;
+  height: 9vh;
+  transform-origin: 50% 50%;
+}
+.story {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #333;
+  transform-origin: 50% 50%;
+}
+.story-wrapper.active .story {
+  background: red;
+}
+
+#story1 {
+  left: 50%;
+  top: -9vh;
+  margin-left: -8vh;
+}
+#story2 {
+  top: 12vh;
+  right: 0;
+}
+#story3 {
+  bottom: -9vh;
+  right: 9vh;
+}
+#story4 {
+  bottom: 0;
+  left: 9vh;
+}
+#story5 {
+  top: 9vh;
+}

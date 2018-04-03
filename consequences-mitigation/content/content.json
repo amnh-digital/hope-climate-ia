@@ -1,0 +1,50 @@
+{
+  "stories": [
+    {
+      "id": "story1",
+      "title": "",
+      "description": "",
+      "image": "",
+      "video": "",
+      "width": 1920,
+      "height": 1080,
+      "duration": 0
+    },{
+      "id": "story2",
+      "title": "",
+      "description": "",
+      "image": "",
+      "video": "",
+      "width": 1920,
+      "height": 1080,
+      "duration": 0
+    },{
+      "id": "story3",
+      "title": "",
+      "description": "",
+      "image": "",
+      "video": "",
+      "width": 1920,
+      "height": 1080,
+      "duration": 0
+    },{
+      "id": "story4",
+      "title": "",
+      "description": "",
+      "image": "",
+      "video": "",
+      "width": 1920,
+      "height": 1080,
+      "duration": 0
+    },{
+      "id": "story5",
+      "title": "",
+      "description": "",
+      "image": "",
+      "video": "",
+      "width": 1920,
+      "height": 1080,
+      "duration": 0
+    }
+  ]
+}

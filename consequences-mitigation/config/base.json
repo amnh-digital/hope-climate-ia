@@ -1,0 +1,23 @@
+{
+  "stories": {
+    "el": "#stories"
+  },
+  "map": {
+    "el": "#map"
+  },
+  "sound": {
+    "enable": 1,
+    "audio": ["../shared/audio/tick.mp3"],
+    "volume": 1.0,
+    "limitLastPlayedMs": 50,
+    "limitSameLastPlayedMs": 200,
+    "sprites": {
+      "tick": [0, 150]
+    }
+  },
+  "sleep": {
+    "enable": 1,
+    "checkInterval": 15,
+    "sleepAfter": 120
+  }
+}

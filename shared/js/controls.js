@@ -17,6 +17,7 @@ var Controls = (function() {
     var keyboardMappings = this.opt.keyboardMappings;
     var gamepadMappings = this.opt.gamepadMappings;
     var uiMappings = this.opt.uiMappings;
+    var touchMappings = this.opt.touchMappings;
 
     if (mouseMappings) {
       this.loadMouseListeners(mouseMappings);
@@ -28,6 +29,10 @@ var Controls = (function() {
 
     if (uiMappings) {
       this.loadUIListeners(uiMappings);
+    }
+
+    if (touchMappings) {
+      this.loadTouchListeners(touchMappings);
     }
 
     if (gamepadMappings) {
@@ -183,6 +188,33 @@ var Controls = (function() {
     $(window).keypress(onKeyDown);
     $(window).keyup(onKeyUp);
 
+  };
+
+  Controls.prototype.loadTouchListeners = function(mappings){
+    var $container = $('<div id="ui" class="ui"></div>');
+    var $document = $(document);
+
+    _.each(mappings, function(opt, key){
+      var $listener = $('<div id="'+opt.el+'" class="ui-touch-region '+key+'"></div>');
+      $container.append($listener);
+      var listener = $listener[0];
+      var region = new ZingTouch.Region(listener);
+
+      var onChange = function(e){
+        var d = e.detail;
+        if (d.angle) {
+          // 90 degrees = starting position = straight up
+          var angle = 360 - (d.angle - 90);
+          if (angle >= 360) angle -= 360;
+          $listener.css('transform', "rotate3d(0, 0, 1, "+angle+"deg)")
+          $document.trigger("controls.rotate", [angle/360.0]);
+        }
+      };
+
+      region.bind(listener, key, onChange);
+    });
+
+    $('body').append($container);
   };
 
   Controls.prototype.loadUIListeners = function(mappings) {

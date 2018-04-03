@@ -171,6 +171,29 @@ a {
   margin-left: auto;
 }
 
+.ui-touch-region {
+  display: block;
+  width: 12vh;
+  height: 12vh;
+  background: #3fc1be;
+  position: relative;
+  margin: 2vh;
+}
+.ui-touch-region.rotate {
+  border-radius: 6vh;
+  cursor: move;
+}
+.ui-touch-region.rotate:before {
+  content: " ";
+  position: absolute;
+  width: 0.5vh;
+  height: 5vh;
+  top: 0;
+  left: 50%;
+  margin-left: -0.25vh;
+  background: rgba(0, 0, 0, 0.333);
+}
+
 @keyframes blink {
   50% {
     opacity: 0.2;
