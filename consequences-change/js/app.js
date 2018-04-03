@@ -1,88 +1,94 @@
 'use strict';
 
-function AppChange(config, content, data) {
-  var defaults = {};
-  this.opt = _.extend({}, defaults, config);
-  this.content = content;
-  this.data = data;
+var AppChange = (function() {
 
-  this.init();
-}
+  function AppChange(config, content, data) {
+    var defaults = {};
+    this.opt = _.extend({}, defaults, config);
+    this.content = content;
+    this.data = data;
 
-AppChange.prototype.init = function(){
-  var _this = this;
+    this.init();
+  }
 
-  this.onReady();
-  this.loadListeners();
-  this.loadControls();
-};
+  AppChange.prototype.init = function(){
+    var _this = this;
 
-AppChange.prototype.loadControls = function(){
-  var _this = this;
-
-  var controls = new Controls(this.opt.controls);
-
-  return controls.load();
-};
-
-AppChange.prototype.loadListeners = function(){
-  var _this = this;
-  var $document = $(document);
-
-  var onSlide = function(e, key, value) {
-    _this.onSlide(value);
-  };
-  var onButtonUp = function(e, value) {
-    _this.onButtonUp(value);
+    this.onReady();
+    this.loadListeners();
+    this.loadControls();
   };
 
-  $document.on("controls.axes.change", onSlide);
-  $document.on("controls.button.up", onButtonUp);
+  AppChange.prototype.loadControls = function(){
+    var _this = this;
 
-  $(window).on('resize', function(){
-    _this.onResize();
-  });
+    var controls = new Controls(this.opt.controls);
 
-};
+    return controls.load();
+  };
 
-AppChange.prototype.onButtonUp = function(){
-  this.globe.next();
-  this.slideshow.next();
-  this.sleep.wakeUp();
-};
+  AppChange.prototype.loadListeners = function(){
+    var _this = this;
+    var $document = $(document);
 
-AppChange.prototype.onReady = function(){
-  var d = this.data;
+    var onSlide = function(e, key, value) {
+      _this.onSlide(value);
+    };
+    var onButtonUp = function(e, value) {
+      _this.onButtonUp(value);
+    };
 
-  var opt = _.extend({}, this.opt.slideshow, this.content);
+    $document.on("controls.axes.change", onSlide);
+    $document.on("controls.button.up", onButtonUp);
 
-  // Initialize slideshow
-  this.slideshow = new Slideshow(opt);
+    $(window).on('resize', function(){
+      _this.onResize();
+    });
 
-  // Init globe
-  opt = _.extend({}, this.opt.globe, this.content, {"geojson": d});
-  this.globe = new Globe(opt);
+  };
 
-  // Init sleep mode utilitys
-  opt = _.extend({}, this.opt.sleep);
-  this.sleep = new Sleep(opt);
+  AppChange.prototype.onButtonUp = function(){
+    this.globe.next();
+    this.slideshow.next();
+    this.sleep.wakeUp();
+  };
 
-  this.render();
-};
+  AppChange.prototype.onReady = function(){
+    var d = this.data;
 
-AppChange.prototype.onResize = function(){
-  this.globe.onResize();
-};
+    var opt = _.extend({}, this.opt.slideshow, this.content);
 
-AppChange.prototype.onSlide = function(value) {
-  this.slideshow.onSlide(value);
-  this.sleep.wakeUp();
-};
+    // Initialize slideshow
+    this.slideshow = new Slideshow(opt);
 
-AppChange.prototype.render = function() {
-  var _this = this;
+    // Init globe
+    opt = _.extend({}, this.opt.globe, this.content, {"geojson": d});
+    this.globe = new Globe(opt);
 
-  this.globe.render();
+    // Init sleep mode utilitys
+    opt = _.extend({}, this.opt.sleep);
+    this.sleep = new Sleep(opt);
 
-  requestAnimationFrame(function(){ _this.render(); });
-};
+    this.render();
+  };
+
+  AppChange.prototype.onResize = function(){
+    this.globe.onResize();
+  };
+
+  AppChange.prototype.onSlide = function(value) {
+    this.slideshow.onSlide(value);
+    this.sleep.wakeUp();
+  };
+
+  AppChange.prototype.render = function() {
+    var _this = this;
+
+    this.globe.render();
+
+    requestAnimationFrame(function(){ _this.render(); });
+  };
+
+  return AppChange;
+
+})();

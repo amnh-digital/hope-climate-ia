@@ -1,112 +1,118 @@
 'use strict';
 
-function AppTimescales(config, content, data) {
-  var defaults = {};
-  this.opt = _.extend({}, defaults, config);
-  this.content = content;
-  this.data = data;
+var AppTimescales = (function() {
 
-  this.init();
-}
+  function AppTimescales(config, content, data) {
+    var defaults = {};
+    this.opt = _.extend({}, defaults, config);
+    this.content = content;
+    this.data = data;
 
-AppTimescales.prototype.init = function(){
-  var _this = this;
+    this.init();
+  }
 
-  var controlPromise = this.loadControls();
-  var soundPromise = this.loadSounds();
+  AppTimescales.prototype.init = function(){
+    var _this = this;
 
-  $.when.apply($, [controlPromise, soundPromise]).then(function(){
-    _this.onReady();
-  });
+    var controlPromise = this.loadControls();
+    var soundPromise = this.loadSounds();
 
-};
+    $.when.apply($, [controlPromise, soundPromise]).then(function(){
+      _this.onReady();
+    });
 
-AppTimescales.prototype.loadControls = function(){
-  var _this = this;
+  };
 
-  var controls = new Controls(this.opt.controls);
+  AppTimescales.prototype.loadControls = function(){
+    var _this = this;
 
-  return controls.load();
-};
+    var controls = new Controls(this.opt.controls);
 
-AppTimescales.prototype.loadListeners = function(){
-  var _this = this;
+    return controls.load();
+  };
 
-  $(document).on("controls.axes.change", function(e, key, value) {
-    switch(key) {
-      case "horizontal":
-        _this.onTimeChange(value);
-        break;
-      case "vertical":
-        _this.onScaleChange(1.0-value);
-        break;
-      default:
-        break;
-    }
-  });
+  AppTimescales.prototype.loadListeners = function(){
+    var _this = this;
 
-  $(document).on("sleep.start", function(e, value) {
-    _this.graphics.sleepStart();
-  });
+    $(document).on("controls.axes.change", function(e, key, value) {
+      switch(key) {
+        case "horizontal":
+          _this.onTimeChange(value);
+          break;
+        case "vertical":
+          _this.onScaleChange(1.0-value);
+          break;
+        default:
+          break;
+      }
+    });
 
-  $(document).on("sleep.end", function(e, value) {
-    _this.graphics.sleepEnd();
-  });
+    $(document).on("sleep.start", function(e, value) {
+      _this.graphics.sleepStart();
+    });
 
-  $(window).on('resize', function(){
-    _this.onResize();
-  });
+    $(document).on("sleep.end", function(e, value) {
+      _this.graphics.sleepEnd();
+    });
 
-};
+    $(window).on('resize', function(){
+      _this.onResize();
+    });
 
-AppTimescales.prototype.loadSounds = function(){
-  var _this = this;
+  };
 
-  var sound = new Sound(this.opt.sound);
+  AppTimescales.prototype.loadSounds = function(){
+    var _this = this;
 
-  return sound.load();
-};
+    var sound = new Sound(this.opt.sound);
 
-AppTimescales.prototype.onReady = function(){
-  var d = this.data;
+    return sound.load();
+  };
 
-  var opt = _.extend({}, this.opt.graphics, this.content, this.data);
+  AppTimescales.prototype.onReady = function(){
+    var d = this.data;
 
-  // Initialize viz
-  this.graphics = new Graphics(opt);
+    var opt = _.extend({}, this.opt.graphics, this.content, this.data);
 
-  // Init sleep mode utilitys
-  opt = _.extend({}, this.opt.sleep);
-  this.sleep = new Sleep(opt);
+    // Initialize viz
+    this.graphics = new Graphics(opt);
 
-  // Init messages
-  opt = _.extend({}, this.opt.messages, this.content, {domain: this.data.domain, scale: this.opt.graphics.scale, minYearsDisplay: this.opt.graphics.minYearsDisplay});
-  this.messages = new Messages(opt);
+    // Init sleep mode utilitys
+    opt = _.extend({}, this.opt.sleep);
+    this.sleep = new Sleep(opt);
 
-  this.loadListeners();
-  this.render();
-};
+    // Init messages
+    opt = _.extend({}, this.opt.messages, this.content, {domain: this.data.domain, scale: this.opt.graphics.scale, minYearsDisplay: this.opt.graphics.minYearsDisplay});
+    this.messages = new Messages(opt);
 
-AppTimescales.prototype.onResize = function(){
-  this.graphics.onResize();
-};
+    this.loadListeners();
+    this.render();
+  };
 
-AppTimescales.prototype.onScaleChange = function(value) {
-  var scale = UTIL.easeInOutSin(value);
-  this.graphics.onScaleChange(scale);
-  this.messages.onScaleChange(scale);
-  this.sleep.wakeUp();
-};
+  AppTimescales.prototype.onResize = function(){
+    this.graphics.onResize();
+  };
 
-AppTimescales.prototype.onTimeChange = function(value) {
-  this.graphics.onTimeChange(value);
-  this.sleep.wakeUp();
-};
+  AppTimescales.prototype.onScaleChange = function(value) {
+    var scale = UTIL.easeInOutSin(value);
+    this.graphics.onScaleChange(scale);
+    this.messages.onScaleChange(scale);
+    this.sleep.wakeUp();
+  };
 
-AppTimescales.prototype.render = function(){
-  var _this = this;
+  AppTimescales.prototype.onTimeChange = function(value) {
+    this.graphics.onTimeChange(value);
+    this.sleep.wakeUp();
+  };
 
-  this.graphics.render();
+  AppTimescales.prototype.render = function(){
+    var _this = this;
 
-  requestAnimationFrame(function(){ _this.render(); });
-};
+    this.graphics.render();
+
+    requestAnimationFrame(function(){ _this.render(); });
+  };
+
+  return AppTimescales;
+
+})();

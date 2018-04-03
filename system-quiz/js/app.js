@@ -1,91 +1,97 @@
 'use strict';
 
-function AppQuiz(config, content) {
-  var defaults = {};
-  this.opt = _.extend({}, defaults, config);
-  this.content = content;
+var AppQuiz = (function() {
 
-  this.init();
-}
+  function AppQuiz(config, content) {
+    var defaults = {};
+    this.opt = _.extend({}, defaults, config);
+    this.content = content;
 
-AppQuiz.prototype.init = function(){
-  var _this = this;
+    this.init();
+  }
 
-  var controlPromise = this.loadControls();
-  var soundPromise = this.loadSounds();
+  AppQuiz.prototype.init = function(){
+    var _this = this;
 
-  $.when.apply($, [controlPromise, soundPromise]).then(function(){
-    _this.onReady();
-  });
-};
+    var controlPromise = this.loadControls();
+    var soundPromise = this.loadSounds();
 
-AppQuiz.prototype.loadControls = function(){
-  var _this = this;
-
-  var controls = new Controls(this.opt.controls);
-
-  return controls.load();
-};
-
-AppQuiz.prototype.loadListeners = function(){
-  var _this = this;
-  var $document = $(document);
-
-  var buttonDown = function(e, value) {
-    _this.onButtonDown(value);
-  };
-  var resize = function(){
-    _this.onResize();
+    $.when.apply($, [controlPromise, soundPromise]).then(function(){
+      _this.onReady();
+    });
   };
 
-  $document.on("controls.button.down", buttonDown);
-  $(window).on('resize', resize);
+  AppQuiz.prototype.loadControls = function(){
+    var _this = this;
 
-  // var sleepStart = function(e, value) { _this.quiz.sleepStart(); };
-  // var sleepEnd = function(e, value) { _this.quiz.sleepEnd(); };
-  // $(document).on("sleep.start", sleepStart);
-  // $(document).on("sleep.end", sleepEnd);
-};
+    var controls = new Controls(this.opt.controls);
 
-AppQuiz.prototype.loadSounds = function(){
-  var _this = this;
+    return controls.load();
+  };
 
-  var sound = new Sound(this.opt.sound);
+  AppQuiz.prototype.loadListeners = function(){
+    var _this = this;
+    var $document = $(document);
 
-  return sound.load();
-};
+    var buttonDown = function(e, value) {
+      _this.onButtonDown(value);
+    };
+    var resize = function(){
+      _this.onResize();
+    };
 
-AppQuiz.prototype.onReady = function(){
-  var d = this.data;
+    $document.on("controls.button.down", buttonDown);
+    $(window).on('resize', resize);
 
-  var opt = _.extend({}, this.opt.quiz, this.content);
+    // var sleepStart = function(e, value) { _this.quiz.sleepStart(); };
+    // var sleepEnd = function(e, value) { _this.quiz.sleepEnd(); };
+    // $(document).on("sleep.start", sleepStart);
+    // $(document).on("sleep.end", sleepEnd);
+  };
 
-  // Initialize quiz
-  this.quiz = new Quiz(opt);
+  AppQuiz.prototype.loadSounds = function(){
+    var _this = this;
 
-  // Init sleep mode utilitys
-  // opt = _.extend({}, this.opt.sleep);
-  // this.sleep = new Sleep(opt);
+    var sound = new Sound(this.opt.sound);
 
-  this.loadListeners();
+    return sound.load();
+  };
 
-  // this.render();
-};
+  AppQuiz.prototype.onReady = function(){
+    var d = this.data;
 
-AppQuiz.prototype.onResize = function(){
-  this.quiz.onResize();
-};
+    var opt = _.extend({}, this.opt.quiz, this.content);
 
-AppQuiz.prototype.onButtonDown = function(value) {
-  console.log("Button down " + value);
-  this.quiz.onAnswer(value);
-  // this.sleep.wakeUp();
-};
+    // Initialize quiz
+    this.quiz = new Quiz(opt);
 
-AppQuiz.prototype.render = function(){
-  var _this = this;
+    // Init sleep mode utilitys
+    // opt = _.extend({}, this.opt.sleep);
+    // this.sleep = new Sleep(opt);
 
-  this.quiz.render();
+    this.loadListeners();
 
-  requestAnimationFrame(function(){ _this.render(); });
-};
+    // this.render();
+  };
+
+  AppQuiz.prototype.onResize = function(){
+    this.quiz.onResize();
+  };
+
+  AppQuiz.prototype.onButtonDown = function(value) {
+    console.log("Button down " + value);
+    this.quiz.onAnswer(value);
+    // this.sleep.wakeUp();
+  };
+
+  AppQuiz.prototype.render = function(){
+    var _this = this;
+
+    this.quiz.render();
+
+    requestAnimationFrame(function(){ _this.render(); });
+  };
+
+  return AppQuiz;
+
+})();

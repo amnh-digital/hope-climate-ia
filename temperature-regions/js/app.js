@@ -1,98 +1,104 @@
 'use strict';
 
-function AppRegions(config, content, data) {
-  var defaults = {};
-  this.opt = _.extend({}, defaults, config);
-  this.content = content;
-  this.data = data;
+var AppRegions = (function() {
 
-  this.init();
-}
+  function AppRegions(config, content, data) {
+    var defaults = {};
+    this.opt = _.extend({}, defaults, config);
+    this.content = content;
+    this.data = data;
 
-AppRegions.prototype.init = function(){
-  var _this = this;
+    this.init();
+  }
 
-  var controlPromise = this.loadControls();
+  AppRegions.prototype.init = function(){
+    var _this = this;
 
-  $.when.apply($, [controlPromise]).then(function(){
-    _this.onReady();
-  });
+    var controlPromise = this.loadControls();
 
-};
+    $.when.apply($, [controlPromise]).then(function(){
+      _this.onReady();
+    });
 
-AppRegions.prototype.loadControls = function(){
-  var _this = this;
+  };
 
-  var controls = new Controls(this.opt.controls);
+  AppRegions.prototype.loadControls = function(){
+    var _this = this;
 
-  return controls.load();
-};
+    var controls = new Controls(this.opt.controls);
 
-AppRegions.prototype.loadListeners = function(){
-  var _this = this;
+    return controls.load();
+  };
 
-  $(document).on("controls.axes.change", function(e, key, value) {
-    switch(key) {
-      case "horizontal":
-        _this.onTimeChange(value);
-        break;
-      case "vertical":
-        _this.onZoneChange(1.0-value);
-        break;
-      default:
-        break;
-    }
-  });
+  AppRegions.prototype.loadListeners = function(){
+    var _this = this;
 
-  // $(document).on("sleep.start", function(e, value) {
-  //   _this.sleepStart();
-  // });
-  //
-  // $(document).on("sleep.end", function(e, value) {
-  //   _this.sleepEnd();
-  // });
+    $(document).on("controls.axes.change", function(e, key, value) {
+      switch(key) {
+        case "horizontal":
+          _this.onTimeChange(value);
+          break;
+        case "vertical":
+          _this.onZoneChange(1.0-value);
+          break;
+        default:
+          break;
+      }
+    });
 
-  $(window).on('resize', function(){
-    _this.onResize();
-  });
+    // $(document).on("sleep.start", function(e, value) {
+    //   _this.sleepStart();
+    // });
+    //
+    // $(document).on("sleep.end", function(e, value) {
+    //   _this.sleepEnd();
+    // });
 
-};
+    $(window).on('resize', function(){
+      _this.onResize();
+    });
 
-AppRegions.prototype.onReady = function(){
-  var d = this.data;
+  };
 
-  var opt = _.extend({}, this.opt.graphics, this.data);
+  AppRegions.prototype.onReady = function(){
+    var d = this.data;
 
-  // Initialize viz
-  this.graphics = new Graphics(opt);
+    var opt = _.extend({}, this.opt.graphics, this.data);
 
-  opt = _.extend({}, this.opt.map, this.data, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
-  this.map = new Map(opt);
+    // Initialize viz
+    this.graphics = new Graphics(opt);
 
-  opt = _.extend({}, this.opt.messages, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
-  this.messages = new Messages(opt);
+    opt = _.extend({}, this.opt.map, this.data, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
+    this.map = new Map(opt);
 
-  // Init sleep mode utilitys
-  opt = _.extend({}, this.opt.sleep);
-  this.sleep = new Sleep(opt);
+    opt = _.extend({}, this.opt.messages, this.content, {zone: this.opt.graphics.zone, time: this.opt.graphics.time});
+    this.messages = new Messages(opt);
 
-  this.loadListeners();
-};
+    // Init sleep mode utilitys
+    opt = _.extend({}, this.opt.sleep);
+    this.sleep = new Sleep(opt);
 
-AppRegions.prototype.onResize = function(){
-  this.graphics.onResize();
-  this.map.onResize();
-};
+    this.loadListeners();
+  };
 
-AppRegions.prototype.onTimeChange = function(value) {
-  this.graphics.onTimeChange(value);
-  this.map.onTimeChange(value);
-  this.sleep.wakeUp();
-};
+  AppRegions.prototype.onResize = function(){
+    this.graphics.onResize();
+    this.map.onResize();
+  };
 
-AppRegions.prototype.onZoneChange = function(value) {
-  this.graphics.onZoneChange(value);
-  this.map.onZoneChange(value);
-  this.messages.onZoneChange(value);
-  this.sleep.wakeUp();
-};
+  AppRegions.prototype.onTimeChange = function(value) {
+    this.graphics.onTimeChange(value);
+    this.map.onTimeChange(value);
+    this.sleep.wakeUp();
+  };
+
+  AppRegions.prototype.onZoneChange = function(value) {
+    this.graphics.onZoneChange(value);
+    this.map.onZoneChange(value);
+    this.messages.onZoneChange(value);
+    this.sleep.wakeUp();
+  };
+
+  return AppRegions;
+
+})();
