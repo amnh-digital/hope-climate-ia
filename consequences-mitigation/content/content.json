@@ -2,49 +2,34 @@
   "stories": [
     {
       "id": "story1",
-      "title": "",
-      "description": "",
-      "image": "",
-      "video": "",
-      "width": 1920,
-      "height": 1080,
-      "duration": 0
+      "title": "Mr. Bigglesworth",
+      "description": "Meow and walk away mrow sit on human they not getting up ever for walk on car leaving trail of paw prints on hood and windshield.",
+      "image": "https://s3.amazonaws.com/brianfoo-amnh/cat1.jpg",
+      "video": "https://s3.amazonaws.com/brianfoo-amnh/cat1.mp4"
     },{
       "id": "story2",
-      "title": "",
-      "description": "",
-      "image": "",
-      "video": "",
-      "width": 1920,
-      "height": 1080,
-      "duration": 0
+      "title": "Colonel Meow",
+      "description": "I could pee on this if i had the energy stare at wall turn and meow stare at wall some more meow again continue staring gnaw the corn cob scratch the box stare at ceiling.",
+      "image": "https://s3.amazonaws.com/brianfoo-amnh/cat2.jpg",
+      "video": "https://s3.amazonaws.com/brianfoo-amnh/cat2.mp4"
     },{
       "id": "story3",
-      "title": "",
-      "description": "",
-      "image": "",
-      "video": "",
-      "width": 1920,
-      "height": 1080,
-      "duration": 0
+      "title": "Keyboard Cat",
+      "description": "Claw at curtains stretch and yawn nibble on tuna ignore human bite human hand. Tuxedo cats always looking dapper stare out the window. ",
+      "image": "https://s3.amazonaws.com/brianfoo-amnh/cat3.jpg",
+      "video": "https://s3.amazonaws.com/brianfoo-amnh/cat4.mp4"
     },{
       "id": "story4",
-      "title": "",
-      "description": "",
-      "image": "",
-      "video": "",
-      "width": 1920,
-      "height": 1080,
-      "duration": 0
+      "title": "Heathcliff",
+      "description": "Cats secretly make all the worlds muffins Gate keepers of hell so behind the couch crash against wall but walk away like nothing happened.",
+      "image": "https://s3.amazonaws.com/brianfoo-amnh/cat4.jpg",
+      "video": "https://s3.amazonaws.com/brianfoo-amnh/cat3.mp4"
     },{
       "id": "story5",
-      "title": "",
-      "description": "",
-      "image": "",
-      "video": "",
-      "width": 1920,
-      "height": 1080,
-      "duration": 0
+      "title": "Get Fuzzy",
+      "description": "Stare at ceiling light give me some of your food give me some of your food give me some of your food meh",
+      "image": "https://s3.amazonaws.com/brianfoo-amnh/cat5.jpg",
+      "video": "https://s3.amazonaws.com/brianfoo-amnh/cat5.mp4"
     }
   ]
 }

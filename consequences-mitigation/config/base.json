@@ -1,7 +1,7 @@
 {
   "stories": {
     "el": "#stories",
-    "loadingTime": 5000
+    "loadingTime": 4000
   },
   "map": {
     "el": "#map"
