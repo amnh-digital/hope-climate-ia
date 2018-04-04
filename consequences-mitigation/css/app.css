@@ -13,6 +13,11 @@
   width: 16vh;
   height: 9vh;
   transform-origin: 50% 50%;
+  transition: transform 1s ease-in-out;
+  transform: scale3d(1, 1, 1);
+}
+.story-wrapper.active {
+  transform: scale3d(1.25, 1.25, 1.25);
 }
 .story {
   position: absolute;
@@ -22,9 +27,49 @@
   left: 0;
   background: #333;
   transform-origin: 50% 50%;
+  transform: scale3d(1, 1, 1);
 }
 .story-wrapper.active .story {
   background: red;
+}
+.story-wrapper.playing .story {
+  background: green;
+}
+
+.loading,
+.progress {
+  position: absolute;
+  width: 100%;
+  height: 1.5vh;
+  bottom: 0;
+  left: 0;
+}
+
+.loading {
+  background: #222;
+  transition: bottom 1s ease-in-out;
+}
+.story-wrapper.active .loading {
+  bottom: -1.5vh;
+}
+.loading-bar {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: #555;
+}
+
+.progress {
+  background: #222;
+  opacity: 0;
+  bottom: -1.5vh;
+  line-height: 1.5vh;
+  transition: opacity 1s ease-in-out;
+}
+.story-wrapper.playing .progress {
+  opacity: 1;
 }
 
 #story1 {

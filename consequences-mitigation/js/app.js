@@ -68,7 +68,7 @@ var AppMitigation = (function() {
     // opt = _.extend({}, this.opt.sleep);
     // this.sleep = new Sleep(opt);
 
-    // this.render();
+    this.render();
   };
 
   AppMitigation.prototype.onResize = function(){
@@ -81,6 +81,8 @@ var AppMitigation = (function() {
 
   AppMitigation.prototype.render = function() {
     var _this = this;
+
+    this.stories.render();
 
     requestAnimationFrame(function(){ _this.render(); });
   };
