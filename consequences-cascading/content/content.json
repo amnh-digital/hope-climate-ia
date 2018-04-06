@@ -1,0 +1,286 @@
+{
+  "network": [
+    {
+      "id": "a",
+      "factbox": "",
+      "nodes": [
+        {
+          "parent": "warming",
+          "id": "a1",
+          "label": "",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "a1",
+          "id": "a2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "a2",
+          "id": "a3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "a3",
+          "id": "a4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "a3",
+          "id": "a5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },{
+      "id": "b",
+      "factbox": "",
+      "nodes": [
+        {
+          "parent": "warming",
+          "id": "b1",
+          "label": "",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "b1",
+          "id": "b2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "b2",
+          "id": "b3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "b3",
+          "id": "b4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "b3",
+          "id": "b5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },{
+      "id": "c",
+      "factbox": "",
+      "nodes": [
+        {
+          "parent": "warming",
+          "id": "c1",
+          "label": "",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "c1",
+          "id": "c2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "c1",
+          "id": "c3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "c3",
+          "id": "c4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "c3",
+          "id": "c5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },{
+      "id": "d",
+      "factbox": "",
+      "nodes": [
+        {
+          "parent": "warming",
+          "id": "d1",
+          "label": "",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "d1",
+          "id": "d2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "d1",
+          "id": "d3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "d1",
+          "id": "d4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "d1",
+          "id": "d5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    },{
+      "id": "e",
+      "factbox": "",
+      "nodes": [
+        {
+          "parent": "warming",
+          "id": "e1",
+          "label": "",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "e1",
+          "id": "e2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "e2",
+          "id": "e3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "e3",
+          "id": "e4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "",
+          "x": 0,
+          "y": 0
+        },{
+          "parent": "e4",
+          "id": "e5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "",
+          "x": 0,
+          "y": 0
+        }
+      ]
+    }
+  ]
+
+}

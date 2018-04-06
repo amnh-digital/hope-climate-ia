@@ -1,0 +1,23 @@
+{
+  "network": {
+    "el": "#network"
+  },
+  "sound": {
+    "enable": 1,
+    "audio": ["../shared/audio/pop.mp3"],
+    "volume": 1.0,
+    "limitLastPlayedMs": 50,
+    "limitSameLastPlayedMs": 200,
+    "sprites": {
+      "higher": [1350, 1000],
+      "high": [0, 1000],
+      "medium": [4000, 1000],
+      "low": [5200, 1000]
+    }
+  },
+  "sleep": {
+    "enable": 1,
+    "checkInterval": 15,
+    "sleepAfter": 120
+  }
+}

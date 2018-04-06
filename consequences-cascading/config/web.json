@@ -1,0 +1,10 @@
+{
+  "controls": {
+    "touchMappings": {
+      "rotate": {
+        "el": "knob",
+        "options": {}
+      }
+    }
+  }
+}
