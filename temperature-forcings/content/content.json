@@ -63,8 +63,8 @@
     "all": {
       "type": "all",
       "label": "All factors",
-      "title": "All human factors",
-      "sub": "Greenhouse gases account for warming the planet, while deforestation and aerosol pollution have cooled it slightly. This line represents all human factors together.",
+      "title": "All factors combined",
+      "sub": "Greenhouse gases account for warming the planet, while deforestation and aerosol pollution have cooled it slightly. This line represents all human and natural factors together.",
       "color": "#a8b749",
       "image": "img/all.png",
       "x": 0.84,
