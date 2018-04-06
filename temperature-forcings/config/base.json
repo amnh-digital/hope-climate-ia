@@ -9,11 +9,13 @@
       "tickEvery": 5,
       "textStyle": {
         "fill": "#7f7f87",
-        "fontSize": 0.03
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
       },
       "subtextStyle": {
         "fill": "#7f7f87",
-        "fontSize": 0.022
+        "fontSize": 0.022,
+        "fontFamily": "Balance"
       }
     },
     "yAxis": {
@@ -24,11 +26,13 @@
       "tickEvery": 0.25,
       "textStyle": {
         "fill": "#7f7f87",
-        "fontSize": 0.03
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
       },
       "subtextStyle": {
         "fill": "#7f7f87",
-        "fontSize": 0.02
+        "fontSize": 0.02,
+        "fontFamily": "Balance"
       },
       "hotColor": "0xff3300",
       "coolColor": "0x99cccc"

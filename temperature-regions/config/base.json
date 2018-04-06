@@ -8,29 +8,34 @@
       "textStyle": {
         "fill": "#e2bb3d",
         "fontSize": 0.05,
-        "fontWeight": "bold"
+        "fontWeight": "bold",
+        "fontFamily": "Balance"
       }
     },
     "xAxis": {
       "height": 0.08,
       "textStyle": {
         "fill": "#505454",
-        "fontSize": 0.05
+        "fontSize": 0.05,
+        "fontFamily": "Balance"
       },
       "subtextStyle": {
         "fill": "#505454",
-        "fontSize": 0.04
+        "fontSize": 0.04,
+        "fontFamily": "Balance"
       }
     },
     "yAxis": {
       "width": 0.125,
       "textStyle": {
         "fill": "#505454",
-        "fontSize": 0.05
+        "fontSize": 0.05,
+        "fontFamily": "Balance"
       },
       "subtextStyle": {
         "fill": "#505454",
-        "fontSize": 0.04
+        "fontSize": 0.04,
+        "fontFamily": "Balance"
       }
     }
   },

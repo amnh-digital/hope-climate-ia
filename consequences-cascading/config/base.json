@@ -1,6 +1,20 @@
 {
   "network": {
-    "el": "#network"
+    "el": "#network",
+    "angleThreshold": 60,
+    "transitionMs": 1000,
+    "resetAfterMs": 4000,
+    "rootNode": {
+      "radius": 0.1,
+      "x": 0.5,
+      "y": 0.15,
+      "color": "0xd64724",
+      "textStyle": {
+        "fontSize": 0.033,
+        "fill": "#ffffff",
+        "fontFamily": "Balance"
+      }
+    }
   },
   "sound": {
     "enable": 1,
