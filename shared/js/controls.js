@@ -200,14 +200,17 @@ var Controls = (function() {
       var listener = $listener[0];
       var region = new ZingTouch.Region(listener);
 
+
       var onChange = function(e){
         var d = e.detail;
-        if (d.angle) {
+        if (d.distanceFromLast) {
+          var angle = d.angle;
+          var angleDelta = d.distanceFromLast;
           // 90 degrees = starting position = straight up
-          var angle = 360 - (d.angle - 90);
+          angle = 360 - (angle - 90);
           if (angle >= 360) angle -= 360;
           $listener.css('transform', "rotate3d(0, 0, 1, "+angle+"deg)")
-          $document.trigger("controls.rotate", [angle/360.0]);
+          $document.trigger("controls.rotate", [angleDelta]);
         }
       };
 

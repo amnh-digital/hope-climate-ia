@@ -70,9 +70,9 @@ var AppCascading = (function() {
   AppCascading.prototype.onResize = function(){
   };
 
-  AppCascading.prototype.onRotate = function(value){
+  AppCascading.prototype.onRotate = function(delta){
     // this.sleep.wakeUp();
-    this.network.onRotate(value);
+    this.network.onRotate(delta);
   };
 
   AppCascading.prototype.render = function() {

@@ -74,9 +74,9 @@ var AppMitigation = (function() {
   AppMitigation.prototype.onResize = function(){
   };
 
-  AppMitigation.prototype.onRotate = function(value){
+  AppMitigation.prototype.onRotate = function(delta){
     // this.sleep.wakeUp();
-    this.stories.onRotate(value);
+    this.stories.onRotate(delta);
   };
 
   AppMitigation.prototype.render = function() {

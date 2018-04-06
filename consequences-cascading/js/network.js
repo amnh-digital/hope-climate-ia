@@ -11,7 +11,7 @@ var Network = (function() {
     this.$el = $(this.opt.el);
   };
 
-  Network.prototype.onRotate = function(value){
+  Network.prototype.onRotate = function(delta){
 
   };
 

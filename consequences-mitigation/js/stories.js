@@ -13,7 +13,11 @@ var Stories = (function() {
     this.$el = $(this.opt.el);
     this.stories = stories;
     this.storyCount = stories.length;
+
     this.currentStoryIndex = -1;
+    this.angleThreshold = this.opt.angleThreshold;
+    this.angleDelta = 0;
+
 
     this.loadUI();
     this.onRotate(0);
@@ -44,7 +48,7 @@ var Stories = (function() {
       var $video = $story.find("video").first();
       var video = $video[0];
       stories[i].video = $video[0];
-      
+
       video.load();
       video.onended = function() {
         _this.onVideoEnded(stories[i]);
@@ -56,18 +60,27 @@ var Stories = (function() {
     this.$el.append($container);
   };
 
-  Stories.prototype.onRotate = function(value){
+  Stories.prototype.onRotate = function(delta){
     var stories = this.stories;
     var count = this.storyCount;
-    var segment = 1.0 / count;
+    var angleThreshold = this.angleThreshold;
+    var index = 0;
+    var changed = false;
 
-    var adjustedValue = value + segment/2;
-    if (adjustedValue >= 1.0) adjustedValue -= 1.0;
+    // check to see if we reached the threshold for going to the next story
+    var angleDelta = this.angleDelta + delta;
+    var changed = Math.abs(angleDelta) >= angleThreshold;
+    if (changed && angleDelta < 0) index = this.currentStoryIndex - 1;
+    else if (changed) index = this.currentStoryIndex + 1;
+    if (index < 0) index = count - 1;
+    if (index >= count) index = 0;
+    this.angleDelta = angleDelta;
 
-    var findex = adjustedValue * count;
-    var index = parseInt(Math.floor(findex));
-    var story = stories[index];
-    var changed = (!this.story || this.story.index !== index);
+    // first load
+    if (this.currentStoryIndex < 0) {
+      index = 0;
+      changed = true;
+    }
 
     if (changed) {
       if (this.story) {
@@ -75,7 +88,9 @@ var Stories = (function() {
         this.story.video.currentTime = 0;
         this.story.video.pause();
       }
+      var story = stories[index];
       this.story = story;
+      this.currentStoryIndex = index;
       story.$el.addClass('active');
       this.$document.trigger("sound.play.sprite", ["tick"]);
 
@@ -83,6 +98,7 @@ var Stories = (function() {
       this.loadStart = new Date().getTime();
       this.loadEnd = this.loadStart + this.opt.loadingTime;
       this.loading = true;
+      this.angleDelta = 0;
     }
 
     // var multiplier = 0.25;
