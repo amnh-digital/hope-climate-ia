@@ -5,15 +5,15 @@
       "factbox": "",
       "nodes": [
         {
-          "parent": "warming",
+          "parent": "root",
           "id": "a1",
           "label": "",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "a1",
           "id": "a2",
@@ -22,8 +22,8 @@
           "probability": 4,
           "timeframe": 2,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "a2",
           "id": "a3",
@@ -32,8 +32,8 @@
           "probability": 3,
           "timeframe": 3,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "a3",
           "id": "a4",
@@ -42,8 +42,8 @@
           "probability": 2,
           "timeframe": 4,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "a3",
           "id": "a5",
@@ -52,8 +52,8 @@
           "probability": 1,
           "timeframe": 5,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         }
       ]
     },{
@@ -61,15 +61,15 @@
       "factbox": "",
       "nodes": [
         {
-          "parent": "warming",
+          "parent": "root",
           "id": "b1",
           "label": "",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "b1",
           "id": "b2",
@@ -78,8 +78,8 @@
           "probability": 4,
           "timeframe": 2,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "b2",
           "id": "b3",
@@ -88,8 +88,8 @@
           "probability": 3,
           "timeframe": 3,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "b3",
           "id": "b4",
@@ -98,8 +98,8 @@
           "probability": 2,
           "timeframe": 4,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "b3",
           "id": "b5",
@@ -108,8 +108,8 @@
           "probability": 1,
           "timeframe": 5,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         }
       ]
     },{
@@ -117,15 +117,15 @@
       "factbox": "",
       "nodes": [
         {
-          "parent": "warming",
+          "parent": "root",
           "id": "c1",
           "label": "",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "c1",
           "id": "c2",
@@ -134,8 +134,8 @@
           "probability": 4,
           "timeframe": 2,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "c1",
           "id": "c3",
@@ -144,8 +144,8 @@
           "probability": 3,
           "timeframe": 3,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "c3",
           "id": "c4",
@@ -154,8 +154,8 @@
           "probability": 2,
           "timeframe": 4,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "c3",
           "id": "c5",
@@ -164,8 +164,8 @@
           "probability": 1,
           "timeframe": 5,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         }
       ]
     },{
@@ -173,15 +173,15 @@
       "factbox": "",
       "nodes": [
         {
-          "parent": "warming",
+          "parent": "root",
           "id": "d1",
           "label": "",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "d1",
           "id": "d2",
@@ -190,8 +190,8 @@
           "probability": 4,
           "timeframe": 2,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "d1",
           "id": "d3",
@@ -200,8 +200,8 @@
           "probability": 3,
           "timeframe": 3,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "d1",
           "id": "d4",
@@ -210,8 +210,8 @@
           "probability": 2,
           "timeframe": 4,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "d1",
           "id": "d5",
@@ -220,8 +220,8 @@
           "probability": 1,
           "timeframe": 5,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         }
       ]
     },{
@@ -229,15 +229,15 @@
       "factbox": "",
       "nodes": [
         {
-          "parent": "warming",
+          "parent": "root",
           "id": "e1",
           "label": "",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "e1",
           "id": "e2",
@@ -246,8 +246,8 @@
           "probability": 4,
           "timeframe": 2,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "e2",
           "id": "e3",
@@ -256,8 +256,8 @@
           "probability": 3,
           "timeframe": 3,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "e3",
           "id": "e4",
@@ -266,8 +266,8 @@
           "probability": 2,
           "timeframe": 4,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         },{
           "parent": "e4",
           "id": "e5",
@@ -276,8 +276,8 @@
           "probability": 1,
           "timeframe": 5,
           "description": "",
-          "x": 0,
-          "y": 0
+          "nx": 0,
+          "ny": 0
         }
       ]
     }

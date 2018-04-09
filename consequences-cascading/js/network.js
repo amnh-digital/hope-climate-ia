@@ -17,12 +17,14 @@ var Network = (function() {
   Network.prototype.init = function(){
     this.$el = $(this.opt.el);
 
-    this.network = this.opt.network;
+    this.network = this.parseNetwork(this.opt.network);
 
     this.branchCount = this.network.length;
     this.angleThreshold = this.opt.angleThreshold;
     this.angleDelta = 0;
-    this.currentIndex = -1;
+
+    this.currentIndex = 0;
+    this.branch = this.network[0];
 
     this.width = this.$el.width();
     this.height = this.$el.height();
@@ -30,26 +32,44 @@ var Network = (function() {
     this.loadView();
     this.refreshDimensions();
     this.renderRootNode();
+
+    this.branchTransitionStart = new Date().getTime();
+    this.branchTransitionEnd = this.branchTransitionStart + this.branch.duration;
+    this.branchTransitioning = true;
+    this.render();
   };
 
   Network.prototype.loadView = function(){
     var _this = this;
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var rootNode = new PIXI.Graphics();
-    var nodeGroups = new PIXI.Container();
+    var branches = new PIXI.Container();
 
     addLabelBuffers(rootNode, 1);
 
-    _.each(this.network, function(nodeGroup, i){
-      var g = new PIXI.Graphics();
-      addLabelBuffers(g, nodeGroup.length * 2);
-      nodeGroups.addChild(g);
-      _this.network[i].g = g;
+    this.network = _.map(this.network, function(branch, i){
+      var container = new PIXI.Container();
+      var lines = new PIXI.Graphics();
+      var circles = new PIXI.Graphics();
+      var labels = new PIXI.Container();
+      branch.nodes = _.map(branch.nodes, function(node, j){
+        var label = new PIXI.Text("");
+        labels.addChild(label);
+        node.label = label;
+        return node;
+      });
+      container.addChild(lines, circles, labels);
+      branches.addChild(container);
+      branch.container = container;
+      branch.labels = labels;
+      branch.lineGraphics = lines;
+      branch.circleGraphics = circles;
+      return branch;
     });
 
-    this.app.stage.addChild(nodeGroups, rootNode);
+    this.app.stage.addChild(branches, rootNode);
     this.rootNode = rootNode;
-    this.sleepers = [rootNode, nodeGroups];
+    this.sleepers = [rootNode, branches];
     this.dreamers = [];
 
     this.$el.append(this.app.view);
@@ -80,7 +100,9 @@ var Network = (function() {
     }
 
     if (changed) {
-      // if (this.branch) { }
+      if (this.branch) {
+        this.transitionFromBranch = this.branch;
+      }
       var branch = network[index];
       this.branch = branch;
       this.currentIndex = index;
@@ -91,12 +113,63 @@ var Network = (function() {
       this.transitioning = true;
       this.angleDelta = 0;
 
+      this.branchTransitionStart = new Date().getTime();
+      this.branchTransitionEnd = this.branchTransitionStart + this.branch.duration;
+      this.branchTransitioning = true;
+
     } else {
-      this.rootNode.rotation = this.angleDelta * (Math.PI / 180);
+      var radians = this.angleDelta * (Math.PI / 180);
+      // rotate root node
+      this.rootNode.rotation = radians;
+      this.branch.container.rotation = radians;
     }
   };
 
+  Network.prototype.parseNetwork = function(network){
+    var nodeAlphaRange = this.opt.nodeAlphaRange.slice(0);
+    var nodeMs = this.opt.nodeMs;
+    var nodeTransitionMs = this.opt.nodeTransitionMs;
+
+    return _.map(network, function(branch, i){
+      branch.index = i;
+      var nodeCount = branch.nodes.length;
+      var segment = 1.0 / nodeCount;
+      var prevNX = 0.5;
+      var prevNY = 0;
+      var maxDelta = 0.1;
+      var nodeLookup = {};
+      branch.duration = nodeMs * nodeCount;
+      branch.nodes = _.map(branch.nodes, function(node, j){
+        if (node.parent !== "root" && _.has(nodeLookup, node.parent)) {
+          prevNX = nodeLookup[node.parent].nx;
+          prevNY = nodeLookup[node.parent].ny;
+        }
+        if (node.nx <= 0) node.nx = prevNX + (Math.random() * 2 - 1) * maxDelta;
+        if (node.ny <= 0) node.ny = prevNY + segment;
+        node.pnx = prevNX;
+        node.pny = prevNY;
+        // alpha is based on probability
+        node.a = UTIL.lerp(nodeAlphaRange[0], nodeAlphaRange[1], (node.probability - 1) / 4.0);
+        node.color = 0x005052;
+        node.lineColor = 0x005052;
+        var start = 1.0 * j / nodeCount;
+        var end = 1.0 * (j+1) / nodeCount;
+        node.start = start;
+        node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs);
+        prevNX = node.nx;
+        prevNY = node.ny;
+        nodeLookup[node.id] = {
+          nx: node.nx,
+          ny: node.ny
+        };
+        return node;
+      });
+      return branch;
+    });
+  };
+
   Network.prototype.refreshDimensions = function(){
+    var _this = this;
     var w = this.$el.width();
     var h = this.$el.height();
 
@@ -105,28 +178,91 @@ var Network = (function() {
 
     var rootNodeOpt = this.opt.rootNode;
     this.rootNodeRadius = rootNodeOpt.radius * h;
-    this.rootNodeX = rootNodeOpt.x * w;
-    this.rootNodeY = rootNodeOpt.y * h;
+    var rootNodeX = rootNodeOpt.x * w;
+    var rootNodeY = rootNodeOpt.y * h;
+    this.rootNodeX = rootNodeX;
+    this.rootNodeY = rootNodeY;
     var rootNodeTextStyle = _.extend({}, rootNodeOpt.textStyle);
     rootNodeTextStyle.fontSize *= h;
     this.rootNodeTextStyle = rootNodeTextStyle;
 
     var rootNode = this.rootNode;
-    rootNode.pivot.set(this.rootNodeX, this.rootNodeY);
-    rootNode.position.set(this.rootNodeX, this.rootNodeY)
+    rootNode.pivot.set(rootNodeX, rootNodeY);
+    rootNode.position.set(rootNodeX, rootNodeY);
+
+    // set position for each branch/node in the network
+    var nodeRadiusRange = this.opt.nodeRadiusRange.slice(0);
+    var nodeLineWidthRange = this.opt.nodeLineWidthRange.slice(0);
+    nodeRadiusRange[0] *= h;
+    nodeRadiusRange[1] *= h;
+    var y0 = rootNodeY;
+    var y1 = h - nodeRadiusRange[1];
+    var x0 = nodeRadiusRange[1];
+    var x1 = w - nodeRadiusRange[1];
+    this.network = _.map(this.network, function(branch, i){
+      branch.nodes = _.map(branch.nodes, function(node, j){
+        node.x = UTIL.lerp(x0, x1, node.nx);
+        node.y = UTIL.lerp(y0, y1, node.ny);
+        node.fromX = UTIL.lerp(x0, x1, node.pnx);
+        node.fromY = UTIL.lerp(y0, y1, node.pny);
+        // radius is based on severity
+        node.r = UTIL.lerp(nodeRadiusRange[0], nodeRadiusRange[1], (node.severity - 1) / 4.0);
+        // line width based on probability
+        node.lineWidth = UTIL.lerp(nodeLineWidthRange[0], nodeLineWidthRange[1], (node.probability - 1) / 4.0);
+        return node;
+      });
+      branch.container.pivot.set(rootNodeX, rootNodeY);
+      branch.container.position.set(rootNodeX, rootNodeY);
+      return branch;
+    });
   };
 
   Network.prototype.render = function(){
     if (this.transitioning) {
-      var now = new Date().getTime();
-      var progress = UTIL.norm(now, this.transitionStart, this.transitionEnd);
-      if (progress >= 1) {
-        progress = 1;
-        this.transitioning = false;
-      }
-      var angle = this.transitionAngleStart * (1-progress);
-      this.rootNode.rotation = angle * (Math.PI / 180);
+      this.transition();
     }
+
+    if (this.branchTransitioning) {
+      this.renderBranch();
+    }
+  };
+
+  Network.prototype.renderBranch = function(){
+    var now = new Date().getTime();
+    var progress = UTIL.norm(now, this.branchTransitionStart, this.branchTransitionEnd);
+    if (progress >= 1) {
+      progress = 1;
+      this.branchTransitioning = false;
+    }
+
+    var lineGraphics = this.branch.lineGraphics;
+    var circleGraphics = this.branch.circleGraphics;
+    lineGraphics.clear();
+    circleGraphics.clear();
+    _.each(this.branch.nodes, function(node, i){
+      var p = UTIL.norm(progress, node.start, node.end);
+      p = UTIL.clamp(p, 0, 1);
+
+      var label = node.label;
+      label.alpha = p;
+
+      if (p > 0) {
+        circleGraphics.beginFill(node.color);
+        lineGraphics.lineStyle(node.lineWidth, node.lineColor, node.a);
+        lineGraphics.moveTo(node.fromX, node.fromY);
+        if (p >= 1.0) {
+          lineGraphics.lineTo(node.x, node.y);
+          circleGraphics.drawCircle(node.x, node.y, node.r);
+
+        } else {
+          var mu = UTIL.easeInElastic(p);
+          var lerpPoint = UTIL.lerpLine(node.fromX, node.fromY, node.x, node.y, mu);
+          lineGraphics.lineTo(lerpPoint[0], lerpPoint[1]);
+          circleGraphics.drawCircle(lerpPoint[0], lerpPoint[1], node.r * mu);
+        }
+        circleGraphics.endFill();
+      }
+    });
   };
 
   Network.prototype.renderRootNode = function(){
@@ -150,6 +286,31 @@ var Network = (function() {
     label.text = "Warming";
     label.x = rootNodeX;
     label.y = rootNodeY;
+  };
+
+  Network.prototype.transition = function(){
+    var now = new Date().getTime();
+    var progress = UTIL.norm(now, this.transitionStart, this.transitionEnd);
+    if (progress >= 1) {
+      progress = 1;
+      this.transitioning = false;
+    }
+
+    // rotate root node
+    var angle = this.transitionAngleStart * (1-progress);
+    var radians = angle * (Math.PI / 180);
+    this.rootNode.rotation = radians;
+
+    var container = this.branch.container;
+    container.alpha = progress;
+    container.rotation = -radians;
+
+    if (this.transitionFromBranch) {
+      container = this.transitionFromBranch.container;
+      container.alpha = 1.0 - progress;
+    }
+
+
   };
 
   return Network;

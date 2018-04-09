@@ -4,6 +4,11 @@
     "angleThreshold": 60,
     "transitionMs": 1000,
     "resetAfterMs": 4000,
+    "nodeRadiusRange": [0.02, 0.05],
+    "nodeAlphaRange": [0.5, 1.0],
+    "nodeLineWidthRange": [3, 8],
+    "nodeMs": 1000,
+    "nodeTransitionMs": 1000,
     "rootNode": {
       "radius": 0.1,
       "x": 0.5,

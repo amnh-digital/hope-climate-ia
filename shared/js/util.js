@@ -93,6 +93,12 @@
     return ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0);
   };
 
+  UTIL.lerpLine = function(x0, y0, x1, y1, mu) {
+    var nx = x0 + (x1 - x0) * mu;
+    var ny = y0 + (y1 - y0) * mu;
+    return [nx, ny];
+  };
+
   UTIL.lerpList = function(l1, l2, amount) {
     var ll = [];
     for (var i=0; i<l1.length; i++) {
