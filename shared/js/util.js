@@ -134,6 +134,10 @@
     return query;
   };
 
+  UTIL.random = function(low, high) {
+    return UTIL.lerp(low, high, Math.random());
+  };
+
   UTIL.round = function(value, precision) {
     return +value.toFixed(precision);
   };
@@ -142,6 +146,7 @@
     return Math.round(value / nearest) * nearest;
   };
 
+  // East = 0 degrees
   UTIL.translatePoint = function(p, degrees, distance) {
     var radians = degrees * (Math.PI / 180);
     var x2 = p[0] + distance * Math.cos(radians);

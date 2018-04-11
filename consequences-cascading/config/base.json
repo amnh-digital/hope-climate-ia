@@ -19,7 +19,8 @@
         "fill": "#ffffff",
         "fontFamily": "Balance"
       }
-    }
+    },
+    "soundSprites": ["low", "medium", "high", "higher"]
   },
   "sound": {
     "enable": 1,

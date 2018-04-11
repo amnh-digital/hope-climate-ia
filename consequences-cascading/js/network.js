@@ -16,7 +16,7 @@ var Network = (function() {
 
   Network.prototype.init = function(){
     this.$el = $(this.opt.el);
-
+    this.$document = $(document);
     this.network = this.parseNetwork(this.opt.network);
 
     this.branchCount = this.network.length;
@@ -104,6 +104,10 @@ var Network = (function() {
         this.transitionFromBranch = this.branch;
       }
       var branch = network[index];
+      branch.nodes = _.mapObject(branch.nodes, function(node, id){
+        node.drawn = false;
+        return node;
+      });
       this.branch = branch;
       this.currentIndex = index;
 
@@ -129,6 +133,8 @@ var Network = (function() {
     var nodeAlphaRange = this.opt.nodeAlphaRange.slice(0);
     var nodeMs = this.opt.nodeMs;
     var nodeTransitionMs = this.opt.nodeTransitionMs;
+    var soundSprites = this.opt.soundSprites;
+    var soundSpritesLen = soundSprites.length;
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -186,14 +192,23 @@ var Network = (function() {
         node.nx = point[0];
         node.ny = point[1];
 
+        // determine sound based on severity
+        var soundSpriteIndex = Math.round((node.severity - 1) / 4.0 * (soundSpritesLen - 1));
+        node.soundSprite = soundSprites[soundSpriteIndex];
+
         // alpha is based on probability
         node.a = UTIL.lerp(nodeAlphaRange[0], nodeAlphaRange[1], (node.probability - 1) / 4.0);
         node.color = 0x005052;
         node.lineColor = 0x005052;
         var start = 1.0 * index / nodeCount;
         var end = 1.0 * (index+1) / nodeCount;
-        node.start = start;
-        node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs);
+        var pad = 1.0 / nodeCount / 4.0;
+        var delta = 0;
+        if (parentChildCount > 1) {
+          delta = UTIL.random(-pad, pad);
+        }
+        node.start = start + delta;
+        node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs) + delta;
 
         // update node
         nodes[id] = node;
@@ -267,6 +282,7 @@ var Network = (function() {
   };
 
   Network.prototype.renderBranch = function(){
+    var _this = this;
     var now = new Date().getTime();
     var progress = UTIL.norm(now, this.branchTransitionStart, this.branchTransitionEnd);
     if (progress >= 1) {
@@ -279,6 +295,7 @@ var Network = (function() {
     lineGraphics.clear();
     circleGraphics.clear();
     var nodeRadius = this.nodeRadius;
+    var $document = this.$document;
     _.each(this.branch.nodes, function(node, id){
       var p = UTIL.norm(progress, node.start, node.end);
       p = UTIL.clamp(p, 0, 1);
@@ -287,6 +304,11 @@ var Network = (function() {
       label.alpha = p;
 
       if (p > 0) {
+        if (!node.drawn) {
+          $document.trigger("sound.play.sprite", [node.soundSprite]);
+          _this.branch.nodes[id].drawn = true;
+        }
+
         var alpha = node.a;
         var x0 = node.fromX;
         var x1 = node.x;

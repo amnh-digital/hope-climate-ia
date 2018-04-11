@@ -14,10 +14,13 @@ var AppCascading = (function() {
   AppCascading.prototype.init = function(){
     var _this = this;
 
-    this.onReady();
-    this.loadListeners();
-    this.loadControls();
-    this.loadSounds();
+    var controlPromise = this.loadControls();
+    var soundPromise = this.loadSounds();
+
+    $.when.apply($, [controlPromise, soundPromise]).then(function(){
+      _this.onReady();
+      _this.loadListeners();
+    });
   };
 
   AppCascading.prototype.loadControls = function(){
