@@ -11,9 +11,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "a1",
           "id": "a2",
@@ -21,9 +19,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "a2",
           "id": "a3",
@@ -31,9 +27,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "a3",
           "id": "a4",
@@ -41,9 +35,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "a3",
           "id": "a5",
@@ -51,9 +43,7 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         }
       ]
     },{
@@ -67,9 +57,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "b1",
           "id": "b2",
@@ -77,9 +65,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "b2",
           "id": "b3",
@@ -87,9 +73,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "b3",
           "id": "b4",
@@ -97,9 +81,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "b3",
           "id": "b5",
@@ -107,9 +89,7 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         }
       ]
     },{
@@ -123,9 +103,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "c1",
           "id": "c2",
@@ -133,9 +111,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "c1",
           "id": "c3",
@@ -143,9 +119,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "c3",
           "id": "c4",
@@ -153,9 +127,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "c3",
           "id": "c5",
@@ -163,9 +135,7 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         }
       ]
     },{
@@ -179,9 +149,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "d1",
           "id": "d2",
@@ -189,9 +157,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "d1",
           "id": "d3",
@@ -199,9 +165,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "d1",
           "id": "d4",
@@ -209,9 +173,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "d1",
           "id": "d5",
@@ -219,9 +181,7 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         }
       ]
     },{
@@ -235,9 +195,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "e1",
           "id": "e2",
@@ -245,9 +203,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "e2",
           "id": "e3",
@@ -255,9 +211,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "e3",
           "id": "e4",
@@ -265,9 +219,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         },{
           "parent": "e4",
           "id": "e5",
@@ -275,9 +227,7 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "",
-          "nx": 0,
-          "ny": 0
+          "description": ""
         }
       ]
     }

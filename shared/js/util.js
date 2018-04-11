@@ -142,6 +142,13 @@
     return Math.round(value / nearest) * nearest;
   };
 
+  UTIL.translatePoint = function(p, degrees, distance) {
+    var radians = degrees * (Math.PI / 180);
+    var x2 = p[0] + distance * Math.cos(radians);
+    var y2 = p[1] + distance * Math.sin(radians);
+    return [x2, y2];
+  };
+
   UTIL.within = function(num, min, max) {
     if (num < min) return false;
     if (num > max) return false;

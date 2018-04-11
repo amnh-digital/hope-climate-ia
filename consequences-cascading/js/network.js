@@ -52,7 +52,7 @@ var Network = (function() {
       var lines = new PIXI.Graphics();
       var circles = new PIXI.Graphics();
       var labels = new PIXI.Container();
-      branch.nodes = _.map(branch.nodes, function(node, j){
+      branch.nodes = _.mapObject(branch.nodes, function(node, id){
         var label = new PIXI.Text("");
         labels.addChild(label);
         node.label = label;
@@ -134,36 +134,73 @@ var Network = (function() {
       branch.index = i;
       var nodeCount = branch.nodes.length;
       var segment = 1.0 / nodeCount;
-      var prevNX = 0.5;
-      var prevNY = 0;
-      var maxDelta = 0.1;
-      var nodeLookup = {};
       branch.duration = nodeMs * nodeCount;
-      branch.nodes = _.map(branch.nodes, function(node, j){
-        if (node.parent !== "root" && _.has(nodeLookup, node.parent)) {
-          prevNX = nodeLookup[node.parent].nx;
-          prevNY = nodeLookup[node.parent].ny;
+
+      // tranform nodes into a hash
+      var nodeIds = _.pluck(branch.nodes, 'id');
+      branch.nodeIds = nodeIds;
+      var nodes = _.object(_.map(branch.nodes, function(node, j){
+        return [node.id, node];
+      }));
+
+      _.each(nodes, function(n, id){
+        var node = _.clone(n);
+
+        // retrieve parent info
+        var parent = false;
+        var parentNX = 0.5;
+        var parentNY = 0;
+        var parentChildCount = 0;
+        var index = 0;
+        if (node.parent !== "root") {
+          parent = nodes[node.parent];
+          parentNX = parent.nx;
+          parentNY = parent.ny;
+          parentChildCount = parent.childCount;
+          index = parent.index + 1;
         }
-        if (node.nx <= 0) node.nx = prevNX + (Math.random() * 2 - 1) * maxDelta;
-        if (node.ny <= 0) node.ny = prevNY + segment;
-        node.pnx = prevNX;
-        node.pny = prevNY;
+        node.index = index;
+        node.pnx = parentNX;
+        node.pny = parentNY;
+
+        // check for children
+        var children = _.filter(nodes, function(cnode){ return cnode.parent===id});
+        var childCount = children.length;
+        node.childCount = childCount;
+        node.childIds = _.pluck(children, 'id');
+
+        // determine normal position
+        var distance = node.distance ? node.distance : segment;
+        var baseAngle = 90;
+        var anglePad = 15;
+        // evenly space children if multiple children
+        if (parentChildCount > 1) {
+          var childIndex = parent.childIds.indexOf(id);
+          var childMu = 1.0 * childIndex / (parentChildCount-1);
+          var maxAngle = parentChildCount * anglePad;
+          baseAngle = UTIL.lerp(baseAngle-maxAngle, baseAngle+maxAngle, childMu);
+        }
+        // determine position via angle + distance
+        var angle = node.angle ? node.angle : _.random(baseAngle-anglePad, baseAngle+anglePad);
+        var point = UTIL.translatePoint([parentNX, parentNY], angle, distance);
+        node.nx = point[0];
+        node.ny = point[1];
+
         // alpha is based on probability
         node.a = UTIL.lerp(nodeAlphaRange[0], nodeAlphaRange[1], (node.probability - 1) / 4.0);
         node.color = 0x005052;
         node.lineColor = 0x005052;
-        var start = 1.0 * j / nodeCount;
-        var end = 1.0 * (j+1) / nodeCount;
+        var start = 1.0 * index / nodeCount;
+        var end = 1.0 * (index+1) / nodeCount;
         node.start = start;
         node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs);
-        prevNX = node.nx;
-        prevNY = node.ny;
-        nodeLookup[node.id] = {
-          nx: node.nx,
-          ny: node.ny
-        };
-        return node;
+
+        // update node
+        nodes[id] = node;
       });
+
+      branch.nodes = nodes;
+
       return branch;
     });
   };
@@ -200,7 +237,7 @@ var Network = (function() {
     var x0 = nodeRadiusRange[1];
     var x1 = w - nodeRadiusRange[1];
     this.network = _.map(this.network, function(branch, i){
-      branch.nodes = _.map(branch.nodes, function(node, j){
+      branch.nodes = _.mapObject(branch.nodes, function(node, id){
         node.x = UTIL.lerp(x0, x1, node.nx);
         node.y = UTIL.lerp(y0, y1, node.ny);
         node.fromX = UTIL.lerp(x0, x1, node.pnx);
@@ -215,6 +252,8 @@ var Network = (function() {
       branch.container.position.set(rootNodeX, rootNodeY);
       return branch;
     });
+
+    this.nodeRadius = nodeRadiusRange[0];
   };
 
   Network.prototype.render = function(){
@@ -239,7 +278,8 @@ var Network = (function() {
     var circleGraphics = this.branch.circleGraphics;
     lineGraphics.clear();
     circleGraphics.clear();
-    _.each(this.branch.nodes, function(node, i){
+    var nodeRadius = this.nodeRadius;
+    _.each(this.branch.nodes, function(node, id){
       var p = UTIL.norm(progress, node.start, node.end);
       p = UTIL.clamp(p, 0, 1);
 
@@ -247,19 +287,33 @@ var Network = (function() {
       label.alpha = p;
 
       if (p > 0) {
-        circleGraphics.beginFill(node.color);
-        lineGraphics.lineStyle(node.lineWidth, node.lineColor, node.a);
-        lineGraphics.moveTo(node.fromX, node.fromY);
-        if (p >= 1.0) {
-          lineGraphics.lineTo(node.x, node.y);
-          circleGraphics.drawCircle(node.x, node.y, node.r);
+        var alpha = node.a;
+        var x0 = node.fromX;
+        var x1 = node.x;
+        var y0 = node.fromY;
+        var y1 = node.y;
+        var radius = node.r;
+        var color = node.color;
 
-        } else {
+        if (p < 1.0) {
           var mu = UTIL.easeInElastic(p);
           var lerpPoint = UTIL.lerpLine(node.fromX, node.fromY, node.x, node.y, mu);
-          lineGraphics.lineTo(lerpPoint[0], lerpPoint[1]);
-          circleGraphics.drawCircle(lerpPoint[0], lerpPoint[1], node.r * mu);
+          x1 = lerpPoint[0];
+          y1 = lerpPoint[1];
+          radius = radius * mu;
         }
+
+        lineGraphics.lineStyle(node.lineWidth, node.lineColor, alpha);
+        lineGraphics.moveTo(x0, y0);
+
+        lineGraphics.lineTo(x1, y1);
+
+        circleGraphics.beginFill(color, alpha);
+        circleGraphics.drawCircle(x1, y1, radius);
+        circleGraphics.endFill();
+
+        circleGraphics.beginFill(color);
+        circleGraphics.drawCircle(x1, y1, nodeRadius);
         circleGraphics.endFill();
       }
     });
@@ -309,7 +363,6 @@ var Network = (function() {
       container = this.transitionFromBranch.container;
       container.alpha = 1.0 - progress;
     }
-
 
   };
 
