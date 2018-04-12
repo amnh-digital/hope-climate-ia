@@ -245,6 +245,8 @@ var Network = (function() {
     // set position for each branch/node in the network
     var nodeRadiusRange = this.opt.nodeRadiusRange.slice(0);
     var nodeLineWidthRange = this.opt.nodeLineWidthRange.slice(0);
+    var nodeDashGapRange = this.opt.nodeDashGapRange.slice(0);
+    var nodeDashWidthRange = this.opt.nodeDashWidthRange.slice(0);
     nodeRadiusRange[0] *= h;
     nodeRadiusRange[1] *= h;
     var y0 = rootNodeY;
@@ -261,6 +263,9 @@ var Network = (function() {
         node.r = UTIL.lerp(nodeRadiusRange[0], nodeRadiusRange[1], (node.severity - 1) / 4.0);
         // line width based on probability
         node.lineWidth = UTIL.lerp(nodeLineWidthRange[0], nodeLineWidthRange[1], (node.probability - 1) / 4.0);
+        // line dash based on propability
+        node.dashGapWidth = UTIL.lerp(nodeDashGapRange[0], nodeDashGapRange[1], (node.probability - 1) / 4.0);
+        node.dashWidth = UTIL.lerp(nodeDashWidthRange[0], nodeDashWidthRange[1], (node.probability - 1) / 4.0);
         return node;
       });
       branch.container.pivot.set(rootNodeX, rootNodeY);
@@ -278,6 +283,8 @@ var Network = (function() {
 
     if (this.branchTransitioning) {
       this.renderBranch();
+    } else {
+      this.renderDashes();
     }
   };
 
@@ -290,15 +297,14 @@ var Network = (function() {
       this.branchTransitioning = false;
     }
 
-    var lineGraphics = this.branch.lineGraphics;
     var circleGraphics = this.branch.circleGraphics;
-    lineGraphics.clear();
     circleGraphics.clear();
     var nodeRadius = this.nodeRadius;
     var $document = this.$document;
     _.each(this.branch.nodes, function(node, id){
       var p = UTIL.norm(progress, node.start, node.end);
       p = UTIL.clamp(p, 0, 1);
+      _this.branch.nodes[id].progress = p;
 
       var label = node.label;
       label.alpha = p;
@@ -325,10 +331,8 @@ var Network = (function() {
           radius = radius * mu;
         }
 
-        lineGraphics.lineStyle(node.lineWidth, node.lineColor, alpha);
-        lineGraphics.moveTo(x0, y0);
-
-        lineGraphics.lineTo(x1, y1);
+        _this.branch.nodes[id].toX = x1;
+        _this.branch.nodes[id].toY = y1;
 
         circleGraphics.beginFill(color, alpha);
         circleGraphics.drawCircle(x1, y1, radius);
@@ -338,6 +342,66 @@ var Network = (function() {
         circleGraphics.drawCircle(x1, y1, nodeRadius);
         circleGraphics.endFill();
       }
+    });
+
+    this.renderDashes();
+  };
+
+  Network.prototype.renderDashes = function(){
+    var now = new Date().getTime();
+    var nodeDashMs = this.opt.nodeDashMs;
+    var dashOffset = now % nodeDashMs;
+    var dashProgress = dashOffset / nodeDashMs;
+
+    var lineGraphics = this.branch.lineGraphics;
+    lineGraphics.clear();
+
+    var dashLine = function(g, x0, y0, x1, y1, width, gap, offset) {
+      // no dash = straight line
+      if (gap <= 0) {
+        g.moveTo(x0, y0).lineTo(x1, y1);
+        return;
+      }
+      var d = UTIL.distance(x0, y0, x1, y1);
+      g.moveTo(x0, y0);
+      while (offset < d) {
+        var p;
+        // account for beginning with just a gap
+        if (offset < gap) {
+          p = UTIL.lerpLine(x0, y0, x1, y1, offset/d);
+          g.moveTo(p[0], p[1]);
+        // beginning with partial line
+        } else if (offset < (gap + width)) {
+          var delta = offset - gap;
+          p = UTIL.lerpLine(x0, y0, x1, y1, delta/d);
+          g.lineTo(p[0], p[1]);
+          p = UTIL.lerpLine(x0, y0, x1, y1, offset/d);
+          g.moveTo(p[0], p[1]);
+        }
+        // draw the line
+        offset += width;
+        if (offset > d) offset = d; // account for end of line
+        p = UTIL.lerpLine(x0, y0, x1, y1, offset/d);
+        g.lineTo(p[0], p[1]);
+        // make the gap
+        offset += gap;
+        p = UTIL.lerpLine(x0, y0, x1, y1, offset/d);
+        g.moveTo(p[0], p[1]);
+      }
+    };
+
+    _.each(this.branch.nodes, function(node, id){
+
+      if (node.progress > 0) {
+        var alpha = node.a;
+        var x0 = node.fromX;
+        var x1 = node.toX;
+        var y0 = node.fromY;
+        var y1 = node.toY;
+        lineGraphics.lineStyle(node.lineWidth, node.lineColor, alpha);
+        dashLine(lineGraphics, x0, y0, x1, y1, node.dashWidth, node.dashGapWidth, dashProgress*(node.dashGapWidth+node.dashWidth));
+      }
+
     });
   };
 

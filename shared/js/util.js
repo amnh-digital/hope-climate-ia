@@ -12,6 +12,10 @@
     return value;
   };
 
+  UTIL.distance = function(x0, y0, x1, y1) {
+    return Math.hypot(x1-x0, y1-y0);
+  };
+
   UTIL.easeInOutCubic = function (t) {
     return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1;
   };
