@@ -143,6 +143,8 @@ var Network = (function() {
     var nodeAlphaRange = this.opt.nodeAlphaRange.slice(0);
     var nodeMs = this.opt.nodeMs;
     var nodeTransitionMs = this.opt.nodeTransitionMs;
+    var nodeContentDelayMs = this.opt.nodeContentDelayMs;
+    var nodeContentMs = this.opt.nodeContentMs;
     var soundSprites = this.opt.soundSprites;
     var soundSpritesLen = soundSprites.length;
     var nodeRadiusRange = this.opt.nodeRadiusRange;
@@ -226,6 +228,8 @@ var Network = (function() {
         }
         node.start = start + delta;
         node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs) + delta;
+        node.contentStart = node.start + segment * (nodeContentDelayMs/nodeMs);
+        node.contentEnd = node.contentStart + segment * (nodeContentMs/nodeMs);
 
         // radius is based on severity
         node.nRadius = UTIL.lerp(nodeRadiusRange[0], nodeRadiusRange[1], (node.severity - 1) / 4.0);
@@ -353,12 +357,16 @@ var Network = (function() {
   };
 
   Network.prototype.render = function(){
+    // we are transition to a new branch
     if (this.transitioning) {
       this.transition();
     }
 
+    // branch nodes are animating in
     if (this.branchTransitioning) {
       this.renderBranch();
+
+    // branch is finished rendering, just animate dashes
     } else {
       this.renderDashes();
     }
@@ -418,8 +426,6 @@ var Network = (function() {
         circleGraphics.drawCircle(x1, y1, nodeRadius);
         circleGraphics.endFill();
 
-        node.contentArea.alpha = p;
-
         // draw content
         // if (p >= 1.0) {
         //   circleGraphics.beginFill(0xff0000);
@@ -427,6 +433,10 @@ var Network = (function() {
         //   circleGraphics.endFill();
         // }
       }
+
+      var contentP = UTIL.norm(progress, node.contentStart, node.contentEnd);
+      contentP = UTIL.clamp(contentP, 0, 1);
+      node.contentArea.alpha = contentP;
     });
 
     this.renderDashes();
