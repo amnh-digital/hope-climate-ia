@@ -135,6 +135,7 @@ var Network = (function() {
     var nodeTransitionMs = this.opt.nodeTransitionMs;
     var soundSprites = this.opt.soundSprites;
     var soundSpritesLen = soundSprites.length;
+    var nodeRadiusRange = this.opt.nodeRadiusRange;
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -189,6 +190,7 @@ var Network = (function() {
         // determine position via angle + distance
         var angle = node.angle ? node.angle : _.random(baseAngle-anglePad, baseAngle+anglePad);
         var point = UTIL.translatePoint([parentNX, parentNY], angle, distance);
+        node.angle = angle;
         node.nx = point[0];
         node.ny = point[1];
 
@@ -209,6 +211,31 @@ var Network = (function() {
         }
         node.start = start + delta;
         node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs) + delta;
+
+        // update node
+        nodes[id] = node;
+      });
+
+      _.each(nodes, function(n, id){
+        var node = _.clone(n);
+
+        // determine position of content
+        var contentDistance = node.contentDistance ? node.contentDistance : nodeRadiusRange[1] * 1.2;
+        var contentAngle = node.angle;
+        var child = false;
+        if (node.childCount > 0) child = nodes[node.childIds[0]];
+
+        // if child, make the angle the normal angle between the two nodes' angles
+        if (child) {
+          var childAngle = child.angle;
+          contentAngle = (contentAngle + childAngle) * 0.5 + 90;
+          if (childAngle > node.angle && node.childCount===1 || node.childCount > 1) contentAngle -= 180;
+        }
+
+        contentAngle = node.contentAngle ? node.contentAngle : contentAngle;
+        var contentPoint = UTIL.translatePoint([node.nx, node.ny], contentAngle, contentDistance);
+        node.contentNx = contentPoint[0];
+        node.contentNy = contentPoint[1];
 
         // update node
         nodes[id] = node;
@@ -259,6 +286,8 @@ var Network = (function() {
         node.y = UTIL.lerp(y0, y1, node.ny);
         node.fromX = UTIL.lerp(x0, x1, node.pnx);
         node.fromY = UTIL.lerp(y0, y1, node.pny);
+        node.contentX = UTIL.lerp(x0, x1, node.contentNx);
+        node.contentY = UTIL.lerp(y0, y1, node.contentNy);
         // radius is based on severity
         node.r = UTIL.lerp(nodeRadiusRange[0], nodeRadiusRange[1], (node.severity - 1) / 4.0);
         // line width based on probability
@@ -341,6 +370,13 @@ var Network = (function() {
         circleGraphics.beginFill(color);
         circleGraphics.drawCircle(x1, y1, nodeRadius);
         circleGraphics.endFill();
+
+        // draw content
+        // if (p >= 1.0) {
+        //   circleGraphics.beginFill(0xff0000);
+        //   circleGraphics.drawCircle(node.contentX, node.contentY, 10);
+        //   circleGraphics.endFill();
+        // }
       }
     });
 
