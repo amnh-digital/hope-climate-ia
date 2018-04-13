@@ -3,7 +3,7 @@
     "el": "#network",
     "angleThreshold": 60,
     "transitionMs": 1000,
-    "resetAfterMs": 4000,
+    "resetAfterMs": 2000,
     "nodeRadiusRange": [0.02, 0.08],
     "nodeAlphaRange": [0.3, 1.0],
     "nodeLineWidthRange": [3, 8],

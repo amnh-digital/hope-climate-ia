@@ -106,6 +106,14 @@ var Network = (function() {
     this.angleDelta = angleDelta;
     this.angleDeltaProgress = angleDeltaProgress;
 
+    // start the countdown to reset
+    this.resetting = false;
+    this.resetCountingDown = true;
+    this.resetStart = new Date().getTime() + this.opt.resetAfterMs;
+    this.resetEnd = this.resetStart + this.opt.transitionMs;
+    this.resetAngleStart = this.angleDelta;
+    this.resetAngleProgressStart = this.angleDeltaProgress;
+
     // first load
     if (this.currentIndex < 0) {
       index = 0;
@@ -136,14 +144,16 @@ var Network = (function() {
       this.branchTransitionEnd = this.branchTransitionStart + this.branch.duration;
       this.branchTransitioning = true;
 
+      this.resetCountingDown = false;
+
     } else {
       var radians = this.angleDelta * (Math.PI / 180);
       // rotate root node
       this.rootNode.rotation = radians;
       this.branch.container.rotation = radians;
+      this.branch.container.alpha = 1.0 - angleDeltaProgress;
       _.each(this.branch.nodes, function(node, id){
         node.contentArea.rotation = -radians;
-        if (!branchTransitioning) node.contentArea.alpha = 1.0 - angleDeltaProgress;
       });
     }
   };
@@ -366,24 +376,36 @@ var Network = (function() {
   };
 
   Network.prototype.render = function(){
+    var now = new Date().getTime();
+
     // we are transition to a new branch
     if (this.transitioning) {
-      this.transition();
+      this.renderTransition(now);
     }
 
     // branch nodes are animating in
     if (this.branchTransitioning) {
-      this.renderBranch();
+      this.renderBranch(now);
 
     // branch is finished rendering, just animate dashes
     } else {
-      this.renderDashes();
+      this.renderDashes(now);
+    }
+
+    // check if we need to reset
+    if (this.resetCountingDown && now > this.resetStart) {
+      this.resetting = true;
+      this.resetCountingDown = false;
+    }
+
+    if (this.resetting) {
+      this.renderReset(now);
     }
   };
 
-  Network.prototype.renderBranch = function(){
+  Network.prototype.renderBranch = function(t){
     var _this = this;
-    var now = new Date().getTime();
+    var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.branchTransitionStart, this.branchTransitionEnd);
     if (progress >= 1) {
       progress = 1;
@@ -399,9 +421,6 @@ var Network = (function() {
       var p = UTIL.norm(progress, node.start, node.end);
       p = UTIL.clamp(p, 0, 1);
       _this.branch.nodes[id].progress = p;
-
-      var label = node.label;
-      label.alpha = p;
 
       if (p > 0) {
         if (!node.drawn) {
@@ -446,14 +465,14 @@ var Network = (function() {
 
       var contentP = UTIL.norm(progress, node.contentStart, node.contentEnd);
       contentP = UTIL.clamp(contentP, 0, 1);
-      node.contentArea.alpha = contentP * (1.0-angleDeltaProgress);
+      node.contentArea.alpha = contentP;
     });
 
     this.renderDashes();
   };
 
-  Network.prototype.renderDashes = function(){
-    var now = new Date().getTime();
+  Network.prototype.renderDashes = function(t){
+    var now = t ? t : new Date().getTime();
     var nodeDashMs = this.opt.nodeDashMs;
     var dashOffset = now % nodeDashMs;
     var dashProgress = dashOffset / nodeDashMs;
@@ -510,6 +529,32 @@ var Network = (function() {
     });
   };
 
+  Network.prototype.renderReset = function(t){
+    if (this.transitioning) return false;
+
+    var now = t ? t : new Date().getTime();
+    var progress = UTIL.norm(now, this.resetStart, this.resetEnd);
+    var progressEased = UTIL.easeInOutSin(progress);
+    if (progress >= 1) {
+      progress = 1;
+      this.resetting = false;
+    }
+
+    // rotate root node
+    var angle = this.resetAngleStart * (1-progressEased);
+    var radians = angle * (Math.PI / 180);
+    this.rootNode.rotation = radians;
+    this.angleDelta = angle;
+    this.angleDeltaProgress = Math.abs(this.angleDelta) / this.angleThreshold;
+
+    var container = this.branch.container;
+    container.alpha = UTIL.lerp(1.0-this.resetAngleProgressStart, 1.0, progressEased);
+    container.rotation = radians;
+    _.each(this.branch.nodes, function(node, id){
+      node.contentArea.rotation = -radians;
+    });
+  };
+
   Network.prototype.renderRootNode = function(){
     var rootNode = this.rootNode;
     var label = rootNode.children[0];
@@ -533,21 +578,22 @@ var Network = (function() {
     label.y = rootNodeY;
   };
 
-  Network.prototype.transition = function(){
-    var now = new Date().getTime();
+  Network.prototype.renderTransition = function(t){
+    var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.transitionStart, this.transitionEnd);
+    var progressEased = UTIL.easeInOutSin(progress);
     if (progress >= 1) {
       progress = 1;
       this.transitioning = false;
     }
 
     // rotate root node
-    var angle = this.transitionAngleStart * (1-progress);
+    var angle = this.transitionAngleStart * (1-progressEased);
     var radians = angle * (Math.PI / 180);
     this.rootNode.rotation = radians;
 
     var container = this.branch.container;
-    container.alpha = progress;
+    container.alpha = progressEased;
     container.rotation = -radians;
     _.each(this.branch.nodes, function(node, id){
       node.contentArea.rotation = radians;
@@ -555,7 +601,8 @@ var Network = (function() {
 
     if (this.transitionFromBranch) {
       container = this.transitionFromBranch.container;
-      container.alpha = 1.0 - progress;
+      var p = 1.0 - progress;
+      if (p < container.alpha) container.alpha = p;
     }
 
   };
