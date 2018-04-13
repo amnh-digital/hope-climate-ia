@@ -12,6 +12,21 @@
     "nodeDashMs": 500,
     "nodeMs": 1000,
     "nodeTransitionMs": 1000,
+    "nodeContentWidth": 0.2,
+    "nodeContentHeight": 0.12,
+    "nodeImageWidth": 0.2,
+    "nodeLabelTextStyle": {
+      "fontSize": 0.02,
+      "fill": "#999999",
+      "fontFamily": "Balance"
+    },
+    "nodeBodyTextStyle": {
+      "fontSize": 0.015,
+      "fill": "#999999",
+      "fontFamily": "Balance",
+      "wordWrap": true,
+      "lineHeight": 1.5
+    },
     "rootNode": {
       "radius": 0.1,
       "x": 0.5,

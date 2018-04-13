@@ -16,11 +16,51 @@ var AppCascading = (function() {
 
     var controlPromise = this.loadControls();
     var soundPromise = this.loadSounds();
+    var assetPromise = this.loadAssets();
 
-    $.when.apply($, [controlPromise, soundPromise]).then(function(){
+    $.when.apply($, [controlPromise, soundPromise, assetPromise]).then(function(){
       _this.onReady();
       _this.loadListeners();
     });
+  };
+
+  AppCascading.prototype.loadAssets = function(){
+    var _this = this;
+    var deferred = $.Deferred();
+    var loader = new PIXI.loaders.Loader();
+
+    // get image paths from content
+    var network = this.content.network;
+    var imagePaths = ['img/placeholder.png'];
+    _.each(network, function(branch, i){
+      _.each(branch.nodes, function(node, j){
+        if (node.image) imagePaths.push(node.image);
+      });
+    });
+
+    // load images
+    imagePaths = _.uniq(imagePaths);
+    var imageIndex = {};
+    _.each(imagePaths, function(path){
+      var filename = path.split("/").pop();
+      var id = filename.split(".").shift();
+      imageIndex[path] = id;
+      loader.add(id, path);
+    });
+
+    // on load, assign textures to content and resolve
+    loader.load(function(loader, resources){
+      _.each(network, function(branch, i){
+        _.each(branch.nodes, function(node, j){
+          var imageId = "placeholder";
+          if (node.image) imageId = imageIndex[node.image];
+          _this.content.network[i].nodes[j].texture = resources[imageId].texture;
+        });
+      });
+      deferred.resolve();
+    });
+
+    return deferred.promise();
   };
 
   AppCascading.prototype.loadControls = function(){

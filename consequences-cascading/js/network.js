@@ -51,17 +51,26 @@ var Network = (function() {
       var container = new PIXI.Container();
       var lines = new PIXI.Graphics();
       var circles = new PIXI.Graphics();
-      var labels = new PIXI.Container();
+      var contentAreas = new PIXI.Container();
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
-        var label = new PIXI.Text("");
-        labels.addChild(label);
+        var contentArea = new PIXI.Graphics();
+        var label = new PIXI.Text("Lorem Ipsum");
+        var description = new PIXI.Text("Praesent ut feugiat purus, sed sodales dui. Nulla quis nulla vel erat bibendum elementum.");
+        var sprite = new PIXI.Sprite(node.texture);
+        node.imageRatio = sprite.width / sprite.height;
+        contentArea.addChild(label, description, sprite);
+        contentArea.alpha = 0;
+        contentAreas.addChild(contentArea);
+        node.contentArea = contentArea;
         node.label = label;
+        node.description = description;
+        node.sprite = sprite;
         return node;
       });
-      container.addChild(lines, circles, labels);
+      container.addChild(lines, circles, contentAreas);
       branches.addChild(container);
       branch.container = container;
-      branch.labels = labels;
+      branch.contentAreaGraphics = contentAreas;
       branch.lineGraphics = lines;
       branch.circleGraphics = circles;
       return branch;
@@ -106,6 +115,7 @@ var Network = (function() {
       var branch = network[index];
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
         node.drawn = false;
+        node.contentArea.alpha = 0;
         return node;
       });
       this.branch = branch;
@@ -136,6 +146,8 @@ var Network = (function() {
     var soundSprites = this.opt.soundSprites;
     var soundSpritesLen = soundSprites.length;
     var nodeRadiusRange = this.opt.nodeRadiusRange;
+    var nodeContentWidth = this.opt.nodeContentWidth;
+    var nodeContentHeight = this.opt.nodeContentHeight;
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -194,6 +206,9 @@ var Network = (function() {
         node.nx = point[0];
         node.ny = point[1];
 
+        node.nContentWidth = node.nContentWidth ? node.nContentWidth : nodeContentWidth;
+        node.nContentHeight = node.nContentHeight ? node.nContentHeight : nodeContentHeight;
+
         // determine sound based on severity
         var soundSpriteIndex = Math.round((node.severity - 1) / 4.0 * (soundSpritesLen - 1));
         node.soundSprite = soundSprites[soundSpriteIndex];
@@ -212,6 +227,9 @@ var Network = (function() {
         node.start = start + delta;
         node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs) + delta;
 
+        // radius is based on severity
+        node.nRadius = UTIL.lerp(nodeRadiusRange[0], nodeRadiusRange[1], (node.severity - 1) / 4.0);
+
         // update node
         nodes[id] = node;
       });
@@ -220,7 +238,7 @@ var Network = (function() {
         var node = _.clone(n);
 
         // determine position of content
-        var contentDistance = node.contentDistance ? node.contentDistance : nodeRadiusRange[1] * 1.2;
+        var contentDistance = node.contentDistance ? node.contentDistance : node.nRadius * 1.1 + node.nContentWidth * 0.5;
         var contentAngle = node.angle;
         var child = false;
         if (node.childCount > 0) child = nodes[node.childIds[0]];
@@ -269,11 +287,18 @@ var Network = (function() {
     rootNode.pivot.set(rootNodeX, rootNodeY);
     rootNode.position.set(rootNodeX, rootNodeY);
 
+    var nodeLabelTextStyle = _.extend({}, this.opt.nodeLabelTextStyle);
+    var nodeBodyTextStyle = _.extend({}, this.opt.nodeBodyTextStyle);
+    nodeLabelTextStyle.fontSize *= h;
+    nodeBodyTextStyle.fontSize *= h;
+    nodeBodyTextStyle.lineHeight = nodeBodyTextStyle.fontSize * nodeBodyTextStyle.lineHeight;
+
     // set position for each branch/node in the network
     var nodeRadiusRange = this.opt.nodeRadiusRange.slice(0);
     var nodeLineWidthRange = this.opt.nodeLineWidthRange.slice(0);
     var nodeDashGapRange = this.opt.nodeDashGapRange.slice(0);
     var nodeDashWidthRange = this.opt.nodeDashWidthRange.slice(0);
+    var nodeImageWidth = this.opt.nodeImageWidth;
     nodeRadiusRange[0] *= h;
     nodeRadiusRange[1] *= h;
     var y0 = rootNodeY;
@@ -282,14 +307,36 @@ var Network = (function() {
     var x1 = w - nodeRadiusRange[1];
     this.network = _.map(this.network, function(branch, i){
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
+        // update node position
         node.x = UTIL.lerp(x0, x1, node.nx);
         node.y = UTIL.lerp(y0, y1, node.ny);
         node.fromX = UTIL.lerp(x0, x1, node.pnx);
         node.fromY = UTIL.lerp(y0, y1, node.pny);
-        node.contentX = UTIL.lerp(x0, x1, node.contentNx);
-        node.contentY = UTIL.lerp(y0, y1, node.contentNy);
+        // position content area
+        var contentX = UTIL.lerp(x0, x1, node.contentNx);
+        var contentY = UTIL.lerp(y0, y1, node.contentNy);
+        var contentWidth = node.nContentWidth * w;
+        var contentHeight = node.nContentHeight * h;
+        node.contentArea.pivot.set(contentX, contentY);
+        node.contentArea.position.set(contentX, contentY);
+        // update sprite
+        var x = contentX - contentWidth * 0.5;
+        var y = contentY - contentHeight * 0.5;
+        // node.contentArea.clear();
+        // node.contentArea.beginFill(0xff0000);
+        // node.contentArea.drawRect(x, y, contentWidth, contentHeight);
+        // node.contentArea.endFill();
+        var contentMargin = contentWidth * 0.1;
+        node.sprite.width = nodeImageWidth * contentWidth;
+        node.sprite.height = node.sprite.width / node.imageRatio;
+        node.sprite.position.set(x, y);
+        // update node text
+        node.label.position.set(node.sprite.width + contentMargin + x, y);
+        node.label.style = _.extend({}, nodeLabelTextStyle);
+        node.description.position.set(node.label.position.x, node.label.position.y + node.label.height + contentMargin*0.3);
+        node.description.style = _.extend({}, nodeBodyTextStyle, {wordWrapWidth: contentWidth-node.sprite.width-contentMargin});
         // radius is based on severity
-        node.r = UTIL.lerp(nodeRadiusRange[0], nodeRadiusRange[1], (node.severity - 1) / 4.0);
+        node.radius = node.nRadius * h;
         // line width based on probability
         node.lineWidth = UTIL.lerp(nodeLineWidthRange[0], nodeLineWidthRange[1], (node.probability - 1) / 4.0);
         // line dash based on propability
@@ -349,7 +396,7 @@ var Network = (function() {
         var x1 = node.x;
         var y0 = node.fromY;
         var y1 = node.y;
-        var radius = node.r;
+        var radius = node.radius;
         var color = node.color;
 
         if (p < 1.0) {
@@ -370,6 +417,8 @@ var Network = (function() {
         circleGraphics.beginFill(color);
         circleGraphics.drawCircle(x1, y1, nodeRadius);
         circleGraphics.endFill();
+
+        node.contentArea.alpha = p;
 
         // draw content
         // if (p >= 1.0) {
