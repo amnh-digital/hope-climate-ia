@@ -78,8 +78,16 @@ var AppCascading = (function() {
     var onRotate = function(e, value) {
       _this.onRotate(value);
     };
-
     $document.on("controls.rotate", onRotate);
+
+    var onFactboxHide = function(e, value){ _this.factbox.hide(); };
+    var onFactboxReset = function(e, branch){ _this.factbox.reset(branch); };
+    var onFactboxShow = function(e, branch){ _this.factbox.show(branch); };
+    var onFactboxTransition = function(e, value){ _this.factbox.transition(value); };
+    $document.on("factbox.hide", onFactboxHide);
+    $document.on("factbox.reset", onFactboxReset);
+    $document.on("factbox.show", onFactboxShow);
+    $document.on("factbox.transition", onFactboxTransition);
 
     $(window).on('resize', function(){
       _this.onResize();
@@ -95,6 +103,10 @@ var AppCascading = (function() {
     return sound.load();
   };
 
+  AppCascading.prototype.onBranchChange = function(branch){
+    this.factbox.onBranchChange(branch);
+  };
+
   AppCascading.prototype.onReady = function(){
     var d = this.data;
 
@@ -102,6 +114,10 @@ var AppCascading = (function() {
 
     // Initialize slideshow
     this.network = new Network(opt);
+
+    // Initialize factbox
+    opt = _.extend({}, this.opt.factbox, this.content);
+    this.factbox = new FactBox(opt);
 
     // Init sleep mode utilitys
     // opt = _.extend({}, this.opt.sleep);

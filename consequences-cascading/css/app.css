@@ -5,3 +5,33 @@
   left: 0;
   top: 0;
 }
+
+.fact-boxes {
+  position: absolute;
+  width: 16%;
+  height: auto;
+  left: 5%;
+  bottom: 5%;
+}
+.fact-box {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.fact-box.active {
+  opacity: 1;
+}
+.fact-box img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.fact-box .caption {
+  line-height: 1.8;
+  font-size: 1.5vh;
+  margin-top: 1vh;
+}

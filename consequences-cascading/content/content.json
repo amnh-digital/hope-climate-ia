@@ -2,7 +2,7 @@
   "network": [
     {
       "id": "a",
-      "factbox": "",
+      "factbox": {},
       "nodes": [
         {
           "parent": "root",
@@ -48,7 +48,7 @@
       ]
     },{
       "id": "b",
-      "factbox": "",
+      "factbox": {},
       "nodes": [
         {
           "parent": "root",
@@ -94,7 +94,7 @@
       ]
     },{
       "id": "c",
-      "factbox": "",
+      "factbox": {},
       "nodes": [
         {
           "parent": "root",
@@ -140,7 +140,7 @@
       ]
     },{
       "id": "d",
-      "factbox": "",
+      "factbox": {},
       "nodes": [
         {
           "parent": "root",
@@ -186,7 +186,7 @@
       ]
     },{
       "id": "e",
-      "factbox": "",
+      "factbox": {},
       "nodes": [
         {
           "parent": "root",

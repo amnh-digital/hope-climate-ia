@@ -41,6 +41,9 @@
       }
     }
   },
+  "factbox": {
+    "el": "#fact-boxes"
+  },
   "sound": {
     "enable": 1,
     "audio": ["../shared/audio/horn.mp3"],

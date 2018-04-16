@@ -127,6 +127,7 @@ var Network = (function() {
       var branch = network[index];
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
         node.drawn = false;
+        node.done = false;
         node.contentArea.alpha = 0;
         return node;
       });
@@ -145,6 +146,8 @@ var Network = (function() {
       this.branchTransitioning = true;
 
       this.resetCountingDown = false;
+      this.$document.trigger("factbox.hide", [true]);
+      this.$document.trigger("factbox.reset", [branch]);
 
     } else {
       var radians = this.angleDelta * (Math.PI / 180);
@@ -155,6 +158,7 @@ var Network = (function() {
       _.each(this.branch.nodes, function(node, id){
         node.contentArea.rotation = -radians;
       });
+      this.$document.trigger("factbox.transition", [1.0 - angleDeltaProgress]);
     }
   };
 
@@ -403,18 +407,20 @@ var Network = (function() {
   Network.prototype.renderBranch = function(t){
     var _this = this;
     var now = t ? t : new Date().getTime();
+    var branch = this.branch;
+    var $document = this.$document;
     var progress = UTIL.norm(now, this.branchTransitionStart, this.branchTransitionEnd);
     if (progress >= 1) {
       progress = 1;
       this.branchTransitioning = false;
+      $document.trigger("factbox.show", [branch]);
     }
     var angleDeltaProgress = this.angleDeltaProgress;
-
     var circleGraphics = this.branch.circleGraphics;
     circleGraphics.clear();
     var nodeRadius = this.nodeRadius;
-    var $document = this.$document;
-    _.each(this.branch.nodes, function(node, id){
+
+    _.each(branch.nodes, function(node, id){
       var p = UTIL.norm(progress, node.start, node.end);
       p = UTIL.clamp(p, 0, 1);
       _this.branch.nodes[id].progress = p;
@@ -545,11 +551,13 @@ var Network = (function() {
     this.angleDeltaProgress = Math.abs(this.angleDelta) / this.angleThreshold;
 
     var container = this.branch.container;
-    container.alpha = UTIL.lerp(1.0-this.resetAngleProgressStart, 1.0, progressEased);
+    var alpha = UTIL.lerp(1.0-this.resetAngleProgressStart, 1.0, progressEased);
+    container.alpha = alpha;
     container.rotation = radians;
     _.each(this.branch.nodes, function(node, id){
       node.contentArea.rotation = -radians;
     });
+    this.$document.trigger("factbox.transition", [alpha]);
   };
 
   Network.prototype.renderRootNode = function(){
