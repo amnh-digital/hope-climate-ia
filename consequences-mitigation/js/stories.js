@@ -39,8 +39,10 @@ var Stories = (function() {
           html += '</div>';
         html += '</div>';
         html += '<div class="progress"><div class="progress-bar"></div></div>';
+        html += '<div class="information"><h2>'+story.title+'</h2><p>'+story.description+'</p></div>';
       html += '</div>';
       var $story = $(html);
+      if (story.className) $story.addClass(story.className);
       stories[i].index = i;
       stories[i].$el = $story;
       stories[i].$loadProgress = $story.find(".loading-bar").first();

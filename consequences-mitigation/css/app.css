@@ -37,6 +37,38 @@
   background: #666;
 }
 
+.information {
+  position: absolute;
+  width: 16vh;
+  height: auto;
+  right: -17.5vh;
+  top: 0;
+  opacity: 0.5;
+  transform: translate3d(0, 3vh, 0);
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+.information h2 {
+  font-size: 1vh;
+}
+.information p {
+  font-size: 0.8vh;
+  line-height: 1.6;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.story-wrapper.textRight .information {
+  right: auto;
+  left: -17.5vh;
+  text-align: right;
+}
+.story-wrapper.active .information {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+.story-wrapper.active .information p {
+  opacity: 1;
+}
+
 
 .video-container {
   opacity: 0.4;
@@ -118,4 +150,23 @@
 }
 #story5 {
   top: 9vh;
+}
+
+.map {
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: -25vh;
+  right: 0;
+}
+.map img,
+.map svg {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.map svg .filled {
+  fill: #111;
 }

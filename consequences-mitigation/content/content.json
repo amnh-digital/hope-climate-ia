@@ -20,12 +20,14 @@
       "video": "https://s3.amazonaws.com/brianfoo-amnh/cat4.mp4"
     },{
       "id": "story4",
+      "className": "textRight",
       "title": "Heathcliff",
       "description": "Cats secretly make all the worlds muffins Gate keepers of hell so behind the couch crash against wall but walk away like nothing happened.",
       "image": "https://s3.amazonaws.com/brianfoo-amnh/cat4.jpg",
       "video": "https://s3.amazonaws.com/brianfoo-amnh/cat3.mp4"
     },{
       "id": "story5",
+      "className": "textRight",
       "title": "Get Fuzzy",
       "description": "Stare at ceiling light give me some of your food give me some of your food give me some of your food meh",
       "image": "https://s3.amazonaws.com/brianfoo-amnh/cat5.jpg",
