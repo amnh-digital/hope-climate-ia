@@ -150,6 +150,18 @@
     return Math.round(value / nearest) * nearest;
   };
 
+  UTIL.secondsToString = function(seconds){
+    var d = new Date(null);
+    d.setSeconds(seconds);
+    var start = 11;
+    var len = 8;
+    if (seconds < 3600) {
+      start = 14;
+      len = 5;
+    }
+    return d.toISOString().substr(start, len);
+  };
+
   // East = 0 degrees
   UTIL.translatePoint = function(p, degrees, distance) {
     var radians = degrees * (Math.PI / 180);

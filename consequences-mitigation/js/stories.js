@@ -38,15 +38,16 @@ var Stories = (function() {
             html += '<video src="'+story.video+'" preload="auto" crossorigin="anonymous" />';
           html += '</div>';
         html += '</div>';
-        html += '<div class="progress"><div class="progress-bar"></div></div>';
+        html += '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
         html += '<div class="information"><h2>'+story.title+'</h2><p>'+story.description+'</p></div>';
       html += '</div>';
       var $story = $(html);
       if (story.className) $story.addClass(story.className);
       stories[i].index = i;
       stories[i].$el = $story;
-      stories[i].$loadProgress = $story.find(".loading-bar").first();
-      stories[i].$progress = $story.find(".progress-bar").first();
+      stories[i].$loadProgressBar = $story.find(".loading-bar").first();
+      stories[i].$progressBar = $story.find(".progress-bar").first();
+      stories[i].$progressText = $story.find(".progress-text").first();
       var $video = $story.find("video").first();
       var video = $video[0];
       stories[i].video = $video[0];
@@ -144,14 +145,21 @@ var Stories = (function() {
         this.playing = true;
         this.playStory(this.story);
       }
-      this.story.$loadProgress.css('width', ((1.0-progress)*100)+'%');
+      this.story.$loadProgressBar.css('transform', 'scale3d('+(1-progress)+',1,1)');
     }
 
     if (this.playing) {
       var video = this.story.video;
       var progress = 0;
       if (video.duration) progress = video.currentTime / video.duration;
-      this.story.$progress.css('width', (progress*100)+'%');
+      this.story.$progressBar.css('transform', 'scale3d('+progress+',1,1)');
+      var durationString = this.story.durationString;
+      if (!durationString) {
+        durationString = UTIL.secondsToString(video.duration);
+        this.story.durationString = durationString;
+      }
+      var progressText = UTIL.secondsToString(video.currentTime) + " / " + durationString;
+      this.story.$progressText.text(progressText);
     }
 
   };
