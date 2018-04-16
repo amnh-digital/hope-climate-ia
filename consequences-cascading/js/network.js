@@ -164,8 +164,6 @@ var Network = (function() {
     var nodeTransitionMs = this.opt.nodeTransitionMs;
     var nodeContentDelayMs = this.opt.nodeContentDelayMs;
     var nodeContentMs = this.opt.nodeContentMs;
-    var soundSprites = this.opt.soundSprites;
-    var soundSpritesLen = soundSprites.length;
     var nodeRadiusRange = this.opt.nodeRadiusRange;
     var nodeContentWidth = this.opt.nodeContentWidth;
     var nodeContentHeight = this.opt.nodeContentHeight;
@@ -231,8 +229,7 @@ var Network = (function() {
         node.nContentHeight = node.nContentHeight ? node.nContentHeight : nodeContentHeight;
 
         // determine sound based on severity
-        var soundSpriteIndex = Math.round((node.severity - 1) / 4.0 * (soundSpritesLen - 1));
-        node.soundSprite = soundSprites[soundSpriteIndex];
+        node.soundMu = (node.severity - 1) / 4.0;
 
         // alpha is based on probability
         node.a = UTIL.lerp(nodeAlphaRange[0], nodeAlphaRange[1], (node.probability - 1) / 4.0);
@@ -424,7 +421,7 @@ var Network = (function() {
 
       if (p > 0) {
         if (!node.drawn) {
-          $document.trigger("sound.play.sprite", [node.soundSprite]);
+          $document.trigger("sound.play.percent", [node.soundMu]);
           _this.branch.nodes[id].drawn = true;
         }
 

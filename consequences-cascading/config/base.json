@@ -39,20 +39,36 @@
         "fill": "#ffffff",
         "fontFamily": "Balance"
       }
-    },
-    "soundSprites": ["low", "medium", "high", "higher"]
+    }
   },
   "sound": {
     "enable": 1,
-    "audio": ["../shared/audio/pop.mp3"],
+    "audio": ["../shared/audio/horn.mp3"],
     "volume": 0.4,
     "limitLastPlayedMs": 50,
     "limitSameLastPlayedMs": 200,
     "sprites": {
-      "higher": [1350, 1000],
-      "high": [0, 1000],
-      "medium": [4000, 1000],
-      "low": [5200, 1000]
+      "C0":[25200,2E3],
+      "D0":[37800,2E3],
+      "D#0":[31500,2E3],
+      "F0":[56700,2E3],
+      "G0":[69300,2E3],
+      "G#0":[63E3,2E3],
+      "A#0":[0,2E3],
+      "C1":[27300,2E3],
+      "D1":[39900,2E3],
+      "D#1":[33600,2E3],
+      "F1":[58800,2E3],
+      "G1":[71400,2E3],
+      "G#1":[65100,2E3],
+      "A#1":[2100,2E3],
+      "C2":[29400,2E3],
+      "D2":[42E3,2E3],
+      "D#2":[35700,2E3],
+      "F2":[60900,2E3],
+      "G2":[73500,2E3],
+      "G#2":[67200,2E3],
+      "A#2":[4200,2E3]
     }
   },
   "sleep": {
