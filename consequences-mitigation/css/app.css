@@ -179,3 +179,10 @@
 .map svg .filled {
   fill: #111;
 }
+.map .overlay {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.map .overlay.active {
+  opacity: 1;
+}

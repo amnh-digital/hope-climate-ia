@@ -1,8 +1,8 @@
 {
+  "angleThreshold": 60,
   "stories": {
     "el": "#stories",
-    "loadingTime": 4000,
-    "angleThreshold": 60
+    "loadingTime": 4000
   },
   "map": {
     "el": "#map"

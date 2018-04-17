@@ -103,6 +103,7 @@ var AppMitigation = (function() {
 
     if (changed) {
       this.stories.onChange(index);
+      this.map.onChange(index);
       this.currentStoryIndex = index;
       this.$document.trigger("sound.play.sprite", ["tick"]);
       this.angleDelta = 0;
