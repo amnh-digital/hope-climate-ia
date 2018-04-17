@@ -10,6 +10,7 @@ var Stories = (function() {
 
   Stories.prototype.init = function(stories){
     this.$el = $(this.opt.el);
+    this.$body = $('body');
     this.stories = stories;
 
     this.loadUI();
@@ -77,6 +78,7 @@ var Stories = (function() {
   Stories.prototype.onVideoEnded = function(story){
     this.playing = false;
     story.$el.removeClass('playing');
+    this.$body.removeClass('playing');
     story.video.currentTime = 0;
     story.video.pause();
     // if (this.story && story.index === this.story.index) {
@@ -88,6 +90,7 @@ var Stories = (function() {
 
   Stories.prototype.playStory = function(story){
     story.$el.addClass('playing');
+    this.$body.addClass('playing');
     story.video.play();
 
   };

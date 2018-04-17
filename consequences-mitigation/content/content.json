@@ -2,7 +2,7 @@
   "stories": [
     {
       "id": "story1",
-      "title": "Mr. Bigglesworth",
+      "title": "Hunts Point",
       "map": {
         "className": "hunts-point",
         "image": "img/hunts_point.png"
@@ -12,7 +12,7 @@
       "video": "https://s3.amazonaws.com/brianfoo-amnh/cat1.mp4"
     },{
       "id": "story2",
-      "title": "Colonel Meow",
+      "title": "Red Hook",
       "map": {
         "className": "red-hook",
         "image": "img/red_hook.png"
@@ -22,7 +22,7 @@
       "video": "https://s3.amazonaws.com/brianfoo-amnh/cat2.mp4"
     },{
       "id": "story3",
-      "title": "Keyboard Cat",
+      "title": "Rockaway Peninsula",
       "map": {
         "className": "rockaway",
         "image": "img/rockaway_peninsula.png"
@@ -33,7 +33,7 @@
     },{
       "id": "story4",
       "className": "textRight",
-      "title": "Heathcliff",
+      "title": "Coney Island",
       "map": {
         "className": "coney-island",
         "image": "img/coney_island.png"
@@ -44,7 +44,7 @@
     },{
       "id": "story5",
       "className": "textRight",
-      "title": "Get Fuzzy",
+      "title": "Staten Island",
       "map": {
         "className": "staten-island",
         "image": "img/staten_island.png"
