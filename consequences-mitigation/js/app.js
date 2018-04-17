@@ -14,6 +14,12 @@ var AppMitigation = (function() {
   AppMitigation.prototype.init = function(){
     var _this = this;
 
+    this.storyCount = this.content.stories.length;
+    this.currentStoryIndex = 0;
+    this.angleThreshold = this.opt.angleThreshold;
+    this.angleDelta = 0;
+    this.$document = $(document);
+
     this.onReady();
     this.loadListeners();
     this.loadControls();
@@ -75,8 +81,34 @@ var AppMitigation = (function() {
   };
 
   AppMitigation.prototype.onRotate = function(delta){
+    var count = this.storyCount;
+    var angleThreshold = this.angleThreshold;
+    var index = 0;
+    var changed = false;
+
+    // check to see if we reached the threshold for going to the next story
+    var angleDelta = this.angleDelta + delta;
+    var changed = Math.abs(angleDelta) >= angleThreshold;
+    if (changed && angleDelta < 0) index = this.currentStoryIndex - 1;
+    else if (changed) index = this.currentStoryIndex + 1;
+    if (index < 0) index = count - 1;
+    if (index >= count) index = 0;
+    this.angleDelta = angleDelta;
+
+    // first load
+    if (this.currentStoryIndex < 0) {
+      index = 0;
+      changed = true;
+    }
+
+    if (changed) {
+      this.stories.onChange(index);
+      this.currentStoryIndex = index;
+      this.$document.trigger("sound.play.sprite", ["tick"]);
+      this.angleDelta = 0;
+    }
+
     // this.sleep.wakeUp();
-    this.stories.onRotate(delta);
   };
 
   AppMitigation.prototype.render = function() {
