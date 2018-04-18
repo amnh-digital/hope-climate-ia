@@ -1,9 +1,9 @@
 
 .content {
   width: 50vw;
-  left: auto;
-  right: 5vw;
-  top: 9vw;
+  left: 50%;
+  top: 10vw;
+  margin-left: -20vw;
 }
 .content.sleepMode {
   z-index: 100;
@@ -69,17 +69,19 @@
 
 .sidebar {
   width: 30vw;
-  left: 5vw;
-  bottom: 10vh;
+  left: 3vw;
+  bottom: 5vh;
   height: 10vh;
   top: auto;
   color: #aaa;
+  margin: 0;
 }
 .sidebar h3 {
   letter-spacing: 0.1vh;
+  font-size: 1.3vh;
 }
 .sidebar p {
-  font-size: 1.3vh;
+  font-size: 1vh;
   line-height: 1.8;
   font-weight: normal;
   letter-spacing: 0.1vh;

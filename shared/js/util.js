@@ -121,6 +121,10 @@
     return (1.0 * value - a) / (b - a);
   };
 
+  UTIL.radians = function(angle) {
+    return angle * (Math.PI / 180);
+  };
+
   UTIL.pad = function(num, size) {
     var s = num+"";
     while (s.length < size) s = "0" + s;

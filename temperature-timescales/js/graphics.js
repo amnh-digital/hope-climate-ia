@@ -537,29 +537,42 @@ var Graphics = (function() {
 
     while(i <= count) {
 
+      var label;
       var p = dataToPoint(0, value, domain, range, yAxisBounds);
       var y = p[1];
       var dc = UTIL.round(value, 1);
       var df = UTIL.round(value * 1.8, 1);
-      var label;
 
       var showLabel = (i === 0 || i === count || dc === halfRange[0] || dc === halfRange[1]);
 
       if (dc===0) {
         label = axes.children[labelIndex];
-        label.text = "20th century";
+        label.text = "No";
         label.style = yAxisTextStyle;
-        label.x = xLabel;
+        label.x = xLabel * 0.86;
         label.y = y;
         label.anchor.set(1.0, 1.0);
         labelIndex += 1;
 
         label = axes.children[labelIndex];
-        label.text = "average";
+        label.text = "change";
         label.style = yAxisTextStyle;
         label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 0);
+        labelIndex += 1;
+
+        // y axis label
+        label = axes.children[labelIndex];
+        label.text = "Change from 20th century average temperature";
+        label.style = _.extend({}, yAxisTextStyle, {
+          fontSize: yAxisTextStyle.fontSize * 0.9,
+          letterSpacing: yAxisTextStyle.fontSize * 0.1
+        });
+        label.x = xLabel * 0.1;
+        label.y = y;
+        label.anchor.set(0.5, 0);
+        label.rotation = UTIL.radians(-90);
         labelIndex += 1;
 
       } else if (showLabel) {
