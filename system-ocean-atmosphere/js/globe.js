@@ -14,25 +14,54 @@ var Globe = (function() {
     this.init();
   }
 
+  function lonLatToVector3(lng, lat, radius) {
+    var out = new THREE.Vector3();
+
+    lng = UTIL.radians(lng);
+    lat = UTIL.radians(lat);
+
+    //flips the Y axis
+    lat = Math.PI / 2 - lat;
+
+    // distribute to sphere
+    out.set(
+      Math.sin(lat) * Math.sin(lng) * radius,
+      Math.cos(lat) * radius,
+      Math.sin(lat) * Math.cos(lng) * radius
+    );
+
+    return out;
+  }
+
+  // http://stackoverflow.com/questions/27409074
+  function objectToScreen(obj, camera, w, h){
+    var v3 = new THREE.Vector3();
+    var hw = w / 2;
+    var hh = h / 2;
+
+    camera.updateMatrixWorld();
+    obj.updateMatrixWorld();
+    v3.setFromMatrixPosition(obj.matrixWorld);
+    v3.project(camera);
+
+    var x = (v3.x * hw) + hw;
+    var y = (-v3.y * hh) + hh;
+
+    return new THREE.Vector2(x, y);
+  }
+
   Globe.prototype.init = function(){
-    this.$el = $(this.opt.el);
+    var el = this.opt.el;
+    this.$document = $(document);
+    this.$el = $(el);
     this.$el.append($('<h2>'+this.opt.title+'</h2>'));
 
     this.rotateX = 0.5;
     this.rotateY = 0.5;
-    var annotations = _.map(this.opt.annotations.slice(0), function(a){
-      a.current = 0.0;
-      a.target = 0.0;
-      return [a.id, a];
-    });
-    this.bgCurrent = 0.0;
-    this.bgTarget = 0.0;
-    this.annotationIndex = _.object(annotations);
 
     this.initScene();
     this.loadGeojson(this.opt.geojson);
     this.loadVideo();
-    this.loadAnnotationLayer();
   };
 
   Globe.prototype.initScene = function() {
@@ -66,51 +95,16 @@ var Globe = (function() {
     this.xContainer = new THREE.Object3D();
     this.yContainer = new THREE.Object3D();
 
+    this.annotationReference = new THREE.Object3D();
+    // this.annotationReference = new THREE.Mesh(new THREE.SphereGeometry(0.01, 64, 64), new THREE.MeshBasicMaterial());
+
+    this.xContainer.add(this.annotationReference);
     this.yContainer.add(this.xContainer);
     this.container.add(this.yContainer);
     this.scene.add(this.container);
 
     // init controls
     // this.controls = new THREE.OrbitControls(this.camera, $("#globes")[0]);
-  };
-
-  Globe.prototype.drawAnnotation = function(annotation, direction, progress) {
-    var context = this.annotationContext;
-    var bt = this.opt.bgTransparency;
-    var w = this.opt.bgWidth;
-    var h = this.opt.bgHeight;
-
-    var ax = 0;
-    var ay = 0;
-    var aw = w;
-    var ah = h;
-    var at = UTIL.lerp(0, bt, progress);
-    if (direction > 0) at = UTIL.lerp(bt, 0, progress);
-
-    if (annotation && annotation.width) {
-      ax = annotation.x;
-      ay = annotation.y;
-      aw = annotation.width;
-      ah = annotation.height;
-    }
-
-    context.beginPath();
-    context.rect(ax, ay, aw, ah);
-    context.fillStyle = "rgb("+at+", "+at+", "+at+")";
-    context.fill();
-
-    // check for wrap-around
-    if (annotation && annotation.width) {
-      var x1 = ax + aw;
-      if (x1 > w) {
-        context.beginPath();
-        context.rect(0, ay, x1 - w, ah);
-        context.fillStyle = "rgb("+at+", "+at+", "+at+")";
-        context.fill();
-      }
-    }
-
-    this.annotationTexture.needsUpdate = true;
   };
 
   Globe.prototype.ended = function(){
@@ -128,55 +122,6 @@ var Globe = (function() {
 
   Globe.prototype.isLoaded = function(){
     return this.video && this.video.duration;
-  };
-
-  Globe.prototype.loadAnnotationLayer = function(){
-    var radius = this.opt.radius * 1.0001;
-    var geo = new THREE.SphereGeometry(radius, 64, 64);
-
-    // create canvas
-    var w = this.opt.bgWidth;
-    var h = this.opt.bgHeight;
-    var canvas = document.createElement('canvas');
-    canvas.width = w;
-    canvas.height = h;
-
-    // get context
-    var context = canvas.getContext('2d');
-
-    // draw background
-    context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
-    context.fillRect(0, 0, w, h);
-
-    // draw rectangle
-    // context.beginPath();
-    // context.rect(w/2, h/2, 100, 100);
-    // context.fillStyle = "rgb(0, 0, 0)"; // completely transparent
-    // context.fill();
-
-    // create texture from canvas
-    var texture = new THREE.Texture(canvas);
-    texture.needsUpdate = true;
-    this.annotationTexture = texture;
-
-    // uniforms
-    var uniforms = {
-      color: { type: "c", value: new THREE.Color( 0x000000 ) },
-      texture: { type: "t", value: texture }
-    };
-    // attributes
-    var attributes = {};
-    // material
-    var mat = new THREE.ShaderMaterial({
-        uniforms: uniforms,
-        vertexShader: document.getElementById('vertex_shader').textContent,
-        fragmentShader: document.getElementById('fragment_shader').textContent
-    });
-    mat.transparent = true;
-    var annotationLayer = new THREE.Mesh(geo, mat);
-
-    this.annotationContext = context;
-    this.xContainer.add(annotationLayer);
   };
 
   Globe.prototype.loadEarth = function() {
@@ -278,97 +223,39 @@ var Globe = (function() {
       angle = UTIL.lerp(range[0], range[1], value);
       container.rotation.y = angle * Math.PI / 180;
     }
+
+    if (this.currentAnnotation) {
+      this.renderAnnotation();
+    }
   };
 
   Globe.prototype.render = function(yearProgress){
-
-    if (this.transitioning) {
-      this.transition();
-    }
 
     this.renderer.render(this.scene, this.camera);
     // this.controls.update();
   };
 
-  Globe.prototype.transition = function(){
-    var context = this.annotationContext;
-    var bt = this.opt.bgTransparency;
-    var w = this.opt.bgWidth;
-    var h = this.opt.bgHeight;
-    var step = this.opt.transitionStep;
-    var transitioning = false;
+  Globe.prototype.renderAnnotation = function(){
+    if (!this.currentAnnotation) return false;
 
-    // draw background
-    var bgCurrent = this.bgCurrent;
-    var bgTarget = this.bgTarget;
-    var bgStep = step;
-    if (bgTarget <= 0.0) bgStep = -step;
-    bgCurrent += bgStep;
-    bgCurrent = UTIL.clamp(bgCurrent, 0.0, 1.0);
-    if (bgCurrent !== bgTarget) transitioning = true;
-    this.bgCurrent = bgCurrent;
-
-    var t = UTIL.lerp(0, bt, bgCurrent);
-    t = parseInt(t);
-    // console.log(t)
-    context.fillStyle = "rgb("+t+", "+t+", "+t+")"; // 0 = totally transparent
-    context.fillRect(0, 0, w, h);
-
-    // draw annotations
-    var aindex = this.annotationIndex;
-    _.each(aindex, function(a, id){
-      var astep = step;
-      if (a.target <= 0.0) astep = -step;
-      var aCurrent = a.current + astep;
-      aCurrent = UTIL.clamp(aCurrent, 0.0, 1.0);
-      if (aCurrent !== a.target) transitioning = true;
-      aindex[id].current = aCurrent;
-
-      if (a.width) {
-        var x1 = a.x + a.width;
-        var at = UTIL.lerp(0, bt, aCurrent);
-        context.beginPath();
-        context.rect(a.x, a.y, a.width, a.height);
-        at = parseInt(at);
-        context.fillStyle = "rgb("+at+", "+at+", "+at+")";
-        context.fill();
-
-        // check for wrap-around
-        if (x1 > w) {
-          context.beginPath();
-          context.rect(0, ay, x1 - w, ah);
-          context.fillStyle = "rgb("+at+", "+at+", "+at+")";
-          context.fill();
-        }
-      }
-
-
-    });
-    this.annotationIndex = aindex;
-    this.annotationTexture.needsUpdate = true;
-
+    var w = this.renderer.context.canvas.width;
+    var h = this.renderer.context.canvas.height;
+    var v2 = objectToScreen(this.annotationReference, this.camera, w, h);
+    this.$document.trigger("annotation.position.update", [this.opt.el, v2.x, v2.y]);
   };
 
-  Globe.prototype.updateAnnotation = function(annotation, targetBg){
-    if (targetBg === undefined) targetBg = 0.0;
-    var aindex = this.annotationIndex;
+  Globe.prototype.updateAnnotation = function(annotation){
+    if (annotation && annotation.globeEl !== this.opt.el
+      || annotation && !annotation.arrow) return false;
 
-    var transitioning = false;
-    this.annotationIndex = _.mapObject(aindex, function(ann, id) {
-      ann.target = 1.0;
-      if (!annotation || !annotation.width) ann.target = targetBg;
-      if (annotation && annotation.id===id) ann.target = targetBg;
-      if (ann.current !== ann.target) transitioning = true;
-      return ann;
-    });
-
-    // transition background
-    if (annotation && !annotation.width) this.bgTarget = 0.0;
-    else if (annotation) this.bgTarget = 1.0;
-    else this.bgTarget = targetBg;
-    if (this.bgCurrent !== this.bgTarget) transitioning = true;
-
-    this.transitioning = transitioning;
+    this.currentAnnotation = annotation;
+    if (annotation) {
+      var lat = annotation.lat;
+      var lon = annotation.lon;
+      var v3 = lonLatToVector3(lon, lat, this.opt.radius);
+      this.annotationReference.position.copy(v3);
+    }
+    this.renderAnnotation();
   };
 
   return Globe;

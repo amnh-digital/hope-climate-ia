@@ -97,11 +97,20 @@ var AppOceanAtmosphere = (function() {
       }
     });
 
+    $document.on("annotation.position.update", function(e, el, x, y){
+      _this.onAnnotationPositionUpdate(el, x, y);
+    });
+
     $(window).on('resize', function(){
       _.each(globes, function(globe){
         globe.onResize();
       });
+      _this.contentObj.onResize();
     });
+  };
+
+  AppOceanAtmosphere.prototype.onAnnotationPositionUpdate = function(el, x, y){
+    this.contentObj.onAnnotationPositionUpdate(el, x, y);
   };
 
   AppOceanAtmosphere.prototype.onReady = function(){

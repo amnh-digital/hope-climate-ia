@@ -5,12 +5,13 @@
       "lon": -60.7623902,
       "width": 50,
       "height": 30,
-      "globeEl": ["#ocean-currents", "#atmosphere-wind"],
+      "globeEl": "#ocean-currents",
+      "arrow": true,
       "parentEl": "#content",
       "els": [
         {
           "id": "content-gulf-stream",
-          "className": "content-both",
+          "className": "content-ocean",
           "title": "Gulf Stream",
           "text": "This fast-moving current transports warm water from the tropics north along the coast of North America."
         }
@@ -20,12 +21,13 @@
       "lon": 149.0079868,
       "width": 50,
       "height": 30,
-      "globeEl": ["#ocean-currents", "#atmosphere-wind"],
+      "globeEl": "#ocean-currents",
       "parentEl": "#content",
+      "arrow": true,
       "els": [
         {
           "id": "content-kuroshio-current",
-          "className": "content-both",
+          "className": "content-ocean",
           "title": "Kuroshio Current",
           "text": "A warm current running north from the tropics. In the mid-latitudes, it joins the North Pacific current and flows eastward, across the Pacific."
         }
@@ -33,7 +35,7 @@
     },{
       "lat": 0,
       "lon": 90,
-      "globeEl": ["#atmosphere-wind"],
+      "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "els": [
         {
