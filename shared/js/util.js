@@ -155,6 +155,7 @@
   };
 
   UTIL.secondsToString = function(seconds){
+    if (!seconds) return "0:00";
     var d = new Date(null);
     d.setSeconds(seconds);
     var start = 11;

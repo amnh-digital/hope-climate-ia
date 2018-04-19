@@ -7,7 +7,10 @@ var Controls = (function() {
     this.init();
   }
 
-  Controls.prototype.init = function(){};
+  Controls.prototype.init = function(){
+    this.$window = $(window);
+    this.$document = $(document);
+  };
 
   Controls.prototype.load = function(){
     this.deferred = $.Deferred();
@@ -17,6 +20,7 @@ var Controls = (function() {
     var keyboardMappings = this.opt.keyboardMappings;
     var gamepadMappings = this.opt.gamepadMappings;
     var uiMappings = this.opt.uiMappings;
+    var scrollMappings = this.opt.scrollMappings;
     var touchMappings = this.opt.touchMappings;
 
     if (mouseMappings) {
@@ -29,6 +33,10 @@ var Controls = (function() {
 
     if (uiMappings) {
       this.loadUIListeners(uiMappings);
+    }
+
+    if (scrollMappings) {
+      this.loadScrollListeners(scrollMappings);
     }
 
     if (touchMappings) {
@@ -86,7 +94,7 @@ var Controls = (function() {
     var axisX = -1;
     var axisY = -1;
 
-    var $document = $(document);
+    var $document = this.$document;
     var $el = $(opt.el);
     var values = opt.values;
     var listenToHorizontal = (values.indexOf("horizontal") >= 0);
@@ -103,7 +111,7 @@ var Controls = (function() {
       boundX1 = boundX0 + $el.width();
       boundY1 = boundY0 + $el.height();
     };
-    $(window).on("resize", onResize);
+    this.$window.on("resize", onResize);
 
     var onMousemove = function(e){
       var x = e.pageX;
@@ -132,7 +140,7 @@ var Controls = (function() {
     var axisX = 0.5;
     var axisY = 0.5;
 
-    var $document = $(document);
+    var $document = this.$document;
     var $el = $(opt.el);
     var values = opt.values;
     var listenToHorizontal = (values.indexOf("horizontal") >= 0);
@@ -167,7 +175,7 @@ var Controls = (function() {
 
   Controls.prototype.loadKeyboardListeners = function(mappings){
     var keys = _.keys(mappings);
-    var $document = $(document);
+    var $document = this.$document;
     var state = _.mapObject(mappings, function(val, key) { return false; });
 
     var onKeyDown = function(e){
@@ -185,14 +193,15 @@ var Controls = (function() {
       }
     };
 
-    $(window).keypress(onKeyDown);
-    $(window).keyup(onKeyUp);
+    var $window = this.$window;
+    $window.keypress(onKeyDown);
+    $window.keyup(onKeyUp);
 
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){
     var $container = $('<div id="ui" class="ui"></div>');
-    var $document = $(document);
+    var $document = this.$document;
 
     _.each(mappings, function(opt, key){
       var $listener = $('<div id="'+opt.el+'" class="ui-touch-region '+key+'"></div>');
@@ -220,9 +229,25 @@ var Controls = (function() {
     $('body').append($container);
   };
 
+  Controls.prototype.loadScrollListeners = function(mappings) {
+    var $document = this.$document;
+
+    this.$window.on('mousewheel', function(event) {
+      // console.log(event.deltaX, event.deltaY, event.deltaFactor);
+      _.each(mappings, function(props, orientation){
+        var delta = event.deltaY;
+        if (orientation==="horizontal") delta = event.deltaX;
+        if (Math.abs(delta) > 0) {
+          delta *= props.multiplier;
+          $document.trigger("controls."+props.name, [-delta]);
+        }
+      });
+    });
+  };
+
   Controls.prototype.loadUIListeners = function(mappings) {
     var $container = $('<div id="ui" class="ui"></div>');
-    var $document = $(document);
+    var $document = this.$document;
 
     _.each(mappings, function(opt, key){
       var $slider = $('<div id="'+opt.el+'"></div>');
@@ -248,7 +273,7 @@ var Controls = (function() {
     var prevState = this.gamepadState;
     var axes = gamepad.axes;
     var gamepadMappings = this.gamepadMappings;
-    var $document = $(document);
+    var $document = this.$document;
 
     $.each(gamepadMappings, function(key, index){
       var state = (axes[index] + 1) / 2; // convert from [-1,1] to [0,1]
