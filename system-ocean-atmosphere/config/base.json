@@ -1,5 +1,6 @@
 {
   "calendar": {
+    "el": "#calendar",
     "marker": "#marker"
   },
   "colorKey": {

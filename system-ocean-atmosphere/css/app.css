@@ -38,10 +38,10 @@
   left: 0;
 }
 .calendar {
-  width: 80%;
-  left: 10%;
+  width: 60%;
+  left: 20%;
   height: 7vh;
-  top: 12vh;
+  top: 15vh;
   border-top: 0.5vh solid #222;
   -webkit-transform: translateZ(0);
 }
@@ -63,7 +63,7 @@
 }
 .marker {
   position: absolute;
-  width: 5%;
+  width: 8.333333333%;
   height: 0.5vh;
   background: white;
   left: 0;
@@ -82,7 +82,7 @@
   width: 50%;
   position: absolute;
   bottom: 5vh;
-  height: 5vh;
+  height: 2vh;
   left: 50%;
   margin-left: -25%;
 }
@@ -94,8 +94,9 @@
   left: 0;
 }
 .color-key .label {
+  height: 2vh;
   position: absolute;
-  top: 0;
+  top: -3vh;
 }
 .color-key .label:first-child {
   left: 0;

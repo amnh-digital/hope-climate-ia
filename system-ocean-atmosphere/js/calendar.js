@@ -12,13 +12,18 @@ var Calendar = (function() {
   }
 
   Calendar.prototype.init = function(){
+    this.$el = $(this.opt.el);
     this.$marker = $(this.opt.marker);
+    this.onResize();
+  };
+
+  Calendar.prototype.onResize = function(){
+    this.width = this.$el.width();
   };
 
   Calendar.prototype.render = function(yearProgress){
-    this.$el = $(this.opt.el);
-    var left = lerp(0, 11.0/12*100, yearProgress);
-    this.$marker.css('left', left+'%');
+    var left = this.width * (11.0 / 12.0) * yearProgress;
+    this.$marker.css('transform', 'translate3d('+left+'px,0,0)');
   };
 
   return Calendar;

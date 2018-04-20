@@ -81,7 +81,6 @@ var AppOceanAtmosphere = (function() {
 
   AppOceanAtmosphere.prototype.loadListeners = function(){
     var _this = this;
-    var globes = this.globes;
     var $document = $(document);
 
     $document.on("controls.axes.change", function(e, key, value) {
@@ -102,10 +101,7 @@ var AppOceanAtmosphere = (function() {
     });
 
     $(window).on('resize', function(){
-      _.each(globes, function(globe){
-        globe.onResize();
-      });
-      _this.contentObj.onResize();
+      _this.onResize();
     });
   };
 
@@ -133,6 +129,14 @@ var AppOceanAtmosphere = (function() {
     this.loadListeners();
 
     this.render();
+  };
+
+  AppOceanAtmosphere.prototype.onResize = function(){
+    _.each(this.globes, function(globe){
+      globe.onResize();
+    });
+    this.contentObj.onResize();
+    this.calendar.onResize();
   };
 
   AppOceanAtmosphere.prototype.onRotate = function(axis, value){
