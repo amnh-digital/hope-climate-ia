@@ -79,12 +79,11 @@
   line-height: 20vh;
 }
 .color-key {
-  width: 50%;
+  width: 40%;
   position: absolute;
   bottom: 5vh;
   height: 2vh;
-  left: 50%;
-  margin-left: -25%;
+  left: 30%;
 }
 .color-key-canvas {
   position: absolute;

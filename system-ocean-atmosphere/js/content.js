@@ -81,7 +81,7 @@ var Content = (function() {
         x0 = (aBB.x*0.97) - mBB.x;
       }
 
-      graphics.lineStyle(4, 0xffffff,  0.25);
+      graphics.lineStyle(2, 0xffffff,  0.5);
       graphics.moveTo(x0, y0);
       graphics.lineTo(x, y);
     }

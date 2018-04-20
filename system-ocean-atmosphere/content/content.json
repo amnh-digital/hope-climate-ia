@@ -6,7 +6,11 @@
       "width": 50,
       "height": 30,
       "globeEl": "#ocean-currents",
-      "arrow": true,
+      "arrow": {
+        "radius": 0.3,
+        "distance": 1.0,
+        "anchor": [1.0, 0.5]
+      },
       "parentEl": "#content",
       "els": [
         {
@@ -23,7 +27,12 @@
       "height": 30,
       "globeEl": "#ocean-currents",
       "parentEl": "#content",
-      "arrow": true,
+      "arrow": {
+        "radius": 0.3,
+        "distance": 1.0,
+        "circleAngle": 180,
+        "anchor": [1.0, 0.5]
+      },
       "els": [
         {
           "id": "content-kuroshio-current",

@@ -50,6 +50,19 @@ var Globe = (function() {
     return new THREE.Vector2(x, y);
   }
 
+  function v3ToScreen(v3, camera, w, h){
+    var hw = w / 2;
+    var hh = h / 2;
+
+    camera.updateMatrixWorld();
+    v3.project(camera);
+
+    var x = (v3.x * hw) + hw;
+    var y = (-v3.y * hh) + hh;
+
+    return new THREE.Vector2(x, y);
+  }
+
   Globe.prototype.init = function(){
     var el = this.opt.el;
     this.$document = $(document);
@@ -60,14 +73,15 @@ var Globe = (function() {
     this.rotateY = 0.5;
 
     this.initScene();
+    this.loadAnnotation();
     this.loadGeojson(this.opt.geojson);
     this.loadVideo();
   };
 
   Globe.prototype.initScene = function() {
     var _this = this;
-    var w = this.$el.width();
-    var h = this.$el.height();
+    var w = parseInt(this.$el.width());
+    var h = parseInt(this.$el.height());
     var radius = this.opt.radius;
 
     // init renderer
@@ -95,13 +109,11 @@ var Globe = (function() {
     this.xContainer = new THREE.Object3D();
     this.yContainer = new THREE.Object3D();
 
-    this.annotationReference = new THREE.Object3D();
-    // this.annotationReference = new THREE.Mesh(new THREE.SphereGeometry(0.01, 64, 64), new THREE.MeshBasicMaterial());
-
-    this.xContainer.add(this.annotationReference);
     this.yContainer.add(this.xContainer);
     this.container.add(this.yContainer);
     this.scene.add(this.container);
+
+    this.origin = new THREE.Vector3(0,0,0);
 
     // init controls
     // this.controls = new THREE.OrbitControls(this.camera, $("#globes")[0]);
@@ -122,6 +134,29 @@ var Globe = (function() {
 
   Globe.prototype.isLoaded = function(){
     return this.video && this.video.duration;
+  };
+
+  Globe.prototype.loadAnnotation = function(){
+    var radius = this.opt.radius;
+    var material = new THREE.LineBasicMaterial({color: 0xffffff, linewidth: 4, opacity: 0.8, transparent: true});
+    var geometry = new THREE.CircleGeometry(radius, 64);
+    geometry.vertices.shift(); // remove the center
+    geometry.vertices.push(geometry.vertices[0]); // close the loop
+
+    // this.annotationAnchor = new THREE.Object3D();
+    this.annotationAnchor = new THREE.Mesh(new THREE.SphereGeometry(0.01, 64, 64), new THREE.MeshBasicMaterial());
+    this.annotationAnchor.position.set(radius, 0, 0);
+
+    this.annotationTest = new THREE.Mesh(new THREE.SphereGeometry(0.01, 64, 64), new THREE.MeshBasicMaterial());
+
+
+    this.annotationCircle = new THREE.Line(geometry, material);
+    this.annotationCircle.scale.set(0.1, 0.1, 0.1);
+
+    this.annotationCircle.add(this.annotationAnchor);
+
+    this.xContainer.add(this.annotationCircle);
+    this.scene.add(this.annotationTest);
   };
 
   Globe.prototype.loadEarth = function() {
@@ -148,13 +183,13 @@ var Globe = (function() {
     var dir = new THREE.Vector3(0, 1, 0);
     var origin = new THREE.Vector3(0, 0, 0);
     var length = radius * 1.5;
-    var hex = 0x00ff00;
+    var hex = 0x333333;
     var northArrow = new THREE.ArrowHelper(dir, origin, length, hex);
     earth.add(northArrow);
 
     // add south arrow
     dir = new THREE.Vector3(0, -1, 0);
-    hex = 0xff0000;
+    hex = 0x333333;
     var southArrow = new THREE.ArrowHelper(dir, origin, length, hex);
     earth.add(southArrow);
 
@@ -196,8 +231,8 @@ var Globe = (function() {
   };
 
   Globe.prototype.onResize = function(){
-    var w = this.$el.width();
-    var h = this.$el.height();
+    var w = parseInt(this.$el.width());
+    var h = parseInt(this.$el.height());
 
     this.renderer.setSize(w, h);
     this.camera.aspect = w / h;
@@ -238,9 +273,19 @@ var Globe = (function() {
   Globe.prototype.renderAnnotation = function(){
     if (!this.currentAnnotation) return false;
 
+    // var annotationCircle = this.annotationCircle;
+    // annotationCircle.updateMatrixWorld();
+    // var v3 = annotationCircle.geometry.vertices[0].clone();
+    // v3.applyMatrix4(annotationCircle.matrixWorld);
+    //
+    // this.annotationLine.position.copy(v3);
+    var v3 = this.annotationAnchor.localToWorld(new THREE.Vector3(0,0,0));
+    this.annotationTest.position.copy(v3);
+
     var w = this.renderer.context.canvas.width;
     var h = this.renderer.context.canvas.height;
-    var v2 = objectToScreen(this.annotationReference, this.camera, w, h);
+    var v2 = objectToScreen(this.annotationAnchor, this.camera, w, h);
+    // var v2 = v3ToScreen(v3, this.camera, w, h);
     this.$document.trigger("annotation.position.update", [this.opt.el, v2.x, v2.y]);
   };
 
@@ -250,10 +295,21 @@ var Globe = (function() {
 
     this.currentAnnotation = annotation;
     if (annotation) {
+      var radius = this.opt.radius;
       var lat = annotation.lat;
       var lon = annotation.lon;
-      var v3 = lonLatToVector3(lon, lat, this.opt.radius);
-      this.annotationReference.position.copy(v3);
+      var arrow = annotation.arrow;
+      var arrowRadius = arrow.radius || 0.3;
+      var arrowDistance = arrow.distance || 1.0;
+      this.annotationCircle.scale.set(arrowRadius, arrowRadius, arrowRadius);
+      var v3 = lonLatToVector3(lon, lat, this.opt.radius * arrowDistance);
+      this.annotationCircle.position.copy(v3);
+      this.annotationCircle.lookAt(this.origin);
+
+    // hide annotation circle
+    } else {
+      this.annotationCircle.scale.set(0.001, 0.001, 0.001);
+      this.annotationCircle.position.set(0,0,0);
     }
     this.renderAnnotation();
   };
