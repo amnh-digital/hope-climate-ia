@@ -48,8 +48,9 @@ var Content = (function() {
     _.each(this.annotations, function(a, i){
       var $container = $(a.parentEl);
       var $els = [];
+      var globeEl = a.globeEl.substring(1);
       _.each(a.els, function(el, j){
-        var $annotation = $('<div id="'+el.id+'" class="annotation"></div>');
+        var $annotation = $('<div id="'+el.id+'" class="annotation '+globeEl+'"></div>');
         if (el.className) $annotation.addClass(el.className);
         if (el.title) $annotation.append('<h3>'+el.title+'</h3>');
         if (el.image) $annotation.append('<img src="'+el.image+'" alt="'+el.imageAlt+'" />');
@@ -67,7 +68,7 @@ var Content = (function() {
   Content.prototype.onAnnotationPositionUpdate = function(el, x, y){
     var m = this.markers[el];
     var graphics = m.graphics;
-    var annotation = this.currentAnnotation;
+    var annotation = m.currentAnnotation;
 
     graphics.clear();
     if (m.active && annotation && annotation.arrow) {
@@ -102,24 +103,21 @@ var Content = (function() {
     });
   };
 
-  Content.prototype.update = function(annotation){
+  Content.prototype.update = function(globeEl, annotation){
     var _this = this;
-    $(".annotation").removeClass('active');
+    $(".annotation."+globeEl.substring(1)).removeClass('active');
 
-    _.each(this.markers, function(m, key){
-      var active = (annotation && annotation.globeEl===key);
-      if (!active) m.graphics.clear();
-      _this.markers[key].active = active;
-    });
+    var marker = this.markers[globeEl];
+    if (!annotation) marker.graphics.clear();
+    this.markers[globeEl].active = annotation !== false;
+    this.markers[globeEl].currentAnnotation = annotation;
 
     if (!annotation) {
-      this.currentAnnotation = false;
       return false;
     }
 
     var i = annotation.index;
-    this.currentAnnotation = this.annotations[i];
-    _.each(this.currentAnnotation.$els, function($el,i){
+    _.each(this.annotations[i].$els, function($el,i){
       $el.addClass('active');
     });
   };

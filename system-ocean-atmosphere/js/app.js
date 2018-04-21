@@ -24,7 +24,6 @@ var AppOceanAtmosphere = (function() {
     this.rotateX = 0.5;
     this.rotateY = 0.5;
     this.content.annotations = this.loadAnnotations();
-    this.currentAnnotationId = false;
     this.onReady();
     this.loadControls();
   };
@@ -97,6 +96,7 @@ var AppOceanAtmosphere = (function() {
     });
 
     $document.on("annotation.position.update", function(e, el, x, y){
+      // console.log(el, x, y);
       _this.onAnnotationPositionUpdate(el, x, y);
     });
 
@@ -119,7 +119,12 @@ var AppOceanAtmosphere = (function() {
     var annotations = this.content.annotations;
 
     _.each(globesOpt, function(opt){
-      globes.push(new Globe(_.extend({}, opt, globeOpt, content)));
+      var globe = _.extend({}, opt, {
+        currentAnnotation: false,
+        currentAnnotationId: false,
+        obj: new Globe(_.extend({}, opt, globeOpt, content))
+      })
+      globes.push(globe);
     });
 
     this.globes = globes;
@@ -133,14 +138,14 @@ var AppOceanAtmosphere = (function() {
 
   AppOceanAtmosphere.prototype.onResize = function(){
     _.each(this.globes, function(globe){
-      globe.onResize();
+      globe.obj.onResize();
     });
     this.contentObj.onResize();
     this.calendar.onResize();
   };
 
   AppOceanAtmosphere.prototype.onRotate = function(axis, value){
-
+    var _this = this;
     if (axis === "vertical")  this.rotateY = value;
     else this.rotateX = value;
 
@@ -157,8 +162,6 @@ var AppOceanAtmosphere = (function() {
       return lon >= a.lonFrom && lon <= a.lonTo && lat >= a.latFrom && lat <= a.latTo;
     });
     // console.log(annotations)
-    var annotation = false;
-    var annotationId = false;
 
     // multiple found, sort by distance
     if (annotations.length > 1) {
@@ -167,23 +170,27 @@ var AppOceanAtmosphere = (function() {
       });
     }
 
-    // found annotation
-    if (annotations.length > 0) {
-      annotation = annotations[0];
-    }
+    var globes = this.globes;
+    _.each(globes, function(globe, i){
+      var globeAnnotations = _.filter(annotations, function(a){ return a.globeEl===globe.el; });
+      var globeAnnotation = false;
+      var globeAnnotationId = false;
+      // found annotation
+      if (globeAnnotations.length > 0) {
+        globeAnnotation = globeAnnotations[0];
+      }
 
-    // check if we changed annotation
-    if (annotation) annotationId = annotation.id;
-    var changed = (annotationId !== this.currentAnnotationId);
-    if (changed) {
-      this.contentObj.update(annotation);
-      this.currentAnnotationId = annotationId;
-    }
+      // check if we changed annotation
+      if (globeAnnotation) globeAnnotationId = globeAnnotation.id;
+      var changed = (globeAnnotationId !== globe.currentAnnotationId);
+      if (changed) {
+        _this.contentObj.update(globe.el, globeAnnotation);
+        globes[i].currentAnnotationId = globeAnnotationId;
+        globes[i].currentAnnotation = globeAnnotation;
+        globe.obj.updateAnnotation(globeAnnotation);
+      }
 
-    _.each(this.globes, function(globe){
-      globe.onRotate(axis, value);
-      if (changed) globe.updateAnnotation(annotation);
-      // else if (changed) globe.updateAnnotation(false, 1.0);
+      globe.obj.onRotate(axis, value);
     });
   };
 
@@ -191,10 +198,10 @@ var AppOceanAtmosphere = (function() {
     var _this = this;
 
     var globeTest = this.globes[0];
-    var yearProgress = globeTest.getProgress();
+    var yearProgress = globeTest.obj.getProgress();
 
     _.each(this.globes, function(globe){
-      globe.render();
+      globe.obj.render();
     });
 
     this.calendar.render(yearProgress);
