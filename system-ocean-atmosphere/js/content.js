@@ -72,15 +72,12 @@ var Content = (function() {
 
     graphics.clear();
     if (m.active && annotation && annotation.arrow) {
+      var arrow = annotation.arrow;
       var aBB = annotation.bb;
       var mBB = m.bb;
 
-      var y0 = (aBB.y+aBB.height*0.5) - mBB.y;
-      var x0 = (aBB.x+aBB.width*1.1) - mBB.x;
-
-      if (annotation.arrowAnchor==="left") {
-        x0 = (aBB.x*0.97) - mBB.x;
-      }
+      var y0 = (aBB.y+aBB.height*arrow.anchor[1]) - mBB.y;
+      var x0 = (aBB.x+aBB.width*arrow.anchor[0]) - mBB.x;
 
       graphics.lineStyle(2, 0xffffff,  0.5);
       graphics.moveTo(x0, y0);

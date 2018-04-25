@@ -3,6 +3,8 @@
     {
       "lat": 37.0942262,
       "lon": -60.7623902,
+      "width": 50,
+      "height": 30,
       "globeEl": "#ocean-currents",
       "arrow": {
         "radius": 0.3,
@@ -21,12 +23,13 @@
     },{
       "lat": 35.0308912,
       "lon": 149.0079868,
+      "width": 50,
+      "height": 30,
       "globeEl": "#ocean-currents",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.3,
         "distance": 1.0,
-        "circleAngle": 180,
         "anchor": [1.0, 0.5]
       },
       "els": [
@@ -40,6 +43,8 @@
     },{
       "lat": 0,
       "lon": 90,
+      "width": 50,
+      "height": 30,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "els": [
@@ -55,14 +60,15 @@
         }
       ]
     },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
+      "lat": -22.7381204,
+      "lon": -81.6294632,
+      "width": 50,
+      "height": 30,
       "globeEl": "#ocean-currents",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.3,
         "distance": 1.0,
-        "circleAngle": 180,
         "anchor": [1.0, 0.5]
       },
       "els": [
@@ -74,14 +80,15 @@
         }
       ]
     },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
+      "lat": -46.5707514,
+      "lon": 27.2465078,
+      "width": 50,
+      "height": 30,
       "globeEl": "#ocean-currents",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.3,
         "distance": 1.0,
-        "circleAngle": 180,
         "anchor": [1.0, 0.5]
       },
       "els": [
@@ -93,15 +100,16 @@
         }
       ]
     },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
+      "lat": 56.1262412,
+      "lon": -28.3714522,
+      "width": 50,
+      "height": 30,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.3,
         "distance": 1.0,
-        "circleAngle": 180,
-        "anchor": [1.0, 0.5]
+        "anchor": [0.0, 0.5]
       },
       "els": [
         {
@@ -112,15 +120,16 @@
         }
       ]
     },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
+      "lat": 2,
+      "lon": -121.1574312,
+      "width": 50,
+      "height": 30,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.3,
         "distance": 1.0,
-        "circleAngle": 180,
-        "anchor": [1.0, 0.5]
+        "anchor": [0.0, 0.5]
       },
       "els": [
         {
@@ -131,15 +140,16 @@
         }
       ]
     },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
+      "lat": 2,
+      "lon": -171.1574312,
+      "width": 50,
+      "height": 30,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.3,
         "distance": 1.0,
-        "circleAngle": 180,
-        "anchor": [1.0, 0.5]
+        "anchor": [0.0, 0.5]
       },
       "els": [
         {
@@ -147,25 +157,6 @@
           "className": "content-atmosphere",
           "title": "Coriolis Effect",
           "text": "Earth’s rotation deflects rising air masses. Without this force, air would move directly from the tropics to the poles—but the Coriolis Effect results in currents moving in a curved path."
-        }
-      ]
-    },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
-      "globeEl": "#atmosphere-wind",
-      "parentEl": "#content",
-      "arrow": {
-        "radius": 0.3,
-        "distance": 1.0,
-        "circleAngle": 180,
-        "anchor": [1.0, 0.5]
-      },
-      "els": [
-        {
-          "id": "content-thermal-equator",
-          "className": "content-atmosphere",
-          "title": "Thermal Equator",
-          "text": "This band of warm air rises from where solar energy is most concentrated. This changes seasonally, moving slightly north in June and south in December."
         }
       ]
     }

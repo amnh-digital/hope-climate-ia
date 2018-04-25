@@ -295,6 +295,10 @@ var Globe = (function() {
       this.annotationCircle.position.copy(v3);
       this.annotationCircle.lookAt(this.origin);
 
+      var arrowRadius = radius;
+      if (arrow.anchor[0] <= 0) arrowRadius = -radius;
+      this.annotationAnchor.position.set(arrowRadius, 0, 0);
+
     // hide annotation circle
     } else {
       this.annotationCircle.scale.set(0.001, 0.001, 0.001);
