@@ -1,49 +1,82 @@
 {
   "slideshow": [
     {
-      "before": "img/pederson_glacier_1930.jpg",
-      "after": "img/pederson_glacier_2005.jpg",
-      "labelBefore": "1930",
-      "labelAfter": "2005",
-      "caption": "Pedersen Glacier melt, Alaska, summer.",
-      "longDescription": "The foreground water in the earlier image is part of a lagoon, adjacent to Aialik Bay, into which Pedersen Glacier was calving icebergs. In the 2005 photograph, most of the lagoon has filled with sediment and supports grasses, shrubs and aquatic plants. The dead trees visible among the grasses are remnants of a forest that was drowned when the coast sank by some 10 feet (3 meters) during the 1964 Alaskan Earthquake. Pedersen Glacier’s terminus has retreated more than a mile (2 kilometers) and stands of trees have grown between the wetland and the glacier. The tributary high above Pedersen Glacier separated from it sometime during the third quarter of the 20th century.",
-      "lon": -149.7893318,
-      "lat": 59.8927771,
+      "before": "img/ice_before.jpg",
+      "after": "img/ice_after.jpg",
+      "labelBefore": "September 1984",
+      "labelAfter": "September 2012",
+      "caption": "Arctic Ice Shrinks to Record Low",
+      "longDescription": "In 2012, the Arctic ice cap shrank to the smallest size ever recorded. If the polar ice caps continue to melt at the present rate, by 2100 there could be no Arctic ice at all during the summer.",
+      "lon": 0,
+      "lat": 84.6019818,
       "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change?id=212#212-pedersen-glacier-melt-alaska"
-    },{
-      "before": "img/samoa_coral_2014.jpg",
-      "after": "img/samoa_coral_2015.jpg",
-      "labelBefore": "Dec 2014",
-      "labelAfter": "Feb 2015",
-      "caption": "Coral bleaching in American Samoa.",
-      "longDescription": "A before and after image of the bleaching in American Samoa. The first image was taken in December 2014. The second image was taken in February 2015 when The Ocean Agency / XL Catlin Seaview Survey / Richard Vevers responded to a NOAA coral bleaching alert.",
-      "lon": -171.1410828,
-      "lat": -14.174928,
-      "credit": "XL Catlin Seaview Survey",
-      "creditUrl": "http://www.globalcoralbleaching.org/#images"
-    },{
-      "before": "img/neumayer_glacier_2005.jpg",
-      "after": "img/neumayer_glacier_2016.jpg",
-      "labelBefore": "2005",
-      "labelAfter": "2016",
-      "caption": "Neumayer Glacier shrinks on South Georgia Island.",
-      "longDescription": "Neumayer Glacier is on the east coast of South Georgia, an island some 1,200 miles (2,000 kilometers) east of South America’s southern tip. It has retreated more than 2.5 miles (4 kilometers) during the past 16 years. Neumayer flows into the ocean; even a tiny change in ocean temperature significantly affects the amount of heat available to melt the glacier.",
-      "lon": -36.7187762,
-      "lat": -54.2444436,
-      "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change?id=601#601-neumayer-glacier-shrinks-on-south-georgia-island"
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=623#623-arctic-sea-ice-coverage-hits-record-low"
     },{
       "before": "img/virgin_islands_before.jpg",
       "after": "img/virgin_islands_after.jpg",
       "labelBefore": "August 25, 2017",
       "labelAfter": "September 10, 2017",
-      "caption": "Hurricane Irma turns Virgin Islands brown.",
-      "longDescription": "Hurricane Irma tore through the British and U.S. Virgin Islands on Sept. 6, 2017, leaving the once-verdant landscape brown. Some of the discoloration is likely the result of vegetation being ripped away by the storm, which had sustained winds of 185 mph (298 kph) at the time, while some browning may have been caused by salt spray killing leaves and plants. The brighter appearance of the ocean in the September view is likely caused by a choppier ocean surface than in the August view. Wind-driven choppiness scatters more light than a calm surface.",
+      "caption": "British Virgin Islands Stripped of Greenery by Hurricane Irma",
+      "longDescription": "Once covered in greenery, the British Virgin Islands were left brown and denuded by Hurricane Irma in 2017. Hurricanes could become more powerful as the climate warms.",
       "lon": -65.2991647,
       "lat": 18.065972,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=628#628-hurricane-irma-turns-virgin-islands-brown"
+    },{
+      "before": "img/poopo_before.jpg",
+      "after": "img/poopo_after.jpg",
+      "labelBefore": "April 12, 2013",
+      "labelAfter": "January 15, 2016",
+      "caption": "Bolivia’s Lake Poopó runs dry",
+      "longDescription": "In wet periods, Lake Poopó is Bolivia’s second largest lake, covering 3,000 square km (1,200 square miles). Already shrinking as water was diverted for mining and agriculture, the lake ran completely dry after a major drought in 2016.",
+      "lon": -67.3955752,
+      "lat": -18.8408739,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=565#565-drying-lake-poop,-bolivia"
+    },{
+      "before": "img/greenland_before.jpg",
+      "after": "img/greenland_after.jpg",
+      "labelBefore": "June 10, 2014",
+      "labelAfter": "June 15, 2016",
+      "caption": "Melting Ice in Greenland",
+      "longDescription": "In 2016, Greenland’s ice sheet became covered by rivers and lakes (visible in blue) earlier in the summer than in previous years. Formed from melting ice, the liquid water digs deep holes into the ice sheet, allowing the water to drain to the bottom of the ice sheet and into the ocean.",
+      "lon": -48.2649612,
+      "lat": 74.2411205,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=586#586-exceptionally-early-ice-melt-greenland"
+    },{
+      "before": "img/samoa_coral_2014.jpg",
+      "after": "img/samoa_coral_2015.jpg",
+      "labelBefore": "Dec 2014",
+      "labelAfter": "Feb 2015",
+      "caption": "Coral Bleaching in American Samoa",
+      "longDescription": "Vast areas of American Samoa’s coral reefs were damaged during a major global bleaching event in the Pacific Ocean in 2015. Temperature increases of even a few degrees can cripple entire reef systems. During a catastrophic 2016 heat wave, 30 percent of the coral in Australia’s Great Barrier Reef died.",
+      "lon": -171.1410828,
+      "lat": -14.174928,
+      "credit": "XL Catlin Seaview Survey",
+      "creditUrl": "http://www.globalcoralbleaching.org/#images"
+    },{
+      "before": "img/pederson_glacier_1930.jpg",
+      "after": "img/pederson_glacier_2005.jpg",
+      "labelBefore": "1930",
+      "labelAfter": "2005",
+      "caption": "Pedersen Glacier melt, Alaska, summer.",
+      "longDescription": "The foreground water in the earlier image is part of a lagoon, adjacent to Aialik Bay, into which Pedersen Glacier was calving icebergs. In the 2005 photograph, most of the lagoon has filled with sediment and supports grasses, shrubs and aquatic plants.",
+      "lon": -149.7893318,
+      "lat": 59.8927771,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=212#212-pedersen-glacier-melt-alaska"
+    },{
+      "before": "img/neumayer_glacier_2005.jpg",
+      "after": "img/neumayer_glacier_2016.jpg",
+      "labelBefore": "2005",
+      "labelAfter": "2016",
+      "caption": "Neumayer Glacier shrinks on South Georgia Island",
+      "longDescription": "Neumayer Glacier is on the east coast of South Georgia, an island some 1,200 miles (2,000 kilometers) east of South America’s southern tip. It has retreated more than 2.5 miles (4 kilometers) during the past 16 years. Neumayer flows into the ocean; even a tiny change in ocean temperature significantly affects the amount of heat available to melt the glacier.",
+      "lon": -36.7187762,
+      "lat": -54.2444436,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=601#601-neumayer-glacier-shrinks-on-south-georgia-island"
     }
   ]
 }
