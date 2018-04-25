@@ -1,10 +1,13 @@
 {
+  "observedContent": {
+    "label": "Observed global temperature change since 1880"
+  },
   "forcings": {
     "orbital": {
       "type": "natural",
       "label": "Earth's orbital changes",
       "title": "Is it orbital changes?",
-      "sub": "No. Shifts in Earth's orbit led to past changes in climate, but this has had little influence since 1880.",
+      "sub": "No. Shifts in Earth’s orbit affect climate over thousands of years and longer, not over the time shown here.",
       "color": "#29BECE",
       "image": "img/orbital.png",
       "x": 0.43,
@@ -13,8 +16,8 @@
     "solar": {
       "type": "natural",
       "label": "Solar temperature",
-      "title": "Is it the sun?",
-      "sub": "No. The amount of energy the Sun radiates does vary in cycles, but not enough to cause the observed warming.",
+      "title": "Is it solar activity?",
+      "sub": "No. The Sun’s energy output has varied only slightly over the last century, producing almost no impact on recent climate.",
       "color": "#FF8200",
       "image": "img/solar.png",
       "x": 0.35,
@@ -24,7 +27,7 @@
       "type": "natural",
       "label": "Volcanic activity",
       "title": "Is it volcanoes?",
-      "sub": "No. Volcanic eruptions have a short-term cooling effect.",
+      "sub": "No. Climate records show that large eruptions often cool the planet for several years.",
       "color": "#ea4d4d",
       "image": "img/volcanic.png",
       "x": 0.2,
@@ -44,7 +47,7 @@
       "type": "human",
       "label": "Aerosols",
       "title": "Is aerosol pollution?",
-      "sub": "No. Some chemicals in airborne pollutants reflect solar energy instead of absorbing it—but have other negative effects, like smog and acid rain.",
+      "sub": "No. Some airborne pollutants reflect solar energy back to space, producing a cooling effect. However, they also have negative effects such as smog and acid rain.",
       "color": "#fd9bff",
       "image": "img/aerosols.png",
       "x": 0.13,
@@ -54,7 +57,7 @@
       "type": "human",
       "label": "Greenhouse gases",
       "title": "Is it greenhouse gases?",
-      "sub": "Yes. The rise in heat-trapping greenhouse gases is the only factor that matches observed warming since 1880.",
+      "sub": "Yes. The rise in heat-trapping greenhouse gases is the only factor that can account for observed warming since 1880.",
       "color": "#5cad51",
       "image": "img/ghgs.png",
       "x": 0.57,
@@ -63,8 +66,8 @@
     "all": {
       "type": "all",
       "label": "All factors",
-      "title": "All factors combined",
-      "sub": "Greenhouse gases account for warming the planet, while deforestation and aerosol pollution have cooled it slightly. This line represents all human and natural factors together.",
+      "title": "Combined human and natural factors",
+      "sub": "Greenhouse gases from human activity warm the planet, while natural factors cool it slightly. The combination of these human and natural factors closely matches the rise in global temperature since 1880.",
       "color": "#a8b749",
       "image": "img/all.png",
       "x": 0.84,

@@ -4,10 +4,10 @@
       "1": "orbital",
       "2": "solar",
       "3": "volcanic",
-      "4": "land_use",
-      "5": "ghgs",
-      "6": "aerosols",
-      "7": "all"
+      "4": "ghgs",
+      "5": "aerosols",
+      "6": "all",
+      "7": "land_use"
     }
   }
 }

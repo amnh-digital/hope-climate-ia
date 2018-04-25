@@ -581,12 +581,12 @@ var Graphics = (function() {
 
     // draw label
     var m = this.margin;
-    label.text = "Observed Global Temperature";
-    textStyle.wordWrapWidth = m[1] * 2;
+    label.text = this.opt.observedContent.label;
+    textStyle.wordWrapWidth = m[1] * 0.95;
     label.style = textStyle;
     label.anchor.set(0, 0);
-    label.x = cx + cw * 0.95;
-    label.y = cy + ch * 0.01;
+    label.x = cx + cw * 1.01;
+    label.y = cy + ch * 0.3;
   };
 
   Graphics.prototype.renderPlot = function(){

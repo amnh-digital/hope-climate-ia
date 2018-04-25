@@ -1,7 +1,7 @@
 {
   "graphics": {
     "el": "#graphics",
-    "margin": [0.1, 0.05, 0.1, 0.1],
+    "margin": [0.1, 0.15, 0.1, 0.1],
     "sleepTransitionMs": 2000,
     "xAxis": {
       "height": 0.0667,
