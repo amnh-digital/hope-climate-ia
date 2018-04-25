@@ -1,22 +1,25 @@
 {
   "messages": [
-    {"text": "In a single year, temperature jumps around from month to month with no particular pattern.", "years": 1.2},
-    {"text": "The average global temperature jumps around from year to year. It's hard to see any pattern when looking at only a handful of years.", "years": 10},
-    {"text": "Several decades of temperature records don't always show whether the planet is warming or cooling.", "years": 30},
-    {"text": "You can begin to see patterns of climate change can be seen when looking at 40 years of records or more.", "years": 100},
-    {"text": "When viewing over a century of global temperature records, a clear warming trend is observed.", "years": 200}
+    {"text": "Temperature can vary greatly month-to-month. You need more time to see a pattern.", "years": 1.2},
+    {"text": "Short-term records can reflect natural variations in the climate system. What happens if you look at more years?", "years": 10},
+    {"text": "Climate trends become clear over 20 or more years of data. More time will show an even more distinct trend.", "years": 50},
+    {"text": "The rise in global temperature becomes very pronounced over several decades. What can you see in 100 years or more of data?", "years": 100},
+    {"text": "The world has warmed rapidly over the last century. The pace of warming has also increased—16 of the 17 hottest years on record have occurred since 2001.", "years": 200}
   ],
   "annotations": [
-    {"years": [1911, 1944], "text": "From 1910 to the 1940s, there is some warming from both human CO2 emissions and natural factors."},
-    {"year": 1944, "text": "Warming trend peaks, slight cooling begins."},
-    {"years": [1945, 1975], "text": "From the 1940s to 1975, aerosols from pollution and volcanic eruptions cool planet slightly."},
+    {"years": [1911, 1944], "text": "Warming from both human CO₂ emissions and natural factors."},
+    {"years": [1945, 1975], "text": "Temperature levels off, possibly due the cooling effect of aerosol pollution."},
     {"year": 1975, "text": "Warming starts to accelerate, driven by human CO₂ emissions."},
     {"year": 1979, "text": "Rate of warming increases to 0.3°C (0.5°F) per decade."},
-    {"year": 1993, "text": "Sea level rise accelerates to 30 millimeters (1.10 inches) per decade, doubling 1901-1990 mean."},
-    {"year": 1998, "text": "A strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
-    {"year": 2003, "text": "A historic heat wave in Europe kills 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
-    {"year": 2005, "text": "Average temperature breaks the 1998 record."},
-    {"year": 2012, "text": "Lowest recorded Arctic sea ice extent in satellite record.", "image": "img/sea_ice.jpg", "imageW": 400, "imageH": 225},
-    {"year": 2016, "text": "Hottest year on record."}
+    {"year": 1990, "text": "Sea level rise accelerates to 3 cm (1.1 in) per decade, doubling the rate of rise since 1901"},
+    {"year": 1998, "text": "Warmer oceans boost warming from greenhouse gases, breaking 118 years of heat records."},
+    {"year": 2003, "text": "Historic heat wave in Europe kills 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
+    {"year": 2005, "text": "Global average temperature breaks the 1998 record."},
+    {"year": 2010, "text": "Russian heat wave kills 25% of the country’s crops, causing grain prices worldwide to soar."},
+    {"year": 2012, "text": "Lowest recorded Arctic sea ice extent in the satellite record.", "image": "img/sea_ice.jpg", "imageW": 400, "imageH": 225},
+    {"year": 2013, "text": "Australian “Angry Summer” peaks, setting a new record for hottest daily average: 40.3°C (104.5°F)."},
+    {"year": 2015, "text": "Second hottest year on record."},
+    {"year": 2016, "text": "Hottest year on record."},
+    {"year": 2017, "text": "Third hottest year on record."}
   ]
 }

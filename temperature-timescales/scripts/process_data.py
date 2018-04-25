@@ -16,9 +16,9 @@ import sys
 BASELINE = 13.9
 
 START_YEAR = 1880
-END_YEAR = 2016
-MONTHLY_DATA_FILE = "../data/188001-201710.csv"
-ANNUAL_DATA_FILE = "../data/1880-2017.csv"
+END_YEAR = 2017
+MONTHLY_DATA_FILE = "../data/188001-201803.csv"
+ANNUAL_DATA_FILE = "../data/1880-2018.csv"
 OUTPUT_FILE = "../data/current.json"
 # GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
 GRADIENT = ["#58e0dc", "#99cccc", "#adada3", "#d67052", "#eb5229", "#ff3300"]
