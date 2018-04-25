@@ -30,7 +30,7 @@
       "geojsonLineColor": "#555555"
     },{
       "el": "#atmosphere-wind",
-      "title": "Wind currents and air temperature<br />near sea level",
+      "title": "Wind currents and air temperature<br />near the sea surface",
       "videoOffset": 0.5,
       "viewAngle": 45,
       "near": 0.01,
