@@ -22,7 +22,7 @@ var FactBox = (function() {
     var _this = this;
     _.each(this.branches, function(branch, i){
       var image = branch.factbox.image ? branch.factbox.image : "img/factbox_placeholder.jpg";
-      var caption = branch.factbox.caption ? branch.factbox.caption : "Aliquam erat volutpat. Phasellus vulputate tortor sagittis est commodo, sed congue ipsum facilisis. Maecenas lobortis arcu velit, quis fermentum massa viverra ut.";
+      var caption = branch.factbox.description ? branch.factbox.description : "Aliquam erat volutpat. Phasellus vulputate tortor sagittis est commodo, sed congue ipsum facilisis. Maecenas lobortis arcu velit, quis fermentum massa viverra ut.";
       var $factbox = $('<div class="fact-box"><div class="inner"><div class="image"><img src="'+image+'" /></div><div class="caption">'+caption+'</div></div></div>');
       $container.append($factbox);
       _this.branches[i].factbox.$el = $factbox;
