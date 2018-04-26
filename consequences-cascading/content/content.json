@@ -2,7 +2,9 @@
   "network": [
     {
       "id": "a",
-      "factbox": {},
+      "factbox": {
+        "description": "During the 2003 heat wave in Europe, about 70,000 people died, mostly elderly. According to scientists who study ancient tree rings, it was the region’s hottest heat wave in 2,500 years."
+      },
       "nodes": [
         {
           "parent": "root",
@@ -11,7 +13,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": ""
+          "description": "Extreme heat waves could become longer and more severe"
         },{
           "parent": "a1",
           "id": "a2",
@@ -19,15 +21,15 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": ""
+          "description": "In regions lacking air conditioning, Thousands of people, particularly the elderly, could die"
         },{
-          "parent": "a2",
+          "parent": "root",
           "id": "a3",
           "label": "",
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": ""
+          "description": "Reduced rainfall causes soil to dry out, reducing crop yields"
         },{
           "parent": "a3",
           "id": "a4",
@@ -35,7 +37,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": ""
+          "description": "Extreme heat increases evaporation, further drying the soil"
         },{
           "parent": "a3",
           "id": "a5",
@@ -43,12 +45,14 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": ""
+          "description": "Poor harvests could cause food shortages and temporary price increases"
         }
       ]
     },{
       "id": "b",
-      "factbox": {},
+      "factbox": {
+        "description": "A series of droughts between 2006 and 2011 devastated rural areas in Syria. Unemployed refugees fled to the cities, contributing to political instability, civil war and disputes over refugees in Europe."
+      },
       "nodes": [
         {
           "parent": "root",
@@ -57,7 +61,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": ""
+          "description": "Rising temperatures could cause more numerous, widespread and persistent droughts"
         },{
           "parent": "b1",
           "id": "b2",
@@ -65,7 +69,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": ""
+          "description": "Reduced crop yields could cause localized famines"
         },{
           "parent": "b2",
           "id": "b3",
@@ -73,7 +77,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": ""
+          "description": "People could flee droughtstricken areas to become “climate refugees”"
         },{
           "parent": "b3",
           "id": "b4",
@@ -81,20 +85,22 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": ""
+          "description": "Neighboring regions could be destabilized"
         },{
-          "parent": "b3",
+          "parent": "b4",
           "id": "b5",
           "label": "",
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": ""
+          "description": "Conflicts over resources could fuel political instability and violence"
         }
       ]
     },{
       "id": "c",
-      "factbox": {},
+      "factbox": {
+        "description": "Parts of Argentina have already seen a surge of malaria as the climate warms."
+      },
       "nodes": [
         {
           "parent": "root",
@@ -103,7 +109,7 @@
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": ""
+          "description": "Climates become warmer and moister"
         },{
           "parent": "c1",
           "id": "c2",
@@ -111,7 +117,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": ""
+          "description": "Yellow fever, Chagas’s disease, schistosomiasis and other warm-weather diseases could all become more common"
         },{
           "parent": "c1",
           "id": "c3",
@@ -119,115 +125,31 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": ""
+          "description": "Lyme disease could spread as ticks’ ranges expand"
         },{
-          "parent": "c3",
+          "parent": "c1",
           "id": "c4",
           "label": "",
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": ""
+          "description": "Toxic algal blooms could contaminate seafood"
         },{
-          "parent": "c3",
+          "parent": "c1",
           "id": "c5",
           "label": "",
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": ""
-        }
-      ]
-    },{
-      "id": "d",
-      "factbox": {},
-      "nodes": [
-        {
-          "parent": "root",
-          "id": "d1",
-          "label": "",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": ""
+          "description": "Mosquitoes could spread malaria and dengue fever to more places"
         },{
-          "parent": "d1",
-          "id": "d2",
-          "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": ""
-        },{
-          "parent": "d1",
-          "id": "d3",
-          "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": ""
-        },{
-          "parent": "d1",
-          "id": "d4",
-          "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": ""
-        },{
-          "parent": "d1",
-          "id": "d5",
+          "parent": "c1",
+          "id": "c6",
           "label": "",
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": ""
-        }
-      ]
-    },{
-      "id": "e",
-      "factbox": {},
-      "nodes": [
-        {
-          "parent": "root",
-          "id": "e1",
-          "label": "",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": ""
-        },{
-          "parent": "e1",
-          "id": "e2",
-          "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": ""
-        },{
-          "parent": "e2",
-          "id": "e3",
-          "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": ""
-        },{
-          "parent": "e3",
-          "id": "e4",
-          "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": ""
-        },{
-          "parent": "e4",
-          "id": "e5",
-          "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
-          "description": ""
+          "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water supplies"
         }
       ]
     }
