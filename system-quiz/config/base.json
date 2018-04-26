@@ -1,9 +1,10 @@
 {
   "quiz": {
-    "el": "#quiz"
+    "el": "#quiz",
+    "answerWaitMs": 8000
   },
   "sound": {
-    "enable": 1,
+    "enable": 0,
     "audio": ["../shared/audio/quiz.mp3"],
     "volume": 1.0,
     "limitLastPlayedMs": 50,

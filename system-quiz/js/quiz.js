@@ -30,15 +30,19 @@ var Quiz = (function() {
       var $question = $('<div class="quiz-question" id="'+id+'"></div>');
 
       var html = '<div class="q">'+q.q+'</div>';
+      if (q.htmlBefore) html += q.htmlBefore;
       html += '<div class="as">';
       _.each(q.a, function(a){
         var className = "a";
         if (a.isCorrect) className += " correct";
+        var htmlBefore = a.htmlBefore || '';
+        var htmlAfter = a.htmlAfter || '';
         html += '<div class="'+className+'">';
-          html += '<div class="label-wrapper"><div class="label">'+a.label+'</div></div>';
+          html += '<div class="label-wrapper">'+htmlBefore+'<div class="label">'+a.label+'</div>'+htmlAfter+'</div>';
           html += '<div class="feedback">'+a.feedback+'</div>';
         html += '</div>'
       });
+      if (q.htmlAfter) html += q.htmlAfter;
       html += '</div>';
 
       $question.html(html);
@@ -89,12 +93,13 @@ var Quiz = (function() {
     var answer = this.activeQuestion.a[index];
     var $answers = $el.find('.a');
     var $answer = $($answers[index]);
+    var className = answer.isCorrect ? "correct" : "incorrect";
     $answer.addClass('active');
 
-    $el.addClass('answered');
+    $el.addClass('answered '+className);
 
-    var sound = answer.isCorrect ? "correct" : "incorrect";
-    $(document).trigger("sound.play.sprite", [sound]);
+    // var sound = answer.isCorrect ? "correct" : "incorrect";
+    // $(document).trigger("sound.play.sprite", [sound]);
 
     this.answered = true;
 
@@ -102,8 +107,8 @@ var Quiz = (function() {
       _this.next();
       _this.answered = false;
       $answer.removeClass('active');
-      $el.removeClass('answered');
-    }, 5000);
+      $el.removeClass('answered '+className);
+    }, this.opt.answerWaitMs);
   };
 
   Quiz.prototype.onResize = function(){
@@ -111,7 +116,7 @@ var Quiz = (function() {
   };
 
   Quiz.prototype.reset = function(){
-    this.shuffle();
+    // this.shuffle();
     this.currentIndex = -1;
     this.next();
   };
