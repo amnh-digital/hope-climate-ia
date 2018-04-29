@@ -1,4 +1,20 @@
 {
+  "prompts": {
+    "restart": {
+      "id": "p-restart",
+      "q": "<p>Congrats, you answered <span id='correct-count'></span> of <span id='question-count'></span> questions correctly. Would you like to try again?</p>",
+      "action": "showResults",
+      "a": [
+        {
+          "label": "Yes",
+          "action": "reset"
+        },{
+          "label": "No",
+          "action": "reset"
+        }
+      ]
+    }
+  },
   "questions": [
     {
       "id": "q-climate-weather",

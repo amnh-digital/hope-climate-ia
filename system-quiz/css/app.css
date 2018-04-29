@@ -133,6 +133,9 @@
 .quiz-question.answered .a.active.correct .label-wrapper > * {
   animation: tada 1s;
 }
+.quiz-prompts .quiz-question.answered .a.active .label-wrapper > * {
+  animation: bounce 1s;
+}
 .quiz-question.answered .q {
   opacity: 0;
 }
