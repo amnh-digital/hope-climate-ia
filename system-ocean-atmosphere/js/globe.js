@@ -71,9 +71,11 @@ var Globe = (function() {
 
     this.rotateX = 0.5;
     this.rotateY = 0.5;
+    this.annotations = _.where(this.opt.annotations, {globeEl: el});
 
     this.initScene();
     this.loadAnnotation();
+    this.loadAnnotations();
     this.loadGeojson(this.opt.geojson);
     this.loadVideo();
   };
@@ -153,6 +155,29 @@ var Globe = (function() {
     this.annotationCircle.add(this.annotationAnchor);
 
     this.xContainer.add(this.annotationCircle);
+  };
+
+  Globe.prototype.loadAnnotations = function(){
+    var annotations = this.annotations;
+
+    var radius = this.opt.radius;
+    var markerRadius = radius * 0.03;
+    var distance = radius * 1.1;
+    var container = this.xContainer;
+    var origin = this.origin;
+
+    this.annotations = _.map(annotations, function(a, i){
+      var geometry = new THREE.ConeBufferGeometry(markerRadius, markerRadius*2, 8);
+      geometry.rotateX(Math.PI / 2)
+      var material = new THREE.MeshBasicMaterial({color: 0x89bf54, opacity: 0.5, transparent: true});
+      var marker = new THREE.Mesh(geometry, material);
+      marker.position.copy(lonLatToVector3(a.lon, a.lat, distance));
+      // marker.rotation.x = Math.PI / 2;
+      marker.lookAt(origin);
+      container.add(marker);
+      a.marker = marker;
+      return a;
+    });
   };
 
   Globe.prototype.loadEarth = function() {
@@ -283,6 +308,17 @@ var Globe = (function() {
       || annotation && !annotation.arrow) return false;
 
     this.currentAnnotation = annotation;
+
+    // show/hide markers
+    var marker = false;
+    if (annotation) {
+      var a = _.findWhere(this.annotations, {id: annotation.id});
+      if (a) marker = a.marker;
+    }
+    if (this.currentMarker) this.currentMarker.visible = true;
+    this.currentMarker = marker;
+    if (marker) marker.visible = false;
+
     if (annotation) {
       var radius = this.opt.radius;
       var lat = annotation.lat;
