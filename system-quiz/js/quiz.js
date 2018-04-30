@@ -133,7 +133,9 @@ var Quiz = (function() {
       _this.next();
       _this.answered = false;
       $answer.removeClass('active');
-      $el.removeClass('answered '+className);
+      setTimeout(function(){
+        $el.removeClass('answered '+className);
+      }, 1000);
     }, this.opt.answerWaitMs);
   };
 
