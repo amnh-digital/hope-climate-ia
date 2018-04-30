@@ -80,8 +80,18 @@
   margin-left: -0.125vh;
   top: 10.333vh;
 }
+.a.circle .label {
+  border-radius: 8vh;
+  border: 0.3vh solid #5ebfec;
+}
+.a.circle .label:before {
+  top: 16vh;
+}
 .a:last-child .label:before {
   background: #cedf78;
+}
+.a.circle:last-child .label{
+  border-color: #cedf78;
 }
 .a:last-child .label-wrapper {
   left: auto;

@@ -212,3 +212,50 @@
     transform: translate3d(2vh, 1vw, 2vh) scale3d(1.2,1.2,1.2)  rotate3d(0, 0, 1, -45deg);
   }
 }
+
+
+#q-ocean .ocean {
+  position: fixed;
+  width: 120%;
+  height: 60%;
+  bottom: -10%;
+  left: -10%;
+  background: url(../img/ocean.png) repeat-x;
+  transform-origin: 50% 50%;
+  animation: wave 20s infinite;
+  opacity: 0.6;
+}
+#q-ocean .ocean:before {
+  content: " ";
+  position: absolute;
+  width: 20vh;
+  height: 20vh;
+  left: 50%;
+  margin-left: -10vh;
+  top: -10vh;
+  transform-origin: 50% 50%;
+  background: url(../img/cycle.png) no-repeat;
+  background-size: 100% 100%;
+  animation: spin 10s infinite linear;
+  animation-direction: backwards;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+#q-ocean.quiz-question.answered .ocean:before {
+  opacity: 1;
+}
+@keyframes wave {
+  from,
+  50%,
+  to {
+    transform: translate3d(0, 0, 0) scale3d(1,1,1) rotate3d(0, 0, 1, 0deg);
+  }
+
+  25% {
+    transform: translate3d(-10vh, -5vh, -2vh) scale3d(0.95,0.95,0.95) rotate3d(0, 0, 1, 1deg);
+  }
+
+  75% {
+    transform: translate3d(10vh, 5vh, 2vh) scale3d(1.05,1.05,1.05)  rotate3d(0, 0, 1, -1deg);
+  }
+}

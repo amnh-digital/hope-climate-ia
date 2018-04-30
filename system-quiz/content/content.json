@@ -51,6 +51,26 @@
           "feedback": "<p><strong>Sorry!</strong> Nitrogen makes up 80% of Earth’s atmosphere but is <strong>not a greenhouse gas</strong>.</p>"
         }
       ]
+    },{
+      "id": "q-ocean",
+      "q": "<p>The ocean affects Earth’s climate.</p>",
+      "htmlBefore": "<div class='ocean imagery'></div>",
+      "a": [
+        {
+          "htmlBefore": "<p class='left'>Is this</p>",
+          "htmlAfter": "<p class='center'>or</p>",
+          "className": "circle",
+          "label": "true",
+          "isCorrect": true,
+          "feedback": "<p><strong>Correct!</strong> The ocean stores vast amounts of heat and carbon, which it <strong>exchanges with the atmosphere to impact climate</strong>.</p>"
+        },{
+          "htmlAfter": "<p class='right'>?</p>",
+          "label": "false",
+          "className": "circle",
+          "isCorrect": false,
+          "feedback": "<p><strong>Sorry!</strong> The ocean stores vast amounts of heat and carbon, which it <strong>exchanges with the atmosphere to impact climate</strong>.</p>"
+        }
+      ]
     }
   ]
 }

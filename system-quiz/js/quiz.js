@@ -16,7 +16,7 @@ var Quiz = (function() {
     if (q.htmlBefore) html += q.htmlBefore;
     html += '<div class="as">';
     _.each(q.a, function(a){
-      var className = "a";
+      var className = a.className ? "a " + a.className : "a";
       if (a.isCorrect) className += " correct";
       var htmlBefore = a.htmlBefore || '';
       var htmlAfter = a.htmlAfter || '';
