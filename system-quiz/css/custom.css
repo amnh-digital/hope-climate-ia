@@ -23,7 +23,7 @@
 #q-climate-weather .solid {
   opacity: 0;
 }
-#q-climate-weather.quiz-question.active .correct .label-wrapper {
+#q-climate-weather.quiz-question.active .a:last-child .label-wrapper {
   transform: translate3d(0, 10vh, 0);
 }
 #q-climate-weather.quiz-question.answered .solid {
@@ -37,10 +37,10 @@
   top: 0;
   transition: transform 5s, opacity 5s;
 }
-#q-climate-weather.quiz-question.answered.correct .cloud {
+#q-climate-weather.quiz-question.answered.incorrect .cloud {
   transform: translate3d(-24vw, 0, 0);
 }
-#q-climate-weather.quiz-question.answered.incorrect .cloud {
+#q-climate-weather.quiz-question.answered.correct .cloud {
   transform: translate3d(-37vw, 0, 0);
 }
 #q-climate-weather .cloud .animate {
