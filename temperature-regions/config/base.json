@@ -45,7 +45,8 @@
     "imgEl": "#temperature-map",
     "helperEl": "#map-helper",
     "clipImgEl": "#worldmap",
-    "yearEl": ".map-year"
+    "yearEl": ".map-year",
+    "latEl": ".map-latitude"
   },
   "messages": {
     "el": "#messages"

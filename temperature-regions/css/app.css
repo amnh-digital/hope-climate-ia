@@ -33,7 +33,7 @@
   display: inline-block;
   padding: 0.2vh 0;
   font-weight: bold;
-  border-bottom: 0.4vh solid #e2bb3d;
+  /* border-bottom: 0.4vh solid #e2bb3d; */
 }
 .map-key {
   position: fixed;
@@ -89,7 +89,7 @@ svg text {
 }
 .graph-title {
   position: absolute;
-  top: -2.4vw;
+  top: -30%;
   text-align: center;
   width: 100%;
 }
@@ -97,6 +97,11 @@ svg text {
   font-size: 1.3vh;
   font-weight: normal;
   color: #575959;
+  line-height: 1.5;
+}
+.graph-title h3 span,
+.map-latitude {
+  color: #e2bb3d;
 }
 .graph-messages {
   display: block;

@@ -1,25 +1,25 @@
 {
   "messages": [
     {
-      "lat": [90, 54],
+      "lat": [90, 60],
       "label": "Northern high latitudes",
       "text": "The Arctic is warming nearly twice as fast as the rest of the world."
     },{
-      "lat": [54, 18],
+      "lat": [60, 30],
       "label": "Northern mid-latitudes",
-      "text": "Areas between the equator and poles are generally getting hotter-though some places see extreme cold weather linked to climate change."
+      "text": "Seasonal extremes are becoming more common, including reduced snow cover in winter and a longer forest fire season."
     },{
-      "lat": [18, -18],
-      "label": "Equator",
-      "text": "Even relatively modest warming around the equator is affecting tropical species that rely on a steady climate. "
+      "lat": [30, -30],
+      "label": "Tropics",
+      "text": "Even relatively modest warming around the equator is affecting tropical species."
     },{
-      "lat": [-18, -54],
+      "lat": [-30, -60],
       "label": "Southern mid-latitudes",
-      "text": "Patterns of monsoons and cyclones appear to be changing as the oceans that drive these storms warm."
+      "text": "Patterns of air and ocean circulation are changing, carrying more heat toward Antarctica."
     },{
-      "lat": [-54, -90],
+      "lat": [-60, -90],
       "label": "Southern high latitudes",
-      "text": "Antarctica's climate is quite variable because of the surrounding oceans, but the number of unusually warm years is increasing."
+      "text": "Antarctica is not warming as quickly as the Arctic, though unusually warm years are becoming more frequent."
     }
   ],
   "cities": [

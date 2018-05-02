@@ -16,6 +16,7 @@ var Map = (function() {
     this.$helper = $(this.opt.helperEl);
     this.$clipImg = $(this.opt.clipImgEl);
     this.$year = $(this.opt.yearEl);
+    this.$latitude = $(this.opt.latEl);
 
     var zoneCount = this.opt.zoneData.length;
     this.zoneCount = zoneCount;
@@ -77,6 +78,9 @@ var Map = (function() {
     var y0 = top / 100 * h;
     var y1 = y0 + hh;
     this.$clipImg.css('clip', 'rect('+y0+'px,'+hw+'px,'+y1+'px,0px)');
+
+    var lat = Math.round(UTIL.lerp(90, -90, zone));
+    this.$latitude.text(lat);
 
     this.updateCities(value);
   };
