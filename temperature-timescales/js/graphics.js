@@ -115,7 +115,7 @@ var Graphics = (function() {
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(axes, 24);
     addLabelBuffers(plot, 30);
-    addLabelBuffers(marker, 4);
+    addLabelBuffers(marker, 5);
     addLabelBuffers(annotations, this.opt.annotations.length);
 
     this.axes = axes;
@@ -703,6 +703,7 @@ var Graphics = (function() {
     var cLabel = marker.children[1];
     var fLabel = marker.children[2];
     var aLabel = marker.children[3];
+    var lLabel = marker.children[4];
     var markerColor = parseInt(this.opt.marker.color);
     var markerFill = parseInt(this.opt.marker.fill);
     var widthStep = this.markerWidthStep;
@@ -785,35 +786,41 @@ var Graphics = (function() {
     // set text
     yLabel.text = yearText;
     cLabel.text = dc + "°C";
-    fLabel.text = df + "°F";
+    fLabel.text = "(" + df + "°F)";
     aLabel.text = annotation;
+    lLabel.text = "difference from 20th century average temperature"
 
     // set style
     cLabel.style = textStyle;
-    fLabel.style = textStyle;
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
     yLabel.style = textStyle;
     textStyle = _.clone(textStyle);
-    textStyle.fontSize *= 0.9;
+    textStyle.fontSize *= 0.8;
+    fLabel.style = _.extend({}, textStyle, {fill: 0x333333});
     textStyle.wordWrap = true;
     textStyle.wordWrapWidth = labelW;
-    aLabel.style = textStyle;
+    aLabel.style = _.extend({}, textStyle, {lineHeight: textStyle.fontSize * 1.5});
+    textStyle = _.clone(textStyle);
+    textStyle.fontSize *= 0.8;
+    lLabel.style = textStyle;
 
     // set x position
     yLabel.x = labelX;
     cLabel.x = labelX;
-    fLabel.x = labelX + labelW * 0.5 + marginX;
+    fLabel.x = labelX + yLabel.width + marginX * 1.3;
     aLabel.x = labelX;
+    lLabel.x = labelX;
 
     // set y position
     yLabel.y = cy + marginY;
     cLabel.y = yLabel.y + yLabel.height + marginY * 2;
-    fLabel.y = cLabel.y;
-    aLabel.y = cLabel.y + cLabel.height + marginY * 2;
+    fLabel.y = cLabel.y * 1.04;
+    lLabel.y = cLabel.y + cLabel.height + marginY;
+    aLabel.y = lLabel.y + lLabel.height + marginY * 2;
 
     // draw rectangles
-    var rectH = marginY * 4 + yLabel.height + cLabel.height;
+    var rectH = marginY * 5 + yLabel.height + cLabel.height + lLabel.height;
     if (showAnnotation) rectH += marginY * 2 + aLabel.height;
     var imageW, imageH;
     var images = this.images;
@@ -840,13 +847,13 @@ var Graphics = (function() {
     marker.drawRect(rectX, cy, rectW, rectH);
     marker.endFill();
 
-    marker.beginFill(current.color, 0.5);
-    marker.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 2);
+    marker.beginFill(0x444444, 0.3);
+    marker.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
     marker.endFill();
 
-    marker.lineStyle(1, 0x000000, 0.5);
-    marker.moveTo(labelX + labelW * 0.5, cLabel.y);
-    marker.lineTo(labelX + labelW * 0.5, cLabel.y+cLabel.height);
+    // marker.lineStyle(1, 0x000000, 0.5);
+    // marker.moveTo(labelX + labelW * 0.5, cLabel.y);
+    // marker.lineTo(labelX + labelW * 0.5, cLabel.y+cLabel.height);
 
     this.prev = current;
   };
