@@ -75,6 +75,11 @@
   top: auto;
   color: #aaa;
   margin: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.sidebar.active {
+  opacity: 1;
 }
 .sidebar h3 {
   letter-spacing: 0.1vh;

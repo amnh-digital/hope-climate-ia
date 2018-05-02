@@ -547,15 +547,15 @@ var Graphics = (function() {
 
       if (dc===0) {
         label = axes.children[labelIndex];
-        label.text = "No";
+        label.text = "20th century";
         label.style = yAxisTextStyle;
-        label.x = xLabel * 0.86;
+        label.x = xLabel;
         label.y = y;
         label.anchor.set(1.0, 1.0);
         labelIndex += 1;
 
         label = axes.children[labelIndex];
-        label.text = "change";
+        label.text = "average";
         label.style = yAxisTextStyle;
         label.x = xLabel;
         label.y = y;
@@ -563,17 +563,17 @@ var Graphics = (function() {
         labelIndex += 1;
 
         // y axis label
-        label = axes.children[labelIndex];
-        label.text = "Change from 20th century average temperature";
-        label.style = _.extend({}, yAxisTextStyle, {
-          fontSize: yAxisTextStyle.fontSize * 0.9,
-          letterSpacing: yAxisTextStyle.fontSize * 0.1
-        });
-        label.x = xLabel * 0.1;
-        label.y = y;
-        label.anchor.set(0.5, 0);
-        label.rotation = UTIL.radians(-90);
-        labelIndex += 1;
+        // label = axes.children[labelIndex];
+        // label.text = "Change from 20th century average temperature";
+        // label.style = _.extend({}, yAxisTextStyle, {
+        //   fontSize: yAxisTextStyle.fontSize * 0.9,
+        //   letterSpacing: yAxisTextStyle.fontSize * 0.1
+        // });
+        // label.x = xLabel * 0.1;
+        // label.y = y;
+        // label.anchor.set(0.5, 0);
+        // label.rotation = UTIL.radians(-90);
+        // labelIndex += 1;
 
       } else if (showLabel) {
         label = axes.children[labelIndex];

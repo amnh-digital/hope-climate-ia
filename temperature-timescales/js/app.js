@@ -16,6 +16,7 @@ var AppTimescales = (function() {
 
     var controlPromise = this.loadControls();
     var soundPromise = this.loadSounds();
+    this.$sidebar = $(".sidebar");
 
     $.when.apply($, [controlPromise, soundPromise]).then(function(){
       _this.onReady();
@@ -48,10 +49,12 @@ var AppTimescales = (function() {
     });
 
     $(document).on("sleep.start", function(e, value) {
+      _this.$sidebar.removeClass("active");
       _this.graphics.sleepStart();
     });
 
     $(document).on("sleep.end", function(e, value) {
+      _this.$sidebar.addClass("active");
       _this.graphics.sleepEnd();
     });
 

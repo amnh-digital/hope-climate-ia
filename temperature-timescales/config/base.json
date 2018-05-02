@@ -15,7 +15,7 @@
     "annotationsUI": {
       "color": "0xc6ad61",
       "highlightColor": "0xe2bb3d",
-      "scaleThreshold": 0.5
+      "scaleThreshold": 0.72
     },
     "plot": {
       "textStyle": {
