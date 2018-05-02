@@ -45,6 +45,28 @@
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=586#586-exceptionally-early-ice-melt-greenland"
     },{
+      "before": "img/glacier_before.jpg",
+      "after": "img/glacier_after.jpg",
+      "labelBefore": "2006",
+      "labelAfter": "2017",
+      "caption": "Shrinking Glaciers in Switzerland",
+      "longDescription": "The Trift Glacier in Switzerland retreated 1.17 kilometers (0.7 miles) between 2006 and 2017.",
+      "lon": 8.3619038,
+      "lat": 46.6640991,
+      "credit": "James Balog and the Extreme Ice Survey",
+      "creditUrl": "https://newatlas.com/before-after-photos-glaciers-climate-change/49143/"
+    },{
+      "before": "img/harvey_before.jpg",
+      "after": "img/harvey_after.jpg",
+      "labelBefore": "November 20, 2016",
+      "labelAfter": "August 31, 2017",
+      "caption": "Hurricane Harvey Causes Flooding in Houston, Texas",
+      "longDescription": "Hurricane Harvey dumped up to 120 cm (47 inches ) in the area around Houston, Texas. The storm displaced 30,000 people, destroyed 200,000 homes and businesses and caused $126 billion in property damage.  Rare extreme weather events like these could become more frequent as the climate warms.",
+      "lon": -95.682169,
+      "lat": 29.8168809,
+      "credit": "Digital Globe",
+      "creditUrl": "https://www.nytimes.com/interactive/2017/08/29/us/houston-before-and-after-hurricane-harvey.html"
+    },{
       "before": "img/samoa_coral_2014.jpg",
       "after": "img/samoa_coral_2015.jpg",
       "labelBefore": "Dec 2014",
@@ -55,28 +77,6 @@
       "lat": -14.174928,
       "credit": "XL Catlin Seaview Survey",
       "creditUrl": "http://www.globalcoralbleaching.org/#images"
-    },{
-      "before": "img/pederson_glacier_1930.jpg",
-      "after": "img/pederson_glacier_2005.jpg",
-      "labelBefore": "1930",
-      "labelAfter": "2005",
-      "caption": "Pedersen Glacier melt, Alaska, summer.",
-      "longDescription": "The foreground water in the earlier image is part of a lagoon, adjacent to Aialik Bay, into which Pedersen Glacier was calving icebergs. In the 2005 photograph, most of the lagoon has filled with sediment and supports grasses, shrubs and aquatic plants.",
-      "lon": -149.7893318,
-      "lat": 59.8927771,
-      "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change?id=212#212-pedersen-glacier-melt-alaska"
-    },{
-      "before": "img/neumayer_glacier_2005.jpg",
-      "after": "img/neumayer_glacier_2016.jpg",
-      "labelBefore": "2005",
-      "labelAfter": "2016",
-      "caption": "Neumayer Glacier shrinks on South Georgia Island",
-      "longDescription": "Neumayer Glacier is on the east coast of South Georgia, an island some 1,200 miles (2,000 kilometers) east of South America’s southern tip. It has retreated more than 2.5 miles (4 kilometers) during the past 16 years. Neumayer flows into the ocean; even a tiny change in ocean temperature significantly affects the amount of heat available to melt the glacier.",
-      "lon": -36.7187762,
-      "lat": -54.2444436,
-      "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change?id=601#601-neumayer-glacier-shrinks-on-south-georgia-island"
     }
   ]
 }

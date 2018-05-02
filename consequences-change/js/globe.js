@@ -16,7 +16,7 @@ var Globe = (function() {
 
   function toSphere(lon, lat, radius) {
     var phi = (90-lat) * (Math.PI/180);
-    var theta = (lon+180) * (Math.PI/180);
+    var theta = (lon+90) * (Math.PI/180);
     var x = -(radius * Math.sin(phi) * Math.cos(theta));
     var y = (radius * Math.cos(phi));
     var z = (radius * Math.sin(phi) * Math.sin(theta));
@@ -111,7 +111,7 @@ var Globe = (function() {
 
   Globe.prototype.next = function(){
     if (this.transitioning) return false;
-    
+
     this.currentSlide += 1;
     if (this.currentSlide >= this.slideCount) {
       this.currentSlide = 0;
@@ -161,8 +161,17 @@ var Globe = (function() {
 
   Globe.prototype.updateEarth = function(slide){
     var earth = this.earth;
-    var phi = slide.lat * Math.PI / 180;
-    var theta = (270 - slide.lon) * Math.PI / 180;
+    // var phi = slide.lat * Math.PI / 180;
+    // var theta = (90 - slide.lon) * Math.PI / 180;
+    var phi = slide.lat * (Math.PI/180);
+
+    console.log(slide.lon)
+    // var lon = slide.lon + 135;
+    // if (slide.lon > 0) lon = slide.lon - 45;
+    var lon = 360 - slide.lon;
+
+    var theta = lon * (Math.PI/180);
+
     var euler = new THREE.Euler(phi, theta, 0, 'XYZ');
 
     // rotation (using slerp)
