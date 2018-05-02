@@ -12,6 +12,23 @@ var Controls = (function() {
     this.$document = $(document);
   };
 
+  Controls.prototype.getGamepadIndex = function(){
+    var gamepads = navigator.getGamepads();
+    if (!gamepads || !gamepads.length) return false;
+
+    var gamepadIndex = false;
+    var count = 5;
+
+    for(var i=0; i<count; i++) {
+      if (gamepads[i]) {
+        gamepadIndex = i;
+        break;
+      }
+    }
+
+    return gamepadIndex;
+  };
+
   Controls.prototype.load = function(){
     this.deferred = $.Deferred();
 
@@ -59,11 +76,11 @@ var Controls = (function() {
 
   Controls.prototype.loadGamepad = function(gamepadMappings){
     var _this = this;
+    var getGamepadIndex = this.getGamepadIndex();
 
-    var gamepads = navigator.getGamepads();
-
-    if (gamepads && gamepads.length && gamepads[0]) {
+    if (getGamepadIndex !== false) {
       console.log("Gamepad found");
+      this.getGamepadIndex = getGamepadIndex;
       var gamepadState = {};
       _.each(_.keys(gamepadMappings), function(key){
         gamepadState[key] = -1;
@@ -264,7 +281,7 @@ var Controls = (function() {
   Controls.prototype.pollGamepad = function(){
     var _this = this;
 
-    var gamepad = navigator.getGamepads()[0];
+    var gamepad = navigator.getGamepads()[this.getGamepadIndex];
     if (!gamepad) {
       this.loadGamepad(this.gamepadMappings);
       return false;
