@@ -175,7 +175,6 @@ var Network = (function() {
     return _.map(network, function(branch, i){
       branch.index = i;
       var nodeCount = branch.nodes.length;
-      var segment = 1.0 / nodeCount;
       branch.duration = nodeMs * nodeCount;
 
       // tranform nodes into a hash
@@ -190,26 +189,47 @@ var Network = (function() {
 
         // retrieve parent info
         var parent = false;
-        var parentNX = 0.5;
-        var parentNY = 0;
         var parentChildCount = 0;
         var index = 0;
         if (node.parent !== "root") {
           parent = nodes[node.parent];
-          parentNX = parent.nx;
-          parentNY = parent.ny;
           parentChildCount = parent.childCount;
           index = parent.index + 1;
         }
         node.index = index;
-        node.pnx = parentNX;
-        node.pny = parentNY;
+        node.parentChildCount = parentChildCount;
 
         // check for children
         var children = _.filter(nodes, function(cnode){ return cnode.parent===id});
         var childCount = children.length;
         node.childCount = childCount;
         node.childIds = _.pluck(children, 'id');
+
+        // update node
+        nodes[id] = node;
+      });
+
+      var indices = _.pluck(nodes, "index");
+      var levels = _.max(indices) + 1;
+      var segment = 1.0 / levels;
+
+      _.each(nodes, function(n, id){
+        var node = _.clone(n);
+
+        // retrieve parent info
+        var parent = false;
+        var parentNX = 0.5;
+        var parentNY = 0;
+        if (node.parent !== "root") {
+          parent = nodes[node.parent];
+          parentNX = parent.nx;
+          parentNY = parent.ny;
+        }
+        node.pnx = parentNX;
+        node.pny = parentNY;
+
+        var parentChildCount = node.parentChildCount;
+        var index = node.index;
 
         // determine normal position
         var distance = node.distance ? node.distance : segment;
