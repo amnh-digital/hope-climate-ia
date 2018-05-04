@@ -39,6 +39,7 @@ var Controls = (function() {
     var uiMappings = this.opt.uiMappings;
     var scrollMappings = this.opt.scrollMappings;
     var touchMappings = this.opt.touchMappings;
+    var pointerlockMappings = this.opt.pointerlockMappings;
 
     if (mouseMappings) {
       this.loadMouseListeners(mouseMappings);
@@ -54,6 +55,10 @@ var Controls = (function() {
 
     if (scrollMappings) {
       this.loadScrollListeners(scrollMappings);
+    }
+
+    if (pointerlockMappings) {
+      this.loadPointerlockListeners(pointerlockMappings);
     }
 
     if (touchMappings) {
@@ -214,6 +219,50 @@ var Controls = (function() {
     $window.keypress(onKeyDown);
     $window.keyup(onKeyUp);
 
+  };
+
+  Controls.prototype.loadPointerlockListeners = function(mappings){
+    var $document = this.$document;
+
+    function updatePosition(e){
+      _.each(mappings, function(props, orientation){
+        var delta = e.movementY;
+        if (orientation==="horizontal") delta = event.movementX;
+        if (Math.abs(delta) > 0) {
+          delta *= props.multiplier;
+          $document.trigger("controls."+props.name, [delta]);
+        }
+      });
+    };
+
+    document.addEventListener("mousemove", updatePosition, false);
+
+    // // add target canvas
+    // var $canvas = $("<canvas></canvas>");
+    // $canvas.css({
+    //   "width": "100%",
+    //   "height": "100%",
+    //   "top": 0,
+    //   "left": 0,
+    //   "position": "absolute"
+    // });
+    // $("body").append($canvas);
+    // var canvas = $canvas[0];
+    //
+    // // Initiate pointer lock
+    // document.addEventListener('pointerlockchange', function(){
+    //   if (document.pointerLockElement === canvas) {
+    //     console.log('The pointer lock status is now locked');
+    //     document.addEventListener("mousemove", updatePosition, false);
+    //   } else {
+    //     console.log('The pointer lock status is now unlocked');
+    //   }
+    // }, false);
+    //
+    // canvas.onclick = function() {
+    //   console.log('Requesting pointer lock...');
+    //   canvas.requestPointerLock();
+    // };
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){

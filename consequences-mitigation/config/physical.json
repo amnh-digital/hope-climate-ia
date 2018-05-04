@@ -1,6 +1,6 @@
 {
   "controls": {
-    "scrollMappings": {
+    "pointerlockMappings": {
       "vertical": {
         "name": "rotate",
         "multiplier": 4.0
