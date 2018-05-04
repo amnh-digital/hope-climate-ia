@@ -223,6 +223,7 @@ var Controls = (function() {
 
   Controls.prototype.loadPointerlockListeners = function(mappings){
     var $document = this.$document;
+    var el = $(this.opt.el)[0];
 
     function updatePosition(e){
       _.each(mappings, function(props, orientation){
@@ -235,34 +236,22 @@ var Controls = (function() {
       });
     };
 
-    document.addEventListener("mousemove", updatePosition, false);
+    // document.addEventListener("mousemove", updatePosition, false);
 
-    // // add target canvas
-    // var $canvas = $("<canvas></canvas>");
-    // $canvas.css({
-    //   "width": "100%",
-    //   "height": "100%",
-    //   "top": 0,
-    //   "left": 0,
-    //   "position": "absolute"
-    // });
-    // $("body").append($canvas);
-    // var canvas = $canvas[0];
-    //
-    // // Initiate pointer lock
-    // document.addEventListener('pointerlockchange', function(){
-    //   if (document.pointerLockElement === canvas) {
-    //     console.log('The pointer lock status is now locked');
-    //     document.addEventListener("mousemove", updatePosition, false);
-    //   } else {
-    //     console.log('The pointer lock status is now unlocked');
-    //   }
-    // }, false);
-    //
-    // canvas.onclick = function() {
-    //   console.log('Requesting pointer lock...');
-    //   canvas.requestPointerLock();
-    // };
+    // Initiate pointer lock
+    document.addEventListener('pointerlockchange', function(){
+      if (document.pointerLockElement === el) {
+        console.log('The pointer lock status is now locked');
+        document.addEventListener("mousemove", updatePosition, false);
+      } else {
+        console.log('The pointer lock status is now unlocked');
+      }
+    }, false);
+
+    el.onclick = function() {
+      console.log('Requesting pointer lock...');
+      el.requestPointerLock();
+    };
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){

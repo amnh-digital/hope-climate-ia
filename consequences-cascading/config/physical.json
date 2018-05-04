@@ -1,5 +1,6 @@
 {
   "controls": {
+    "el": "#app",
     "pointerlockMappings": {
       "vertical": {
         "name": "rotate",
