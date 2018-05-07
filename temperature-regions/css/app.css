@@ -68,10 +68,10 @@ svg text {
   content: " ";
   display: block;
   background: #000;
-  width: 0.33vh;
+  width: 1vh;
   height: 100%;
   position: absolute;
-  right: -0.33vh;
+  right: -0.67vh;
   top: 0;
   box-sizing: border-box;
 }
