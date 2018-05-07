@@ -87,14 +87,14 @@ var AppForcings = (function() {
   };
 
   AppForcings.prototype.onButtonDown = function(value) {
-    console.log("Button down " + value);
+    // console.log("Button down " + value);
     this.graphics.forcingOn(value);
     this.messages.forcingOn(value);
     this.sleep.wakeUp();
   };
 
   AppForcings.prototype.onButtonUp = function(value) {
-    console.log("Button up " + value);
+    // console.log("Button up " + value);
     this.graphics.forcingOff(value);
     this.messages.forcingOff(value);
     this.sleep.wakeUp();

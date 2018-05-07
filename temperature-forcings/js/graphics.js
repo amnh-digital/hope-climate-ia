@@ -64,8 +64,8 @@ var Graphics = (function() {
     this.domain = this.opt.domain;
     this.range = this.opt.range;
     this.observedData = this.opt.observed;
-    this.forcingsContent = this.opt.forcings;
     this.forcingsData = this.opt.data;
+    this.forcingsContent = this.opt.forcings;
     this.transitionStep = this.opt.transitionStep;
     this.cordConfig = this.opt.cord;
     this.sleepTransitionMs = this.opt.sleepTransitionMs;
@@ -124,6 +124,10 @@ var Graphics = (function() {
     var range = this.range;
     var incr = this.opt.yAxis.tickEvery;
 
+    var forcingsColors = _.mapObject(this.forcingsContent, function(val, key){
+      return parseInt("0x"+val.color.slice(1), 16);
+    });
+
     this.forcingsState = _.mapObject(this.forcingsData, function(d, key) {
       // calculate intersections
       var intersections = [];
@@ -137,13 +141,13 @@ var Graphics = (function() {
         state: false,
         prevProgress: 0,
         progress: 0,
-        intersections: intersections
+        intersections: intersections,
+        color: forcingsColors[key],
+        data: d.data
       };
     });
 
-    this.forcingsColors = _.mapObject(this.forcingsContent, function(val, key){
-      return parseInt("0x"+val.color.slice(1), 16);
-    });
+
   };
 
   Graphics.prototype.initView = function(){
@@ -152,8 +156,9 @@ var Graphics = (function() {
     var plot = new PIXI.Graphics();
     var cords = new PIXI.Graphics();
     var observed = new PIXI.Graphics();
+    var combined = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, observed, cords, plot);
+    this.app.stage.addChild(axes, observed, cords, plot, combined);
 
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
@@ -164,9 +169,10 @@ var Graphics = (function() {
     this.cords = cords;
     this.observed = observed;
     this.plot = plot;
+    this.combined = combined;
 
     this.sleepers = [axes, cords, plot, observed.children[0]];
-    this.dreamers = [];
+    this.dreamers = [combined];
 
     this.$el.append(this.app.view);
 
@@ -174,6 +180,9 @@ var Graphics = (function() {
     this.renderObserved();
     this.renderPlot();
     this.renderCords();
+
+    this.combined.alpha = 0;
+    this.renderCombined();
   };
 
   Graphics.prototype.checkForPluck = function() {
@@ -227,6 +236,7 @@ var Graphics = (function() {
     this.renderObserved();
     this.renderPlot();
     this.renderCords();
+    this.renderCombined();
   };
 
   Graphics.prototype.pluck = function(){
@@ -483,6 +493,14 @@ var Graphics = (function() {
     }
   };
 
+  Graphics.prototype.renderCombined = function(){
+    var combined = this.combined;
+    var forcing = this.forcingsState["all"];
+
+    combined.clear();
+    this.renderLine(combined, forcing, 1.0);
+  };
+
   Graphics.prototype.renderCord = function(g, c){
     if (c.dy===0) g.lineStyle(4, 0xc4ced4);
     else g.lineStyle(3, 0x45474c, 0.5);
@@ -526,6 +544,47 @@ var Graphics = (function() {
       g.moveTo(x0, c.y).lineTo(x0 + pw, c.y);
     }
 
+  };
+
+  Graphics.prototype.renderLine = function(plot, forcing, progress){
+    var domain = this.domain;
+    var range = this.range;
+    var pd = this.plotDimensions;
+    var len = domain[1] - domain[0];
+    var pointRadius = this.pointRadius;
+
+    progress = progress || forcing.progress;
+    var data = forcing.data;
+    var color = forcing.color;
+
+    // draw line
+    plot.lineStyle(3, color);
+    _.each(data, function(v, i){
+      var p = 1.0 * i / len;
+
+      if (p <= progress) {
+        var dx = domain[0] + i;
+        var dy = v;
+        var point = dataToPoint(dx, dy, domain, range, pd);
+
+        if (i<=0) {
+          plot.moveTo(point[0], point[1]);
+        } else {
+          plot.lineTo(point[0], point[1]);
+        }
+      }
+
+    });
+
+    // draw point
+    var i = parseInt(Math.round(progress * len));
+    var v = data[i];
+    var dx = domain[0] + i;
+    var dy = v;
+    var point = dataToPoint(dx, dy, domain, range, pd);
+    plot.beginFill(color);
+    plot.drawCircle(point[0], point[1], pointRadius);
+    plot.endFill();
   };
 
   Graphics.prototype.renderCords = function(){
@@ -590,53 +649,15 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.renderPlot = function(){
+    var _this = this;
     var forcingsState = this.forcingsState;
-    var forcingsData = this.forcingsData;
     var plot = this.plot;
-    var domain = this.domain;
-    var range = this.range;
-    var pd = this.plotDimensions;
-    var forcingsColors = this.forcingsColors;
-    var len = domain[1] - domain[0];
-    var pointRadius = this.pointRadius;
 
     plot.clear();
 
     _.each(forcingsState, function(value, key){
       if (value.state !== false) {
-        var progress = value.progress;
-        var data = forcingsData[key].data;
-        var color = forcingsColors[key];
-
-        // draw line
-        plot.lineStyle(3, color);
-        _.each(data, function(v, i){
-          var p = 1.0 * i / len;
-
-          if (p <= progress) {
-            var dx = domain[0] + i;
-            var dy = v;
-            var point = dataToPoint(dx, dy, domain, range, pd);
-
-            if (i<=0) {
-              plot.moveTo(point[0], point[1]);
-            } else {
-              plot.lineTo(point[0], point[1]);
-            }
-          }
-
-        });
-
-        // draw point
-        var i = parseInt(Math.round(progress * len));
-        var v = data[i];
-        var dx = domain[0] + i;
-        var dy = v;
-        var point = dataToPoint(dx, dy, domain, range, pd);
-        plot.beginFill(color);
-        plot.drawCircle(point[0], point[1], pointRadius);
-        plot.endFill();
-
+        _this.renderLine(plot, value);
       }
     });
   };
@@ -671,6 +692,10 @@ var Graphics = (function() {
 
     _.each(this.sleepers, function(g){
       g.alpha = alpha;
+    });
+
+    _.each(this.dreamers, function(g){
+      g.alpha = 1.0 - alpha;
     });
   };
 
