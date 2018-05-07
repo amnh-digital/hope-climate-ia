@@ -8,7 +8,9 @@ var Globe = (function() {
       near: 0.01,
       far: 1000,
       radius: 0.5,
-      videoOffset: 0.0
+      videoOffset: 0.0,
+      opacityStep: 1.0,
+      positionStep: 1.0
     };
     this.opt = $.extend({}, defaults, options);
     this.init();
@@ -134,6 +136,8 @@ var Globe = (function() {
     return progress;
   };
 
+  Globe.prototype.isTransitioning = function(){};
+
   Globe.prototype.isLoaded = function(){
     return this.video && this.video.duration;
   };
@@ -236,7 +240,8 @@ var Globe = (function() {
     // add video element to document
     var $video = $('<video id="video" webkit-playsinline style="display: none" autoplay loop crossorigin="anonymous"></video>');
     _.each(this.opt.videos, function(v){
-      $video.append($('<source src="'+v.url+'" type="'+v.type+'">'));
+      var rand = "?r=" + parseInt(Math.random() * 100000); // add random string at the end to prevent cache
+      $video.append($('<source src="'+v.url+rand+'" type="'+v.type+'">'));
     });
     $('body').append($video);
     this.video = $video[0];
@@ -287,6 +292,10 @@ var Globe = (function() {
 
   Globe.prototype.render = function(yearProgress){
 
+    // if (this.isTransitioning()) {
+    //
+    // }
+
     this.renderer.render(this.scene, this.camera);
     // this.controls.update();
   };
@@ -306,6 +315,18 @@ var Globe = (function() {
   Globe.prototype.updateAnnotation = function(annotation){
     if (annotation && annotation.globeEl !== this.opt.el
       || annotation && !annotation.arrow) return false;
+
+
+    // // prep transition properties
+    // if (this.currentAnnotation) {
+    //   annotation.currentLon = this.currentAnnotation.currentLon;
+    //   annotation.currentLat = this.currentAnnotation.currentLat;
+    //   annotation.currentOpacity = this.currentAnnotation.currentOpacity;
+    // } else {
+    //   annotation.currentLon = annotation.lon;
+    //   annotation.currentLat = annotation.lat;
+    //   annotation.currentOpacity = 0;
+    // }
 
     this.currentAnnotation = annotation;
 
