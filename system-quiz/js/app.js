@@ -43,10 +43,11 @@ var AppQuiz = (function() {
     $document.on("controls.button.down", buttonDown);
     $(window).on('resize', resize);
 
-    // var sleepStart = function(e, value) { _this.quiz.sleepStart(); };
-    // var sleepEnd = function(e, value) { _this.quiz.sleepEnd(); };
-    // $(document).on("sleep.start", sleepStart);
-    // $(document).on("sleep.end", sleepEnd);
+    var sleepStart = function(e, vars) {
+      var prompt = vars.prompt || "start";
+      _this.quiz.prompt(prompt);
+    };
+    $(document).on("sleep.start", sleepStart);
   };
 
   AppQuiz.prototype.loadSounds = function(){
@@ -66,8 +67,10 @@ var AppQuiz = (function() {
     this.quiz = new Quiz(opt);
 
     // Init sleep mode utilitys
-    // opt = _.extend({}, this.opt.sleep);
-    // this.sleep = new Sleep(opt);
+    opt = _.extend({}, this.opt.sleep);
+    this.sleep = new Sleep(opt);
+    opt = _.extend({}, this.opt.check);
+    this.check = new Sleep(opt);
 
     this.loadListeners();
 
@@ -81,7 +84,8 @@ var AppQuiz = (function() {
   AppQuiz.prototype.onButtonDown = function(value) {
     console.log("Button down " + value);
     this.quiz.onAnswer(value);
-    // this.sleep.wakeUp();
+    this.check.wakeUp();
+    this.sleep.wakeUp();
   };
 
   AppQuiz.prototype.render = function(){

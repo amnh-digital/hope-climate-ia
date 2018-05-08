@@ -35,7 +35,12 @@ var Quiz = (function() {
   Quiz.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.loadUI();
-    this.reset();
+    this.restart();
+  };
+
+  Quiz.prototype.cont = function(){
+    this.$progressContainer.addClass('active');
+    this.next(0);
   };
 
   Quiz.prototype.done = function(){
@@ -76,13 +81,15 @@ var Quiz = (function() {
     // load progress
     var $progress = $('<div class="progress">Question <span id="current">1</span> of <span class="total">'+questions.length+'</span></div>');
     this.$el.append($progress);
+    this.$progressContainer = $progress;
     this.$progress = $progress.find("#current").first();
 
     return questions;
   };
 
-  Quiz.prototype.next = function(){
-    this.currentIndex += 1;
+  Quiz.prototype.next = function(inc){
+    inc = inc===undefined ? 1 : inc;
+    this.currentIndex += inc;
 
     // we're done
     if (this.currentIndex >= this.questionCount) {
@@ -95,7 +102,7 @@ var Quiz = (function() {
       this.activeQuestion.$el.removeClass('active');
     }
 
-    this.$progress.text(this.currentIndex + 1);
+    this.$progress.text(this.currentIndex + inc);
 
     this.activeQuestion = this.questions[this.currentIndex];
     this.activeQuestion.$el.addClass('active');
@@ -151,14 +158,18 @@ var Quiz = (function() {
 
     this.answered = true;
 
+    var delay = answer.delay || 2000;
+
     setTimeout(function(){
       if (answer.action) {
-        _this[answer.action]();
+        _this[answer.action](answer);
       }
       _this.answered = false;
       $answer.removeClass('active');
-      $el.removeClass('answered');
-    }, 2000);
+      setTimeout(function(){
+        $el.removeClass('answered');
+      }, 1000);
+    }, delay);
   };
 
   Quiz.prototype.onResize = function(){
@@ -166,6 +177,11 @@ var Quiz = (function() {
   };
 
   Quiz.prototype.prompt = function(key){
+    // hard-coded: don't override start screen
+    if (key !== "start" && this.activeQuestion.id === "p-start") return;
+
+    this.$progressContainer.removeClass('active');
+
     if (this.activeQuestion) {
       this.activeQuestion.$el.removeClass('active');
     }
@@ -183,7 +199,20 @@ var Quiz = (function() {
     // this.shuffle();
     this.currentIndex = -1;
     this.correctCount = 0;
+    this.$progressContainer.addClass('active');
     this.next();
+  };
+
+  Quiz.prototype.restart = function(){
+    this.currentIndex = -1;
+    this.correctCount = 0;
+    this.prompt("start");
+  };
+
+  Quiz.prototype.restartRespond = function(answer) {
+    var _this = this;
+
+    setTimeout(function(){ _this.reset(); }, 2000);
   };
 
   Quiz.prototype.showResults = function(){

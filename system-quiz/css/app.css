@@ -85,13 +85,22 @@
   border: 0.3vh solid #5ebfec;
 }
 .a.circle .label:before {
-  top: 16vh;
+  top: 16.1vh;
 }
 .a:last-child .label:before {
   background: #cedf78;
 }
 .a.circle:last-child .label{
   border-color: #cedf78;
+}
+.a.hover {
+  animation: hover 10s infinite;
+}
+.a.hover:last-child {
+  animation-delay: 5s;
+}
+.quiz-question.answered .a.hover {
+  animation: none;
 }
 .a:last-child .label-wrapper {
   left: auto;
@@ -196,4 +205,9 @@
   top: 18vh;
   left: 5vw;
   color: #faa519;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.progress.active {
+  opacity: 1;
 }

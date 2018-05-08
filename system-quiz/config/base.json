@@ -14,9 +14,20 @@
       "incorrect": [1400, 3000]
     }
   },
+  "check": {
+    "enable": 1,
+    "checkInterval": 5,
+    "sleepAfter": 30,
+    "custom": {
+      "prompt": "check"
+    }
+  },
   "sleep": {
     "enable": 1,
     "checkInterval": 5,
-    "sleepAfter": 10
+    "sleepAfter": 60,
+    "custom": {
+      "prompt": "start"
+    }
   }
 }

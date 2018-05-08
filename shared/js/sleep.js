@@ -18,6 +18,7 @@ var Sleep = (function() {
     this.checkIntervalMs = this.opt.checkInterval * 1000;
     this.sleepAfterMs = this.opt.sleepAfter * 1000;
     this.isSleeping = false;
+    this.customVars = this.opt.custom || {};
 
     this.load();
   };
@@ -43,7 +44,7 @@ var Sleep = (function() {
     if (elapsed > this.sleepAfterMs) {
       this.isSleeping = true;
       $('#app').addClass('sleeping');
-      $(document).trigger("sleep.start", [true]);
+      $(document).trigger("sleep.start", [this.customVars]);
     }
   };
 
@@ -54,7 +55,7 @@ var Sleep = (function() {
     this.lastActivity = now;
     this.isSleeping = false;
     $('#app').removeClass('sleeping');
-    $(document).trigger("sleep.end", [true]);
+    $(document).trigger("sleep.end", [this.customVars]);
   };
 
   return Sleep;
