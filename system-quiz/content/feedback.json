@@ -1,0 +1,17 @@
+{
+  "feedback": [
+    {
+      "correct": 1.0,
+      "message": "A plus!"
+    },{
+      "correct": 0.5,
+      "message": "Good job!"
+    },{
+      "correct": 0.25,
+      "message": "Better luck next time!"
+    },{
+      "correct": 0.0,
+      "message": "Don’t worry! You can find helpful information in this exhibit. Explore the area, then try again."
+    }
+  ]
+}
