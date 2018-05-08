@@ -158,6 +158,27 @@
 .quiz-question.answered .q {
   opacity: 0;
 }
+
+.arrow {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 3vh solid transparent;
+  border-right: 3vh solid transparent;
+  border-top: 3vh solid #5ebfec;
+  position: fixed;
+  bottom: -0.2%;
+  left: 40.8%;
+}
+.arrow:last-child {
+  border-top: 3vh solid #cedf78;
+  left: auto;
+  right: 40.8%;
+}
+.quiz-question.answered .arrow {
+  display: none;
+}
 /*
 .quiz-question.answered .label-wrapper {
   transform: scale(0.6);

@@ -33,19 +33,20 @@
     },
     "start": {
       "id": "p-start",
-      "q": "<p><strong>Hi there. Are you a climate expert?</strong></p><p>Respond by pressing one of the buttons below the screen.</p>",
+      "q": "<p><strong>Hi there. Are you a climate expert?</strong></p><p>Start by pressing one of the buttons below the screen.</p>",
+      "htmlBefore": "<div class='arrows imagery'><div class='arrow'></div><div class='arrow'></div></div>",
       "a": [
         {
           "label": "Yes",
           "action": "reset",
           "feedback": "<p><strong>Excellent!</strong> Here are some questions to test your climate knowledge.</p>",
-          "className": "circle hover",
+          "className": "hover",
           "delay": 4000
         },{
           "label": "No",
           "action": "reset",
           "feedback": "<p><strong>No problem!</strong> Here are some questions to boost your climate knowledge.</p>",
-          "className": "circle hover",
+          "className": "hover",
           "delay": 4000
         }
       ]
