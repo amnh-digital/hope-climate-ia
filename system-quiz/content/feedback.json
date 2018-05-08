@@ -11,7 +11,7 @@
       "message": "Better luck next time!"
     },{
       "correct": 0.0,
-      "message": "Don’t worry! You can find helpful information in this exhibit. Explore the area, then try again."
+      "messageAfter": "Don’t worry! You can find helpful information in this exhibit. Explore the area, then try again."
     }
   ]
 }

@@ -46,6 +46,7 @@ var Quiz = (function() {
   Quiz.prototype.done = function(){
     // alert('Done!');
 
+    this.updateResults();
     this.prompt('restart');
 
     // this.reset();
@@ -215,12 +216,26 @@ var Quiz = (function() {
     setTimeout(function(){ _this.reset(); }, 2000);
   };
 
-  Quiz.prototype.showResults = function(){
-    $('#correct-count').text(this.correctCount);
-  };
-
   Quiz.prototype.shuffle = function(){
     this.questions = _.shuffle(this.questions);
+  };
+
+  Quiz.prototype.updateResults = function(){
+    var feedback = this.opt.feedback;
+    var last = feedback[feedback.length-1];
+    var message = last.message || "";
+    var messageAfter = last.messageAfter || "";
+
+    var correct = this.correctCount / this.questionCount;
+    var res = _.find(feedback, function(f){ return correct >= f.correct; });
+    if (res) {
+      message = res.message || "";
+      messageAfter = res.messageAfter || "";
+    }
+
+    $('#correct-feedback').text(message);
+    $('#correct-feedback-after').text(messageAfter);
+    $('#correct-count').text(this.correctCount);
   };
 
   return Quiz;
