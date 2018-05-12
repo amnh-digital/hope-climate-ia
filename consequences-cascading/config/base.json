@@ -4,7 +4,7 @@
     "angleThreshold": 60,
     "transitionMs": 1000,
     "resetAfterMs": 2000,
-    "nodeRadiusRange": [0.02, 0.08],
+    "nodeRadiusRange": [0.02, 0.2],
     "nodeAlphaRange": [0.3, 1.0],
     "nodeLineWidthRange": [3, 8],
     "nodeDashGapRange": [5, 0],
@@ -19,6 +19,7 @@
     "nodeImageWidth": 0.2,
     "nodeColor": "0x058599",
     "nodeLineColor": "0x058599",
+    "nodeBgColor": "0x0a2126",
     "nodeLabelTextStyle": {
       "fontSize": 0.02,
       "fill": "#058599",
@@ -32,7 +33,7 @@
       "lineHeight": 1.5
     },
     "rootNode": {
-      "radius": 0.15,
+      "radius": 0.135,
       "x": 0.5,
       "y": 0.075,
       "color": "0x058599",

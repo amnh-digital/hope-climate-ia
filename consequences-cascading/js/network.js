@@ -46,11 +46,14 @@ var Network = (function() {
     var rootNode = new PIXI.Graphics();
     var branches = new PIXI.Container();
 
-    addLabelBuffers(rootNode, 1);
+    this.sectionTitleBg = new PIXI.Graphics();
+    rootNode.addChild(this.sectionTitleBg);
+    addLabelBuffers(rootNode, 4);
 
     this.network = _.map(this.network, function(branch, i){
       var container = new PIXI.Container();
       var lines = new PIXI.Graphics();
+      var bg = new PIXI.Graphics();
       var circles = new PIXI.Graphics();
       var contentAreas = new PIXI.Container();
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
@@ -71,17 +74,24 @@ var Network = (function() {
         // node.label = label;
         return node;
       });
-      container.addChild(lines, circles, contentAreas);
+      container.addChild(bg, lines, circles, contentAreas);
       branches.addChild(container);
       branch.container = container;
       branch.contentAreaGraphics = contentAreas;
       branch.lineGraphics = lines;
+      branch.bgGraphics = bg;
       branch.circleGraphics = circles;
       return branch;
     });
 
     this.app.stage.addChild(branches, rootNode);
+
     this.rootNode = rootNode;
+    this.rootLabel = this.rootNode.children[1];
+    this.rootSublabel = this.rootNode.children[2];
+    this.sectionTitleFrom = this.rootNode.children[3];
+    this.sectionTitleTo = this.rootNode.children[4];
+
     this.sleepers = [rootNode, branches];
     this.dreamers = [];
 
@@ -176,6 +186,7 @@ var Network = (function() {
     var nodeContentHeight = this.opt.nodeContentHeight;
     var nodeColor = parseInt(this.opt.nodeColor);
     var nodeLineColor = parseInt(this.opt.nodeLineColor);
+    var nodeBgColor = parseInt(this.opt.nodeBgColor);
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -264,6 +275,7 @@ var Network = (function() {
         node.a = UTIL.lerp(nodeAlphaRange[0], nodeAlphaRange[1], (node.probability - 1) / 4.0);
         node.color = nodeColor;
         node.lineColor = nodeLineColor;
+        node.bgColor = nodeBgColor;
         var start = 1.0 * index / nodeCount;
         var end = 1.0 * (index+1) / nodeCount;
         var pad = 1.0 / nodeCount / 4.0;
@@ -287,7 +299,7 @@ var Network = (function() {
         var node = _.clone(n);
 
         // determine position of content
-        var contentDistance = node.contentDistance ? node.contentDistance : node.nRadius * 1.1 + node.nContentWidth * 0.5;
+        var contentDistance = node.contentDistance ? node.contentDistance : nodeRadiusRange[0] * 2 + node.nContentWidth * 0.5;
         var contentAngle = node.angle;
         var child = false;
         if (node.childCount > 0) child = nodes[node.childIds[0]];
@@ -327,7 +339,7 @@ var Network = (function() {
     var rootNodeX = rootNodeOpt.x * w;
     var rootNodeY = rootNodeOpt.y * h;
     this.rootNodeX = rootNodeX;
-    this.rootNodeY = rootNodeY;
+    this.rootNodeY = rootNodeY * 1.2;
     var rootNodeTextStyle = _.extend({}, rootNodeOpt.textStyle);
     rootNodeTextStyle.fontSize *= h;
     this.rootNodeTextStyle = rootNodeTextStyle;
@@ -350,7 +362,7 @@ var Network = (function() {
     var nodeImageWidth = this.opt.nodeImageWidth;
     nodeRadiusRange[0] *= h;
     nodeRadiusRange[1] *= h;
-    var y0 = rootNodeY;
+    var y0 = rootNodeY + this.rootNodeRadius;
     var y1 = h * 0.85 - nodeRadiusRange[1];
     var x0 = nodeRadiusRange[1];
     var x1 = w - nodeRadiusRange[1];
@@ -445,7 +457,9 @@ var Network = (function() {
     }
     var angleDeltaProgress = this.angleDeltaProgress;
     var circleGraphics = this.branch.circleGraphics;
+    var bgGraphics = this.branch.bgGraphics;
     circleGraphics.clear();
+    bgGraphics.clear();
     var nodeRadius = this.nodeRadius;
 
     _.each(branch.nodes, function(node, id){
@@ -466,6 +480,7 @@ var Network = (function() {
         var y1 = node.y;
         var radius = node.radius;
         var color = node.color;
+        var bgColor = node.bgColor;
 
         if (p < 1.0) {
           var mu = UTIL.easeInElastic(p);
@@ -478,9 +493,9 @@ var Network = (function() {
         _this.branch.nodes[id].toX = x1;
         _this.branch.nodes[id].toY = y1;
 
-        circleGraphics.beginFill(color, alpha);
-        circleGraphics.drawCircle(x1, y1, radius);
-        circleGraphics.endFill();
+        bgGraphics.beginFill(bgColor);
+        bgGraphics.drawCircle(x1, y1, radius);
+        bgGraphics.endFill();
 
         circleGraphics.beginFill(color);
         circleGraphics.drawCircle(x1, y1, nodeRadius);
@@ -590,7 +605,8 @@ var Network = (function() {
 
   Network.prototype.renderRootNode = function(){
     var rootNode = this.rootNode;
-    var label = rootNode.children[0];
+    var label = this.rootLabel;
+    var sublabel = this.rootSublabel;
 
     rootNode.clear();
 
@@ -610,7 +626,64 @@ var Network = (function() {
     label.style = rootNodeTextStyle;
     label.text = "Global warming";
     label.x = rootNodeX;
-    label.y = rootNodeY * 1.2;
+    label.y = rootNodeY ;
+
+    sublabel.anchor.set(0, 0.5);
+    sublabel.style = rootNodeTextStyle;
+    sublabel.text = "could lead to";
+    sublabel.x = rootNodeX + rootNodeRadius * 1.1;
+    sublabel.y = rootNodeY;
+
+    this.renderSectionTitle();
+  };
+
+  Network.prototype.renderSectionTitle = function(progress){
+    progress = progress===undefined ? 1 : progress;
+
+    var rootNodeY = this.rootNodeY;
+    var rootNodeTextStyle = this.rootNodeTextStyle;
+    var sectionTitleFrom = this.sectionTitleFrom;
+    var sectionTitleTo = this.sectionTitleTo;
+    var sectionTitleBg = this.sectionTitleBg;
+    var sublabel = this.rootSublabel;
+
+    sectionTitleFrom.text = this.transitionFromBranch ? this.transitionFromBranch.title : "";
+    sectionTitleTo.text = this.branch.title;
+    sectionTitleFrom.alpha = 1.0 - progress;
+    sectionTitleTo.alpha = progress;
+
+    sectionTitleFrom.anchor.set(0, 0.5);
+    sectionTitleFrom.style = _.extend({}, rootNodeTextStyle, {fill: "#000000", fontSize: rootNodeTextStyle.fontSize * 0.8});
+    sectionTitleFrom.x = sublabel.x + sublabel.width * 1.15;
+    sectionTitleFrom.y = rootNodeY;
+
+    sectionTitleTo.text = this.branch.title;
+    sectionTitleTo.anchor.set(0, 0.5);
+    sectionTitleTo.style = sectionTitleFrom.style;
+    sectionTitleTo.x = sectionTitleFrom.x;
+    sectionTitleTo.y = sectionTitleFrom.y;
+
+    var padX = 0.08;
+    var padY = 0.1;
+    var width = UTIL.lerp(sectionTitleFrom.width, sectionTitleTo.width, progress);
+    var height = sectionTitleTo.height;
+    var x = sectionTitleTo.x - width * padX;
+    var y = sectionTitleTo.y - sectionTitleTo.height/2 - height * padY;
+    width *= (1.0 + (padX * 2));
+    height *= (1.0 + (padY * 2));
+
+    // make background color pop
+    var threshold = 0.5;
+    var color = 0x058599;
+    if (progress < threshold) {
+      var colorProgress = UTIL.easeInOutSin(progress/threshold);
+      color = UTIL.lerpColor(0xffffff, 0x058599, colorProgress);
+    }
+
+    sectionTitleBg.clear();
+    sectionTitleBg.beginFill(color);
+    sectionTitleBg.drawRect(x, y, width, height);
+    sectionTitleBg.endFill();
   };
 
   Network.prototype.renderTransition = function(t){
@@ -640,6 +713,8 @@ var Network = (function() {
       if (p < container.alpha) container.alpha = p;
     }
 
+    // transition title
+    this.renderSectionTitle(progressEased);
   };
 
   return Network;
