@@ -174,6 +174,8 @@ var Network = (function() {
     var nodeRadiusRange = this.opt.nodeRadiusRange;
     var nodeContentWidth = this.opt.nodeContentWidth;
     var nodeContentHeight = this.opt.nodeContentHeight;
+    var nodeColor = parseInt(this.opt.nodeColor);
+    var nodeLineColor = parseInt(this.opt.nodeLineColor);
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -260,8 +262,8 @@ var Network = (function() {
 
         // alpha is based on probability
         node.a = UTIL.lerp(nodeAlphaRange[0], nodeAlphaRange[1], (node.probability - 1) / 4.0);
-        node.color = 0x005052;
-        node.lineColor = 0x005052;
+        node.color = nodeColor;
+        node.lineColor = nodeLineColor;
         var start = 1.0 * index / nodeCount;
         var end = 1.0 * (index+1) / nodeCount;
         var pad = 1.0 / nodeCount / 4.0;
@@ -597,16 +599,18 @@ var Network = (function() {
     var rootNodeY = this.rootNodeY;
     var rootNodeTextStyle = this.rootNodeTextStyle;
     var color = parseInt(this.opt.rootNode.color);
+    var lineWidth = this.opt.rootNode.lineWidth * rootNodeRadius;
 
-    rootNode.beginFill(color);
+    rootNode.lineStyle(lineWidth, color);
+    rootNode.beginFill(0x000000);
     rootNode.drawCircle(rootNodeX, rootNodeY, rootNodeRadius);
     rootNode.endFill();
 
     label.anchor.set(0.5, 0.5);
     label.style = rootNodeTextStyle;
-    label.text = "Warming";
+    label.text = "Global warming";
     label.x = rootNodeX;
-    label.y = rootNodeY;
+    label.y = rootNodeY * 1.2;
   };
 
   Network.prototype.renderTransition = function(t){

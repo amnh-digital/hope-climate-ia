@@ -17,26 +17,29 @@
     "nodeContentWidth": 0.2,
     "nodeContentHeight": 0.12,
     "nodeImageWidth": 0.2,
+    "nodeColor": "0x058599",
+    "nodeLineColor": "0x058599",
     "nodeLabelTextStyle": {
       "fontSize": 0.02,
-      "fill": "#999999",
+      "fill": "#058599",
       "fontFamily": "Balance"
     },
     "nodeBodyTextStyle": {
       "fontSize": 0.015,
-      "fill": "#999999",
+      "fill": "#058599",
       "fontFamily": "Balance",
       "wordWrap": true,
       "lineHeight": 1.5
     },
     "rootNode": {
-      "radius": 0.1,
+      "radius": 0.15,
       "x": 0.5,
-      "y": 0.15,
-      "color": "0xd64724",
+      "y": 0.075,
+      "color": "0x058599",
+      "lineWidth": 0.05,
       "textStyle": {
         "fontSize": 0.033,
-        "fill": "#ffffff",
+        "fill": "#058599",
         "fontFamily": "Balance"
       }
     }
