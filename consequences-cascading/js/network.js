@@ -58,10 +58,20 @@ var Network = (function() {
       var contentAreas = new PIXI.Container();
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
         var contentArea = new PIXI.Graphics();
-        // var label = new PIXI.Text(node.label);
-        var description = new PIXI.Text(node.description);
-        contentArea.addChild(description);
-        node.description = description;
+        if (node.label && node.label.length) {
+          var label = new PIXI.Text(node.label);
+          contentArea.addChild(label);
+          node.label = label;
+        } else {
+          node.label = false;
+        }
+        if (node.description && node.description.length) {
+          var description = new PIXI.Text(node.description);
+          contentArea.addChild(description);
+          node.description = description;
+        } else {
+          node.description = false;
+        }
         if (node.texture) {
           var sprite = new PIXI.Sprite(node.texture);
           node.imageRatio = sprite.width / sprite.height;
@@ -71,7 +81,6 @@ var Network = (function() {
         contentArea.alpha = 0;
         contentAreas.addChild(contentArea);
         node.contentArea = contentArea;
-        // node.label = label;
         return node;
       });
       container.addChild(bg, lines, circles, contentAreas);
@@ -354,6 +363,9 @@ var Network = (function() {
     nodeBodyTextStyle.fontSize *= h;
     nodeBodyTextStyle.lineHeight = nodeBodyTextStyle.fontSize * nodeBodyTextStyle.lineHeight;
 
+    var nodeLabelRadius = this.opt.nodeLabelRadius * h;
+    this.nodeLabelRadius = nodeLabelRadius;
+
     // set position for each branch/node in the network
     var nodeRadiusRange = this.opt.nodeRadiusRange.slice(0);
     var nodeLineWidthRange = this.opt.nodeLineWidthRange.slice(0);
@@ -393,12 +405,15 @@ var Network = (function() {
           node.sprite.height = node.sprite.width / node.imageRatio;
           node.sprite.position.set(x, y);
         }
-        // update node text
-        // node.label.position.set(node.sprite.width + contentMargin + x, y);
-        // node.label.style = _.extend({}, nodeLabelTextStyle);
-        // node.description.position.set(node.label.position.x, node.label.position.y + node.label.height + contentMargin*0.3);
-        node.description.position.set(contentMargin + x, y);
-        node.description.style = _.extend({}, nodeBodyTextStyle, {wordWrapWidth: contentWidth-contentMargin});
+        if (node.label) {
+          node.label.anchor.set(0.5, 0.5);
+          node.label.position.set(node.x, node.y);
+          node.label.style = _.extend({}, nodeLabelTextStyle, {wordWrap: true, wordWrapWidth: nodeLabelRadius*1.9, align: 'center'});
+        }
+        if (node.description) {
+          node.description.position.set(contentMargin + x, y);
+          node.description.style = _.extend({}, nodeBodyTextStyle, {wordWrapWidth: contentWidth-contentMargin});
+        }
         // radius is based on severity
         node.radius = node.nRadius * h;
         // line width based on probability
@@ -414,6 +429,7 @@ var Network = (function() {
     });
 
     this.nodeRadius = nodeRadiusRange[0];
+
   };
 
   Network.prototype.render = function(){
@@ -461,6 +477,7 @@ var Network = (function() {
     circleGraphics.clear();
     bgGraphics.clear();
     var nodeRadius = this.nodeRadius;
+    var nodeLabelRadius = this.nodeLabelRadius;
 
     _.each(branch.nodes, function(node, id){
       var p = UTIL.norm(progress, node.start, node.end);
@@ -497,9 +514,18 @@ var Network = (function() {
         bgGraphics.drawCircle(x1, y1, radius);
         bgGraphics.endFill();
 
-        circleGraphics.beginFill(color);
-        circleGraphics.drawCircle(x1, y1, nodeRadius);
-        circleGraphics.endFill();
+        if (node.label) {
+          circleGraphics.beginFill(0x000000);
+          circleGraphics.lineStyle(4, color);
+          circleGraphics.drawCircle(x1, y1, nodeLabelRadius);
+          circleGraphics.endFill();
+
+        } else {
+          circleGraphics.beginFill(color);
+          circleGraphics.lineStyle(0);
+          circleGraphics.drawCircle(x1, y1, nodeRadius);
+          circleGraphics.endFill();
+        }
 
         // draw content
         // if (p >= 1.0) {
