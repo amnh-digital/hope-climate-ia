@@ -2,18 +2,20 @@
   "network": [
     {
       "id": "a",
+      "title": "food shortages",
       "factbox": {
-        "description": "During the 2003 heat wave in Europe, about 70,000 people died, mostly elderly. According to scientists who study ancient tree rings, it was the region’s hottest heat wave in 2,500 years."
+        "description": "In 2010, the global price of wheat doubled after poor harvests in Russia, China and the Ukraine. The high price of bread that year became an aggravating factor in the social unrest known as the “Arab Spring.”",
+        "image": "img/factbox_food.jpg"
       },
       "nodes": [
         {
           "parent": "root",
           "id": "a1",
-          "label": "",
+          "label": "Heat waves",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "Extreme heat waves could become longer and more severe"
+          "description": ""
         },{
           "parent": "a1",
           "id": "a2",
@@ -21,15 +23,16 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "In regions lacking air conditioning, Thousands of people, particularly the elderly, could die"
+          "description": "Reduced rainfall causes soil to dry out, <bold>reducing crop yields</bold>",
+          "image": "img/dry_soil.jpg"
         },{
-          "parent": "root",
+          "parent": "a2",
           "id": "a3",
           "label": "",
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "Reduced rainfall causes soil to dry out, reducing crop yields"
+          "description": "Extreme heat increases evaporation, <bold>further drying the soil</bold>"
         },{
           "parent": "a3",
           "id": "a4",
@@ -37,31 +40,26 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "Extreme heat increases evaporation, further drying the soil"
-        },{
-          "parent": "a3",
-          "id": "a5",
-          "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
-          "description": "Poor harvests could cause food shortages and temporary price increases"
+          "description": "Poor harvests could cause <bold>food shortages</bold> and temporary <bold>price increases</bold>",
+          "image": "img/food_shortage.jpg"
         }
       ]
     },{
       "id": "b",
+      "title": "political conflicts",
       "factbox": {
-        "description": "A series of droughts between 2006 and 2011 devastated rural areas in Syria. Unemployed refugees fled to the cities, contributing to political instability, civil war and disputes over refugees in Europe."
+        "description": "A series of droughts between 2006 and 2011 devastated rural areas in Syria. Unemployed refugees fled to the cities, contributing to instability,  civil war and disputes over refugees.",
+        "image": "img/factbox_conflicts.jpg"
       },
       "nodes": [
         {
           "parent": "root",
           "id": "b1",
-          "label": "",
+          "label": "Droughts",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "Rising temperatures could cause more numerous, widespread and persistent droughts"
+          "description": ""
         },{
           "parent": "b1",
           "id": "b2",
@@ -69,7 +67,8 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "Reduced crop yields could cause localized famines"
+          "description": "Reduced crop yields cause localized famines",
+          "image": "img/crop.jpg"
         },{
           "parent": "b2",
           "id": "b3",
@@ -77,7 +76,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "People could flee droughtstricken areas to become “climate refugees”"
+          "description": "People flee drought-stricken areas to become “climate refugees”"
         },{
           "parent": "b3",
           "id": "b4",
@@ -85,7 +84,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "Neighboring regions could be destabilized"
+          "description": "Neighboring regions could be destabilized "
         },{
           "parent": "b4",
           "id": "b5",
@@ -93,23 +92,26 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "Conflicts over resources could fuel political instability and violence"
+          "description": "Conflicts over resources could fuel political instability, violence and war",
+          "image": "img/conflicts.jpg"
         }
       ]
     },{
       "id": "c",
+      "title": "disease",
       "factbox": {
-        "description": "Parts of Argentina have already seen a surge of malaria as the climate warms."
+        "description": "Parts of Argentina have already seen a surge of malaria as the climate warms.",
+        "image": "img/factbox_disease.jpg"
       },
       "nodes": [
         {
           "parent": "root",
           "id": "c1",
-          "label": "",
+          "label": "Regional climate changes",
           "severity": 1,
           "probability": 5,
           "timeframe": 1,
-          "description": "Climates become warmer and moister"
+          "description": ""
         },{
           "parent": "c1",
           "id": "c2",
@@ -117,7 +119,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "Yellow fever, Chagas’s disease, schistosomiasis and other warm-weather diseases could all become more common"
+          "description": "Mosquitoes could spread malaria and dengue fever to new areas"
         },{
           "parent": "c1",
           "id": "c3",
@@ -125,7 +127,8 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "Lyme disease could spread as ticks’ ranges expand"
+          "description": "Waterborne diseases such as cholera  could spread as flooding and rain runoff contaminate water supplies",
+          "image": "img/cholera.png"
         },{
           "parent": "c1",
           "id": "c4",
@@ -133,7 +136,8 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "Toxic algal blooms could contaminate seafood"
+          "description": "Lyme disease could spread as ticks' ranges expand",
+          "image": "img/lyme.jpg"
         },{
           "parent": "c1",
           "id": "c5",
@@ -141,7 +145,7 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "Mosquitoes could spread malaria and dengue fever to more places"
+          "description": "Toxic algal blooms could contaminate seafood"
         },{
           "parent": "c1",
           "id": "c6",
@@ -149,7 +153,112 @@
           "severity": 5,
           "probability": 1,
           "timeframe": 5,
-          "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water supplies"
+          "description": "Yellow fever, Chagas's disease, schistosomiasis and other warm-weather diseases could all become more common",
+          "image": "img/disease.png"
+        }
+      ]
+    },{
+      "id": "d",
+      "title": "species relocating",
+      "factbox": {
+        "description": "Many birds, including swallows, flycatchers, lapwings and wagtails, have already shifted the timing of their migrations in response to climate change.",
+        "image": "img/factbox_species.jpg"
+      },
+      "nodes": [
+        {
+          "parent": "root",
+          "id": "d1",
+          "label": "spring starting earlier",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": ""
+        },{
+          "parent": "d1",
+          "id": "d2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "Leaves reappear on plants sooner, and leaf-eating insects multiply earlier",
+          "image": "img/leaves.jpg"
+        },{
+          "parent": "d2",
+          "id": "d3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "Migrating birds must arrive earlier or won't find enough insects to eat"
+        },{
+          "parent": "d3",
+          "id": "d4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "Plant, insect and bird ranges could shrink, or move to higher altitudes and higher latitudes"
+        },{
+          "parent": "d4",
+          "id": "d5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "Invasive pests such as bark beetles could devastate forests as their ranges expand",
+          "image": "img/pests.jpg"
+        }
+      ]
+    },{
+      "id": "e",
+      "title": "displaced people",
+      "factbox": {
+        "description": "The Solomon Islands, an island nation in the Pacific Ocean, has already lost six islands to rising waters.",
+        "image": "img/factbox_displaced.jpg"
+      },
+      "nodes": [
+        {
+          "parent": "root",
+          "id": "e1",
+          "label": "sea level rise",
+          "severity": 1,
+          "probability": 5,
+          "timeframe": 1,
+          "description": ""
+        },{
+          "parent": "e1",
+          "id": "e2",
+          "label": "",
+          "severity": 3,
+          "probability": 4,
+          "timeframe": 2,
+          "description": "Major cities are threatened worldwide"
+        },{
+          "parent": "e2",
+          "id": "e3",
+          "label": "",
+          "severity": 4,
+          "probability": 3,
+          "timeframe": 3,
+          "description": "Many coastal regions cannot afford extensive, expensive barriers required to hold back rising seas",
+          "image": "img/coastal.jpg"
+        },{
+          "parent": "e3",
+          "id": "e4",
+          "label": "",
+          "severity": 5,
+          "probability": 2,
+          "timeframe": 4,
+          "description": "Millions of people in poorer areas would be displaced",
+          "image": "img/displaced.jpg"
+        },{
+          "parent": "e4",
+          "id": "e5",
+          "label": "",
+          "severity": 5,
+          "probability": 1,
+          "timeframe": 5,
+          "description": "Many low-lying islands could disappear entirely"
         }
       ]
     }

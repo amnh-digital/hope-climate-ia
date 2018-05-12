@@ -57,15 +57,18 @@ var Network = (function() {
         var contentArea = new PIXI.Graphics();
         // var label = new PIXI.Text(node.label);
         var description = new PIXI.Text(node.description);
-        var sprite = new PIXI.Sprite(node.texture);
-        node.imageRatio = sprite.width / sprite.height;
-        contentArea.addChild(description, sprite);
+        contentArea.addChild(description);
+        node.description = description;
+        if (node.texture) {
+          var sprite = new PIXI.Sprite(node.texture);
+          node.imageRatio = sprite.width / sprite.height;
+          contentArea.addChild(sprite);
+          node.sprite = sprite;
+        }
         contentArea.alpha = 0;
         contentAreas.addChild(contentArea);
         node.contentArea = contentArea;
         // node.label = label;
-        node.description = description;
-        node.sprite = sprite;
         return node;
       });
       container.addChild(lines, circles, contentAreas);
@@ -371,15 +374,17 @@ var Network = (function() {
         // node.contentArea.drawRect(x, y, contentWidth, contentHeight);
         // node.contentArea.endFill();
         var contentMargin = contentWidth * 0.1;
-        node.sprite.width = nodeImageWidth * contentWidth;
-        node.sprite.height = node.sprite.width / node.imageRatio;
-        node.sprite.position.set(x, y);
+        if (node.sprite) {
+          node.sprite.width = nodeImageWidth * contentWidth;
+          node.sprite.height = node.sprite.width / node.imageRatio;
+          node.sprite.position.set(x, y);
+        }
         // update node text
         // node.label.position.set(node.sprite.width + contentMargin + x, y);
         // node.label.style = _.extend({}, nodeLabelTextStyle);
         // node.description.position.set(node.label.position.x, node.label.position.y + node.label.height + contentMargin*0.3);
-        node.description.position.set(node.sprite.width + contentMargin + x, y);
-        node.description.style = _.extend({}, nodeBodyTextStyle, {wordWrapWidth: contentWidth-node.sprite.width-contentMargin});
+        node.description.position.set(contentMargin + x, y);
+        node.description.style = _.extend({}, nodeBodyTextStyle, {wordWrapWidth: contentWidth-contentMargin});
         // radius is based on severity
         node.radius = node.nRadius * h;
         // line width based on probability

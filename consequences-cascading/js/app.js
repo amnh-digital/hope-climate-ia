@@ -52,9 +52,10 @@ var AppCascading = (function() {
     loader.load(function(loader, resources){
       _.each(network, function(branch, i){
         _.each(branch.nodes, function(node, j){
-          var imageId = "placeholder";
-          if (node.image) imageId = imageIndex[node.image];
-          _this.content.network[i].nodes[j].texture = resources[imageId].texture;
+          if (node.image) {
+            var imageId = imageIndex[node.image];
+            _this.content.network[i].nodes[j].texture = resources[imageId].texture;
+          }
         });
       });
       deferred.resolve();
