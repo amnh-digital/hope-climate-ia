@@ -23,7 +23,7 @@
           "severity": 3,
           "probability": 4,
           "timeframe": 2,
-          "description": "Reduced rainfall causes soil to dry out, <bold>reducing crop yields</bold>",
+          "description": "Reduced rainfall causes soil to dry out, reducing crop yields",
           "image": "img/dry_soil.jpg"
         },{
           "parent": "a2",
@@ -32,7 +32,7 @@
           "severity": 4,
           "probability": 3,
           "timeframe": 3,
-          "description": "Extreme heat increases evaporation, <bold>further drying the soil</bold>"
+          "description": "Extreme heat increases evaporation, further drying the soil"
         },{
           "parent": "a3",
           "id": "a4",
@@ -40,7 +40,7 @@
           "severity": 5,
           "probability": 2,
           "timeframe": 4,
-          "description": "Poor harvests could cause <bold>food shortages</bold> and temporary <bold>price increases</bold>",
+          "description": "Poor harvests could cause food shortages and temporary price increases",
           "image": "img/food_shortage.jpg"
         }
       ]
