@@ -54,7 +54,10 @@ var AppCascading = (function() {
         _.each(branch.nodes, function(node, j){
           if (node.image) {
             var imageId = imageIndex[node.image];
-            _this.content.network[i].nodes[j].texture = resources[imageId].texture;
+            var texture = resources[imageId].texture;
+            _this.content.network[i].nodes[j].texture = texture;
+            _this.content.network[i].nodes[j].originalWidth = texture.width;
+            _this.content.network[i].nodes[j].originalHeight = texture.height;
           }
         });
       });

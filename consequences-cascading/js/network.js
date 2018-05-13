@@ -77,6 +77,9 @@ var Network = (function() {
           node.imageRatio = sprite.width / sprite.height;
           contentArea.addChild(sprite);
           node.sprite = sprite;
+          var spriteMask = new PIXI.Graphics();
+          sprite.addChild(spriteMask);
+          node.sprite.mask = spriteMask;
         }
         contentArea.alpha = 0;
         contentAreas.addChild(contentArea);
@@ -196,6 +199,7 @@ var Network = (function() {
     var nodeColor = parseInt(this.opt.nodeColor);
     var nodeLineColor = parseInt(this.opt.nodeLineColor);
     var nodeBgColor = parseInt(this.opt.nodeBgColor);
+    var nodeLabelRadius = this.opt.nodeLabelRadius;
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -277,6 +281,11 @@ var Network = (function() {
         node.nContentWidth = node.nContentWidth ? node.nContentWidth : nodeContentWidth;
         node.nContentHeight = node.nContentHeight ? node.nContentHeight : nodeContentHeight;
 
+        if (node.label && node.label.length) {
+          node.nContentWidth = nodeLabelRadius * 2;
+          node.nContentHeight = node.nContentWidth;
+        }
+
         // determine sound based on severity
         node.soundMu = (node.severity - 1) / 4.0;
 
@@ -324,6 +333,11 @@ var Network = (function() {
         var contentPoint = UTIL.translatePoint([node.nx, node.ny], contentAngle, contentDistance);
         node.contentNx = contentPoint[0];
         node.contentNy = contentPoint[1];
+
+        if (node.label && node.label.length) {
+          node.contentNx = node.nx;
+          node.contentNy = node.ny;
+        }
 
         // update node
         nodes[id] = node;
@@ -403,6 +417,13 @@ var Network = (function() {
         if (node.sprite) {
           node.sprite.width = nodeImageWidth * contentWidth;
           node.sprite.height = node.sprite.width / node.imageRatio;
+          var multiply = node.originalWidth / node.sprite.width;
+          var diameter = Math.min(node.sprite.width, node.sprite.height);
+          var radius = diameter/2 * multiply;
+          node.sprite.mask.clear();
+          node.sprite.mask.beginFill();
+          node.sprite.mask.drawCircle(radius, radius, radius);
+          node.sprite.mask.endFill();
           node.sprite.position.set(x, y);
         }
         if (node.label) {
