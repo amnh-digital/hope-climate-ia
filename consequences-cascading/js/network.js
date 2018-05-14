@@ -56,6 +56,8 @@ var Network = (function() {
       var bg = new PIXI.Graphics();
       var circles = new PIXI.Graphics();
       var contentAreas = new PIXI.Container();
+      var alphaFilter = new PIXI.filters.AlphaFilter();
+      alphaFilter.resolution = 2;
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
         var contentArea = new PIXI.Graphics();
         if (node.label && node.label.length) {
@@ -86,9 +88,11 @@ var Network = (function() {
         node.contentArea = contentArea;
         return node;
       });
+      container.filters = [alphaFilter];
       container.addChild(bg, lines, circles, contentAreas);
       branches.addChild(container);
       branch.container = container;
+      branch.alphaFilter = alphaFilter;
       branch.contentAreaGraphics = contentAreas;
       branch.lineGraphics = lines;
       branch.bgGraphics = bg;
@@ -179,7 +183,7 @@ var Network = (function() {
       // rotate root node
       this.rootNode.rotation = radians;
       this.branch.container.rotation = radians;
-      this.branch.container.alpha = 1.0 - angleDeltaProgress;
+      this.branch.alphaFilter.alpha = 1.0 - angleDeltaProgress;
       _.each(this.branch.nodes, function(node, id){
         node.contentArea.rotation = -radians;
       });
@@ -640,10 +644,9 @@ var Network = (function() {
     this.angleDelta = angle;
     this.angleDeltaProgress = Math.abs(this.angleDelta) / this.angleThreshold;
 
-    var container = this.branch.container;
     var alpha = UTIL.lerp(1.0-this.resetAngleProgressStart, 1.0, progressEased);
-    container.alpha = alpha;
-    container.rotation = radians;
+    this.branch.alphaFilter.alpha = alpha;
+    this.branch.container.rotation = radians;
     _.each(this.branch.nodes, function(node, id){
       node.contentArea.rotation = -radians;
     });
@@ -747,17 +750,15 @@ var Network = (function() {
     var radians = angle * (Math.PI / 180);
     this.rootNode.rotation = radians;
 
-    var container = this.branch.container;
-    container.alpha = progressEased;
-    container.rotation = -radians;
+    this.branch.alphaFilter.alpha = progressEased;
+    this.branch.container.rotation = -radians;
     _.each(this.branch.nodes, function(node, id){
       node.contentArea.rotation = radians;
     });
 
     if (this.transitionFromBranch) {
-      container = this.transitionFromBranch.container;
       var p = 1.0 - progress;
-      if (p < container.alpha) container.alpha = p;
+      if (p < this.transitionFromBranch.alphaFilter.alpha) this.transitionFromBranch.alphaFilter.alpha = p;
     }
 
     // transition title
