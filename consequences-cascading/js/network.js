@@ -708,7 +708,7 @@ var Network = (function() {
     var rootNodeTextStyle = this.rootNodeTextStyle;
     var color = parseInt(this.opt.rootNode.color);
     var lineWidth = this.opt.rootNode.lineWidth * rootNodeRadius;
-    var rootNodeH = rootNodeRadius * 0.8;
+    var rootNodeH = rootNodeRadius * 0.55;
 
     rootNode.lineStyle(lineWidth, color);
     rootNode.beginFill(0x000000);
