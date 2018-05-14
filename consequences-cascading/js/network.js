@@ -57,6 +57,7 @@ var Network = (function() {
       var circles = new PIXI.Graphics();
       var contentAreas = new PIXI.Container();
       var alphaFilter = new PIXI.filters.AlphaFilter();
+      var firstId = _.keys(branch.nodes)[0];
       alphaFilter.resolution = 2;
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
         var contentArea = new PIXI.Graphics();
@@ -86,6 +87,17 @@ var Network = (function() {
         contentArea.alpha = 0;
         contentAreas.addChild(contentArea);
         node.contentArea = contentArea;
+        // add a label to the first edge
+        if (id===firstId) {
+          var edgeArea = new PIXI.Graphics();
+          edgeArea.alpha = 0;
+          var edgeLabel = new PIXI.Text("leads to");
+          edgeLabel.anchor.set(0, 0.5);
+          edgeArea.addChild(edgeLabel);
+          contentAreas.addChild(edgeArea);
+          node.edgeArea = edgeArea;
+          node.edgeAreaLabel = edgeLabel;
+        }
         return node;
       });
       container.filters = [alphaFilter];
@@ -158,6 +170,7 @@ var Network = (function() {
         node.drawn = false;
         node.done = false;
         node.contentArea.alpha = 0;
+        if (node.edgeArea) node.edgeArea.alpha = 0;
         return node;
       });
       this.branch = branch;
@@ -186,6 +199,7 @@ var Network = (function() {
       this.branch.alphaFilter.alpha = 1.0 - angleDeltaProgress;
       _.each(this.branch.nodes, function(node, id){
         node.contentArea.rotation = -radians;
+        if (node.edgeArea) node.edgeArea.rotation = -radians;
       });
       this.$document.trigger("factbox.transition", [1.0 - angleDeltaProgress]);
     }
@@ -412,6 +426,10 @@ var Network = (function() {
         node.y = UTIL.lerp(y0, y1, node.ny);
         node.fromX = UTIL.lerp(x0, x1, node.pnx);
         node.fromY = UTIL.lerp(y0, y1, node.pny);
+        if (node.pny <= 0) {
+          node.fromX = rootNodeX;
+          node.fromY = rootNodeY;
+        }
         // position content area
         var contentX = UTIL.lerp(x0, x1, node.contentNx);
         var contentY = UTIL.lerp(y0, y1, node.contentNy);
@@ -419,6 +437,14 @@ var Network = (function() {
         var contentHeight = node.nContentHeight * h;
         node.contentArea.pivot.set(contentX, contentY);
         node.contentArea.position.set(contentX, contentY);
+        if (node.edgeArea) {
+          var edgeX = (node.fromX + node.x) / 2 + w * 0.01;
+          var edgeY = (node.fromY + node.y) / 2;
+          node.edgeArea.pivot.set(edgeX, edgeY);
+          node.edgeArea.position.set(edgeX, edgeY);
+          node.edgeAreaLabel.style = _.extend({}, nodeBodyTextStyle);
+          node.edgeAreaLabel.position.set(edgeX, edgeY);
+        }
         // update sprite
         var x = contentX - contentWidth * 0.5;
         var y = contentY - contentHeight * 0.5;
@@ -575,7 +601,9 @@ var Network = (function() {
 
       var contentP = UTIL.norm(progress, node.contentStart, node.contentEnd);
       contentP = UTIL.clamp(contentP, 0, 1);
+      if (node.label) contentP = 1;
       node.contentArea.alpha = contentP;
+      if (node.edgeArea) node.edgeArea.alpha = contentP;
     });
 
     this.renderDashes();
@@ -662,6 +690,7 @@ var Network = (function() {
     this.branch.container.rotation = radians;
     _.each(this.branch.nodes, function(node, id){
       node.contentArea.rotation = -radians;
+      if (node.edgeArea) node.edgeArea.rotation = -radians;
     });
     this.$document.trigger("factbox.transition", [alpha]);
   };
@@ -679,10 +708,12 @@ var Network = (function() {
     var rootNodeTextStyle = this.rootNodeTextStyle;
     var color = parseInt(this.opt.rootNode.color);
     var lineWidth = this.opt.rootNode.lineWidth * rootNodeRadius;
+    var rootNodeH = rootNodeRadius * 0.8;
 
     rootNode.lineStyle(lineWidth, color);
     rootNode.beginFill(0x000000);
-    rootNode.drawCircle(rootNodeX, rootNodeY, rootNodeRadius);
+    // rootNode.drawCircle(rootNodeX, rootNodeY, rootNodeRadius);
+    rootNode.drawRoundedRect(rootNodeX-rootNodeRadius, rootNodeY-rootNodeH/2, rootNodeRadius*2, rootNodeH, rootNodeRadius*0.1)
     rootNode.endFill();
 
     label.anchor.set(0.5, 0.5);
@@ -767,6 +798,7 @@ var Network = (function() {
     this.branch.container.rotation = -radians;
     _.each(this.branch.nodes, function(node, id){
       node.contentArea.rotation = radians;
+      if (node.edgeArea) node.edgeArea.rotation = radians;
     });
 
     if (this.transitionFromBranch) {
