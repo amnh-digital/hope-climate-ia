@@ -204,6 +204,7 @@ var Network = (function() {
     var nodeLineColor = parseInt(this.opt.nodeLineColor);
     var nodeBgColor = parseInt(this.opt.nodeBgColor);
     var nodeLabelRadius = this.opt.nodeLabelRadius;
+    var nodeImageWidth = this.opt.nodeImageWidth;
 
     return _.map(network, function(branch, i){
       branch.index = i;
@@ -343,6 +344,14 @@ var Network = (function() {
           node.contentNy = node.ny;
         }
 
+        node.nImageWidth = node.nImageWidth ? node.nImageWidth : nodeImageWidth;
+        var imgAngle = node.imageAngle ? node.imageAngle : 270; // north by default
+        var imgDistance = node.imageDistance ? node.imageDistance : node.nImageWidth * 0.375;
+        var imagePoint = UTIL.translatePoint([node.contentNx, node.contentNy], imgAngle, imgDistance);
+        node.imageNx = imagePoint[0];
+        node.imageNy = imagePoint[1];
+
+
         // update node
         nodes[id] = node;
       });
@@ -389,11 +398,10 @@ var Network = (function() {
     var nodeLineWidthRange = this.opt.nodeLineWidthRange.slice(0);
     var nodeDashGapRange = this.opt.nodeDashGapRange.slice(0);
     var nodeDashWidthRange = this.opt.nodeDashWidthRange.slice(0);
-    var nodeImageWidth = this.opt.nodeImageWidth;
     nodeRadiusRange[0] *= h;
     nodeRadiusRange[1] *= h;
     var y0 = rootNodeY + this.rootNodeRadius;
-    var y1 = h * 0.85 - nodeRadiusRange[1];
+    var y1 = h * 0.95 - nodeRadiusRange[1];
     var x0 = nodeRadiusRange[1];
     var x1 = w - nodeRadiusRange[1];
     this.network = _.map(this.network, function(branch, i){
@@ -413,22 +421,26 @@ var Network = (function() {
         // update sprite
         var x = contentX - contentWidth * 0.5;
         var y = contentY - contentHeight * 0.5;
+        // DEBUG: uncomment to debug content placement
         // node.contentArea.clear();
         // node.contentArea.beginFill(0xff0000);
         // node.contentArea.drawRect(x, y, contentWidth, contentHeight);
         // node.contentArea.endFill();
         var contentMargin = contentWidth * 0.1;
         if (node.sprite) {
-          node.sprite.width = nodeImageWidth * contentWidth;
+          node.imageX = UTIL.lerp(x0, x1, node.imageNx);
+          node.imageY = UTIL.lerp(y0, y1, node.imageNy);
+          node.sprite.width = node.nImageWidth * contentWidth;
           node.sprite.height = node.sprite.width / node.imageRatio;
           var multiply = node.originalWidth / node.sprite.width;
           var diameter = Math.min(node.sprite.width, node.sprite.height);
           var radius = diameter/2 * multiply;
+          node.imageX -= diameter*0.5;
           node.sprite.mask.clear();
           node.sprite.mask.beginFill();
           node.sprite.mask.drawCircle(radius, radius, radius);
           node.sprite.mask.endFill();
-          node.sprite.position.set(x, y);
+          node.sprite.position.set(node.imageX, node.imageY);
         }
         if (node.label) {
           node.label.anchor.set(0.5, 0.5);
@@ -723,7 +735,7 @@ var Network = (function() {
     height *= (1.0 + (padY * 2));
 
     // make background color pop
-    var threshold = 0.5;
+    var threshold = 1.0;
     var color = 0x058599;
     if (progress < threshold) {
       var colorProgress = UTIL.easeInOutSin(progress/threshold);
