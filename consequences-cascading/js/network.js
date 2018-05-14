@@ -139,7 +139,7 @@ var Network = (function() {
     this.resetting = false;
     this.resetCountingDown = true;
     this.resetStart = new Date().getTime() + this.opt.resetAfterMs;
-    this.resetEnd = this.resetStart + this.opt.transitionMs;
+    this.resetEnd = this.resetStart + this.opt.resetTransitionMs;
     this.resetAngleStart = this.angleDelta;
     this.resetAngleProgressStart = this.angleDeltaProgress;
 
@@ -267,6 +267,7 @@ var Network = (function() {
 
         // determine normal position
         var distance = node.distance ? node.distance : segment;
+        distance = Math.min(distance, 0.33);
         var baseAngle = 90;
         var anglePad = 15;
         // evenly space children if multiple children
@@ -643,7 +644,7 @@ var Network = (function() {
 
     var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.resetStart, this.resetEnd);
-    var progressEased = UTIL.easeInOutSin(progress);
+    var progressEased = UTIL.easeInElastic(progress);
     if (progress >= 1) {
       progress = 1;
       this.resetting = false;
@@ -751,7 +752,7 @@ var Network = (function() {
   Network.prototype.renderTransition = function(t){
     var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.transitionStart, this.transitionEnd);
-    var progressEased = UTIL.easeInOutSin(progress);
+    var progressEased = UTIL.easeInElastic(progress);
     if (progress >= 1) {
       progress = 1;
       this.transitioning = false;

@@ -2,8 +2,9 @@
   "network": {
     "el": "#network",
     "angleThreshold": 60,
-    "transitionMs": 500,
+    "transitionMs": 2000,
     "resetAfterMs": 500,
+    "resetTransitionMs": 1500,
     "nodeRadiusRange": [0.02, 0.2],
     "nodeLabelRadius": 0.06,
     "nodeAlphaRange": [0.3, 1.0],
