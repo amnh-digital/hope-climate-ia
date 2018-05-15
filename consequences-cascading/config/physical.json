@@ -2,7 +2,7 @@
   "controls": {
     "el": "#app",
     "pointerlockMappings": {
-      "vertical": {
+      "horizontal": {
         "name": "rotate",
         "multiplier": 1.0
       }
