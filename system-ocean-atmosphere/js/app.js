@@ -21,11 +21,16 @@ var AppOceanAtmosphere = (function() {
   }
 
   AppOceanAtmosphere.prototype.init = function(){
+    var _this = this;
+    var videoPromise = this.loadVideo();
+
     this.rotateX = 0.5;
     this.rotateY = 0.5;
     this.content.annotations = this.loadAnnotations();
-    this.onReady();
-    this.loadControls();
+
+    $.when(videoPromise).done(function(resp){
+      _this.onReady();
+    });
   };
 
   AppOceanAtmosphere.prototype.loadAnnotations = function(){
@@ -105,6 +110,28 @@ var AppOceanAtmosphere = (function() {
     });
   };
 
+  AppOceanAtmosphere.prototype.loadVideo = function(){
+    var _this = this;
+    var promise = $.Deferred();
+
+    // add video element to document
+    var $video = $('<video id="video" webkit-playsinline style="display: none" autoplay loop crossorigin="anonymous"></video>');
+    _.each(this.opt.videos, function(v){
+      var rand = "?r=" + parseInt(Math.random() * 100000); // add random string at the end to prevent cache
+      $video.append($('<source src="'+v.url+rand+'" type="'+v.type+'">'));
+    });
+    $('body').append($video);
+    this.video = $video[0];
+
+    // wait for video to load, then load earth
+    this.video.addEventListener('loadeddata', function() {
+      console.log('Video loaded');
+      promise.resolve();
+    }, false);
+
+    return promise;
+  };
+
   AppOceanAtmosphere.prototype.onAnnotationPositionUpdate = function(el, x, y){
     this.contentObj.onAnnotationPositionUpdate(el, x, y);
   };
@@ -117,12 +144,13 @@ var AppOceanAtmosphere = (function() {
     var globesOpt = this.opt.globes;
     var content = this.content;
     var annotations = this.content.annotations;
+    var video = this.video;
 
     _.each(globesOpt, function(opt){
       var globe = _.extend({}, opt, {
         currentAnnotation: false,
         currentAnnotationId: false,
-        obj: new Globe(_.extend({}, opt, globeOpt, content))
+        obj: new Globe(_.extend({}, opt, globeOpt, content, {video: video}))
       })
       globes.push(globe);
     });
@@ -132,6 +160,7 @@ var AppOceanAtmosphere = (function() {
     this.contentObj = new Content(_.extend({}, this.content));
 
     this.loadListeners();
+    this.loadControls();
 
     this.render();
   };

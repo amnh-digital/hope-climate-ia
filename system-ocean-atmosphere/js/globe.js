@@ -74,12 +74,13 @@ var Globe = (function() {
     this.rotateX = 0.5;
     this.rotateY = 0.5;
     this.annotations = _.where(this.opt.annotations, {globeEl: el});
+    this.video = this.opt.video;
 
     this.initScene();
     this.loadAnnotation();
     this.loadAnnotations();
     this.loadGeojson(this.opt.geojson);
-    this.loadVideo();
+    this.loadEarth();
   };
 
   Globe.prototype.initScene = function() {
@@ -231,29 +232,6 @@ var Globe = (function() {
     var radius = this.opt.radius * 1.001;
 
     drawThreeGeo(geojsonData, radius, 'sphere', opt, this.xContainer);
-  };
-
-  Globe.prototype.loadVideo = function(){
-    var _this = this;
-    var promise = $.Deferred();
-
-    // add video element to document
-    var $video = $('<video id="video" webkit-playsinline style="display: none" autoplay loop crossorigin="anonymous"></video>');
-    _.each(this.opt.videos, function(v){
-      var rand = "?r=" + parseInt(Math.random() * 100000); // add random string at the end to prevent cache
-      $video.append($('<source src="'+v.url+rand+'" type="'+v.type+'">'));
-    });
-    $('body').append($video);
-    this.video = $video[0];
-
-    // wait for video to load, then load earth
-    this.video.addEventListener('loadeddata', function() {
-      console.log('Video loaded');
-      promise.resolve();
-      _this.loadEarth();
-    }, false);
-
-    return promise;
   };
 
   Globe.prototype.onResize = function(){
