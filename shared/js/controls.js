@@ -236,22 +236,22 @@ var Controls = (function() {
       });
     };
 
-    // document.addEventListener("mousemove", updatePosition, false);
+    document.addEventListener("mousemove", updatePosition, false);
 
     // Initiate pointer lock
-    document.addEventListener('pointerlockchange', function(){
-      if (document.pointerLockElement === el) {
-        console.log('The pointer lock status is now locked');
-        document.addEventListener("mousemove", updatePosition, false);
-      } else {
-        console.log('The pointer lock status is now unlocked');
-      }
-    }, false);
-
-    el.onclick = function() {
-      console.log('Requesting pointer lock...');
-      el.requestPointerLock();
-    };
+    // document.addEventListener('pointerlockchange', function(){
+    //   if (document.pointerLockElement === el) {
+    //     console.log('The pointer lock status is now locked');
+    //     document.addEventListener("mousemove", updatePosition, false);
+    //   } else {
+    //     console.log('The pointer lock status is now unlocked');
+    //   }
+    // }, false);
+    //
+    // el.onclick = function() {
+    //   console.log('Requesting pointer lock...');
+    //   el.requestPointerLock();
+    // };
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){
