@@ -1,10 +1,11 @@
 {
   "controls": {
     "el": "#app",
+    "channel": "mitigation-cascading",
     "pointerlockMappings": {
       "vertical": {
         "name": "rotate",
-        "multiplier": 4.0
+        "multiplier": 0.5
       }
     }
   }

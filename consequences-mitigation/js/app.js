@@ -36,15 +36,16 @@ var AppMitigation = (function() {
 
   AppMitigation.prototype.loadListeners = function(){
     var _this = this;
-    var $document = $(document);
+    var $window = $(window);
 
-    var onRotate = function(e, value) {
+    var onRotate = function(value) {
       _this.onRotate(value);
     };
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.rotate", onRotate);
+    channel.listen();
 
-    $document.on("controls.rotate", onRotate);
-
-    $(window).on('resize', function(){
+    $window.on('resize', function(){
       _this.onResize();
     });
 

@@ -2,12 +2,14 @@ $(function() {
   $.when(
     $.getJSON("config/base.json"),
     $.getJSON("config/physical.json"),
+    $.getJSON("../system-quiz/config/physical.json"),
     $.getJSON("content/content.json"),
     $.getJSON("data/countries_states.geojson"),
     $.getJSON("data/colorGradientRainbow.json")
 
-  ).done(function(baseConfig, config, content, geojson, colorData){
+  ).done(function(baseConfig, config, configSibling, content, geojson, colorData){
     baseConfig = baseConfig[0];
+    _.extend(config[0].controls, configSibling[0].controls);
     config = _.extend({}, baseConfig, config[0]);
     content = content[0];
     var data = {};

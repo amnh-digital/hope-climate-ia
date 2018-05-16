@@ -33,7 +33,9 @@ var AppRegions = (function() {
   AppRegions.prototype.loadListeners = function(){
     var _this = this;
 
-    $(document).on("controls.axes.change", function(e, key, value) {
+    var onAxisChange = function(resp) {
+      var key = resp.key;
+      var value = resp.value;
       switch(key) {
         case "horizontal":
           _this.onTimeChange(value);
@@ -44,7 +46,10 @@ var AppRegions = (function() {
         default:
           break;
       }
-    });
+    }
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.axes.change", onAxisChange);
+    channel.listen();
 
     // $(document).on("sleep.start", function(e, value) {
     //   _this.sleepStart();

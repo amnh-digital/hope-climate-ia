@@ -29,17 +29,18 @@ var AppChange = (function() {
 
   AppChange.prototype.loadListeners = function(){
     var _this = this;
-    var $document = $(document);
 
-    var onSlide = function(e, key, value) {
-      _this.onSlide(value);
+    var onSlide = function(resp) {
+      _this.onSlide(resp.value);
     };
-    var onButtonUp = function(e, value) {
+    var onButtonUp = function(value) {
       _this.onButtonUp(value);
     };
 
-    $document.on("controls.axes.change", onSlide);
-    $document.on("controls.button.up", onButtonUp);
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.axes.change", onSlide);
+    channel.addCallback("controls.button.up", onButtonUp);
+    channel.listen();
 
     $(window).on('resize', function(){
       _this.onResize();

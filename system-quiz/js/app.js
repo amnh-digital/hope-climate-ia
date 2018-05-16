@@ -32,22 +32,25 @@ var AppQuiz = (function() {
   AppQuiz.prototype.loadListeners = function(){
     var _this = this;
     var $document = $(document);
+    var $window = $(window);
 
-    var buttonDown = function(e, value) {
+    var buttonDown = function(value) {
       _this.onButtonDown(value);
     };
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.button.down", buttonDown);
+    channel.listen();
+
     var resize = function(){
       _this.onResize();
     };
-
-    $document.on("controls.button.down", buttonDown);
-    $(window).on('resize', resize);
+    $window.on('resize', resize);
 
     var sleepStart = function(e, vars) {
       var prompt = vars.prompt || "start";
       _this.quiz.prompt(prompt);
     };
-    $(document).on("sleep.start", sleepStart);
+    $document.on("sleep.start", sleepStart);
   };
 
   AppQuiz.prototype.loadSounds = function(){

@@ -78,11 +78,14 @@ var AppCascading = (function() {
   AppCascading.prototype.loadListeners = function(){
     var _this = this;
     var $document = $(document);
+    var $window = $(window);
 
-    var onRotate = function(e, value) {
+    var onRotate = function(value) {
       _this.onRotate(value);
     };
-    $document.on("controls.rotate", onRotate);
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.rotate", onRotate);
+    channel.listen();
 
     var onFactboxHide = function(e, value){ _this.factbox.hide(); };
     var onFactboxReset = function(e, branch){ _this.factbox.reset(branch); };
@@ -93,7 +96,7 @@ var AppCascading = (function() {
     $document.on("factbox.show", onFactboxShow);
     $document.on("factbox.transition", onFactboxTransition);
 
-    $(window).on('resize', function(){
+    $window.on('resize', function(){
       _this.onResize();
     });
 

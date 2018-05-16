@@ -1,5 +1,6 @@
 {
   "controls": {
+    "channel": "regions-forcings",
     "keyboardMappings": {
       "1": "orbital",
       "2": "solar",

@@ -1,5 +1,6 @@
 {
   "controls": {
+    "channel": "ocean-atmosphere-quiz",
     "gamepadMappings": {
       "vertical": 0,
       "horizontal": 1

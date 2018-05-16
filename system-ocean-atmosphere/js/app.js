@@ -86,8 +86,11 @@ var AppOceanAtmosphere = (function() {
   AppOceanAtmosphere.prototype.loadListeners = function(){
     var _this = this;
     var $document = $(document);
+    var $window = $(window);
 
-    $document.on("controls.axes.change", function(e, key, value) {
+    var onAxisChange = function(resp) {
+      var key = resp.key;
+      var value = resp.value;
       switch(key) {
         case "horizontal":
           _this.onRotate("horizontal", value);
@@ -98,14 +101,17 @@ var AppOceanAtmosphere = (function() {
         default:
           break;
       }
-    });
+    }
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.axes.change", onAxisChange);
+    channel.listen();
 
     $document.on("annotation.position.update", function(e, el, x, y){
       // console.log(el, x, y);
       _this.onAnnotationPositionUpdate(el, x, y);
     });
 
-    $(window).on('resize', function(){
+    $window.on('resize', function(){
       _this.onResize();
     });
   };
