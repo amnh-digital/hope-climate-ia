@@ -7,7 +7,10 @@
   left: 50%;
   margin-left: -40vh;
   top: 30vh;
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
 }
+
 .story-wrapper {
   position: absolute;
   width: 16vh;
@@ -67,6 +70,11 @@
 }
 .story-wrapper.active .information p {
   opacity: 1;
+}
+
+.sleepMode {
+  bottom: auto;
+  top: 33.333333%;
 }
 
 .video-container {
@@ -201,6 +209,7 @@
 }
 .map svg .filled {
   fill: #111;
+  transition: fill 2s ease-in-out;
 }
 .map .overlay {
   opacity: 0;
@@ -208,4 +217,12 @@
 }
 .map .overlay.active {
   opacity: 1;
+}
+
+.sleeping .stories,
+.sleeping .map .overlay.active {
+  opacity: 0;
+}
+.sleeping .map svg .filled {
+  fill: #2b5b62;
 }

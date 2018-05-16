@@ -3,7 +3,7 @@
     "scrollMappings": {
       "vertical": {
         "name": "rotate",
-        "multiplier": 1.0
+        "multiplier": 3.0
       }
     },
     "touchMappings": {

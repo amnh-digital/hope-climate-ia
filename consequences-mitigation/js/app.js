@@ -72,8 +72,8 @@ var AppMitigation = (function() {
     this.map = new Map(opt);
 
     // Init sleep mode utilitys
-    // opt = _.extend({}, this.opt.sleep);
-    // this.sleep = new Sleep(opt);
+    opt = _.extend({}, this.opt.sleep);
+    this.sleep = new Sleep(opt);
 
     this.render();
   };
@@ -82,6 +82,8 @@ var AppMitigation = (function() {
   };
 
   AppMitigation.prototype.onRotate = function(delta){
+    this.sleep.wakeUp();
+
     var count = this.storyCount;
     var angleThreshold = this.angleThreshold;
     var index = 0;
@@ -109,8 +111,6 @@ var AppMitigation = (function() {
       this.$document.trigger("sound.play.sprite", ["tick"]);
       this.angleDelta = 0;
     }
-
-    // this.sleep.wakeUp();
   };
 
   AppMitigation.prototype.render = function() {
