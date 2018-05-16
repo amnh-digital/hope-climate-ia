@@ -2,6 +2,8 @@
 
 # Shapefile source: http://www.naturalearthdata.com/downloads/110m-physical-vectors/
 
+# python process_map.py -land "#2b5b62" -water "#000000" -out "../img/map_resting.svg"
+
 import argparse
 from lib import *
 import os
@@ -15,6 +17,8 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument('-in', dest="INPUT_FILE", default="../data/ne_110m_land/ne_110m_land", help="Temperature input file")
 parser.add_argument('-width', dest="WIDTH", default=1024, type=int, help="Width of SVG")
+parser.add_argument('-land', dest="LAND_COLOR", default="#ffffff", help="Land color")
+parser.add_argument('-water', dest="WATER_COLOR", default="#000000", help="Water color")
 parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/ne_110m_land.svg", help="Output file")
 args = parser.parse_args()
 
@@ -22,6 +26,8 @@ args = parser.parse_args()
 INPUT_FILE = args.INPUT_FILE
 WIDTH = args.WIDTH
 HEIGHT = WIDTH / 2
+LAND_COLOR = args.LAND_COLOR
+WATER_COLOR = args.WATER_COLOR
 OUTPUT_FILE = args.OUTPUT_FILE
 
 def shapeToGeojson(sfname):
@@ -65,11 +71,11 @@ for i, feature in enumerate(geojson["features"]):
 print "%s polygons found" % len(polygons)
 
 dwg = svgwrite.Drawing(OUTPUT_FILE, size=(WIDTH, HEIGHT), profile='full')
-dwg.add(dwg.rect(id="bg", insert=(0,0), size=(WIDTH, HEIGHT), fill="#000000"))
+dwg.add(dwg.rect(id="bg", insert=(0,0), size=(WIDTH, HEIGHT), fill=WATER_COLOR))
 
 dwgLand = dwg.g(id="land")
 for points in polygons:
-    dwgLand.add(dwg.polygon(points=points, fill="#ffffff"))
+    dwgLand.add(dwg.polygon(points=points, fill=LAND_COLOR))
 dwg.add(dwgLand)
 
 # Save

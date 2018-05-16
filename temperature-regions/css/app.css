@@ -136,6 +136,9 @@ svg text {
   letter-spacing: 0.05vw;
   color: #999;
 }
+.worldmap-resting {
+  opacity: 0;
+}
 .worldmap {
   z-index: 0;
 }
@@ -177,6 +180,13 @@ svg text {
 .map > * {
   transition: opacity 2s ease-in-out;
 }
+.sleeping .map {
+  background: none;
+}
 .sleeping .map > * {
   opacity: 0;
+}
+
+.sleeping .map > .worldmap-resting {
+  opacity: 1;
 }
