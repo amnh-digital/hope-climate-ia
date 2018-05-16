@@ -1,6 +1,15 @@
 .title {
   left: 62.5%;
 }
+.title h2 {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  padding-bottom: 1.2vw;
+}
+.sleeping .title h2 {
+  opacity: 1;
+  background: #000;
+}
 .content {
   top: 0;
   height: 100%;
@@ -8,6 +17,10 @@
   width: 100%;
   left: 0;
   margin: 0;
+}
+
+.sleepMode {
+  text-align: center;
 }
 
 .network {
@@ -24,6 +37,8 @@
   height: auto;
   left: 5%;
   bottom: 5%;
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
 }
 .fact-box {
   position: absolute;
@@ -46,4 +61,7 @@
   line-height: 1.8;
   font-size: 1.5vh;
   margin-top: 1vh;
+}
+.sleeping .fact-boxes {
+  opacity: 0;
 }

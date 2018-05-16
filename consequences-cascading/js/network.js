@@ -50,6 +50,8 @@ var Network = (function() {
     rootNode.addChild(this.sectionTitleBg);
     addLabelBuffers(rootNode, 4);
 
+    var sleepers = [];
+
     this.network = _.map(this.network, function(branch, i){
       var container = new PIXI.Container();
       var lines = new PIXI.Graphics();
@@ -102,6 +104,7 @@ var Network = (function() {
       });
       container.filters = [alphaFilter];
       container.addChild(bg, lines, circles, contentAreas);
+      sleepers.push(contentAreas)
       branches.addChild(container);
       branch.container = container;
       branch.alphaFilter = alphaFilter;
@@ -120,7 +123,10 @@ var Network = (function() {
     this.sectionTitleFrom = this.rootNode.children[3];
     this.sectionTitleTo = this.rootNode.children[4];
 
-    this.sleepers = [rootNode, branches];
+    sleepers.push(this.rootNode);
+    // sleepers.push(this.rootLabel, this.rootSublabel, this.sectionTitleFrom, this.sectionTitleTo, this.sectionTitleBg);
+
+    this.sleepers = sleepers;
     this.dreamers = [];
 
     this.$el.append(this.app.view);
@@ -522,6 +528,11 @@ var Network = (function() {
     if (this.resetting) {
       this.renderReset(now);
     }
+
+    // sleep transition
+    if (this.sleepTransitioning) {
+      this.sleepTransition(now);
+    }
   };
 
   Network.prototype.renderBranch = function(t){
@@ -808,6 +819,38 @@ var Network = (function() {
 
     // transition title
     this.renderSectionTitle(progressEased);
+  };
+
+  Network.prototype.sleepEnd = function(){
+    if (this.sleeping) {
+      this.sleepTransitionStart = new Date();
+      this.sleepTransitioning = true;
+      this.sleeping = false;
+    }
+  };
+
+  Network.prototype.sleepStart = function(){
+    this.sleepTransitionStart = new Date();
+    this.sleepTransitioning = true;
+    this.sleeping = true;
+  };
+
+  Network.prototype.sleepTransition = function(now){
+    var transitionMs = this.opt.sleepTransitionMs;;
+    var delta = now - this.sleepTransitionStart;
+    var progress = delta / transitionMs;
+
+    if (progress >= 1) {
+      progress = 1.0;
+      this.sleepTransitioning = false;
+    }
+
+    var alpha = 1.0 - progress;
+    if (!this.sleeping) alpha = progress;
+
+    _.each(this.sleepers, function(g){
+      g.alpha = alpha;
+    });
   };
 
   return Network;

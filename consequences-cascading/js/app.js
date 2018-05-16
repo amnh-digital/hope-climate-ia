@@ -96,10 +96,13 @@ var AppCascading = (function() {
     $document.on("factbox.show", onFactboxShow);
     $document.on("factbox.transition", onFactboxTransition);
 
-    $window.on('resize', function(){
-      _this.onResize();
-    });
+    var onSleepStart = function(e, value) { _this.onSleepStart(); }
+    var onSleepEnd = function(e, value) { _this.onSleepEnd(); }
+    $document.on("sleep.start", onSleepStart);
+    $document.on("sleep.end", onSleepEnd);
 
+    var onResize = function(){ _this.onResize(); }
+    $window.on('resize', onResize);
   };
 
   AppCascading.prototype.loadSounds = function(){
@@ -127,8 +130,8 @@ var AppCascading = (function() {
     this.factbox = new FactBox(opt);
 
     // Init sleep mode utilitys
-    // opt = _.extend({}, this.opt.sleep);
-    // this.sleep = new Sleep(opt);
+    opt = _.extend({}, this.opt.sleep);
+    this.sleep = new Sleep(opt);
 
     this.render();
   };
@@ -137,8 +140,16 @@ var AppCascading = (function() {
   };
 
   AppCascading.prototype.onRotate = function(delta){
-    // this.sleep.wakeUp();
+    this.sleep.wakeUp();
     this.network.onRotate(delta);
+  };
+
+  AppCascading.prototype.onSleepStart = function(){
+    this.network.sleepStart();
+  };
+
+  AppCascading.prototype.onSleepEnd = function(delta){
+    this.network.sleepEnd();
   };
 
   AppCascading.prototype.render = function() {

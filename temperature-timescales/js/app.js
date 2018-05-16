@@ -55,20 +55,19 @@ var AppTimescales = (function() {
     channel.addCallback("controls.axes.change", onAxisChange);
     channel.listen();
 
-    $document.on("sleep.start", function(e, value) {
+    var onSleepStart = function(e, value) {
       _this.$sidebar.removeClass("active");
       _this.graphics.sleepStart();
-    });
-
-    $document.on("sleep.end", function(e, value) {
+    };
+    var onSleepEnd = function(e, value) {
       _this.$sidebar.addClass("active");
       _this.graphics.sleepEnd();
-    });
+    };
+    $document.on("sleep.start", onSleepStart);
+    $document.on("sleep.end", onSleepEnd);
 
-    $window.on('resize', function(){
-      _this.onResize();
-    });
-
+    var onResize = function(){ _this.onResize(); }
+    $window.on('resize', onResize);
   };
 
   AppTimescales.prototype.loadSounds = function(){

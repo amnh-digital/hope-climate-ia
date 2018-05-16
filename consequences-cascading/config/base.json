@@ -5,6 +5,7 @@
     "transitionMs": 2000,
     "resetAfterMs": 500,
     "resetTransitionMs": 1500,
+    "sleepTransitionMs": 2000,
     "nodeRadiusRange": [0.02, 0.2],
     "nodeLabelRadius": 0.06,
     "nodeAlphaRange": [0.3, 1.0],
@@ -82,7 +83,7 @@
   },
   "sleep": {
     "enable": 1,
-    "checkInterval": 15,
-    "sleepAfter": 120
+    "checkInterval": 5,
+    "sleepAfter": 60
   }
 }
