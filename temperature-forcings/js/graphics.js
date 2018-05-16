@@ -495,7 +495,7 @@ var Graphics = (function() {
 
   Graphics.prototype.renderCombined = function(){
     var combined = this.combined;
-    var forcing = this.forcingsState["all"];
+    var forcing = _.extend({}, this.forcingsState["all"], {color: 0x058599});
 
     combined.clear();
     this.renderLine(combined, forcing, 1.0);

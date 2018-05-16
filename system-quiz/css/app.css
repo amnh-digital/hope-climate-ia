@@ -1,3 +1,7 @@
+.title {
+  left: 65%;
+}
+
 .quiz {
   width: 60%;
   top: auto;
@@ -223,8 +227,8 @@
 
 .progress {
   position: fixed;
-  top: 18vh;
-  left: 5vw;
+  bottom: 3vw;
+  left: 4vw;
   color: #faa519;
   opacity: 0;
   transition: opacity 1s ease-in-out;

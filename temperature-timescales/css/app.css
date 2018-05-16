@@ -1,22 +1,16 @@
-
-.content {
-  width: 50vw;
-  left: 50%;
-  top: 10vw;
-  margin-left: -20vw;
+.title,
+.sleepMode {
+  left: 62%;
 }
-.content.sleepMode {
-  z-index: 100;
-  top: 27vh;
-  height: 5vh;
-  right: 3vw;
+.content {
+  width: 50%;
+  margin-left: -25%;
+  top: 27.5%;
 }
 
 .graphics {
-  height: 30vw;
   position: relative;
-  top: auto;
-  left: auto;
+  height: 30vw;
 }
 
 .messages,
@@ -37,22 +31,22 @@
   margin-left: 14.5%;
 }
 .messages > div {
-  padding: 1vh 2vh;
+  /* padding: 1vh 2vh;
   background: #181818;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 .messages p {
   margin: 0;
-  color: #999;
-  line-height: 1.6;
-  font-size: 1.5vh;
+  color: #666;
+  line-height: 1.8;
+  font-size: 0.8vw;
 }
 .messages h2 {
-  font-size: 2vh;
-  margin: 1vh 0;
+  font-size: 1vw;
+  margin: 1.5vw 0 0.667vw;
   /* padding-bottom: 1vh;
   border-bottom: 2px solid #333; */
-  color: #fff;
+  color: #999;
 }
 .messages h2 strong {
   color: #e2bb3d;
@@ -68,15 +62,10 @@
 }
 
 .sidebar {
-  width: 30vw;
-  left: 3vw;
-  bottom: 5vh;
-  height: 10vh;
-  top: auto;
   color: #aaa;
-  margin: 0;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  height: 5vw;
+  display: none;
 }
 .sidebar.active {
   opacity: 1;
@@ -97,7 +86,6 @@
   left: 0;
   opacity: 0;
 }
-
 .sidebar > div:nth-child(1) {
   animation: fadeInOut 40s 0s infinite linear;
 }

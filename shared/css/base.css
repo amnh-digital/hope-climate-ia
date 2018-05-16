@@ -4,57 +4,30 @@
 }
 
 body {
-  font-size: 1.6666666667vh;
+  font-size: 1vw;
   font-family: Balance, arial, helvetica, sans-serif;
 }
 
 .app {
   background: #222;
-  color: #fff;
+  color: #999;
   width: 100vw;
   height: 100vh;
   position: relative;
   overflow: hidden;
 }
 h1 {
-  font-size: 5vh;
-  letter-spacing: 0.05rem;
+  font-size: 3vw;
+  letter-spacing: 0.05vw;
 }
 h2 {
-  font-size: 4vh;
+  font-size: 2.6667vw;
 }
 p {
-  font-size: 2vh;
+  font-size: 1.2vw;
 }
 a {
   color: #fff;
-}
-
-.introduction {
-  color: #ccc;
-}
-
-.title {
-  text-align: left;
-  z-index: 200;
-  position: absolute;
-  left: 5vw;
-  top: 5vh;
-  width: 30vw;
-}
-.title h1 {
-  font-size: 2.25vh;
-  letter-spacing: 0.1vh;
-  white-space: nowrap;
-  font-weight: normal;
-  margin-bottom: 0;
-}
-.title h2 {
-  font-weight: normal;
-  line-height: 1.2;
-  font-size: 4vh;
-  letter-spacing: 0.2vh;
-  margin-top: 1vh;
 }
 
 .view {
@@ -67,24 +40,40 @@ a {
   background: #000;
 }
 
+.title,
 .content {
   position: absolute;
-  box-sizing: border-box;
-  top: 0;
-}
-.content.left {
-  width: 40%;
-  left: 0;
-  padding: 0 1vw 0 5vw;
-}
-.content.right {
-  width: 50%;
-  right: 5%;
-  left: auto;
+  width: 60%;
+  left: 50%;
+  margin-left: -30%;
 }
 
-.graphics,
-.sleepMode {
+.title {
+  text-align: left;
+  z-index: 200;
+  top: 10%;
+  width: 40%;
+}
+.title h1 {
+  line-height: 1.2;
+  font-size: 1.8vw;
+  letter-spacing: 0.1vw;
+  margin-top: 1vh;
+}
+.title h2 {
+  font-size: 1.333vw;
+  letter-spacing: 0.05vw;
+  font-weight: normal;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.content {
+  box-sizing: border-box;
+  top: 30%;
+}
+
+.graphics {
   position: absolute;
   top: 0;
   left: 0;
@@ -93,8 +82,14 @@ a {
 }
 
 .sleepMode {
+  position: absolute;
+  width: 60%;
+  left: 50%;
+  margin-left: -30%;
+  height: 26.6667%;
+  bottom: 0;
+
   /* display: none; */
-  text-align: center;
   box-sizing: border-box;
   padding: 0.5vw;
   /* background: rgba(0,0,0,0.9); */
@@ -103,13 +98,16 @@ a {
   transition: opacity 3s ease-in-out;
 }
 .sleepMode p {
-  font-size: 2vh;
+  font-size: 1vw;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
   margin: 0;
-  line-height: 1.6;
-  letter-spacing: 0.1vh;
+  line-height: 1.8;
+  letter-spacing: 0.06vw;
+}
+.sleepMode p strong {
+  font-size: 1.2vw;
 }
 .sleepMode.active,
 #app.sleeping .sleepMode {
@@ -118,7 +116,18 @@ a {
 }
 .sleepMode.active p,
 #app.sleeping .sleepMode p {
-  animation: blink 3s infinite;
+  /* animation: blink 3s infinite; */
+}
+
+.sidebar {
+  position: absolute;
+  width: 30vw;
+  left: 3vw;
+  bottom: 5vh;
+  transition: opacity 1s ease-in-out;
+}
+.sleeping .sidebar {
+  opacity: 0;
 }
 
 .ui {

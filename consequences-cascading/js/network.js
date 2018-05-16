@@ -390,7 +390,7 @@ var Network = (function() {
     var rootNodeX = rootNodeOpt.x * w;
     var rootNodeY = rootNodeOpt.y * h;
     this.rootNodeX = rootNodeX;
-    this.rootNodeY = rootNodeY * 1.2;
+    this.rootNodeY = rootNodeY;
     var rootNodeTextStyle = _.extend({}, rootNodeOpt.textStyle);
     rootNodeTextStyle.fontSize *= h;
     this.rootNodeTextStyle = rootNodeTextStyle;
@@ -708,7 +708,7 @@ var Network = (function() {
     var rootNodeTextStyle = this.rootNodeTextStyle;
     var color = parseInt(this.opt.rootNode.color);
     var lineWidth = this.opt.rootNode.lineWidth * rootNodeRadius;
-    var rootNodeH = rootNodeRadius * 0.55;
+    var rootNodeH = rootNodeRadius * 0.45;
 
     rootNode.lineStyle(lineWidth, color);
     rootNode.beginFill(0x000000);

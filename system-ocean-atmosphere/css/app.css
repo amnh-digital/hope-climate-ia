@@ -1,14 +1,30 @@
-.globes,
-.calendar,
-.content-container {
+.content {
+  top: 26.666667%;
+}
+
+.content,
+.title {
+  width: 50%;
+  margin-left: -25%;
+}
+
+.globes-wrapper,
+.calendar {
   width: 100%;
-  position: absolute;
-  left: 0;
+  position: relative;
+}
+.globes-wrapper {
+  height: 26.6667vw;
+  margin-top: -2vw;
 }
 .globes,
 .content-container {
-  height: 60vh;
-  bottom: 20vh;
+  position: absolute;
+  width: 150%;
+  height: 100%;
+  left: 50%;
+  top: 0;
+  margin-left: -75%;
 }
 .globe {
   position: absolute;
@@ -16,21 +32,22 @@
   height: 100%;
   top: 0;
   left: 16.66667%;
-  text-align: center;
 }
 .globe:last-child {
   left: auto;
   right: 16.66667%;
 }
 .globe h2 {
-  color: #aaa;
+  color: #999;
   font-weight: normal;
   display: block;
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
+  bottom: -8%;
+  left: 50%;
+  width: 50%;
+  margin-left: -25%;
   font-size: 1rem;
+  line-height: 1.8;
 }
 .globe canvas {
   position: absolute;
@@ -38,11 +55,8 @@
   left: 0;
 }
 .calendar {
-  width: 60%;
-  left: 20%;
-  height: 7vh;
-  top: 15vh;
-  border-top: 0.5vh solid #222;
+  height: 3vw;
+  border-top: 0.1vw solid #222;
   -webkit-transform: translateZ(0);
 }
 .calendar:after {
@@ -57,15 +71,15 @@
   float: left;
   font-weight: normal;
   font-size: 1.2rem;
-  height: 7vh;
-  line-height: 7vh;
-  color: #ccc;
+  height: 3vw;
+  line-height: 3vw;
+  color: #999;
 }
 .marker {
   position: absolute;
   width: 8.333333333%;
-  height: 0.5vh;
-  background: white;
+  height: 0.25vw;
+  background: #777;
   left: 0;
   bottom: 0;
   margin-left: 1.8%;
@@ -79,11 +93,10 @@
   line-height: 20vh;
 }
 .color-key {
-  width: 40%;
-  position: absolute;
-  bottom: 5vh;
-  height: 2vh;
-  left: 30%;
+  position: relative;
+  width: 76%;
+  margin: 8vw auto 0;
+  height: 1.333vw;
 }
 .color-key-canvas {
   position: absolute;
@@ -93,9 +106,10 @@
   left: 0;
 }
 .color-key .label {
-  height: 2vh;
+  height: 1vw;
   position: absolute;
-  top: -3vh;
+  top: -1vw;
+  font-size: 0.8vw;
 }
 .color-key .label:first-child {
   left: 0;

@@ -1,7 +1,7 @@
 {
   "network": {
     "el": "#network",
-    "angleThreshold": 60,
+    "angleThreshold": 45,
     "transitionMs": 2000,
     "resetAfterMs": 500,
     "resetTransitionMs": 1500,
@@ -36,12 +36,12 @@
     },
     "rootNode": {
       "radius": 0.135,
-      "x": 0.5,
-      "y": 0.075,
+      "x": 0.4,
+      "y": 0.2,
       "color": "0x058599",
-      "lineWidth": 0.02,
+      "lineWidth": 0.025,
       "textStyle": {
-        "fontSize": 0.033,
+        "fontSize": 0.027,
         "fill": "#058599",
         "fontFamily": "Balance"
       }
