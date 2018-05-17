@@ -118,6 +118,13 @@ var Graphics = (function() {
     addLabelBuffers(marker, 5);
     addLabelBuffers(annotations, this.opt.annotations.length);
 
+    // add resting filter
+    var fragSrc = $("#resting-fragment-shader").text();
+    var restingFilter = new PIXI.Filter(null, fragSrc);
+    restingFilter.uniforms.progress = 0;
+    plot.filters = [restingFilter];
+    this.restingFilter = restingFilter;
+
     this.axes = axes;
     this.plot = plot;
     this.trend = trend;
@@ -1055,6 +1062,8 @@ var Graphics = (function() {
 
     var alpha = 1.0 - progress;
     if (!this.sleeping) alpha = progress;
+
+    this.restingFilter.uniforms.progress = 1.0 - alpha;
 
     _.each(this.sleepers, function(g){
       g.alpha = alpha;

@@ -43,6 +43,21 @@
       </div>
     </div>
 
+    <script type="x-shader/x-fragment" id="resting-fragment-shader">
+    varying vec2 vTextureCoord;
+    uniform sampler2D uSampler;
+
+    uniform float progress;
+
+    void main() {
+      float threshold = 0.2;
+      vec4 color = texture2D(uSampler, vTextureCoord.xy);
+      vec4 targetColor = vec4(5.0/255.0, 133.0/255.0, 153.0/255.0, 1.0);
+      if (color.r < threshold && color.g < threshold && color.b < threshold) targetColor = color;
+      gl_FragColor = mix(color, targetColor, progress);
+    }
+    </script>
+
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/pixi-4.6.2.min.js"></script>
