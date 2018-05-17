@@ -1,12 +1,12 @@
 {
   "network": {
     "el": "#network",
-    "angleThreshold": 45,
+    "angleThreshold": 30,
     "transitionMs": 2000,
     "resetAfterMs": 500,
     "resetTransitionMs": 1500,
     "sleepTransitionMs": 2000,
-    "nodeRadiusRange": [0.02, 0.2],
+    "nodeRadiusRange": [0.0175, 0.175],
     "nodeLabelRadius": 0.06,
     "nodeAlphaRange": [0.3, 1.0],
     "nodeLineWidthRange": [3, 8],
@@ -17,9 +17,9 @@
     "nodeTransitionMs": 1000,
     "nodeContentDelayMs": 500,
     "nodeContentMs": 1000,
-    "nodeContentWidth": 0.135,
+    "nodeContentWidth": 0.08,
     "nodeContentHeight": 0.04,
-    "nodeImageWidth": 0.8,
+    "nodeImageWidth": 1.5,
     "nodeColor": "0x058599",
     "nodeLineColor": "0x058599",
     "nodeBgColor": "0x0a2126",
@@ -36,11 +36,11 @@
       "lineHeight": 1.5
     },
     "rootNode": {
-      "radius": 0.135,
+      "radius": 0.11,
       "x": 0.4,
       "y": 0.2,
       "color": "0x058599",
-      "lineWidth": 0.025,
+      "lineWidth": 0.015,
       "textStyle": {
         "fontSize": 0.027,
         "fill": "#058599",
