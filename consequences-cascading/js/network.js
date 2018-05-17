@@ -795,8 +795,9 @@ var Network = (function() {
     });
 
     if (this.transitionFromBranch) {
-      var p = 1.0 - progress;
-      if (p < this.transitionFromBranch.alphaFilter.alpha) this.transitionFromBranch.alphaFilter.alpha = p;
+      // var p = 1.0 - progress;
+      // if (p < this.transitionFromBranch.alphaFilter.alpha) this.transitionFromBranch.alphaFilter.alpha = p;
+      this.transitionFromBranch.alphaFilter.alpha = 0;
     }
 
     // transition title
