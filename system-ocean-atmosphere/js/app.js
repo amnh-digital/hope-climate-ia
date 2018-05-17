@@ -106,14 +106,16 @@ var AppOceanAtmosphere = (function() {
     channel.addCallback("controls.axes.change", onAxisChange);
     channel.listen();
 
-    $document.on("annotation.position.update", function(e, el, x, y){
-      // console.log(el, x, y);
-      _this.onAnnotationPositionUpdate(el, x, y);
-    });
+    var onAnnotationPositionUpdate = function(e, el, x, y){ _this.onAnnotationPositionUpdate(el, x, y); };
+    $document.on("annotation.position.update", onAnnotationPositionUpdate);
 
-    $window.on('resize', function(){
-      _this.onResize();
-    });
+    var onSleepStart = function(e, value) { _this.onSleepStart(); };
+    var onSleepEnd = function(e, value) { _this.onSleepEnd(); };
+    $document.on("sleep.start", onSleepStart);
+    $document.on("sleep.end", onSleepEnd);
+
+    var onResize = function(){ _this.onResize(); };
+    $window.on('resize', onResize);
   };
 
   AppOceanAtmosphere.prototype.loadVideo = function(){
@@ -165,6 +167,9 @@ var AppOceanAtmosphere = (function() {
     this.calendar = new Calendar(_.extend({}, this.opt.calendar));
     this.contentObj = new Content(_.extend({}, this.content));
 
+    // Init sleep mode utilitys
+    this.sleep = new Sleep(_.extend({}, this.opt.sleep));
+
     this.loadListeners();
     this.loadControls();
 
@@ -180,6 +185,8 @@ var AppOceanAtmosphere = (function() {
   };
 
   AppOceanAtmosphere.prototype.onRotate = function(axis, value){
+    this.sleep.wakeUp();
+    
     var _this = this;
     if (axis === "vertical")  this.rotateY = value;
     else this.rotateX = value;
@@ -226,6 +233,18 @@ var AppOceanAtmosphere = (function() {
       }
 
       globe.obj.onRotate(axis, value);
+    });
+  };
+
+  AppOceanAtmosphere.prototype.onSleepEnd = function(){
+    _.each(this.globes, function(globe){
+      globe.obj.sleepEnd();
+    });
+  };
+
+  AppOceanAtmosphere.prototype.onSleepStart = function(){
+    _.each(this.globes, function(globe){
+      globe.obj.sleepStart();
     });
   };
 

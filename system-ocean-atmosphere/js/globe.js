@@ -81,6 +81,10 @@ var Globe = (function() {
     this.loadAnnotations();
     this.loadGeojson(this.opt.geojson);
     this.loadEarth();
+    this.loadEarthResting();
+
+    this.onRotate("vertical", this.rotateY);
+    this.onRotate("horizontal", this.rotateX);
   };
 
   Globe.prototype.initScene = function() {
@@ -145,7 +149,8 @@ var Globe = (function() {
 
   Globe.prototype.loadAnnotation = function(){
     var radius = this.opt.radius;
-    var material = new THREE.LineBasicMaterial({color: 0xffffff, linewidth: 4, opacity: 0.8, transparent: true});
+    var circleOpacity = this.opt.circleOpacity;
+    var material = new THREE.LineBasicMaterial({color: 0xffffff, linewidth: 4, opacity: circleOpacity, transparent: true});
     var geometry = new THREE.CircleGeometry(radius, 64);
     geometry.vertices.shift(); // remove the center
     geometry.vertices.push(geometry.vertices[0]); // close the loop
@@ -166,6 +171,7 @@ var Globe = (function() {
     var annotations = this.annotations;
 
     var radius = this.opt.radius;
+    var markerOpacity = this.opt.markerOpacity;
     var markerRadius = radius * 0.03;
     var distance = radius * 1.1;
     var container = this.xContainer;
@@ -174,7 +180,7 @@ var Globe = (function() {
     this.annotations = _.map(annotations, function(a, i){
       var geometry = new THREE.ConeBufferGeometry(markerRadius, markerRadius*2, 8);
       geometry.rotateX(Math.PI / 2)
-      var material = new THREE.MeshBasicMaterial({color: 0x89bf54, opacity: 0.5, transparent: true});
+      var material = new THREE.MeshBasicMaterial({color: 0x89bf54, opacity: markerOpacity, transparent: true});
       var marker = new THREE.Mesh(geometry, material);
       marker.position.copy(lonLatToVector3(a.lon, a.lat, distance));
       // marker.rotation.x = Math.PI / 2;
@@ -221,8 +227,26 @@ var Globe = (function() {
 
     this.xContainer.add(earth);
 
-    this.onRotate("vertical", this.rotateY);
-    this.onRotate("horizontal", this.rotateX);
+    this.earth = earth;
+  };
+
+  Globe.prototype.loadEarthResting = function(){
+    var _this = this;
+    var radius = this.opt.radius * 1.01;
+    var xContainer = this.xContainer;
+
+    // load image texture
+    var loader = new THREE.TextureLoader();
+    loader.load('img/world_map_blank_without_borders.png', function (texture) {
+      // init globe
+      var geo = new THREE.SphereGeometry(radius, 64, 64);
+      var mat = new THREE.MeshBasicMaterial({map: texture, overdraw: true, transparent: true, opacity: 0.0});
+      var earth = new THREE.Mesh(geo, mat);
+      earth.material.map.needsUpdate = true;
+      earth.rotation.y = -Math.PI/2 + (2/9);
+      xContainer.add(earth);
+      _this.earthResting = earth;
+    });
   };
 
   Globe.prototype.loadGeojson = function(geojsonData){
@@ -274,6 +298,10 @@ var Globe = (function() {
     //
     // }
 
+    if (this.sleepTransitioning) {
+      this.sleepTransition();
+    }
+
     this.renderer.render(this.scene, this.camera);
     // this.controls.update();
   };
@@ -290,10 +318,48 @@ var Globe = (function() {
     this.$document.trigger("annotation.position.update", [this.opt.el, v2.x, v2.y]);
   };
 
+  Globe.prototype.sleepEnd = function(){
+    if (this.sleeping) {
+      this.sleepTransitionStart = new Date();
+      this.sleepTransitioning = true;
+      this.sleeping = false;
+    }
+  };
+
+  Globe.prototype.sleepStart = function(){
+    this.sleepTransitionStart = new Date();
+    this.sleepTransitioning = true;
+    this.sleeping = true;
+  };
+
+  Globe.prototype.sleepTransition = function(){
+    var now = new Date();
+    var transitionMs = this.opt.sleepTransitionMs;
+    var delta = now - this.sleepTransitionStart;
+    var progress = delta / transitionMs;
+    var markerOpacity = this.opt.markerOpacity;
+    var circleOpacity = this.opt.circleOpacity;
+
+    if (progress >= 1) {
+      progress = 1.0;
+      this.sleepTransitioning = false;
+    }
+
+    var alpha = progress;
+    if (!this.sleeping) alpha = 1.0 - progress;
+
+    this.earthResting.material.opacity = alpha;
+
+    _.each(this.annotations, function(a){
+      a.marker.material.opacity = (1.0 - alpha) * markerOpacity;
+    });
+
+    this.annotationCircle.material.opacity = (1.0 - alpha) * circleOpacity;
+  };
+
   Globe.prototype.updateAnnotation = function(annotation){
     if (annotation && annotation.globeEl !== this.opt.el
       || annotation && !annotation.arrow) return false;
-
 
     // // prep transition properties
     // if (this.currentAnnotation) {

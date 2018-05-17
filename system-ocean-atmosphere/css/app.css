@@ -169,6 +169,21 @@
   opacity: 1;
 }
 
+.calendar,
+.content-container,
+.color-key,
+.globe h2,
+.globe canvas:last-child {
+  transition: opacity 2s ease-in-out;
+}
+.sleeping .calendar,
+.sleeping .content-container,
+.sleeping .color-key,
+.sleeping .globe h2,
+.sleeping .globe canvas:last-child {
+  opacity: 0;
+}
+
 #content-hadley-current {
   top: 50%;
 }
