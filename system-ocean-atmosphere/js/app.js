@@ -46,10 +46,13 @@ var AppOceanAtmosphere = (function() {
       copy.index = i;
       copy.id = ""+i;
 
-      copy.latFrom = a.lat - annotationLatThreshold;
-      copy.latTo = a.lat + annotationLatThreshold;
-      copy.lonFrom = a.lon - annotationLonThreshold;
-      copy.lonTo = a.lon + annotationLonThreshold;
+      var lonThreshold = a.lonThreshold || annotationLonThreshold;
+      var latThreshold = a.latThreshold || annotationLatThreshold;
+
+      copy.latFrom = a.lat - latThreshold;
+      copy.latTo = a.lat + latThreshold;
+      copy.lonFrom = a.lon - lonThreshold;
+      copy.lonTo = a.lon + lonThreshold;
       // Note where x = 0px, lon = -90
       // where y = 0px, lat = 90
       var lw = a.width;
@@ -186,7 +189,7 @@ var AppOceanAtmosphere = (function() {
 
   AppOceanAtmosphere.prototype.onRotate = function(axis, value){
     this.sleep.wakeUp();
-    
+
     var _this = this;
     if (axis === "vertical")  this.rotateY = value;
     else this.rotateX = value;

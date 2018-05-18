@@ -1,13 +1,13 @@
 {
   "annotations": [
     {
-      "lat": 37.0942262,
-      "lon": -60.7623902,
+      "lat": 34.111587,
+      "lon": -65.890461,
       "width": 50,
       "height": 30,
       "globeEl": "#ocean-currents",
       "arrow": {
-        "radius": 0.3,
+        "radius": 0.4,
         "distance": 1.0,
         "anchor": [1.0, 0.5]
       },
@@ -17,18 +17,18 @@
           "id": "content-gulf-stream",
           "className": "content-ocean",
           "title": "Gulf Stream",
-          "text": "This fast-moving current carries heat from the tropics toward the poles along the coast of North America."
+          "text": "This fast-moving current carries a significant proportion of ocean heat from the tropics to the Arctic."
         }
       ]
     },{
-      "lat": 35.0308912,
-      "lon": 149.0079868,
+      "lat": 30.76453,
+      "lon": 136.508709,
       "width": 50,
       "height": 30,
       "globeEl": "#ocean-currents",
       "parentEl": "#content",
       "arrow": {
-        "radius": 0.3,
+        "radius": 0.35,
         "distance": 1.0,
         "anchor": [1.0, 0.5]
       },
@@ -38,25 +38,6 @@
           "className": "content-ocean",
           "title": "Kuroshio Current",
           "text": "A warm current running north from the tropics. In the mid-latitudes, it joins the North Pacific current and flows eastward."
-        }
-      ]
-    },{
-      "lat": 0,
-      "lon": 90,
-      "width": 50,
-      "height": 30,
-      "globeEl": "#atmosphere-wind",
-      "parentEl": "#content",
-      "els": [
-        {
-          "id": "content-hadley-current",
-          "className": "content-atmosphere",
-          "title": "Hadley cells",
-          "text": "Warm air rises from the equator, then cools as it moves toward the poles. This cool air sinks to the surface, creating a loop of air circulation known as a Hadley cell."
-        },{
-          "id": "image-hadley-current",
-          "className": "content-image",
-          "image": "img/hadley_cells.png"
         }
       ]
     },{
@@ -75,20 +56,21 @@
         {
           "id": "content-peru-current",
           "className": "content-ocean",
-          "title": "Peru Current",
-          "text": "A cold, north-flowing current that brings nutrients to sea life near South America. This current weakens during El Niño years, warming coastal areas and reducing fish populations."
+          "title": "Peru (Humboldt) Current",
+          "text": "This cold, northward flowing current runs along the west coast of South America. Its flow draws cold, nutrient-rich water from below to the surface, fueling sea life."
         }
       ]
     },{
-      "lat": -46.5707514,
-      "lon": 27.2465078,
-      "width": 50,
-      "height": 30,
+      "lat": -90,
+      "lon": 0,
+      "lonThreshold": 180,
+      "width": 30,
+      "height": 50,
       "globeEl": "#ocean-currents",
       "parentEl": "#content",
       "arrow": {
-        "radius": 0.3,
-        "distance": 1.0,
+        "radius": 0.7,
+        "distance": 0.8,
         "anchor": [1.0, 0.5]
       },
       "els": [
@@ -96,18 +78,18 @@
           "id": "content-southern-ocean",
           "className": "content-ocean",
           "title": "Southern Ocean",
-          "text": "The world’s largest current circles Antarctica. Here, very cold, nutrient-rich bottom waters rise to the surface, travel north and are distributed throughout the world’s oceans."
+          "text": "Powerful eastward winds drive the surface currents circling Antarctica."
         }
       ]
     },{
-      "lat": 56.1262412,
-      "lon": -28.3714522,
+      "lat": 60.107154,
+      "lon": -48.502286,
       "width": 50,
       "height": 30,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "arrow": {
-        "radius": 0.3,
+        "radius": 0.4,
         "distance": 1.0,
         "anchor": [0.0, 0.5]
       },
@@ -116,18 +98,18 @@
           "id": "content-northern-polar",
           "className": "content-atmosphere",
           "title": "Northern Polar Front",
-          "text": "Here, cold polar air meets warm air moving north from equator. This forms a fast-flowing, wavy river of air that drives weather patterns from west to east."
+          "text": "Cold, westward flowing polar air encounters the warmer, eastward flowing air of the mid-latitudes to create a belt of unstable, sometimes stormy weather."
         }
       ]
     },{
-      "lat": 2,
-      "lon": -121.1574312,
+      "lat": 0,
+      "lon": -130,
       "width": 50,
       "height": 30,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "arrow": {
-        "radius": 0.3,
+        "radius": 0.4,
         "distance": 1.0,
         "anchor": [0.0, 0.5]
       },
@@ -136,7 +118,7 @@
           "id": "content-trade-winds",
           "className": "content-atmosphere",
           "title": "Trade Winds",
-          "text": "Some warm, tropical air cools and sinks before reaching the poles. These masses return to the equator, flowing southeast in the Northern Hemisphere and northwest in the Southern Hemisphere. They meet at the Intertropical Convergence Zone."
+          "text": "In the age of sailing ships, sailors used these steady winds to navigate the globe. These surface winds blow southwest in the Northern Hemisphere and northwest the Southern Hemisphere toward the equator."
         }
       ]
     },{
@@ -147,7 +129,7 @@
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
       "arrow": {
-        "radius": 0.3,
+        "radius": 0.4,
         "distance": 1.0,
         "anchor": [0.0, 0.5]
       },
@@ -156,7 +138,7 @@
           "id": "content-coriolis-effect",
           "className": "content-atmosphere",
           "title": "Coriolis Effect",
-          "text": "Earth’s rotation deflects rising air masses. Without this force, air would move directly from the tropics to the poles—but the Coriolis Effect results in currents moving in a curved path."
+          "text": "The process by which Earth’s rotation deflects the flow of water or air to the right in the Northern Hemisphere and left in the Southern Hemisphere when facing the direction of movement. The Coriolis effect accounts for the westerly component of the trade winds."
         }
       ]
     }
