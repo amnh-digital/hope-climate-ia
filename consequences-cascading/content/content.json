@@ -11,41 +11,41 @@
         {
           "parent": "root",
           "id": "a1",
-          "label": "Heat waves",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": "Extreme heat waves could become longer and more severe",
+          "label": "Extreme heat waves",
+          "description": "Heat waves become longer and hotter",
           "angle": 100
         },{
           "parent": "a1",
           "id": "a2",
           "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": "Soil dries out from increased heat and reduced rainfall",
+          "description": "Soil dries out",
           "image": "img/dry_soil.jpg",
           "angle": 100
         },{
           "parent": "a2",
           "id": "a3",
           "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": "Dry soil produces fewer crops",
+          "description": "Fewer crops",
           "angle": 80
         },{
           "parent": "a3",
           "id": "a4",
           "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": "Poor harvests could cause food shortages and price increases",
+          "description": "Poor harvests",
+          "angle": 75
+        },{
+          "parent": "a4",
+          "id": "a5",
+          "label": "",
+          "description": "Food shortages",
           "image": "img/food_shortage.jpg",
           "angle": 75
+        },{
+          "parent": "a4",
+          "id": "a6",
+          "label": "",
+          "description": "Price increases",
+          "angle": 105
         }
       ]
     },{
@@ -60,49 +60,35 @@
           "parent": "root",
           "id": "b1",
           "label": "Droughts",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": "Rising temperatures could cause more severe droughts",
+          "description": "Droughts become longer and more frequent",
           "angle": 100
         },{
           "parent": "b1",
           "id": "b2",
           "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": "Drought-related crop failures could cause localized famines",
+          "description": "Crop failures and famines",
           "image": "img/crop.jpg",
           "angle": 80
         },{
           "parent": "b2",
           "id": "b3",
           "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": "People could flee drought-stricken areas, becoming “climate refugees”",
-          "angle": 90
+          "description": "\"Climate refugees\" flee drought-stricken areas",
+          "angle": 90,
+          "nContentWidth": 0.1
         },{
           "parent": "b3",
           "id": "b4",
           "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": "Neighboring regions could be destabilized ",
-          "angle": 100
-        },{
-          "parent": "b4",
-          "id": "b5",
-          "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
-          "description": "Conflicts over resources could fuel political instability, violence and war",
+          "description": "Hunger and unemployment fuel political instability, violence and war",
           "image": "img/conflicts.jpg",
           "angle": 105
+        },{
+          "parent": "b3",
+          "id": "b5",
+          "label": "",
+          "description": "Emigrants pour into neighboring countries",
+          "angle": 80
         }
       ]
     },{
@@ -116,20 +102,14 @@
         {
           "parent": "root",
           "id": "c1",
-          "label": "Habitat shifts",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": "Regional climate changes could expand the ranges of microbes and insects",
+          "label": "Habitat change",
+          "description": "Insect and microbe ranges expand",
           "angle": 100
         },{
           "parent": "c1",
           "id": "c2",
           "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": "Disease-causing organisms could move into new places",
+          "description": "Disease-causing organisms move into new places",
           "angle": 90,
           "contentAngle": -55,
           "contentDistance": 0.15
@@ -137,30 +117,21 @@
           "parent": "c2",
           "id": "c3",
           "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water supplies",
-          "image": "img/cholera.png",
+          "description": "Lyme disease could spread as ticks’ ranges expand",
+          "image": "img/lyme.jpg",
           "angle": 10
         },{
           "parent": "c2",
           "id": "c4",
           "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
           "description": "Mosquitoes could spread malaria and dengue fever to new areas",
           "angle": 60
         },{
           "parent": "c2",
           "id": "c5",
           "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": "Lyme disease could spread as ticks’ ranges expand",
-          "image": "img/lyme.jpg",
+          "description": "Waterborne diseases such as cholera spreads as flooding and rain runoff contaminate water supplies",
+          "image": "img/cholera.png",
           "angle": 90,
           "contentAngle": 90,
           "imageAngle": 75,
@@ -169,18 +140,12 @@
           "parent": "c2",
           "id": "c6",
           "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
           "description": "Toxic algal blooms could contaminate seafood",
           "angle": 120
         },{
           "parent": "c2",
           "id": "c7",
           "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
           "description": "Yellow fever, Chagas's disease, schistosomiasis and other warm-weather diseases could all become more common",
           "image": "img/disease.png",
           "angle": 165
@@ -198,19 +163,13 @@
           "parent": "root",
           "id": "d1",
           "label": "spring starts earlier",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": "Rising temperatures change timing of seasons",
+          "description": "Seasons change as the climate warms",
           "angle": 100
         },{
           "parent": "d1",
           "id": "d2",
           "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": "Leaves reappear on plants sooner, and leaf-eating insects multiply earlier",
+          "description": "Leaves appear earlier",
           "image": "img/leaves.jpg",
           "angle": 95,
           "nImageWidth": 0.7
@@ -218,31 +177,34 @@
           "parent": "d2",
           "id": "d3",
           "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": "Migrating birds must arrive earlier or won't find enough insects to eat",
+          "description": "Leaf-eating insects multiply sooner",
           "angle": 80
         },{
           "parent": "d3",
           "id": "d4",
           "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": "Plant, insect and bird ranges could shrink, or move to higher altitudes and higher latitudes",
+          "description": "Birds must migrate earlier to find insects to eat",
           "angle": 95
         },{
           "parent": "d4",
           "id": "d5",
           "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
-          "description": "Invasive pests such as bark beetles could devastate forests as their ranges expand",
+          "description": "Plant, insect and bird ranges shrink or move",
+          "angle": 80
+        },{
+          "parent": "d5",
+          "id": "d6",
+          "label": "",
+          "description": "Invasive pests such as bark beetles could devastate forests",
           "image": "img/pests.jpg",
           "angle": 80,
           "nImageWidth": 0.85
+        },{
+          "parent": "d5",
+          "id": "d7",
+          "label": "",
+          "description": "Trees could die out when ranges shift",
+          "angle": 110
         }
       ]
     },{
@@ -257,49 +219,34 @@
           "parent": "root",
           "id": "e1",
           "label": "sea level rise",
-          "severity": 1,
-          "probability": 5,
-          "timeframe": 1,
-          "description": "Oceans expand as they warm and as polar ice caps melt",
+          "description": "Ice caps melt, and warming oceans expand",
           "angle": 100
         },{
           "parent": "e1",
           "id": "e2",
           "label": "",
-          "severity": 3,
-          "probability": 4,
-          "timeframe": 2,
-          "description": "Major cities are threatened worldwide",
+          "description": "Coastal cities threatened by floods and storm surges",
           "angle": 75
         },{
           "parent": "e2",
           "id": "e3",
           "label": "",
-          "severity": 4,
-          "probability": 3,
-          "timeframe": 3,
-          "description": "Many coastal regions cannot afford extensive, expensive barriers required to hold back rising seas",
+          "description": "Many cannot afford protective barriers to rising seas",
           "image": "img/coastal.jpg",
           "angle": 80
         },{
           "parent": "e3",
           "id": "e4",
           "label": "",
-          "severity": 5,
-          "probability": 2,
-          "timeframe": 4,
-          "description": "Millions of people in poorer areas would be displaced",
+          "description": "Millions of people in poorer areas could be displaced",
           "image": "img/displaced.jpg",
-          "angle": 100
+          "angle": 105
         },{
-          "parent": "e4",
+          "parent": "e3",
           "id": "e5",
           "label": "",
-          "severity": 5,
-          "probability": 1,
-          "timeframe": 5,
-          "description": "Many low-lying islands could disappear entirely",
-          "angle": 89
+          "description": "Low-lying islands could disappear entirely",
+          "angle": 80
         }
       ]
     }

@@ -265,6 +265,12 @@ var Network = (function() {
       _.each(nodes, function(n, id){
         var node = _.clone(n);
 
+        // automatically set severity, probability, timeframe if not defined
+        var level = Math.round(UTIL.lerp(1, 5, node.index / (levels-1)));
+        if (!node.severity) node.severity = level;
+        if (!node.probability) node.probability = 5 - level;
+        if (!node.timeframe) node.timeframe = level;
+
         // retrieve parent info
         var parent = false;
         var parentNX = 0.5;
@@ -302,11 +308,6 @@ var Network = (function() {
         node.nContentWidth = node.nContentWidth ? node.nContentWidth : nodeContentWidth;
         node.nContentHeight = node.nContentHeight ? node.nContentHeight : nodeContentHeight;
 
-        if (node.label && node.label.length) {
-          node.nContentWidth = nodeLabelRadius * 2;
-          node.nContentHeight = node.nContentWidth;
-        }
-
         // determine sound based on severity
         node.soundMu = (node.severity - 1) / 4.0;
 
@@ -341,7 +342,7 @@ var Network = (function() {
         var node = _.clone(n);
 
         // determine position of content
-        var contentDistance = node.label ? nodeLabelRadius + node.nContentWidth * 0.5 : nodeRadiusRange[0] * 2 + node.nContentWidth * 0.5;
+        var contentDistance = node.label ? nodeLabelRadius + node.nContentWidth * 0.5 : nodeRadiusRange[0] * 1.5 + node.nContentWidth * 0.5;
         contentDistance = node.contentDistance || contentDistance;
 
         var contentAngle = 0;
