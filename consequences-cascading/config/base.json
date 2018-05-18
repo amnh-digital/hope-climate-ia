@@ -16,6 +16,7 @@
     "nodeMs": 1500,
     "nodeTransitionMs": 1000,
     "nodeContentDelayMs": 500,
+    "nodeInitialDelayMs": 500,
     "nodeContentMs": 1000,
     "nodeContentWidth": 0.08,
     "nodeContentHeight": 0.04,

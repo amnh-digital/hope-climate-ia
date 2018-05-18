@@ -210,6 +210,7 @@ var Network = (function() {
     var nodeMs = this.opt.nodeMs;
     var nodeTransitionMs = this.opt.nodeTransitionMs;
     var nodeContentDelayMs = this.opt.nodeContentDelayMs;
+    var nodeInitialDelayMs = this.opt.nodeInitialDelayMs;
     var nodeContentMs = this.opt.nodeContentMs;
     var nodeRadiusRange = this.opt.nodeRadiusRange;
     var nodeContentWidth = this.opt.nodeContentWidth;
@@ -323,7 +324,10 @@ var Network = (function() {
         }
         node.start = start + delta;
         node.end = UTIL.lerp(start, end, nodeTransitionMs/nodeMs) + delta;
-        node.contentStart = node.start + segment * (nodeContentDelayMs/nodeMs);
+
+        var delayMs = nodeContentDelayMs;
+        if (node.parent==="root") delayMs = nodeInitialDelayMs;
+        node.contentStart = node.start + segment * (delayMs/nodeMs);
         node.contentEnd = node.contentStart + segment * (nodeContentMs/nodeMs);
 
         // radius is based on severity
@@ -593,7 +597,7 @@ var Network = (function() {
 
       var contentP = UTIL.norm(progress, node.contentStart, node.contentEnd);
       contentP = UTIL.clamp(contentP, 0, 1);
-      if (node.label) contentP = 1;
+      // if (node.label) contentP = 1;
       node.contentArea.alpha = contentP;
       if (node.labelArea) node.labelArea.alpha = contentP;
     });
