@@ -2,7 +2,7 @@
   "network": {
     "el": "#network",
     "angleThreshold": 30,
-    "transitionMs": 2000,
+    "transitionMs": 1500,
     "resetAfterMs": 500,
     "resetTransitionMs": 1500,
     "sleepTransitionMs": 2000,
@@ -24,6 +24,7 @@
     "nodeColor": "0x058599",
     "nodeLineColor": "0x058599",
     "nodeBgColor": "0x0a2126",
+    "elasticAmount": 0.02,
     "nodeLabelTextStyle": {
       "fontSize": 0.02,
       "fill": "#058599",

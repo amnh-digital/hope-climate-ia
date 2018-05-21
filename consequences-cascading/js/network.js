@@ -539,6 +539,7 @@ var Network = (function() {
     bgGraphics.clear();
     var nodeRadius = this.nodeRadius;
     var nodeLabelRadius = this.nodeLabelRadius;
+    var elasticAmount = this.opt.elasticAmount;
 
     _.each(branch.nodes, function(node, id){
       var p = UTIL.norm(progress, node.start, node.end);
@@ -561,7 +562,7 @@ var Network = (function() {
         var bgColor = node.bgColor;
 
         if (p < 1.0) {
-          var mu = UTIL.easeInElastic(p);
+          var mu = UTIL.easeInElastic(p, elasticAmount);
           var lerpPoint = UTIL.lerpLine(node.fromX, node.fromY, node.x, node.y, mu);
           x1 = lerpPoint[0];
           y1 = lerpPoint[1];
@@ -669,7 +670,7 @@ var Network = (function() {
 
     var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.resetStart, this.resetEnd);
-    var progressEased = UTIL.easeInElastic(progress);
+    var progressEased = UTIL.easeInElastic(progress, this.opt.elasticAmount);
     if (progress >= 1) {
       progress = 1;
       this.resetting = false;
@@ -781,7 +782,7 @@ var Network = (function() {
   Network.prototype.renderTransition = function(t){
     var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.transitionStart, this.transitionEnd);
-    var progressEased = UTIL.easeInElastic(progress);
+    var progressEased = UTIL.easeInElastic(progress, this.opt.elasticAmount);
     if (progress >= 1) {
       progress = 1;
       this.transitioning = false;
