@@ -1,5 +1,7 @@
 {
   "angleThreshold": 180,
+  "resetAfterMs": 2000,
+  "resetTransitionMs": 2000,
   "stories": {
     "el": "#stories",
     "transformer": "#transformer",

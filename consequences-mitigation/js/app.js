@@ -100,12 +100,14 @@ var AppMitigation = (function() {
     this.angleDelta = angleDelta;
 
     // transition
-    var easedProgress = UTIL.easeInOutSin(angleProgress);
-    var toIndex = this.currentStoryIndex + 1;
-    if (this.angleDelta < 0) toIndex = this.currentStoryIndex - 1;
-    if (toIndex < 0) toIndex = count - 1;
-    if (toIndex >= count) toIndex = 0;
-    this.stories.transition(this.currentStoryIndex, toIndex, easedProgress);
+    this.transition();
+
+    // start the countdown to reset
+    this.resetting = false;
+    this.resetCountingDown = true;
+    this.resetStart = new Date().getTime() + this.opt.resetAfterMs;
+    this.resetEnd = this.resetStart + this.opt.resetTransitionMs;
+    this.resetAngleStart = this.angleDelta;
 
     // first load
     if (this.currentStoryIndex < 0) {
@@ -124,10 +126,44 @@ var AppMitigation = (function() {
 
   AppMitigation.prototype.render = function() {
     var _this = this;
+    var now = new Date().getTime();
+
+    // check if we need to reset
+    if (this.resetCountingDown && now > this.resetStart) {
+      this.resetting = true;
+      this.resetCountingDown = false;
+    }
+
+    if (this.resetting) {
+      this.renderReset(now);
+    }
 
     this.stories.render();
 
     requestAnimationFrame(function(){ _this.render(); });
+  };
+
+  AppMitigation.prototype.renderReset = function(now){
+    var progress = UTIL.norm(now, this.resetStart, this.resetEnd);
+    if (progress >= 1) {
+      progress = 1;
+      this.resetting = false;
+    }
+
+    this.angleDelta = this.resetAngleStart * (1-progress);
+    this.transition();
+  };
+
+  AppMitigation.prototype.transition = function(){
+    var count = this.storyCount;
+    var angleDelta = this.angleDelta;
+    var angleProgress = Math.abs(angleDelta) / this.angleThreshold;
+    var easedProgress = UTIL.easeInOutSin(angleProgress);
+    var toIndex = this.currentStoryIndex + 1;
+    if (angleDelta < 0) toIndex = this.currentStoryIndex - 1;
+    if (toIndex < 0) toIndex = count - 1;
+    if (toIndex >= count) toIndex = 0;
+    this.stories.transition(this.currentStoryIndex, toIndex, easedProgress);
   };
 
   return AppMitigation;
