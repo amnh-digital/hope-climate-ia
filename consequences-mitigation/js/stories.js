@@ -61,22 +61,29 @@ var Stories = (function() {
   };
 
   Stories.prototype.onChange = function(index){
+    var firstLoad = true;
+
     // pause previous story
     if (this.story) {
       this.story.$el.removeClass('active playing');
       this.story.video.currentTime = 0;
       this.story.video.pause();
+      firstLoad = false;
     }
 
     var story = this.stories[index];
     this.story = story;
     story.$el.addClass('active');
 
-    this.$transformer.css('transform', 'translate3d('+story.dx+'px,'+story.dy+'px,0)');
+    if (firstLoad) {
+      var scaleFactor = this.opt.scaleFactor;
+      story.$el.css('transform', 'scale3d('+scaleFactor+','+scaleFactor+','+scaleFactor+')');
+      this.$transformer.css('transform', 'translate3d('+story.dx+'px,'+story.dy+'px,0)');
+    }
 
     this.playing = false;
     this.loadStart = new Date().getTime();
-    this.loadEnd = this.loadStart + this.opt.loadingTime;
+    this.loadEnd = this.loadStart + this.opt.loadingMs;
     this.loading = true;
   };
 
@@ -123,7 +130,7 @@ var Stories = (function() {
     story.video.pause();
     // if (this.story && story.index === this.story.index) {
     //   this.loadStart = new Date().getTime();
-    //   this.loadEnd = this.loadStart + this.opt.loadingTime;
+    //   this.loadEnd = this.loadStart + this.opt.loadingMs;
     //   this.loading = true;
     // }
   };
@@ -162,6 +169,23 @@ var Stories = (function() {
       this.story.$progressText.text(progressText);
     }
 
+  };
+
+  Stories.prototype.transition = function(fromIndex, toIndex, mu){
+    var stories = this.stories;
+    var fromStory = stories[fromIndex];
+    var toStory = stories[toIndex];
+
+    var dx = UTIL.lerp(fromStory.dx, toStory.dx, mu);
+    var dy = UTIL.lerp(fromStory.dy, toStory.dy, mu);
+
+    var scaleFactor = this.opt.scaleFactor;
+    var fromScale = UTIL.lerp(scaleFactor, 1, mu);
+    var toScale = UTIL.lerp(1, scaleFactor, mu);
+
+    fromStory.$el.css('transform', 'scale3d('+fromScale+','+fromScale+','+fromScale+')');
+    toStory.$el.css('transform', 'scale3d('+toScale+','+toScale+','+toScale+')');
+    this.$transformer.css('transform', 'translate3d('+dx+'px,'+dy+'px,0)');
   };
 
   return Stories;

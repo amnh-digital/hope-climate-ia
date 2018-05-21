@@ -91,12 +91,21 @@ var AppMitigation = (function() {
 
     // check to see if we reached the threshold for going to the next story
     var angleDelta = this.angleDelta + delta;
-    var changed = Math.abs(angleDelta) >= angleThreshold;
+    var angleProgress = Math.abs(angleDelta) / angleThreshold;
+    var changed = angleProgress >= 1;
     if (changed && angleDelta < 0) index = this.currentStoryIndex - 1;
     else if (changed) index = this.currentStoryIndex + 1;
     if (index < 0) index = count - 1;
     if (index >= count) index = 0;
     this.angleDelta = angleDelta;
+
+    // transition
+    var easedProgress = UTIL.easeInOutSin(angleProgress);
+    var toIndex = this.currentStoryIndex + 1;
+    if (this.angleDelta < 0) toIndex = this.currentStoryIndex - 1;
+    if (toIndex < 0) toIndex = count - 1;
+    if (toIndex >= count) toIndex = 0;
+    this.stories.transition(this.currentStoryIndex, toIndex, easedProgress);
 
     // first load
     if (this.currentStoryIndex < 0) {

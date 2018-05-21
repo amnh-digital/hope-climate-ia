@@ -26,11 +26,11 @@
   width: 16vh;
   height: 9vh;
   transform-origin: 0% 50%;
-  transition: transform 1s ease-in-out;
-  transform: scale3d(1, 1, 1);
+  /* transition: transform 1s ease-in-out;
+  transform: scale3d(1, 1, 1); */
 }
 .story-wrapper.active {
-  transform: scale3d(1.5, 1.5, 1.5);
+  /* transform: scale3d(1.5, 1.5, 1.5); */
 }
 /* .story-wrapper.playing {
   transition-duration: 3s;
@@ -154,7 +154,7 @@
 }
 
 .transformer {
-  transition: transform 3s ease-in-out;
+  /* transition: transform 3s ease-in-out; */
 }
 
 #story1 {

@@ -30,7 +30,7 @@
       "near": 0.01,
       "far": 1000,
       "radius": 0.5,
-      "geojsonLineColor": "#555555"
+      "geojsonLineColor": "#444444"
     },{
       "el": "#atmosphere-wind",
       "title": "Wind speed and air temperature<br />at sea level",
@@ -39,7 +39,7 @@
       "near": 0.01,
       "far": 1000,
       "radius": 0.5,
-      "geojsonLineColor": "#443820"
+      "geojsonLineColor": "#444444"
     }
   ],
   "sleep": {
