@@ -2,7 +2,9 @@
   "angleThreshold": 60,
   "stories": {
     "el": "#stories",
-    "loadingTime": 4000
+    "transformer": "#transformer",
+    "loadingTime": 4000,
+    "translateFactor": 0.3
   },
   "map": {
     "el": "#map"
@@ -19,7 +21,7 @@
   },
   "sleep": {
     "enable": 1,
-    "checkInterval": 5,
-    "sleepAfter": 60
+    "checkInterval": 10,
+    "sleepAfter": 600
   }
 }

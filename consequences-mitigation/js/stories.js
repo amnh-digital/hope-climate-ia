@@ -10,10 +10,12 @@ var Stories = (function() {
 
   Stories.prototype.init = function(stories){
     this.$el = $(this.opt.el);
+    this.$transformer = $(this.opt.transformer);
     this.$body = $('body');
     this.stories = stories;
 
     this.loadUI();
+    this.onResize();
     this.onChange(0);
   };
 
@@ -55,6 +57,7 @@ var Stories = (function() {
     });
 
     this.$el.append($container);
+    this.stories = stories;
   };
 
   Stories.prototype.onChange = function(index){
@@ -69,10 +72,47 @@ var Stories = (function() {
     this.story = story;
     story.$el.addClass('active');
 
+    this.$transformer.css('transform', 'translate3d('+story.dx+'px,'+story.dy+'px,0)');
+
     this.playing = false;
     this.loadStart = new Date().getTime();
     this.loadEnd = this.loadStart + this.opt.loadingTime;
     this.loading = true;
+  };
+
+  Stories.prototype.onResize = function(){
+    var stories = this.stories;
+
+    // get parent dimensions
+    var pw = this.$el.width();
+    var ph = this.$el.height();
+    var px = this.$el.offset().left;
+    var py = this.$el.offset().top;
+    var translateFactor = this.opt.translateFactor;
+
+    var pcx = px + pw * 0.5;
+    var pcy = py + ph * 0.5;
+
+    // calculate positioning
+    _.each(stories, function(story, i){
+      var $el = story.$el;
+
+      // determine the center of the story
+      var top = $el.offset().top;
+      var left = $el.offset().left;
+      var w = $el.width();
+      var h = $el.height();
+      var cx = left + w * 0.5;
+      var cy = top + h * 0.5;
+
+      // translate the container slightly based on the centers of the story and the parent
+      var lx = UTIL.lerp(cx, pcx, translateFactor);
+      var ly = UTIL.lerp(cy, pcy, translateFactor);
+      stories[i].dx = lx - cx;
+      stories[i].dy = ly - cy;
+    });
+
+    this.stories = stories;
   };
 
   Stories.prototype.onVideoEnded = function(story){

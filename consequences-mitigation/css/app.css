@@ -1,4 +1,14 @@
-
+.title,
+.sleepMode {
+  left: 35%;
+}
+.title {
+  top: 25%;
+}
+.sleepMode {
+  bottom: auto;
+  top: 33.333333%;
+}
 
 .stories {
   height: 40vh;
@@ -20,7 +30,7 @@
   transform: scale3d(1, 1, 1);
 }
 .story-wrapper.active {
-  transform: scale3d(1.25, 1.25, 1.25);
+  transform: scale3d(1.5, 1.5, 1.5);
 }
 /* .story-wrapper.playing {
   transition-duration: 3s;
@@ -70,11 +80,6 @@
 }
 .story-wrapper.active .information p {
   opacity: 1;
-}
-
-.sleepMode {
-  bottom: auto;
-  top: 33.333333%;
 }
 
 .video-container {
@@ -157,39 +162,24 @@
   top: -20vh;
   transform-origin: right center;
 }
-.hunts-point.playing .transformer {
-  transform: scale3d(1.5, 1.5, 1.5) translate3d(-20vh, 10vh, 0);
-}
 #story2 {
   top: 12vh;
   right: 7vh;
-}
-.red-hook.playing .transformer {
-  transform: scale3d(1.5, 1.5, 1.5) translate3d(-10vh, -20vh, 0);
 }
 #story3 {
   bottom: -6vh;
   right: -16vh;
   transform-origin: right bottom;
 }
-.rockaway.playing .transformer {
-  transform: scale3d(1.5, 1.5, 1.5) translate3d(-40vh, -40vh, 0);
-}
 #story4 {
   bottom: -10vh;
-  left: 52vh;
+  left: 45vh;
   transform-origin: center bottom;
-}
-.coney-island.playing .transformer {
-  transform: scale3d(1.5, 1.5, 1.5) translate3d(-20vh, -36vh, 0);
 }
 #story5 {
   top: 19vh;
   left: 9vh;
   transform-origin: center bottom;
-}
-.staten-island.playing .transformer {
-  transform: scale3d(1.1, 1.1, 1.1) translate3d(25vh, -27vh, 0);
 }
 
 .map {
