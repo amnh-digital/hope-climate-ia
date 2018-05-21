@@ -83,6 +83,7 @@ var AppMitigation = (function() {
 
   AppMitigation.prototype.onRotate = function(delta){
     this.sleep.wakeUp();
+    if (this.delaying) return false;
 
     var count = this.storyCount;
     var angleThreshold = this.angleThreshold;
@@ -116,6 +117,10 @@ var AppMitigation = (function() {
     }
 
     if (changed) {
+      // delay controls for a beat
+      this.delaying = true;
+      this.delayEnd = new Date().getTime() + this.opt.delayMs;
+
       this.stories.onChange(index);
       this.map.onChange(index);
       this.currentStoryIndex = index;
@@ -132,6 +137,11 @@ var AppMitigation = (function() {
     if (this.resetCountingDown && now > this.resetStart) {
       this.resetting = true;
       this.resetCountingDown = false;
+    }
+
+    // check delay
+    if (this.delaying && now > this.delayEnd) {
+      this.delaying = false;
     }
 
     if (this.resetting) {
