@@ -8,9 +8,9 @@
   },
   "globe": {
     "el": "#globe",
-    "borderColor": "#777777",
-    "oceanColor": "#33353a",
-    "highlightColor": "#ffe100",
+    "borderColor": "$#primaryDarker",
+    "oceanColor": "$#primaryDark",
+    "highlightColor": "$#highlight",
     "animationMs": 1000
   },
   "controls": {

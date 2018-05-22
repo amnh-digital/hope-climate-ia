@@ -2,11 +2,10 @@
 
 var AppChange = (function() {
 
-  function AppChange(config, content, data) {
+  function AppChange(config, content) {
     var defaults = {};
     this.opt = _.extend({}, defaults, config);
     this.content = content;
-    this.data = data;
 
     this.init();
   }
@@ -55,15 +54,13 @@ var AppChange = (function() {
   };
 
   AppChange.prototype.onReady = function(){
-    var d = this.data;
-
     var opt = _.extend({}, this.opt.slideshow, this.content);
 
     // Initialize slideshow
     this.slideshow = new Slideshow(opt);
 
     // Init globe
-    opt = _.extend({}, this.opt.globe, this.content, {"geojson": d});
+    opt = _.extend({}, this.opt.globe, this.content);
     this.globe = new Globe(opt);
 
     // Init sleep mode utilitys

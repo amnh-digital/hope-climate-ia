@@ -21,18 +21,18 @@
     "nodeContentWidth": 0.08,
     "nodeContentHeight": 0.04,
     "nodeImageWidth": 1.5,
-    "nodeColor": "0x058599",
-    "nodeLineColor": "0x058599",
-    "nodeBgColor": "0x0a2126",
+    "nodeColor": "$0xprimary",
+    "nodeLineColor": "$0xprimary",
+    "nodeBgColor": "$0xprimaryDarker",
     "elasticAmount": 0.02,
     "nodeLabelTextStyle": {
       "fontSize": 0.02,
-      "fill": "#058599",
+      "fill": "$#primary",
       "fontFamily": "Balance"
     },
     "nodeBodyTextStyle": {
       "fontSize": 0.013,
-      "fill": "#058599",
+      "fill": "$#primary",
       "fontFamily": "Balance",
       "wordWrap": true,
       "lineHeight": 1.5
@@ -41,11 +41,11 @@
       "radius": 0.11,
       "x": 0.4,
       "y": 0.2,
-      "color": "0x058599",
+      "color": "$0xprimary",
       "lineWidth": 0.015,
       "textStyle": {
         "fontSize": 0.027,
-        "fill": "#058599",
+        "fill": "$#primary",
         "fontFamily": "Balance"
       }
     }

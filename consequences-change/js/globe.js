@@ -16,7 +16,7 @@ var Globe = (function() {
 
   function toSphere(lon, lat, radius) {
     var phi = (90-lat) * (Math.PI/180);
-    var theta = (lon+90) * (Math.PI/180);
+    var theta = (lon+180) * (Math.PI/180);
     var x = -(radius * Math.sin(phi) * Math.cos(theta));
     var y = (radius * Math.cos(phi));
     var z = (radius * Math.sin(phi) * Math.sin(theta));
@@ -33,8 +33,6 @@ var Globe = (function() {
 
     this.initScene();
     this.loadEarth();
-    this.loadGeojson(this.opt.geojson);
-    this.loadMarker();
   };
 
   Globe.prototype.initScene = function() {
@@ -66,28 +64,23 @@ var Globe = (function() {
   };
 
   Globe.prototype.loadEarth = function() {
+    var _this = this;
     var radius = this.opt.radius;
     var color = this.opt.oceanColor;
+    var scene = this.scene;
 
-    // init globe
-    var geo = new THREE.SphereGeometry(radius, 64, 64);
-    var mat = new THREE.MeshBasicMaterial({
-      color: color
+    // load image texture
+    var loader = new THREE.TextureLoader();
+    loader.load('img/world_map_blank_without_borders.png', function (texture) {
+      // init globe
+      var geo = new THREE.SphereGeometry(radius, 64, 64);
+      var mat = new THREE.MeshBasicMaterial({map: texture, overdraw: true});
+      var earth = new THREE.Mesh(geo, mat);
+      earth.material.map.needsUpdate = true;
+      scene.add(earth);
+      _this.earth = earth;
+      _this.loadMarker();
     });
-
-    this.earth = new THREE.Mesh(geo, mat);
-    // this.earth.rotation.y = -Math.PI/2;
-
-    this.scene.add(this.earth);
-  };
-
-  Globe.prototype.loadGeojson = function(geojsonData){
-    var opt = {
-      color: this.opt.borderColor
-    };
-    var radius = this.opt.radius * 1.000001;
-
-    drawThreeGeo(geojsonData, radius, 'sphere', opt, this.earth);
   };
 
   Globe.prototype.loadMarker = function(){
@@ -162,7 +155,7 @@ var Globe = (function() {
   Globe.prototype.updateEarth = function(slide){
     var earth = this.earth;
     var phi = slide.lat * (Math.PI/180);
-    var lon = 360 - slide.lon;
+    var lon = 270 - slide.lon;
     var theta = lon * (Math.PI/180);
 
     var euler = new THREE.Euler(phi, theta, 0, 'XYZ');

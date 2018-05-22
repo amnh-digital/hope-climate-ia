@@ -8,6 +8,7 @@ $(function() {
 
   ).done(function(baseConfig, config, configSibling, content, data){
     baseConfig = baseConfig[0];
+    updateColorsFromConfig(baseConfig);
     _.extend(config[0].controls.pointerlockMappings, configSibling[0].controls.pointerlockMappings);
     config = _.extend({}, baseConfig, config[0]);
     content = content[0];
