@@ -14,7 +14,7 @@ $(function() {
     // temporary hack: check for localhost to load video locally or remote
     if (window.location.hostname !== "localhost") {
       _.each(config.stories, function(s, i){
-        config.stories[i].video = "https://s3.amazonaws.com/brianfoo-amnh/" + v.video;
+        config.stories[i].video = "https://s3.amazonaws.com/brianfoo-amnh/" + s.video;
       });
     }
 

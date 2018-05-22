@@ -213,5 +213,5 @@
   opacity: 0;
 }
 .sleeping .map svg .filled {
-  fill: var(--primary-color);
+  fill: var(--primary-dark-color);
 }
