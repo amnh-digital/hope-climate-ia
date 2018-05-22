@@ -815,7 +815,7 @@ var Graphics = (function() {
     textStyle.wordWrapWidth = labelW;
     aLabel.style = _.extend({}, textStyle, {lineHeight: textStyle.fontSize * 1.5});
     textStyle = _.clone(textStyle);
-    textStyle.fontSize *= 0.8;
+    textStyle.fontSize *= 0.9;
     lLabel.style = textStyle;
 
     // set x position
@@ -860,7 +860,7 @@ var Graphics = (function() {
     marker.drawRect(rectX, cy, rectW, rectH);
     marker.endFill();
 
-    marker.beginFill(0xffffff, 0.075);
+    marker.beginFill(0x000000, 0.25);
     marker.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
     marker.endFill();
 

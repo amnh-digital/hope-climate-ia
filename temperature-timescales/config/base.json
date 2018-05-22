@@ -26,7 +26,7 @@
     },
     "marker": {
       "color": "$0xhighlight",
-      "fill": "$0xprimaryDarker",
+      "fill": "$0xprimaryDark",
       "dotRadius": 0.01,
       "widthStep": 0.005,
       "textStyle": {
