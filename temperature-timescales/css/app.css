@@ -31,13 +31,9 @@
   margin-left: 14.5%;
 }
 .messages > div {
-  /* padding: 1vh 2vh;
-  background: #181818;
-  box-sizing: border-box; */
 }
 .messages p {
   margin: 0;
-  color: #666;
   line-height: 1.8;
   font-size: 0.8vw;
 }
@@ -46,10 +42,9 @@
   margin: 1.5vw 0 0.667vw;
   /* padding-bottom: 1vh;
   border-bottom: 2px solid #333; */
-  color: #999;
 }
 .messages h2 strong {
-  color: #e2bb3d;
+  color: var(--highlight-color);
 }
 .messages .bracket {
   display: block;
@@ -58,11 +53,10 @@
   margin-top: 1vh;
 }
 .messages .bracket path {
-  fill: #3c4242;
+  fill: var(--secondary-color);
 }
 
 .sidebar {
-  color: #aaa;
   opacity: 0;
   height: 5vw;
   display: none;

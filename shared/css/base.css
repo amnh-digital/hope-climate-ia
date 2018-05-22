@@ -3,18 +3,30 @@
   src: url(../font/BalanceOffcPro.ttf);
 }
 
+/* define global colors */
+:root {
+  --primary-color: #058599;
+  --primary-dark-color: #29494e;
+  --primary-darker-color: #0a2126;
+  --secondary-color: #c98f20;
+  --highlight-color: #e2bb3d;
+  --white-color: #aaaaaa;
+  --gray-color: #231f20;
+  --black-color: #000000;
+}
+
 body {
   font-size: 1vw;
   font-family: Balance, arial, helvetica, sans-serif;
 }
 
 .app {
-  background: #222;
-  color: #999;
   width: 100vw;
   height: 100vh;
   position: relative;
   overflow: hidden;
+  color: var(--white-color);
+  background-color: var(--gray-color);
 }
 h1 {
   font-size: 3vw;
@@ -27,7 +39,7 @@ p {
   font-size: 1.2vw;
 }
 a {
-  color: #fff;
+  color: var(--white-color);
 }
 
 .view {
@@ -37,7 +49,7 @@ a {
   top: 50%;
   left: 0;
   margin-top: -28.125vw;
-  background: #000;
+  background-color: var(--black-color);
 }
 
 .title,

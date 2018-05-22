@@ -22,8 +22,8 @@
   border-radius: 0.5vh;
   opacity: 0;
   transition: opacity 1s ease-in-out;
-  background: #4e5154;
-  border-top: 1vh solid white;
+  background: var(--primary-dark-color);
+  border-top: 1vh solid var(--primary-color);
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
 }
 .message:after {

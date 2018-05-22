@@ -14,11 +14,11 @@
 }
 
 #q-climate-weather .umbrella path {
-  fill: #5ebfec;
+  fill: var(--primary-color);
   transition: opacity 1s ease-in-out;
 }
 #q-climate-weather .umbrella.alt path {
-  fill: #cedf78;
+  fill: var(--secondary-color);
 }
 #q-climate-weather .solid {
   opacity: 0;

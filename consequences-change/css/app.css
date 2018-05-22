@@ -99,7 +99,7 @@
   position: absolute;
   top: 0;
   left: -2px;
-  background: #fced97;
+  background: var(--highlight-color);
   box-shadow: 0 0 4px rgba(0,0,0,0.2);
   z-index: 20;
   transition: background-color 2s ease-in-out, width 2s ease-in-out;
@@ -114,16 +114,16 @@
   z-index: 10;
   opacity: 0;
   transition: opacity 2s ease-in-out;
-  background: #23393c;
+  background: var(--primary-darker-color);
 }
 .slide .image.after:before {
-  background: #29494e;
+  background: var(--primary-dark-color);
 }
 .sleeping .slide .image:before {
   opacity: 1;
 }
 .sleeping .slide .image.after:after {
-  background: #000;
+  background: var(--black-color);
   width: 1vw;
 }
 
@@ -147,7 +147,7 @@
 .caption {
   position: absolute;
   width: 100%;
-  background: #000;
+  background: var(--black-color);
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
@@ -163,10 +163,6 @@
 .caption h2 {
   font-size: 1rem;
 }
-.caption .credit {
-
-}
-
 
 .title h2 {
   font-weight: normal;
