@@ -4,9 +4,12 @@
     "time": 0.5,
     "zone": 0.5,
     "margin": [0.12, 0.06, 0.07, 0.05],
+    "plotBGColor": "$0xprimaryDarkest",
+    "plotLineColor": "$0xblack",
     "marker": {
+      "color": "$0xhighlight",
       "textStyle": {
-        "fill": "#e2bb3d",
+        "fill": "$#highlight",
         "fontSize": 0.05,
         "fontWeight": "bold",
         "fontFamily": "Balance"
@@ -14,13 +17,14 @@
     },
     "xAxis": {
       "height": 0.08,
+      "tickColor": "$0xprimaryDark",
       "textStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.05,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.04,
         "fontFamily": "Balance"
       }
@@ -28,12 +32,12 @@
     "yAxis": {
       "width": 0.125,
       "textStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.05,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.04,
         "fontFamily": "Balance"
       }

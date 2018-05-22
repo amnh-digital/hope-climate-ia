@@ -70,6 +70,10 @@ var Graphics = (function() {
     this.cordConfig = this.opt.cord;
     this.sleepTransitionMs = this.opt.sleepTransitionMs;
 
+    this.plotBGColor = parseInt(this.opt.plotBGColor);
+    this.plotLineColor = parseInt(this.opt.plotLineColor);
+    this.plotTickColor = parseInt(this.opt.plotTickColor);
+
     // cord config details:
     // curveRatio: 0.45,
     // ampMin: 0.1, // min oscillation height in px
@@ -334,6 +338,7 @@ var Graphics = (function() {
     var labelCount = axes.children.length;
     var hotColor = parseInt(this.opt.yAxis.hotColor);
     var coolColor = parseInt(this.opt.yAxis.coolColor);
+    var plotTickColor = this.plotTickColor;
 
     axes.clear();
 
@@ -342,7 +347,7 @@ var Graphics = (function() {
     var cw = pd[2];
     var ch = pd[3];
 
-    axes.beginFill(0x151616);
+    axes.beginFill(this.plotBGColor);
     axes.drawRect(cx, cy, cw, ch);
     axes.endFill();
 
@@ -480,7 +485,7 @@ var Graphics = (function() {
           label.y = yLabel;
         }
 
-        axes.lineStyle(1, 0x7f7f87);
+        axes.lineStyle(2, plotTickColor);
         axes.moveTo(x, cy + ch).lineTo(x, yLine);
       }
 
@@ -502,8 +507,10 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.renderCord = function(g, c){
-    if (c.dy===0) g.lineStyle(4, 0xc4ced4);
-    else g.lineStyle(3, 0x45474c, 0.5);
+    var plotLineColor = this.plotLineColor;
+
+    if (c.dy===0) g.lineStyle(4, 0xffffff, 0.5);
+    else g.lineStyle(3, plotLineColor, 0.5);
 
     // get plot bounds
     var pd = this.plotDimensions;
@@ -609,6 +616,8 @@ var Graphics = (function() {
     var observed = this.observed;
     var textStyle = _.extend({}, this.xAxisSubtextStyle, {wordWrap: true});
     var label = observed.children[0];
+    var plotBGColor = this.plotBGColor;
+    var observedColor = parseInt(this.opt.observedColor);
 
     var cx = pd[0];
     var cy = pd[1];
@@ -619,7 +628,7 @@ var Graphics = (function() {
 
     var barW = cw / len;
     var rangeRatio = range[1] / (range[1]-range[0]);
-    observed.lineStyle(1, 0x151616);
+    observed.lineStyle(1, plotBGColor);
 
     _.each(data, function(value, i){
       var x = i * barW + cx;
@@ -634,7 +643,7 @@ var Graphics = (function() {
         y = cy + ch * rangeRatio;
       }
 
-      observed.beginFill(0x333333);
+      observed.beginFill(observedColor);
       observed.drawRect(x, y, barW, barH);
     });
 

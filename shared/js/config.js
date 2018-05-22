@@ -8,7 +8,9 @@ var CONFIG = {
     "highlight": "e2bb3d",
     "white": "aaaaaa",
     "gray": "231f20",
-    "black": "000000"
+    "black": "000000",
+    "warm": "eb5229",
+    "cool": "99cccc"
   }
 };
 

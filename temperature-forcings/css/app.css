@@ -19,7 +19,7 @@
   height: auto;
   box-sizing: border-box;
   padding: 0 1.5vh;
-  border-radius: 0.5vh;
+  /* border-radius: 0.5vh; */
   opacity: 0;
   transition: opacity 1s ease-in-out;
   background: var(--primary-dark-color);

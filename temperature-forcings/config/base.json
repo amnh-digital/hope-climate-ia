@@ -3,17 +3,21 @@
     "el": "#graphics",
     "margin": [0.1, 0.15, 0.1, 0.1],
     "sleepTransitionMs": 2000,
+    "plotBGColor": "$0xprimaryDarkest",
+    "plotLineColor": "$0xblack",
+    "plotTickColor": "$0xprimaryDark",
+    "observedColor": "$0xprimaryDarker",
     "xAxis": {
       "height": 0.0667,
       "labelEvery": 20,
       "tickEvery": 5,
       "textStyle": {
-        "fill": "#7f7f87",
+        "fill": "$#primaryDark",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "#7f7f87",
+        "fill": "$#primaryDark",
         "fontSize": 0.022,
         "fontFamily": "Balance"
       }
@@ -25,17 +29,17 @@
       "minBounds": [-0.2, 0.2],
       "tickEvery": 0.25,
       "textStyle": {
-        "fill": "#7f7f87",
+        "fill": "$#primaryDark",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "#7f7f87",
+        "fill": "$#primaryDark",
         "fontSize": 0.02,
         "fontFamily": "Balance"
       },
-      "hotColor": "0xff3300",
-      "coolColor": "0x99cccc"
+      "hotColor": "$0xwarm",
+      "coolColor": "$0xcool"
     },
     "transitionStep": 0.025,
     "cord": {

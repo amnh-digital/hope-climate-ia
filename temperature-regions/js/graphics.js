@@ -202,6 +202,8 @@ var Graphics = (function() {
     var xAxisSubtextStyle = this.xAxisSubtextStyle;
     var yAxisTextStyle = this.yAxisTextStyle;
     var yAxisSubtextStyle = this.yAxisSubtextStyle;
+    var plotLineColor = parseInt(this.opt.plotLineColor);
+    var tickColor = parseInt(this.opt.xAxis.tickColor);
 
     var axes = this.axes;
     var labelCount = axes.children.length;
@@ -211,7 +213,7 @@ var Graphics = (function() {
     // clear axes
     axes.clear();
 
-    axes.beginFill(0x151616);
+    axes.beginFill(parseInt(this.opt.plotBGColor));
     axes.drawRect(pd[0], pd[1], pd[2], pd[3]);
     axes.endFill();
 
@@ -230,8 +232,8 @@ var Graphics = (function() {
       // draw label
       if (v%1===0) {
         // draw line
-        if (v!=0) axes.lineStyle(1, 0x2c2d2d);
-        else axes.lineStyle(2, 0x2c2d2d);
+        if (v!=0) axes.lineStyle(1, plotLineColor);
+        else axes.lineStyle(2, plotLineColor);
         axes.moveTo(pd[0], p[1]).lineTo(pd[0]+pd[2], p[1]);
 
         if (v===0) {
@@ -275,7 +277,7 @@ var Graphics = (function() {
     v = domain[0];
     var tickEvery = 10;
     var yLabel = xAxisBounds[1] * 1.12;
-    axes.lineStyle(1, 0x56585c);
+    axes.lineStyle(1, tickColor);
     while (v <= domain[1]) {
       var showLabel = (v===domain[1] || v===domain[0]);
       var showTick = (v%tickEvery===0 || v===domain[1] || v===domain[0]);
@@ -331,9 +333,10 @@ var Graphics = (function() {
     var yearIndex = year - domain[0];
     var value = zoneData[yearIndex][0];
     var color = zoneData[yearIndex][1];
+    var lineColor = parseInt(this.opt.marker.color);
     // console.log(year, value, color);
 
-    marker.lineStyle(4, 0xe2bb3d, 0.8);
+    marker.lineStyle(4, lineColor, 0.8);
     marker.moveTo(x, cy).lineTo(x, cy + ch);
 
     var textStyle = _.clone(this.markerTextStyle);
