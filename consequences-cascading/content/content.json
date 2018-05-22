@@ -18,33 +18,27 @@
           "parent": "a1",
           "id": "a2",
           "label": "",
-          "description": "Soil dries out",
+          "description": "Soil dries from heat and lack of rain",
           "image": "img/dry_soil.jpg",
           "angle": 100
         },{
           "parent": "a2",
           "id": "a3",
           "label": "",
-          "description": "Fewer crops",
+          "description": "Dry soil produces fewer crops",
           "angle": 80
         },{
           "parent": "a3",
           "id": "a4",
           "label": "",
-          "description": "Poor harvests",
-          "angle": 75
-        },{
-          "parent": "a4",
-          "id": "a5",
-          "label": "",
-          "description": "Food shortages",
+          "description": "Food shortages could cause famine",
           "image": "img/food_shortage.jpg",
           "angle": 75
         },{
-          "parent": "a4",
-          "id": "a6",
+          "parent": "a3",
+          "id": "a5",
           "label": "",
-          "description": "Price increases",
+          "description": "Cost of food increases",
           "angle": 105
         }
       ]
@@ -52,7 +46,7 @@
       "id": "b",
       "title": "political conflicts",
       "factbox": {
-        "description": "A series of droughts between 2006 and 2011 devastated rural areas in Syria. Unemployed refugees fled to the cities, contributing to instability,  civil war and disputes over refugees.",
+        "description": "A series of droughts between 2006 and 2011 devastated rural areas in Syria. Unemployed refugees fled to the cities, contributing to civil war and disputes over refugees in Europe.",
         "image": "img/factbox_conflicts.jpg"
       },
       "nodes": [
@@ -93,7 +87,7 @@
       ]
     },{
       "id": "c",
-      "title": "disease",
+      "title": "diseases spreading",
       "factbox": {
         "description": "Parts of Argentina have already seen a surge of malaria as the climate warms and mosquito ranges expand.",
         "image": "img/factbox_disease.jpg"
@@ -117,7 +111,7 @@
           "parent": "c2",
           "id": "c3",
           "label": "",
-          "description": "Lyme disease could spread as ticks’ ranges expand",
+          "description": "Lyme disease could spread as ticks' ranges expand",
           "image": "img/lyme.jpg",
           "angle": 10
         },{
@@ -130,7 +124,7 @@
           "parent": "c2",
           "id": "c5",
           "label": "",
-          "description": "Waterborne diseases such as cholera spreads as flooding and rain runoff contaminate water supplies",
+          "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water",
           "image": "img/cholera.png",
           "angle": 90,
           "contentAngle": 90,
@@ -153,9 +147,9 @@
       ]
     },{
       "id": "d",
-      "title": "species moving",
+      "title": "invasive species",
       "factbox": {
-        "description": "Many birds, including swallows, flycatchers, lapwings and wagtails, have already shifted the timing of their migrations in response to climate change.",
+        "description": "Many birds have already shifted the timing of their migrations in response to climate change.",
         "image": "img/factbox_species.jpg"
       },
       "nodes": [
@@ -203,7 +197,7 @@
           "parent": "d5",
           "id": "d7",
           "label": "",
-          "description": "Trees could die out when ranges shift",
+          "description": "Trees could die when ranges shift",
           "angle": 110
         }
       ]
