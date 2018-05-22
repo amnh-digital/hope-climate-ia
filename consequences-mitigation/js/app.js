@@ -120,6 +120,7 @@ var AppMitigation = (function() {
       // delay controls for a beat
       this.delaying = true;
       this.delayEnd = new Date().getTime() + this.opt.delayMs;
+      this.resetCountingDown = false;
 
       this.stories.onChange(index);
       this.map.onChange(index);
