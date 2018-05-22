@@ -13,57 +13,63 @@
     "tenYearTrendYearsDisplay": [5, 100],
     "sleepTransitionMs": 2000,
     "annotationsUI": {
-      "color": "0xc6ad61",
-      "highlightColor": "0xe2bb3d",
+      "color": "$0xprimary",
+      "highlightColor": "$0xhighlight",
       "scaleThreshold": 0.72
     },
     "plot": {
+      "bgColor": "$0xprimaryDarkest",
       "textStyle": {
-        "fill": "#ffffff",
+        "fill": "$#white",
         "fontFamily": "Balance"
       }
     },
     "marker": {
-      "color": "0xe2bb3d",
-      "fill": "0xc6ad61",
+      "color": "$0xhighlight",
+      "fill": "$0xprimaryDarker",
       "dotRadius": 0.01,
       "widthStep": 0.005,
       "textStyle": {
-        "fill": "#000000",
+        "fill": "$#white",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       }
     },
     "xAxis": {
       "height": 0.0667,
+      "tickColor": "$0xprimaryDark",
       "textStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.024,
         "fontFamily": "Balance"
       }
     },
     "yAxis": {
+      "lineColor": "$0xblack",
       "width": 0.0667,
       "labelCount": 6,
       "step": 0.1,
       "minBounds": [-0.2, 0.2],
-      "lineWidth": 1,
+      "lineWidth": 2,
       "lineWidthBold": 4,
       "textStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "#505454",
+        "fill": "$#primaryDark",
         "fontSize": 0.024,
         "fontFamily": "Balance"
       }
+    },
+    "trend": {
+      "color": "$0xhighlight"
     }
   },
   "sound": {

@@ -53,6 +53,9 @@ var Graphics = (function() {
     this.yAxisMinBounds = this.opt.yAxis.minBounds;
     this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
     this.sleepTransitionMs = this.opt.sleepTransitionMs;
+    this.bgColor = parseInt(this.opt.plot.bgColor);
+    this.axesLineColor = parseInt(this.opt.yAxis.lineColor);
+    this.axesTickColor = parseInt(this.opt.xAxis.tickColor);
 
     this.parseData();
 
@@ -520,10 +523,12 @@ var Graphics = (function() {
     var labelCount = axes.children.length;
     var lineWidth = this.opt.yAxis.lineWidth;
     var lineWidthBold = this.opt.yAxis.lineWidthBold;
+    var axesLineColor = this.axesLineColor;
+    var axesTickColor = this.axesTickColor;
 
     axes.clear();
 
-    axes.beginFill(0x151616);
+    axes.beginFill(this.bgColor);
     axes.drawRect(pd[0], pd[1], pd[2], pd[3]);
     axes.endFill();
 
@@ -605,7 +610,7 @@ var Graphics = (function() {
       }
 
       if (dc===0) axes.lineStyle(lineWidthBold, 0xffffff);
-      else axes.lineStyle(lineWidth, 0xffffff, 0.2);
+      else axes.lineStyle(lineWidth, axesLineColor);
       axes.moveTo(lineX0, y).lineTo(lineX1, y);
 
       value -= yAxisStep;
@@ -664,7 +669,7 @@ var Graphics = (function() {
       var textStyle = xAxisTextStyle;
       if (x >= boundLeft && x <= boundRight) {
 
-        axes.lineStyle(2, 0x666666, 1);
+        axes.lineStyle(2, axesTickColor, 1);
         var text = d.year;
         var value = parseInt(Math.round(d.year));
         if (d.month >= 0) {
@@ -678,7 +683,7 @@ var Graphics = (function() {
         var showLabel = (value % showEvery === 0) || (count >= 130 && value==domain[1]);
         var showTick = (value % tickEvery === 0);
         if (showLabel && labelIndex < labelCount) {
-          axes.lineStyle(3, 0x888888, 1);
+          axes.lineStyle(3, axesTickColor, 1);
           var label = axes.children[labelIndex];
           label.text = text;
           label.style = textStyle;
@@ -804,7 +809,8 @@ var Graphics = (function() {
     yLabel.style = textStyle;
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.8;
-    fLabel.style = _.extend({}, textStyle, {fill: 0x333333});
+    fLabel.style = textStyle;
+    fLabel.alpha = 0.8;
     textStyle.wordWrap = true;
     textStyle.wordWrapWidth = labelW;
     aLabel.style = _.extend({}, textStyle, {lineHeight: textStyle.fontSize * 1.5});
@@ -854,7 +860,7 @@ var Graphics = (function() {
     marker.drawRect(rectX, cy, rectW, rectH);
     marker.endFill();
 
-    marker.beginFill(0x444444, 0.3);
+    marker.beginFill(0xffffff, 0.075);
     marker.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
     marker.endFill();
 
@@ -1001,6 +1007,7 @@ var Graphics = (function() {
     var plotData = this.plotData;
     var trendData = this.tenYearTrend;
     var annotationRanges = this.annotationRanges;
+    var lineColor = parseInt(this.opt.trend.color);
 
     var findAnnotationRange = function(year, annotations){
       var found = _.find(annotations, function(a){ return year >= a.years[0] && year <= a.years[1]; });
@@ -1021,7 +1028,7 @@ var Graphics = (function() {
         if (annRange) {
           // highlight trend if we are currently on this annotation range
           if (current.year >= annRange.years[0] && current.year <= annRange.years[1]) {
-            trend.lineStyle(4, 0xe2bb3d, 0.8);
+            trend.lineStyle(4, lineColor, 0.8);
 
           // otherwise, just show it faintly
           } else {
