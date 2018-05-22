@@ -887,7 +887,9 @@ var Graphics = (function() {
       dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
     }
 
-    var dataMargin = dataW * 0.05;
+    var roundToNearest = 0.5;
+    var dataMargin = Math.max(dataW * 0.05, roundToNearest);
+    dataMargin = UTIL.ceilToNearest(dataMargin, roundToNearest);
     var mx0 = pd[0];
     var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
     var y0 = p0[1];
