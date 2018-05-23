@@ -1,7 +1,7 @@
 {
   "controls": {
     "gamepadMappings": {
-      "horizontal": 1
+      "horizontal": 0
     },
     "keyboardMappings": {
       " ": "next",
