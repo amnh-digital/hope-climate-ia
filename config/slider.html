@@ -1,0 +1,77 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>HoPE Climate Wall</title>
+  <link rel="stylesheet" href="../shared/css/vendor/normalize.css">
+  <style>
+  html {
+    font-size: 18px;
+    font-family: helvetica, sans-serif;
+  }
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.6rem;
+  }
+  li, p {
+    font-size: 1rem;
+  }
+  .container {
+    max-width: 940px;
+    margin: 1rem auto;
+    padding: 1rem;
+    font-size: 2rem;
+  }
+  ol {
+    margin: 0;
+  }
+  li {
+    padding: 0.5rem 0;
+    margin-left: -1rem;
+  }
+  li li {
+    padding: 2rem 1rem 1rem;
+    border-top: 3px solid black;
+    margin: 0;
+  }
+  li li span {
+    display: inline-block;
+    position: relative;
+  }
+  li li span {
+    width: 30%;
+  }
+  li li span:before {
+    display: block;
+    position: absolute;
+    font-size: 0.8rem;
+    top: -1.2rem;
+    left: 0;
+    color: #444;
+  }
+  span.min:before {
+    content: "Min value";
+  }
+  span.max:before {
+    content: "Max value";
+  }
+  span.current:before {
+    content: "Current value";
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Slider utility</h1>
+    <p>Connect gamepad controller-enabled sliders to begin</p>
+    <ol id="slider-list"></ol>
+  </div>
+
+  <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
+  <script src="js/slider.js"></script>
+</body>
+</html>

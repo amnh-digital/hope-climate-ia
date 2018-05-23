@@ -10,9 +10,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('./')); //Tells the app to serve static files from ./
 
 // Listen for control config data
-app.post('/controls/config', function (req, res) {
-  var filename = './controls/config.json';
-  fs.writeFile(dataFile, req.body.data, 'utf8', function(err, data){
+app.post('/config/save', function (req, res) {
+  var filename = req.body.filename;
+  var data = req.body.data;
+
+  // parse numbers
+  for (var i=0; i<data.length; i++) {
+    for (var j=0; j<data[i].length; j++) {
+      data[i][j] = parseFloat(data[i][j]);
+    }
+  }
+
+  // write to file
+  fs.writeFile(filename, JSON.stringify(data), 'utf8', function(err, data){
     console.log('Wrote data to file');
   });
   res.send({
