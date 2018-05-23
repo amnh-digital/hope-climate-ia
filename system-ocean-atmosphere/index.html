@@ -21,21 +21,6 @@
         </div>
 
         <div class="content">
-          <div id="calendar" class="calendar">
-            <div class="mo">Jan</div>
-            <div class="mo">Feb</div>
-            <div class="mo">Mar</div>
-            <div class="mo">Apr</div>
-            <div class="mo">May</div>
-            <div class="mo">Jun</div>
-            <div class="mo">Jul</div>
-            <div class="mo">Aug</div>
-            <div class="mo">Sep</div>
-            <div class="mo">Oct</div>
-            <div class="mo">Nov</div>
-            <div class="mo">Dec</div>
-            <div id="marker" class="marker"></div>
-          </div>
 
           <div class="globes-wrapper">
 
@@ -48,11 +33,38 @@
 
           </div>
 
-          <div class="color-key">
-            <canvas id="color-key-canvas" class="color-key-canvas"></canvas>
-            <div class="label"><span>←</span> Cooler</div>
-            <div class="label">Warmer <span>→</span></div>
+          <div class="key">
+            <div class="calendar-key">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 180">
+                <g id="dial-group">
+                  <g id="calendar">
+                    <path d="M96.63,28a61.43,61.43,0,1,0,61.43,61.43A61.43,61.43,0,0,0,96.63,28Zm0,116a54.55,54.55,0,1,1,54.55-54.55A54.55,54.55,0,0,1,96.63,144Z"/>
+                    <path d="M96.63,34.91a54.28,54.28,0,0,1,27.31,7.33l3.44-6A61.12,61.12,0,0,0,96.63,28Z"/>
+                  </g>
+                </g>
+                <g id="text-group">
+                  <text transform="translate(103.49 19.33)">Jan</text>
+                  <text transform="translate(140.55 38.6)"><tspan>F</tspan><tspan x="7.49" y="0">eb</tspan></text>
+                  <text transform="translate(159.83 74.68)">Mar</text>
+                  <text transform="translate(159.83 115.2)"><tspan>A</tspan><tspan x="9.55" y="0">pr</tspan></text>
+                  <text transform="translate(137.59 150.29)">M<tspan x="13.3" y="0">a</tspan><tspan x="20.45" y="0">y</tspan></text>
+                  <text transform="translate(105.47 168.09)">Jun</text>
+                  <text transform="translate(66.43 168.09)">Jul</text>
+                  <text transform="translate(27.88 150.29)"><tspan>A</tspan><tspan x="9.55" y="0">ug</tspan></text>
+                  <text transform="translate(8.11 115.2)">Sep</text>
+                  <text transform="translate(6.13 74.68)"><tspan>O</tspan><tspan x="10.99" y="0">ct</tspan></text>
+                  <text transform="translate(27.88 38.6)">N<tspan x="10.86" y="0">o</tspan><tspan x="19.1" y="0">v</tspan></text>
+                  <text transform="translate(62.97 19.82)">D<tspan x="9.83" y="0">ec</tspan></text>
+                </g>
+              </svg>
+            </div>
+            <div class="color-key">
+              <canvas id="color-key-canvas" class="color-key-canvas"></canvas>
+              <div class="label"><span>←</span> Cooler</div>
+              <div class="label">Warmer <span>→</span></div>
+            </div>
           </div>
+
         </div>
 
         <div class="sleepMode">

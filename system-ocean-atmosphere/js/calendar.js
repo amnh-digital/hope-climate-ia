@@ -13,17 +13,17 @@ var Calendar = (function() {
 
   Calendar.prototype.init = function(){
     this.$el = $(this.opt.el);
-    this.$marker = $(this.opt.marker);
-    this.onResize();
   };
 
   Calendar.prototype.onResize = function(){
-    this.width = this.$el.width();
+
   };
 
   Calendar.prototype.render = function(yearProgress){
-    var left = this.width * (11.0 / 12.0) * yearProgress;
-    this.$marker.css('transform', 'translate3d('+left+'px,0,0)');
+    var angle = yearProgress * 360;
+    this.$el.css({
+      'transform': 'rotate3d(0, 0, 1, '+angle+'deg)'
+    });
   };
 
   return Calendar;

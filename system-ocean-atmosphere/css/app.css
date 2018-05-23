@@ -1,6 +1,9 @@
 .content {
   top: 26.666667%;
 }
+.title {
+  left: 56%;
+}
 
 .content,
 .title {
@@ -8,14 +11,11 @@
   margin-left: -25%;
 }
 
-.globes-wrapper,
-.calendar {
+.globes-wrapper {
   width: 100%;
   position: relative;
-}
-.globes-wrapper {
   height: 26.6667vw;
-  margin-top: -2vw;
+  margin-top: 3%;
 }
 .globes,
 .content-container {
@@ -41,60 +41,66 @@
   font-weight: normal;
   display: block;
   position: absolute;
-  bottom: -8%;
+  top: 0;
   left: 50%;
   width: 50%;
   margin-left: -25%;
   font-size: 1rem;
   line-height: 1.8;
+  color: var(--primary-color);
 }
 .globe canvas {
   position: absolute;
   top: 0;
   left: 0;
 }
-.calendar {
-  height: 3vw;
-  border-top: 0.1vw solid var(--gray-color);
-  -webkit-transform: translateZ(0);
+
+.key {
+  width: 78%;
+  position: relative;
+  margin: 4vw auto 0;
 }
-.calendar:after {
+.key:after {
   content: "";
   display: table;
   clear: both;
 }
-.mo {
-  width: 8.33333333%;
-  box-sizing: border-box;
-  text-align: center;
+
+.calendar-key {
+  width: 25%;
+  height: auto;
   float: left;
-  font-weight: normal;
-  font-size: 1.2rem;
-  height: 3vw;
-  line-height: 3vw;
+  margin-top: -3.75vw;
 }
-.marker {
-  position: absolute;
-  width: 8.333333333%;
-  height: 0.25vw;
-  background: var(--primary-color);
-  left: 0;
-  bottom: 0;
-  margin-left: 1.8%;
+.calendar-key svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.calendar-key text {
+  fill: var(--primary-dark-color);
+  font-size: 0.7vw;
+}
+#calendar {
+  transform-origin: 50% 50%;
+}
+#calendar path {
+  fill: var(--gray-color);
+}
+#calendar path:last-child {
+  fill: var(--primary-color);
+}
+
+.calendar-key,
+.calendar-key svg {
   -webkit-transform: translateZ(0);
 }
-.loading {
-  text-align: center;
-  font-size: 3rem;
-  white-space: nowrap;
-  height: 20vh;
-  line-height: 20vh;
-}
+
 .color-key {
   position: relative;
-  width: 76%;
-  margin: 8vw auto 0;
-  height: 1.333vw;
+  width: auto;
+  height: 1.2vw;
+  margin-left: 30%;
 }
 .color-key-canvas {
   position: absolute;
@@ -108,16 +114,14 @@
   position: absolute;
   top: -1vw;
   font-size: 0.8vw;
+  letter-spacing: 0.01vw;
+  color: var(--primary-dark-color);
 }
 .color-key .label:first-child {
   left: 0;
 }
 .color-key .label:last-child {
   right: 0;
-}
-
-.content-container {
-
 }
 
 .annotation {
@@ -167,16 +171,14 @@
   opacity: 1;
 }
 
-.calendar,
+.key,
 .content-container,
-.color-key,
 .globe h2,
 .globe canvas:last-child {
   transition: opacity 2s ease-in-out;
 }
-.sleeping .calendar,
+.sleeping .key,
 .sleeping .content-container,
-.sleeping .color-key,
 .sleeping .globe h2,
 .sleeping .globe canvas:last-child {
   opacity: 0;

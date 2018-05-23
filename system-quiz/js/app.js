@@ -13,12 +13,9 @@ var AppQuiz = (function() {
   AppQuiz.prototype.init = function(){
     var _this = this;
 
-    var controlPromise = this.loadControls();
-    var soundPromise = this.loadSounds();
-
-    $.when.apply($, [controlPromise, soundPromise]).then(function(){
-      _this.onReady();
-    });
+    this.loadControls();
+    // var soundPromise = this.loadSounds();
+    this.onReady();
   };
 
   AppQuiz.prototype.loadControls = function(){

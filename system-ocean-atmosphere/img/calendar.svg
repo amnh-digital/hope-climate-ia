@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 180">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #231f20;
+      }
+
+      .cls-2 {
+        fill: #058599;
+      }
+
+      .cls-3, .cls-6 {
+        font-size: 14px;
+        fill: #29494e;
+        font-family: BalanceOffcPro, Balance Offc Pro;
+      }
+
+      .cls-4, .cls-6 {
+        letter-spacing: -0.01em;
+      }
+
+      .cls-5 {
+        letter-spacing: -0.01em;
+      }
+
+      .cls-7 {
+        letter-spacing: 0em;
+      }
+    </style>
+  </defs>
+  <title>calendar</title>
+  <g id="dial-group">
+    <g id="dial">
+      <path class="cls-1" d="M96.63,28a61.43,61.43,0,1,0,61.43,61.43A61.43,61.43,0,0,0,96.63,28Zm0,116a54.55,54.55,0,1,1,54.55-54.55A54.55,54.55,0,0,1,96.63,144Z"/>
+      <path class="cls-2" d="M96.63,34.91a54.28,54.28,0,0,1,27.31,7.33l3.44-6A61.12,61.12,0,0,0,96.63,28Z"/>
+    </g>
+  </g>
+  <g id="text-group">
+    <text class="cls-3" transform="translate(103.49 19.33)">Jan</text>
+    <text class="cls-3" transform="translate(140.55 38.6)"><tspan class="cls-4">F</tspan><tspan x="7.49" y="0">eb</tspan></text>
+    <text class="cls-3" transform="translate(159.83 74.68)">Mar</text>
+    <text class="cls-3" transform="translate(159.83 115.2)"><tspan class="cls-5">A</tspan><tspan x="9.55" y="0">pr</tspan></text>
+    <text class="cls-3" transform="translate(137.59 150.29)">M<tspan class="cls-4" x="13.3" y="0">a</tspan><tspan x="20.45" y="0">y</tspan></text>
+    <text class="cls-3" transform="translate(105.47 168.09)">Jun</text>
+    <text class="cls-3" transform="translate(66.43 168.09)">Jul</text>
+    <text class="cls-3" transform="translate(27.88 150.29)"><tspan class="cls-5">A</tspan><tspan x="9.55" y="0">ug</tspan></text>
+    <text class="cls-3" transform="translate(8.11 115.2)">Sep</text>
+    <text class="cls-3" transform="translate(6.13 74.68)"><tspan class="cls-4">O</tspan><tspan x="10.99" y="0">ct</tspan></text>
+    <text class="cls-3" transform="translate(27.88 38.6)">N<tspan class="cls-5" x="10.86" y="0">o</tspan><tspan x="19.1" y="0">v</tspan></text>
+    <text class="cls-6" transform="translate(62.97 19.82)">D<tspan class="cls-7" x="9.83" y="0">ec</tspan></text>
+  </g>
+</svg>
