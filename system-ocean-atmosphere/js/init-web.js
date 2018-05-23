@@ -3,7 +3,7 @@ $(function() {
     $.getJSON("config/base.json"),
     $.getJSON("config/web.json"),
     $.getJSON("content/content.json"),
-    $.getJSON("data/countries_states.geojson"),
+    $.getJSON("data/continents.json"),
     $.getJSON("data/colorGradientRainbow.json")
 
   ).done(function(baseConfig, config, content, geojson, colorData){

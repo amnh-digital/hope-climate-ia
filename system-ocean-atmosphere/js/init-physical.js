@@ -4,7 +4,7 @@ $(function() {
     $.getJSON("config/physical.json"),
     $.getJSON("../system-quiz/config/physical.json"),
     $.getJSON("content/content.json"),
-    $.getJSON("data/countries_states.geojson"),
+    $.getJSON("data/continents.json"),
     $.getJSON("data/colorGradientRainbow.json")
 
   ).done(function(baseConfig, config, configSibling, content, geojson, colorData){
