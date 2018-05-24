@@ -1,8 +1,8 @@
 'use strict';
 
-var SliderConfig = (function() {
+var GamepadConfig = (function() {
 
-  function SliderConfig(config) {
+  function GamepadConfig(config) {
     var defaults = {
       listEl: "#slider-list",
       maxGamepads: 4
@@ -11,14 +11,14 @@ var SliderConfig = (function() {
     this.init();
   }
 
-  SliderConfig.prototype.init = function(){
+  GamepadConfig.prototype.init = function(){
     this.loadGamepads();
     this.loadUI();
     this.loadListeners();
     this.pollGamepads();
   };
 
-  SliderConfig.prototype.loadGamepad = function(data, i){
+  GamepadConfig.prototype.loadGamepad = function(data, i){
     console.log('Found gamepad', data, i);
     var gp = this.gamepads[i];
     var $el = gp.$el;
@@ -54,7 +54,7 @@ var SliderConfig = (function() {
     this.gamepads[i].axes = axes;
   };
 
-  SliderConfig.prototype.loadGamepads = function(){
+  GamepadConfig.prototype.loadGamepads = function(){
     var maxGamepads = this.opt.maxGamepads;
     this.gamepads = _.times(this.opt.maxGamepads, function(i){
       return {
@@ -63,7 +63,7 @@ var SliderConfig = (function() {
     });
   };
 
-  SliderConfig.prototype.loadListeners = function(){
+  GamepadConfig.prototype.loadListeners = function(){
     var _this = this;
 
     $('body').on('click', 'button', function(e){
@@ -72,7 +72,7 @@ var SliderConfig = (function() {
     })
   };
 
-  SliderConfig.prototype.loadUI = function(){
+  GamepadConfig.prototype.loadUI = function(){
     var maxGamepads = this.opt.maxGamepads;
     var $listEl = $(this.opt.listEl);
 
@@ -84,7 +84,7 @@ var SliderConfig = (function() {
     }
   };
 
-  SliderConfig.prototype.pollGamepads = function(){
+  GamepadConfig.prototype.pollGamepads = function(){
     var _this = this;
     var gamepads = navigator.getGamepads();
 
@@ -103,7 +103,7 @@ var SliderConfig = (function() {
     requestAnimationFrame(function(){ _this.pollGamepads(); });
   };
 
-  SliderConfig.prototype.renderGamepad = function(gamepadData, i){
+  GamepadConfig.prototype.renderGamepad = function(gamepadData, i){
     var _this = this;
     var gp = this.gamepads[i];
     var $el = gp.$el;
@@ -138,17 +138,21 @@ var SliderConfig = (function() {
 
   };
 
-  SliderConfig.prototype.save = function(i){
+  GamepadConfig.prototype.save = function(i){
     var gp = this.gamepads[i];
-    var axes = _.filter(gp.axes, function(a){ return a.max > 0; });
-
-    var postData = _.map(axes, function(a){
-      return [a.index, [a.min, a.max]];
+    var postData = _.map(gp.axes, function(a){
+      return {
+        "min": a.min,
+        "max": a.max
+      };
     });
-    postData = _.object(postData);
     postData = {
-      "filename": "./config/slider.json",
-      "data": postData
+      "filename": "./config/controls.json",
+      "data": {
+        "gamepad": {
+          "axes": postData
+        }
+      }
     }
 
     console.log('Saving config', postData);
@@ -158,8 +162,8 @@ var SliderConfig = (function() {
     });
   }
 
-  return SliderConfig;
+  return GamepadConfig;
 
 })();
 
-var app = new SliderConfig({});
+var app = new GamepadConfig({});

@@ -2,16 +2,52 @@
 
 var Controls = (function() {
   function Controls(options) {
-    var defaults = {};
+    var defaults = {
+      "gamepad": {
+        "axes": [], // go to /config/gamepad.html to configure these
+        "smoothing": 0
+      }
+    };
+    // override nested defaults
+    _.each(defaults, function(value, key){
+      var optionsValue = options[key];
+      if (optionsValue !== undefined) {
+        options[key] = _.extend({}, value, optionsValue);
+      }
+    });
     this.opt = _.extend({}, defaults, options);
     this.init();
+  }
+
+  function norm(value, a, b){
+    return (1.0 * value - a) / (b - a);
   }
 
   Controls.prototype.init = function(){
     this.$window = $(window);
     this.$document = $(document);
 
+    this.initAxes();
+
     this.channel = new Channel(this.opt.channel, {"role": "publisher"});
+  };
+
+  Controls.prototype.initAxes = function(){
+    // parse axes
+    this.axesConfig = _.map(this.opt.gamepad.axes, function(a){
+      return {
+        "min": parseFloat(a.min),
+        "max": parseFloat(a.max)
+      }
+    });
+    if (!this.axesConfig.length) {
+      this.axesConfig = _.times(8, function(i){
+        return {
+          "min": -1,
+          "max": 1
+        }
+      });
+    }
   };
 
   Controls.prototype.getGamepadIndex = function(){
@@ -232,9 +268,10 @@ var Controls = (function() {
     var axes = gamepad.axes;
     var gamepadMappings = this.gamepadMappings;
     var channel = this.channel;
+    var axesConfig = this.axesConfig;
 
     $.each(gamepadMappings, function(key, index){
-      var state = (axes[index] + 1) / 2; // convert from [-1,1] to [0,1]
+      var state = norm(axes[index], axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
       state = +state.toFixed(2);
       state = Math.min(state, 1);
       state = Math.max(state, 0);

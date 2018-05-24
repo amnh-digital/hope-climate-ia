@@ -12,19 +12,23 @@ app.use(express.static('./')); //Tells the app to serve static files from ./
 // Listen for control config data
 app.post('/config/save', function (req, res) {
   var filename = req.body.filename;
-  var data = req.body.data;
+  var dataIn = req.body.data;
+  var dataFileIn = {};
 
-  // parse numbers
-  for (var i=0; i<data.length; i++) {
-    for (var j=0; j<data[i].length; j++) {
-      data[i][j] = parseFloat(data[i][j]);
-    }
+  // read in data if it already exists
+  if (fs.existsSync(filename)) {
+    dataFileIn = JSON.parse(fs.readFileSync(filename, 'utf8'));
   }
 
+  // extend data
+  var dataOut = Object.assign({}, dataFileIn, dataIn);
+
   // write to file
-  fs.writeFile(filename, JSON.stringify(data), 'utf8', function(err, data){
+  fs.writeFile(filename, JSON.stringify(dataOut, null, 2), 'utf8', function(err, data){
     console.log('Wrote data to file');
   });
+
+  // return response
   res.send({
     status: 1,
     message: "Success"

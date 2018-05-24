@@ -13,15 +13,6 @@
     "highlightColor": "$#highlight",
     "animationMs": 1000
   },
-  "controls": {
-    "gamepadMappings": {
-      "horizontal": 1
-    },
-    "keyboardMappings": {
-      " ": "next",
-      "1": "next"
-    }
-  },
   "sleep": {
     "enable": 1,
     "checkInterval": 5,

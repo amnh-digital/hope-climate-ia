@@ -1,5 +1,6 @@
 $(function() {
   $.when(
+    $.getJSON("../config/controls.json"),
     $.getJSON("config/base.json"),
     $.getJSON("config/physical.json"),
     $.getJSON("../system-quiz/config/physical.json"),
@@ -7,11 +8,12 @@ $(function() {
     $.getJSON("data/continents.json"),
     $.getJSON("data/colorGradientRainbow.json")
 
-  ).done(function(baseConfig, config, configSibling, content, geojson, colorData){
+  ).done(function(globalControls, baseConfig, config, configSibling, content, geojson, colorData){
     baseConfig = baseConfig[0];
     updateColorsFromConfig(baseConfig);
     _.extend(config[0].controls, configSibling[0].controls);
     config = _.extend({}, baseConfig, config[0]);
+    config.controls = _.extend({}, globalControls[0], config.controls);
     content = content[0];
     var data = {};
 

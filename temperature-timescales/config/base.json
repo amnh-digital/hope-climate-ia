@@ -101,12 +101,6 @@
       "A#2":[4200,2E3]
     }
   },
-  "controls": {
-    "gamepadMappings": {
-      "vertical": 0,
-      "horizontal": 1
-    }
-  },
   "sleep": {
     "enable": 1,
     "checkInterval": 5,
