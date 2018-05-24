@@ -8,6 +8,7 @@ $(function() {
 
   ).done(function(baseConfig, config, content, geojson, colorData){
     baseConfig = baseConfig[0];
+    updateColorsFromConfig(baseConfig);
     config = _.extend({}, baseConfig, config[0]);
     content = content[0];
     var data = {};

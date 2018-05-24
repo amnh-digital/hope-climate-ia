@@ -1,12 +1,14 @@
 .content {
   top: 26.666667%;
 }
-.title {
+.title,
+.sleepMode {
   left: 56%;
 }
 
 .content,
-.title {
+.title,
+.sleepMode {
   width: 50%;
   margin-left: -25%;
 }
@@ -99,8 +101,9 @@
 .color-key {
   position: relative;
   width: auto;
-  height: 1.2vw;
+  height: 0.7vw;
   margin-left: 30%;
+  margin-right: 5%;
 }
 .color-key-canvas {
   position: absolute;

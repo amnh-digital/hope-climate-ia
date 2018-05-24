@@ -176,11 +176,12 @@ var Globe = (function() {
     var distance = radius * 1.1;
     var container = this.xContainer;
     var origin = this.origin;
+    var markerColor = parseInt(this.opt.markerColor);
 
     this.annotations = _.map(annotations, function(a, i){
       var geometry = new THREE.ConeBufferGeometry(markerRadius, markerRadius*2, 8);
       geometry.rotateX(Math.PI / 2)
-      var material = new THREE.MeshBasicMaterial({color: 0x89bf54, opacity: markerOpacity, transparent: true});
+      var material = new THREE.MeshBasicMaterial({color: markerColor, opacity: markerOpacity, transparent: true});
       var marker = new THREE.Mesh(geometry, material);
       marker.position.copy(lonLatToVector3(a.lon, a.lat, distance));
       // marker.rotation.x = Math.PI / 2;
