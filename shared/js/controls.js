@@ -5,7 +5,7 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothing": 0
+        "smoothingWindow": 5
       }
     };
     // override nested defaults
@@ -19,6 +19,29 @@ var Controls = (function() {
     this.init();
   }
 
+  function weightedMean(values, weights) {
+
+    var result = _.map(values, function(value, i){
+      var weight = weights[i];
+      var sum = value * weight;
+      return [sum, weight];
+    });
+
+    result = _.reduce(result, function(p, c){
+      return [p[0] + c[0], p[1] + c[1]];
+    }, [0, 0]);
+
+    return result[0] / result[1];
+  }
+
+  function linspace(a, b, n) {
+    if(n<2) { return n===1? [a] : []; }
+    var i, ret = Array(n);
+    n--;
+    for(i=n;i>=0;i--) { ret[i] = (i*b+(n-i)*a)/n; }
+    return ret;
+  }
+
   function norm(value, a, b){
     return (1.0 * value - a) / (b - a);
   }
@@ -27,24 +50,34 @@ var Controls = (function() {
     this.$window = $(window);
     this.$document = $(document);
 
-    this.initAxes();
-
     this.channel = new Channel(this.opt.channel, {"role": "publisher"});
   };
 
-  Controls.prototype.initAxes = function(){
+  Controls.prototype.initGamepad = function(){
+    this.smoothingWindow = this.opt.gamepad.smoothingWindow
+    this.gamepadSmoothing = this.smoothingWindow > 0;
+
+    if (this.gamepadSmoothing) {
+      var weights = _.map(linspace(-1, 0, this.opt.gamepad.smoothingWindow), function(v){ return Math.exp(v); });
+      var sum = _.reduce(weights, function(memo, v){ return memo + v; }, 0);
+      weights = _.map(weights, function(v){ return v / sum; })
+      this.gamepadWeights = weights;
+    }
+
     // parse axes
     this.axesConfig = _.map(this.opt.gamepad.axes, function(a){
       return {
         "min": parseFloat(a.min),
-        "max": parseFloat(a.max)
+        "max": parseFloat(a.max),
+        "window": []
       }
     });
     if (!this.axesConfig.length) {
       this.axesConfig = _.times(8, function(i){
         return {
           "min": -1,
-          "max": 1
+          "max": 1,
+          "window": []
         }
       });
     }
@@ -99,6 +132,7 @@ var Controls = (function() {
     }
 
     if (gamepadMappings) {
+      this.initGamepad();
       this.loadGamepad(gamepadMappings);
 
     // don't need to wait for anything if we're not using gamepad controllers
@@ -269,12 +303,29 @@ var Controls = (function() {
     var gamepadMappings = this.gamepadMappings;
     var channel = this.channel;
     var axesConfig = this.axesConfig;
+    var gamepadSmoothing = this.gamepadSmoothing;
+    var smoothingWindow = this.smoothingWindow;
+    var gamepadWeights = this.gamepadWeights;
 
     $.each(gamepadMappings, function(key, index){
       var state = norm(axes[index], axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
       state = +state.toFixed(2);
       state = Math.min(state, 1);
       state = Math.max(state, 0);
+
+      if (gamepadSmoothing) {
+        // add value to the axis' window
+        axesConfig[index].window.push(state);
+        if (axesConfig[index].window.length > smoothingWindow) {
+          axesConfig[index].window = axesConfig[index].window.slice(1);
+        }
+        // calculate weighted average if window has enough values
+        var axesWindow = axesConfig[index].window;
+        if (axesWindow.length === smoothingWindow) {
+          state = weightedMean(axesWindow, gamepadWeights);
+        }
+      }
+
       var prev = prevState[key];
       // state has changed, execute callback
       if (prev != state) {
