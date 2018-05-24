@@ -25,6 +25,7 @@ var Slideshow = (function() {
   };
 
   Slideshow.prototype.initCaptions = function(){
+    var _this = this;
     var $el = this.$captions;
     var $wrapper = $('<div class="captions-wrapper"></div>');
     var slides = this.slides;
@@ -35,11 +36,13 @@ var Slideshow = (function() {
       $caption.append('<p class="credit">Image credit: <a href="'+slide.creditUrl+'">'+slide.credit+'</a></p>');
       if (i===0) $caption.addClass("active");
       $wrapper.append($caption);
+      _this.slides[i].$caption = $caption;
     });
     $el.append($wrapper);
   };
 
   Slideshow.prototype.initSlides = function(){
+    var _this = this;
     var w = this.$el.width();
     var h = this.$el.height();
     var slides = this.slides;
@@ -53,6 +56,7 @@ var Slideshow = (function() {
     var wrapperWidth = slideOffset * slideLen;
 
     this.slideOffset = slideOffset;
+    this.slideW = slideW;
 
     var $wrapper = $('<div class="slideshow-wrapper"></div>');
     $wrapper.css({
@@ -65,12 +69,25 @@ var Slideshow = (function() {
       var $slide = $('<div class="slide"></div>');
       $slide.append('<div class="image before" style="background-image: url('+slide.before+')"><div class="label">'+slide.labelBefore+'</div></div>');
       $slide.append('<div class="image after" style="background-image: url('+slide.after+')"><div class="label">'+slide.labelAfter+'</div></div>');
+      $slide.append('<div class="marker"></div>');
       $slide.css({
         "width": slideW + "px",
         "height": slideH + "px",
         "margin-right": slideMargin + "px"
       });
+      if (i===1) $slide.addClass("active");
       $wrapper.append($slide);
+
+      // first and last have multiple slides
+      var j = i - 1;
+      if (i===0) j = slides.length - 1;
+      if (i===slideLen-1) j = 0;
+      if (_this.slides[j].$slides === undefined) {
+        _this.slides[j].$slides = [$slide];
+      } else {
+        _this.slides[j].$slides.push($slide);
+      }
+
     });
     this.$el.append($wrapper);
   };
@@ -92,12 +109,17 @@ var Slideshow = (function() {
       return;
     }
 
+    var slide = this.slides[this.currentSlide];
+
     $wrapper.removeClass('resetting');
     var slideOffset = this.slideOffset * (this.currentSlide+1);
     $wrapper.css('left', -slideOffset+'px');
 
-    $('.caption').removeClass('active');
-    $('.caption').eq(this.currentSlide).addClass('active');
+    $('.caption, .slide').removeClass('active');
+    slide.$caption.addClass('active');
+    _.each(slide.$slides, function($slide) {
+      $slide.addClass('active');
+    });
 
     this.transitioning = true;
     setTimeout(function(){
@@ -127,10 +149,13 @@ var Slideshow = (function() {
       "margin-right": slideMargin + "px"
     });
 
+    this.slideW = slideW;
     this.slideOffset = slideOffset;
   };
 
   Slideshow.prototype.onSlide = function(value){
+    var offset = this.slideW * value;
+    $('.marker').css('transform', 'translate3d('+offset+'px, 0, 0)');
     $(".image.after").width(((1-value)*100)+"%");
   };
 

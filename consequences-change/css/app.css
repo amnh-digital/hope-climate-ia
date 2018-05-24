@@ -92,17 +92,22 @@
   left: auto;
   right: 1vh;
 }
-.slide .image.after:after {
+.slide .marker {
   content: " ";
   width: 0.2vw;
+  margin-left: -0.1vw;
   height: 100%;
   position: absolute;
   top: 0;
-  left: -2px;
+  left: 0;
   background: var(--highlight-color);
   box-shadow: 0 0 4px rgba(0,0,0,0.2);
   z-index: 20;
-  transition: background-color 2s ease-in-out, width 2s ease-in-out;
+  transition: background-color 2s ease-in-out, width 2s ease-in-out, margin 2s ease-in-out;
+  opacity: 0;
+}
+.slide.active .marker {
+  opacity: 1;
 }
 /* used for sleeping state */
 .slide .image:before {
@@ -122,9 +127,10 @@
 .sleeping .slide .image:before {
   opacity: 1;
 }
-.sleeping .slide .image.after:after {
+.sleeping .slide .marker {
   background: var(--black-color);
   width: 1vw;
+  margin-left: -0.5vw;
 }
 
 .globe,
