@@ -19,10 +19,11 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv4_annual.nc", help="Temperature input file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc", help="Temperature input file")
 parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
-parser.add_argument('-end', dest="END_YEAR", default=2016, type=int, help="End year")
+parser.add_argument('-end', dest="END_YEAR", default=2017, type=int, help="End year")
 parser.add_argument('-zones', dest="ZONES", default=9, type=int, help="Number of zones")
+parser.add_argument('-grad', dest="GRADIENT", default="#58e0dc,#99cccc,#adada3,#d67052,#eb5229,#ff3300", help="Color gradient")
 parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/current.json", help="Output file")
 args = parser.parse_args()
 
@@ -32,11 +33,11 @@ OUTPUT_FILE = args.OUTPUT_FILE
 START_YEAR = args.START_YEAR
 END_YEAR = args.END_YEAR
 ZONES = args.ZONES
+# GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
+GRADIENT = args.GRADIENT.split(",")
+
 RANGE = (-3.5, 3.5) # Celsius
 GRAPH_RANGE = (-1.5, 3.5)
-
-# GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
-GRADIENT = ["#58e0dc", "#99cccc", "#adada3", "#d67052", "#eb5229", "#ff3300"]
 
 # Convert colors to RGB
 GRADIENT = [hex2rgb(g) for g in GRADIENT]

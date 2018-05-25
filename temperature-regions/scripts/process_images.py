@@ -16,12 +16,13 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv4_annual.nc", help="Temperature input file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc", help="Temperature input file")
 parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
-parser.add_argument('-end', dest="END_YEAR", default=2016, type=int, help="End year")
+parser.add_argument('-end', dest="END_YEAR", default=2017, type=int, help="End year")
 parser.add_argument('-out', dest="OUTPUT_DIR", default="../img/frames/", help="Output directory")
 parser.add_argument('-width', dest="TARGET_WIDTH", default=1024, type=int, help="Target width")
 parser.add_argument('-format', dest="IMAGE_FORMAT", default="png", help="Image format")
+parser.add_argument('-grad', dest="GRADIENT", default="#43fff5,#88b5b3,#000000,#dd6952,#f92900", help="Color gradient")
 args = parser.parse_args()
 
 # config
@@ -31,9 +32,8 @@ START_YEAR = args.START_YEAR
 END_YEAR = args.END_YEAR
 TARGET_WIDTH = args.TARGET_WIDTH
 IMAGE_FORMAT = args.IMAGE_FORMAT
-
 # GRADIENT = ["#42a6ff", "#89a2b7", "#000000", "#e05050", "#fc0000"]
-GRADIENT = ["#43fff5", "#88b5b3", "#000000", "#dd6952", "#f92900"]
+GRADIENT = args.GRADIENT.split(",")
 
 MIN_VALUE = -3.5
 MAX_VALUE = 3.5
