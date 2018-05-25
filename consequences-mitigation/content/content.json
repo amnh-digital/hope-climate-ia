@@ -2,55 +2,55 @@
   "stories": [
     {
       "id": "story1",
-      "title": "Hunts Point",
+      "title": "Heat Mitigation",
       "map": {
         "className": "hunts-point",
         "image": "img/hunts_point.png"
       },
-      "description": "Meow and walk away mrow sit on human they not getting up ever for walk on car leaving trail of paw prints on hood and windshield.",
-      "image": "img/cat1.jpg",
+      "description": "To combat the effects of rising temperatures and extreme heat, NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
+      "image": "img/cool_roofs.jpg",
       "video": "video/cat1.mp4"
     },{
       "id": "story2",
-      "title": "Red Hook",
+      "title": "Flood Mitigation",
       "map": {
         "className": "red-hook",
         "image": "img/red_hook.png"
       },
-      "description": "I could pee on this if i had the energy stare at wall turn and meow stare at wall some more meow again continue staring gnaw the corn cob scratch the box stare at ceiling.",
-      "image": "img/cat2.jpg",
+      "description": "Geosyntec, an environmental consulting and engineering firm is working with small businesses in the city to perform resiliency audits to assess vulnerability and installing physical flood protection systems.",
+      "image": "img/geosyntec.jpg",
       "video": "video/cat2.mp4"
     },{
       "id": "story3",
-      "title": "Rockaway Peninsula",
+      "title": "Reducing the Carbon Footprint",
       "map": {
         "className": "rockaway",
         "image": "img/rockaway_peninsula.png"
       },
-      "description": "Claw at curtains stretch and yawn nibble on tuna ignore human bite human hand. Tuxedo cats always looking dapper stare out the window. ",
-      "image": "img/cat3.jpg",
+      "description": "Daylighting systems capture sunlight through a rooftop dome and use reflective tubing to channel the light through a diffuser, spreading sunlight to interior spaces, reducing energy costs and demand on the grid.",
+      "image": "img/daylighting.jpg",
       "video": "video/cat4.mp4"
     },{
       "id": "story4",
       "className": "textRight",
-      "title": "Coney Island",
+      "title": "Extreme Weather Events",
       "map": {
         "className": "coney-island",
         "image": "img/coney_island.png"
       },
-      "description": "Cats secretly make all the worlds muffins Gate keepers of hell so behind the couch crash against wall but walk away like nothing happened.",
-      "image": "img/cat4.jpg",
+      "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges in providing mobility to residents of the New York City region.",
+      "image": "img/mta.jpg",
       "video": "video/cat3.mp4"
     },{
       "id": "story5",
       "className": "textRight",
-      "title": "Staten Island",
+      "title": "Sea Level Rise and Coastal Erosion",
       "map": {
         "className": "staten-island",
         "image": "img/staten_island.png"
       },
-      "description": "Stare at ceiling light give me some of your food give me some of your food give me some of your food meh",
-      "image": "img/cat5.jpg",
+      "description": "The Living Breakwaters Project uses rocky sloped partially submerged walls within the water column to promote a layered resiliency approach to risk reduction through erosion prevention, wave energy attenuation, and enhancement of ecosystems resiliency. ",
+      "image": "img/living_breakwaters.jpg",
       "video": "video/cat5.mp4"
     }
   ]
