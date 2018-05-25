@@ -18,8 +18,8 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv4.nc", help="Temperature input file")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/gistemp1200_ERSSTv4_annual.nc", help="Output file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv5.nc", help="Temperature input file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/gistemp1200_ERSSTv5_annual.nc", help="Output file")
 args = parser.parse_args()
 
 # config
