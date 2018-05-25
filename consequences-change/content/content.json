@@ -1,16 +1,60 @@
 {
   "slideshow": [
     {
+      "before": "img/tropical_glacier_before.jpg",
+      "after": "img/tropical_glacier_after.jpg",
+      "labelBefore": "1988",
+      "labelAfter": "2017",
+      "caption": "Tropical Glaciers are Disappearing",
+      "longDescription": "Even near the equator, tall mountains used to be capped with ice year round. But tropical glaciers could disappear entirely in a few decades , including those in the Sudirman Range on the Pacific island of New Guinea (shown with ice highlighted in blue in this false color image).",
+      "lon": 136.3944068,
+      "lat": -5.5076549,
+      "credit": "NASA",
+      "creditUrl": "https://earthobservatory.nasa.gov/IOTD/view.php?id=91716"
+    },{
       "before": "img/ice_before.jpg",
       "after": "img/ice_after.jpg",
-      "labelBefore": "September 1984",
-      "labelAfter": "September 2012",
+      "labelBefore": "Summer 1984",
+      "labelAfter": "Summer 2012",
       "caption": "Arctic Ice Shrinks to Record Low",
       "longDescription": "In 2012, the Arctic ice cap shrank to the smallest size ever recorded. If the polar ice caps continue to melt at the present rate, by 2100 there could be no Arctic ice at all during the summer.",
       "lon": 0,
       "lat": 84.6019818,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=623#623-arctic-sea-ice-coverage-hits-record-low"
+    },{
+      "before": "img/reservoir_before.jpg",
+      "after": "img/reservoir_after.jpg",
+      "labelBefore": "October 18, 2014",
+      "labelAfter": "October 10, 2017",
+      "caption": "Reservoir Dries in South Africa",
+      "longDescription": "The Theewaterskloof reservoir in South Africa was filled to capacity in 2014. By 2017, after three years of punishing drought, it had lost 73% of its water.",
+      "lon": 19.2066659,
+      "lat": -34.0185443,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=629#629-drought-shrinks-theewaterskloof-reservoir-in-south-africa"
+    },{
+      "before": "img/wildfire_before.jpg",
+      "after": "img/wildfire_after.jpg",
+      "labelBefore": "November 23, 2017",
+      "labelAfter": "December 25, 2017",
+      "caption": "Record Wildfires in California",
+      "longDescription": "In 2017, California experienced its largest wildfire on record. The burned areas, highlighted in red, totaled nearly 1,140 square kilometers (440 square miles). Unburned areas are colored green.",
+      "lon": -119.229032,
+      "lat": 34.274646,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=637#637-largest-california-fire-in-modern-history"
+    },{
+      "before": "img/cambodia_before.jpg",
+      "after": "img/cambodia_after.jpg",
+      "labelBefore": "May 17, 2013",
+      "labelAfter": "October 24, 2013",
+      "caption": "Heavy Flooding in Cambodia",
+      "longDescription": "Roughly 3,000 square kilometers (1,200 square miles) of rice fields were destroyed by flooding of the Mekong and Tonlé Sap Rivers in 2013, affecting half a million people. Extreme floods are expected to increase as a warming climate raises sea levels and heavy rainfall increases in certain areas.",
+      "lon": 105.327086,
+      "lat": 11.486754,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=504#504-typhoon-nari-flood-cambodia"
     },{
       "before": "img/virgin_islands_before.jpg",
       "after": "img/virgin_islands_after.jpg",
@@ -22,6 +66,17 @@
       "lat": 18.065972,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=628#628-hurricane-irma-turns-virgin-islands-brown"
+    },{
+      "before": "img/glacier_before.jpg",
+      "after": "img/glacier_after.jpg",
+      "labelBefore": "2006",
+      "labelAfter": "2017",
+      "caption": "Shrinking Glaciers in Switzerland",
+      "longDescription": "The Trift Glacier in Switzerland retreated 1.17 kilometers (0.7 miles) between 2006 and 2017.",
+      "lon": 8.3619038,
+      "lat": 46.6640991,
+      "credit": "James Balog and the Extreme Ice Survey",
+      "creditUrl": "https://newatlas.com/before-after-photos-glaciers-climate-change/49143/"
     },{
       "before": "img/poopo_before.jpg",
       "after": "img/poopo_after.jpg",
@@ -45,23 +100,45 @@
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=586#586-exceptionally-early-ice-melt-greenland"
     },{
-      "before": "img/glacier_before.jpg",
-      "after": "img/glacier_after.jpg",
-      "labelBefore": "2006",
-      "labelAfter": "2017",
-      "caption": "Shrinking Glaciers in Switzerland",
-      "longDescription": "The Trift Glacier in Switzerland retreated 1.17 kilometers (0.7 miles) between 2006 and 2017.",
-      "lon": 8.3619038,
-      "lat": 46.6640991,
-      "credit": "James Balog and the Extreme Ice Survey",
-      "creditUrl": "https://newatlas.com/before-after-photos-glaciers-climate-change/49143/"
+      "before": "img/argentina_before.jpg",
+      "after": "img/argentina_after.jpg",
+      "labelBefore": "December 22, 2016",
+      "labelAfter": "January 7, 2017",
+      "caption": "Massive Wildfires in Argentina",
+      "longDescription": "During a severe drought in 2017, about 10,000 square kilometers (4,000 square miles) were destroyed by numerous fires that spread through the dry Pampas region in Argentina. Burned areas are colored red.",
+      "lon": -64.283921,
+      "lat": -36.614757,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=612#612-wildfires-scorch-argentinas-pampas-region"
+    },{
+      "before": "img/iraq_before.jpg",
+      "after": "img/iraq_after.jpg",
+      "labelBefore": "September 7, 2006",
+      "labelAfter": "September 15, 2009",
+      "caption": "Drought speeds reservoir loss in Iraq",
+      "longDescription": "The Qadisyah Reservoir in Iraq, which was already being drained for human use, lost water even faster following a drought in 2007. The Middle East could face increasing water shortages as the climate warms, runoff from snow melt is reduced and droughts become more frequent and severe.",
+      "lon": 42.2301128,
+      "lat": 34.3088882,
+      "credit": "NASA",
+      "creditUrl": "https://earthobservatory.nasa.gov/IOTD/view.php?id=80613"
+    },{
+      "before": "img/argentina_flooding_before.jpg",
+      "after": "img/argentina_flooding_after.jpg",
+      "labelBefore": "January 2, 2015",
+      "labelAfter": "January 23, 2017",
+      "caption": "Argentina Flooding damages soybean crop",
+      "longDescription": "Flooding from unusually heavy rain in 2016 and 2017 destroyed much of Argentina’s soybean crop. So many soybeans were destroyed that global prices rose worldwide in response to the reduced supply. Global warming could increase the severity of both floods and droughts",
+      "lon": -63.616672,
+      "lat": -38.416097,
+      "credit": "NASA",
+      "creditUrl": "https://climate.nasa.gov/images-of-change?id=613#613-argentina-flooding-impacts-soybean-production"
     },{
       "before": "img/harvey_before.jpg",
       "after": "img/harvey_after.jpg",
       "labelBefore": "November 20, 2016",
       "labelAfter": "August 31, 2017",
       "caption": "Hurricane Harvey Causes Flooding in Houston, Texas",
-      "longDescription": "Hurricane Harvey dumped up to 120 cm (47 inches ) in the area around Houston, Texas. The storm displaced 30,000 people, destroyed 200,000 homes and businesses and caused $126 billion in property damage.  Rare extreme weather events like these could become more frequent as the climate warms.",
+      "longDescription": "In 2017, Hurricane Harvey dumped up to 122 cm (48 inches6) in the area around Houston, Texas, the largest single rainfall event in U.S. history.7 The storm displaced 30,000 people, destroyed 200,000 homes and businesses and caused $126 billion in property damage.8 Global warming could make such disasters more common.",
       "lon": -95.682169,
       "lat": 29.8168809,
       "credit": "Digital Globe",

@@ -2,10 +2,10 @@
 node_modules/
 *.nc
 *.gz
-
+*.zip
 
 ### OSX
-# Source: https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore 
+# Source: https://raw.githubusercontent.com/github/gitignore/master/Global/macOS.gitignore
 # General
 .DS_Store
 .AppleDouble
@@ -35,7 +35,7 @@ Temporary Items
 
 
 ### NODE
-# Source: https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore 
+# Source: https://raw.githubusercontent.com/github/gitignore/master/Node.gitignore
 # Logs
 logs
 *.log
