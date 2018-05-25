@@ -94,7 +94,7 @@ for t in range(len(baseTimes)):
         for lon in range(baseLons):
             baseValue = baseTemp[t][lat][lon]
             diffValue = diffTemp[lat][lon]
-            if diffValue is not False:
+            if diffValue is not False and baseValue != 0.0:
                 tempV[t, lat, lon] = baseValue + diffValue
             else:
                 tempV[t, lat, lon] = 0.0
