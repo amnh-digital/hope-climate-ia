@@ -26,6 +26,6 @@
   "sleep": {
     "enable": 1,
     "checkInterval": 10,
-    "sleepAfter": 600
+    "sleepAfter": 60
   }
 }
