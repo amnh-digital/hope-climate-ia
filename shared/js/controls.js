@@ -89,12 +89,16 @@ var Controls = (function() {
 
     var gamepadIndex = false;
     var count = 5;
+    var foundGamepads = [];
 
     for(var i=0; i<count; i++) {
       if (gamepads[i]) {
-        gamepadIndex = i;
-        break;
+        foundGamepads.unshift({index: i, gamepad: gamepads[i]});
       }
+    }
+
+    if (foundGamepads.length) {
+      gamepadIndex = foundGamepads[0].index;
     }
 
     return gamepadIndex;
@@ -148,11 +152,11 @@ var Controls = (function() {
 
   Controls.prototype.loadGamepad = function(gamepadMappings){
     var _this = this;
-    var getGamepadIndex = this.getGamepadIndex();
+    var gamepadIndex = this.getGamepadIndex();
 
-    if (getGamepadIndex !== false) {
+    if (gamepadIndex !== false) {
       console.log("Gamepad found");
-      this.getGamepadIndex = getGamepadIndex;
+      this.gamepadIndex = gamepadIndex;
       var gamepadState = {};
       _.each(_.keys(gamepadMappings), function(key){
         gamepadState[key] = -1;
@@ -292,7 +296,7 @@ var Controls = (function() {
   Controls.prototype.pollGamepad = function(){
     var _this = this;
 
-    var gamepad = navigator.getGamepads()[this.getGamepadIndex];
+    var gamepad = navigator.getGamepads()[this.gamepadIndex];
     if (!gamepad) {
       this.loadGamepad(this.gamepadMappings);
       return false;
