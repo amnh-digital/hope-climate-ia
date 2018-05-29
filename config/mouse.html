@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Pointer lock demo</title>
+  <link rel="stylesheet" href="../shared/css/vendor/normalize.css">
+  <style type="text/css">
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: sans-serif;
+  }
+
+  canvas {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid black;
+  }
+
+  .information {
+    width: 640px;
+    margin: 0 auto 50px;
+  }
+
+  #tracker {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    background-color: white;
+  }
+
+  h1 {
+    font-size: 200%;
+  }
+  </style>
+</head>
+<body>
+  <div class="information">
+    <h1>Pointer lock demo</h1>
+
+    <p>This demo demonstrates usage of the pointer lock API. Click on the canvas area and your mouse will directly control the ball inside the canvas, not your mouse pointer. You can press escape to return to the standard expected state.</p>
+  </div>
+
+  <canvas width="640" height="360">
+    Your browser does not support HTML5 canvas
+  </canvas>
+  <div id="tracker"></div>
+
+  <script src="js/mouse.js"></script>
+</body>
+</html>
