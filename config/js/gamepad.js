@@ -11,6 +11,10 @@ var GamepadConfig = (function() {
     this.init();
   }
 
+  function norm(value, a, b){
+    return (1.0 * value - a) / (b - a);
+  };
+
   GamepadConfig.prototype.init = function(){
     this.loadGamepads();
     this.loadUI();
@@ -35,15 +39,18 @@ var GamepadConfig = (function() {
       var $min = $('<span class="min">'+value+'</span>');
       var $max = $('<span class="max">'+value+'</span>');
       var $current = $('<span class="current">'+value+'</span>');
+      var $bar = $('<div class="bar"></div>');
       $axis.append($min);
       $axis.append($current);
       $axis.append($max);
+      $axis.append($bar);
       $axesList.append($axis);
       axes.push({
         index: j,
         $current: $current,
         $min: $min,
         $max: $max,
+        $bar: $bar,
         value: value,
         min: value,
         max: value
@@ -124,6 +131,8 @@ var GamepadConfig = (function() {
     for (var j=0; j<axes.length; j++) {
       var axis = axes[j];
       var value = axesData[j];
+      var percent = norm(value, -1, 1) * 100;
+      axes[j].$bar.css('width', percent+"%");
       axes[j].value = value;
       axes[j].$current.html(value);
       if (value > axis.max) {

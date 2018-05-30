@@ -36,6 +36,7 @@
     padding: 2rem 1rem 1rem;
     border-top: 3px solid black;
     margin: 0;
+    position: relative;
   }
   li li span {
     display: inline-block;
@@ -51,6 +52,15 @@
     top: -1.2rem;
     left: 0;
     color: #444;
+  }
+  .bar {
+    display: block;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #ffe85f;
   }
   span.min:before {
     content: "Min value";
