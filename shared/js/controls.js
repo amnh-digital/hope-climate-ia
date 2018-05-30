@@ -98,6 +98,16 @@ var Controls = (function() {
     }
 
     if (foundGamepads.length) {
+      foundGamepads = _.sortBy(foundGamepads, function(g){
+        var gp = g.gamepad;
+        var axes = 0;
+        if (gp.axes && gp.axes.length) {
+          _.each(gp.axes, function(a){
+            if (a !== 0) axes += 1;
+          });
+        }
+        return -axes;
+      });
       gamepadIndex = foundGamepads[0].index;
     }
 
@@ -214,13 +224,13 @@ var Controls = (function() {
       });
     };
 
-    // document.addEventListener("mousemove", updatePosition, false);
+    document.addEventListener("mousemove", updatePosition, false);
 
     // Initiate pointer lock
     document.addEventListener('pointerlockchange', function(){
       if (document.pointerLockElement === el) {
         console.log('The pointer lock status is now locked');
-        document.addEventListener("mousemove", updatePosition, false);
+        // document.addEventListener("mousemove", updatePosition, false);
       } else {
         console.log('The pointer lock status is now unlocked');
       }
