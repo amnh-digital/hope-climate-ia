@@ -40,10 +40,12 @@ var GamepadConfig = (function() {
       var $max = $('<span class="max">'+value+'</span>');
       var $current = $('<span class="current">'+value+'</span>');
       var $bar = $('<div class="bar"></div>');
+      var $checkbox = $('<input type="checkbox" title="reversed?" />')
       $axis.append($min);
       $axis.append($current);
       $axis.append($max);
       $axis.append($bar);
+      $axis.append($checkbox);
       $axesList.append($axis);
       axes.push({
         index: j,
@@ -51,6 +53,7 @@ var GamepadConfig = (function() {
         $min: $min,
         $max: $max,
         $bar: $bar,
+        $checkbox: $checkbox,
         value: value,
         min: value,
         max: value
@@ -150,9 +153,17 @@ var GamepadConfig = (function() {
   GamepadConfig.prototype.save = function(i){
     var gp = this.gamepads[i];
     var postData = _.map(gp.axes, function(a){
+      var swapped = a.$checkbox[0].checked;
+      var min = a.min;
+      var max = a.max;
+      if (swapped) {
+        var temp = min;
+        min = max;
+        max = temp;
+      }
       return {
-        "min": a.min,
-        "max": a.max
+        "min": min,
+        "max": max
       };
     });
     postData = {
