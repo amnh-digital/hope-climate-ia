@@ -9,7 +9,7 @@
       },
       "description": "To combat the effects of rising temperatures and extreme heat, NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
       "image": "img/cool_roofs.jpg",
-      "video": "video/cat1.mp4"
+      "video": "video/coolroofs.mp4"
     },{
       "id": "story2",
       "title": "Flood Mitigation",
@@ -29,7 +29,7 @@
       },
       "description": "Daylighting systems capture sunlight through a rooftop dome and use reflective tubing to channel the light through a diffuser, spreading sunlight to interior spaces, reducing energy costs and demand on the grid.",
       "image": "img/daylighting.jpg",
-      "video": "video/cat4.mp4"
+      "video": "video/daylighting.mp4"
     },{
       "id": "story4",
       "className": "textRight",
@@ -40,7 +40,7 @@
       },
       "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges in providing mobility to residents of the New York City region.",
       "image": "img/mta.jpg",
-      "video": "video/cat3.mp4"
+      "video": "video/mta.mp4"
     },{
       "id": "story5",
       "className": "textRight",
