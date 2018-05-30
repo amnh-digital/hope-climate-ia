@@ -156,8 +156,8 @@
         {
           "parent": "root",
           "id": "d1",
-          "label": "spring starts earlier",
-          "description": "Seasons change as the climate warms",
+          "label": "seasons change",
+          "description": "Winters are warmer and spring starts earlier",
           "angle": 100
         },{
           "parent": "d1",
@@ -183,7 +183,7 @@
           "parent": "d4",
           "id": "d5",
           "label": "",
-          "description": "Plant, insect and bird ranges shrink or move",
+          "description": "Plant, insect and bird ranges shrink or move when possible",
           "angle": 80
         },{
           "parent": "d5",
@@ -213,7 +213,7 @@
           "parent": "root",
           "id": "e1",
           "label": "sea level rise",
-          "description": "Ice caps melt, and warming oceans expand",
+          "description": "Ice-sheet melting quickens and warming oceans expand",
           "angle": 100
         },{
           "parent": "e1",
