@@ -40,7 +40,11 @@ var AppOceanAtmosphere = (function() {
     var annotationLatThreshold = globeOpt.annotationLatThreshold;
     var annotationLonThreshold = globeOpt.annotationLonThreshold;
 
-    var annotations = _.map(this.content.annotations, function(a, i){
+    var annotations = _.filter(this.content.annotations, function(a, i){
+      return !a.disabled;
+    });
+
+    var annotations = _.map(annotations, function(a, i){
       var copy = _.clone(a);
 
       copy.index = i;

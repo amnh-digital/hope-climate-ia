@@ -12,14 +12,14 @@
       "video": "video/coolroofs.mp4"
     },{
       "id": "story2",
-      "title": "Flood Mitigation",
+      "title": "Extreme Weather Events",
       "map": {
         "className": "red-hook",
         "image": "img/red_hook.png"
       },
-      "description": "Geosyntec, an environmental consulting and engineering firm is working with small businesses in the city to perform resiliency audits to assess vulnerability and installing physical flood protection systems.",
-      "image": "img/geosyntec.jpg",
-      "video": "video/cat2.mp4"
+      "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges in providing mobility to residents of the New York City region.",
+      "image": "img/mta.jpg",
+      "video": "video/mta.mp4"
     },{
       "id": "story3",
       "title": "Reducing the Carbon Footprint",
@@ -33,14 +33,14 @@
     },{
       "id": "story4",
       "className": "textRight",
-      "title": "Extreme Weather Events",
+      "title": "Flood Mitigation",
       "map": {
         "className": "coney-island",
         "image": "img/coney_island.png"
       },
-      "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges in providing mobility to residents of the New York City region.",
-      "image": "img/mta.jpg",
-      "video": "video/mta.mp4"
+      "description": "Geosyntec, an environmental consulting and engineering firm is working with small businesses in the city to perform resiliency audits to assess vulnerability and installing physical flood protection systems.",
+      "image": "img/geosyntec.jpg",
+      "video": "video/cat2.mp4"
     },{
       "id": "story5",
       "className": "textRight",

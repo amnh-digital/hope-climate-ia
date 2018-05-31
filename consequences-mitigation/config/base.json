@@ -7,7 +7,7 @@
     "el": "#stories",
     "transformer": "#transformer",
     "loadingMs": 4000,
-    "scaleFactor": 1.5,
+    "scaleFactor": 1.75,
     "translateFactor": 0.3
   },
   "map": {
@@ -26,6 +26,6 @@
   "sleep": {
     "enable": 1,
     "checkInterval": 10,
-    "sleepAfter": 60
+    "sleepAfter": 120
   }
 }
