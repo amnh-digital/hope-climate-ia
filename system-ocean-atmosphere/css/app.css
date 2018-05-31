@@ -138,6 +138,8 @@
 .annotation.content-both {
   left: 50%;
   margin-left: -6.5%;
+  top: auto;
+  bottom: 5%;
 }
 .annotation.content-atmosphere {
   left: auto;
@@ -148,6 +150,9 @@
   left: auto;
   top: 40%;
   left: 2%;
+}
+.annotation.content-hidden {
+  visibility: hidden;
 }
 .annotation.content-image img {
   position: absolute;

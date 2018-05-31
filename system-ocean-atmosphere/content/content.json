@@ -51,12 +51,33 @@
       "arrow": {
         "radius": 0.7,
         "distance": 0.8,
-        "anchor": [1.0, 0.5]
+        "anchor": [0.0, 0.5]
       },
       "els": [
         {
           "id": "content-southern-ocean",
-          "className": "content-ocean",
+          "className": "content-both",
+          "title": "Southern Ocean",
+          "text": "Powerful eastward winds drive the surface currents circling Antarctica."
+        }
+      ]
+    },{
+      "lat": -90,
+      "lon": 0,
+      "lonThreshold": 180,
+      "width": 30,
+      "height": 50,
+      "globeEl": "#atmosphere-wind",
+      "parentEl": "#content",
+      "arrow": {
+        "radius": 0.7,
+        "distance": 0.8,
+        "anchor": [1.0, 0.5]
+      },
+      "els": [
+        {
+          "id": "content-southern-ocean2",
+          "className": "content-both hidden",
           "title": "Southern Ocean",
           "text": "Powerful eastward winds drive the surface currents circling Antarctica."
         }
@@ -142,7 +163,7 @@
     },{
       "lat": 0,
       "lon": -160,
-      "globeEl": "#atmosphere-wind",
+      "globeEl": "#ocean-currents",
       "parentEl": "#content",
       "arrow": {
         "radius": 0.5,
@@ -152,7 +173,25 @@
       "els": [
         {
           "id": "content-thermal-equator",
-          "className": "content-atmosphere",
+          "className": "content-both",
+          "title": "Thermal Equator",
+          "text": "This band of warm air rises from where solar energy is most concentrated. This changes seasonally, moving slightly north in June and south in December."
+        }
+      ]
+    },{
+      "lat": 0,
+      "lon": -160,
+      "globeEl": "#atmosphere-wind",
+      "parentEl": "#content",
+      "arrow": {
+        "radius": 0.5,
+        "distance": 1.0,
+        "anchor": [1.0, 0.5]
+      },
+      "els": [
+        {
+          "id": "content-thermal-equator2",
+          "className": "content-both hidden",
           "title": "Thermal Equator",
           "text": "This band of warm air rises from where solar energy is most concentrated. This changes seasonally, moving slightly north in June and south in December."
         }
