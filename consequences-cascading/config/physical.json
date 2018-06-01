@@ -4,7 +4,7 @@
     "channel": "mitigation-cascading",
     "pointerlockMappings": {
       "horizontal": {
-        "name": "rotate",
+        "name": "rotate.horizontal",
         "multiplier": 0.2
       }
     }

@@ -84,7 +84,7 @@ var AppCascading = (function() {
       _this.onRotate(value);
     };
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
-    channel.addCallback("controls.rotate", onRotate);
+    channel.addCallback("controls.rotate.horizontal", onRotate);
     channel.listen();
 
     var onFactboxHide = function(e, value){ _this.factbox.hide(); };

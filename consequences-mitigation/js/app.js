@@ -42,7 +42,7 @@ var AppMitigation = (function() {
       _this.onRotate(value);
     };
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
-    channel.addCallback("controls.rotate", onRotate);
+    channel.addCallback("controls.rotate.vertical", onRotate);
     channel.listen();
 
     $window.on('resize', function(){
