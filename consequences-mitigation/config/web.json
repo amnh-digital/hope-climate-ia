@@ -2,14 +2,8 @@
   "controls": {
     "scrollMappings": {
       "vertical": {
-        "name": "rotate",
+        "name": "rotate.vertical",
         "multiplier": 3.0
-      }
-    },
-    "touchMappings": {
-      "rotate": {
-        "el": "knob",
-        "options": {}
       }
     }
   }

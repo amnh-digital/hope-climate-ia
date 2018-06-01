@@ -165,8 +165,8 @@
 .caption p {
   margin: 0.5rem 0;
   font-size: 0.8rem;
-  max-height: 2.8rem;
-  overflow: hidden;
+  /* max-height: 2.8rem;
+  overflow: hidden; */
 }
 .caption h2 {
   font-size: 1rem;
