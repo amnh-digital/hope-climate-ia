@@ -16,7 +16,7 @@
   "sound": {
     "enable": 1,
     "audio": ["../shared/audio/tick.mp3"],
-    "volume": 1.0,
+    "volume": 0.4,
     "limitLastPlayedMs": 50,
     "limitSameLastPlayedMs": 200,
     "sprites": {
