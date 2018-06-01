@@ -188,6 +188,8 @@
   position: absolute;
   top: -25vh;
   right: 0;
+  transition: transform 2s ease-in-out;
+  transform-origin: 0% 100%;
 }
 .map img,
 .map svg {
@@ -209,6 +211,9 @@
   opacity: 1;
 }
 
+.sleeping .map {
+  transform: scale3d(0.83, 0.83, 0.83);
+}
 .sleeping .stories,
 .sleeping .map .overlay.active {
   opacity: 0;
