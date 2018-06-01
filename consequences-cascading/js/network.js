@@ -23,15 +23,14 @@ var Network = (function() {
     this.angleThreshold = this.opt.angleThreshold;
     this.angleDelta = 0;
     this.angleDeltaProgress = 0;
-
     this.currentIndex = 0;
-    this.branch = this.network[0];
 
     this.width = this.$el.width();
     this.height = this.$el.height();
 
     this.loadView();
     this.refreshDimensions();
+    this.updateBranch(this.currentIndex);
     this.renderRootNode();
 
     this.branchTransitionStart = new Date().getTime();
@@ -44,72 +43,78 @@ var Network = (function() {
     var _this = this;
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var rootNode = new PIXI.Graphics();
-    var branches = new PIXI.Container();
 
     this.sectionTitleBg = new PIXI.Graphics();
     rootNode.addChild(this.sectionTitleBg);
     addLabelBuffers(rootNode, 4);
 
-    var sleepers = [];
+    var container = new PIXI.Container();
+    var lines = new PIXI.Graphics();
+    var bg = new PIXI.Graphics();
+    var circles = new PIXI.Graphics();
+    var contentArea = new PIXI.Container();
+    var alphaFilter = new PIXI.filters.AlphaFilter();
+    alphaFilter.resolution = 2;
 
+    var maxNodeCount = 7;
+    var nodeContents = [];
+    _.times(maxNodeCount, function(i){
+      var nodeContent = {};
+
+      // container
+      var contentContainer = new PIXI.Graphics();
+      contentContainer.alpha = 0;
+
+      // only add label for first node
+      var label = false;
+      if (i===0) {
+        var labelArea = new PIXI.Graphics();
+        labelArea.alpha = 0;
+        var labelText = new PIXI.Text("");
+        labelText.anchor.set(0.5, 0.5);
+        labelArea.addChild(labelText);
+        contentArea.addChild(labelArea);
+        label = {
+          area: labelArea,
+          text: labelText
+        }
+      }
+
+      // description
+      var description = new PIXI.Text("");
+      contentContainer.addChild(description);
+
+      // sprite
+      var sprite = new PIXI.Sprite();
+      contentContainer.addChild(sprite);
+
+      // sprite mask
+      var spriteMask = new PIXI.Graphics();
+      sprite.addChild(spriteMask);
+      sprite.mask = spriteMask;
+
+      nodeContent.container = contentContainer;
+      nodeContent.label = label;
+      nodeContent.description = description;
+      nodeContent.sprite = sprite;
+
+      nodeContents.push(nodeContent);
+      contentArea.addChild(contentContainer);
+    });
+
+    // assign content areas to each node in network
     this.network = _.map(this.network, function(branch, i){
-      var container = new PIXI.Container();
-      var lines = new PIXI.Graphics();
-      var bg = new PIXI.Graphics();
-      var circles = new PIXI.Graphics();
-      var contentAreas = new PIXI.Container();
-      var alphaFilter = new PIXI.filters.AlphaFilter();
-      var firstId = _.keys(branch.nodes)[0];
-      alphaFilter.resolution = 2;
-      branch.nodes = _.mapObject(branch.nodes, function(node, id){
-        var contentArea = new PIXI.Graphics();
-        if (node.label && node.label.length) {
-          var labelArea = new PIXI.Graphics();
-          labelArea.alpha = 0;
-          var label = new PIXI.Text(node.label);
-          label.anchor.set(0.5, 0.5);
-          labelArea.addChild(label);
-          contentAreas.addChild(labelArea);
-          node.labelArea = labelArea;
-          node.label = label;
-        } else {
-          node.label = false;
-        }
-        if (node.description && node.description.length) {
-          var description = new PIXI.Text(node.description);
-          contentArea.addChild(description);
-          node.description = description;
-        } else {
-          node.description = false;
-        }
-        if (node.texture) {
-          var sprite = new PIXI.Sprite(node.texture);
-          node.imageRatio = sprite.width / sprite.height;
-          contentArea.addChild(sprite);
-          node.sprite = sprite;
-          var spriteMask = new PIXI.Graphics();
-          sprite.addChild(spriteMask);
-          node.sprite.mask = spriteMask;
-        }
-        contentArea.alpha = 0;
-        contentAreas.addChild(contentArea);
-        node.contentArea = contentArea;
-        return node;
+      var ids = _.keys(branch.nodes);
+      _.each(ids, function(id, j){
+        branch.nodes[id].contentArea = nodeContents[j];
       });
-      container.filters = [alphaFilter];
-      container.addChild(bg, lines, circles, contentAreas);
-      sleepers.push(contentAreas)
-      branches.addChild(container);
-      branch.container = container;
-      branch.alphaFilter = alphaFilter;
-      branch.contentAreaGraphics = contentAreas;
-      branch.lineGraphics = lines;
-      branch.bgGraphics = bg;
-      branch.circleGraphics = circles;
       return branch;
     });
 
-    this.app.stage.addChild(branches, rootNode);
+    container.filters = [alphaFilter];
+    container.addChild(bg, lines, circles, contentArea);
+
+    this.app.stage.addChild(container, rootNode);
 
     this.rootNode = rootNode;
     this.rootLabel = this.rootNode.children[1];
@@ -117,10 +122,15 @@ var Network = (function() {
     this.sectionTitleFrom = this.rootNode.children[3];
     this.sectionTitleTo = this.rootNode.children[4];
 
-    sleepers.push(this.rootNode);
-    // sleepers.push(this.rootLabel, this.rootSublabel, this.sectionTitleFrom, this.sectionTitleTo, this.sectionTitleBg);
+    this.nodeContents = nodeContents;
+    this.container = container;
+    this.alphaFilter = alphaFilter;
+    this.contentAreaGraphics = contentArea;
+    this.lineGraphics = lines;
+    this.bgGraphics = bg;
+    this.circleGraphics = circles;
 
-    this.sleepers = sleepers;
+    this.sleepers = [this.rootNode, this.contentAreaGraphics];
     this.dreamers = [];
 
     this.$el.append(this.app.view);
@@ -165,15 +175,15 @@ var Network = (function() {
       if (this.branch) {
         this.transitionFromBranch = this.branch;
       }
-      var branch = network[index];
-      branch.nodes = _.mapObject(branch.nodes, function(node, id){
-        node.drawn = false;
-        node.done = false;
-        node.contentArea.alpha = 0;
-        if (node.labelArea) node.labelArea.alpha = 0;
-        return node;
+
+      // reset node contents
+      var nodeContents = this.nodeContents;
+      _.each(this.nodeContents, function(node, i){
+        node.container.alpha = 0;
+        if (node.label) node.label.area.alpha = 0;
       });
-      this.branch = branch;
+
+      this.updateBranch(index);
       this.currentIndex = index;
 
       this.transitionAngleStart = this.angleDelta;
@@ -189,17 +199,17 @@ var Network = (function() {
 
       this.resetCountingDown = false;
       this.$document.trigger("factbox.hide", [true]);
-      this.$document.trigger("factbox.reset", [branch]);
+      this.$document.trigger("factbox.reset", [this.branch]);
 
     } else {
       var radians = this.angleDelta * (Math.PI / 180);
       // rotate root node
       this.rootNode.rotation = radians;
-      this.branch.container.rotation = radians;
-      this.branch.alphaFilter.alpha = 1.0 - angleDeltaProgress;
-      _.each(this.branch.nodes, function(node, id){
-        node.contentArea.rotation = -radians;
-        if (node.labelArea) node.labelArea.rotation = -radians;
+      this.container.rotation = radians;
+      this.alphaFilter.alpha = 1.0 - angleDeltaProgress;
+      _.each(this.nodeContents, function(node){
+        node.container.rotation = -radians;
+        if (node.label) node.label.area.rotation = -radians;
       });
       this.$document.trigger("factbox.transition", [1.0 - angleDeltaProgress]);
     }
@@ -358,7 +368,6 @@ var Network = (function() {
         node.contentNy = contentPoint[1];
 
         node.nImageWidth = node.nImageWidth ? node.nImageWidth * nodeImageWidth : nodeImageWidth;
-        if (node.nImageWidth)
         var imgAngle = node.imageAngle ? node.imageAngle : contentAngle;
         var imgDistance = node.imageDistance ? node.imageDistance : node.nContentWidth * 1.4;
         var imagePoint = UTIL.translatePoint([node.contentNx, node.contentNy], imgAngle, imgDistance);
@@ -417,6 +426,18 @@ var Network = (function() {
     var y1 = h * 0.95 - nodeRadiusRange[1];
     var x0 = nodeRadiusRange[1];
     var x1 = w - nodeRadiusRange[1];
+
+    this.container.pivot.set(rootNodeX, rootNodeY);
+    this.container.position.set(rootNodeX, rootNodeY);
+
+    this.nodeContents = _.map(this.nodeContents, function(node, i){
+      if (node.label) {
+        node.label.text.style = _.extend({}, nodeLabelTextStyle, {wordWrap: true, wordWrapWidth: nodeLabelRadius*1.9, align: 'center'});
+      }
+      node.description.style = _.extend({}, nodeBodyTextStyle);
+      return node;
+    })
+
     this.network = _.map(this.network, function(branch, i){
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
         // update node position
@@ -433,43 +454,15 @@ var Network = (function() {
         var contentY = UTIL.lerp(y0, y1, node.contentNy);
         var contentWidth = node.nContentWidth * w;
         var contentHeight = node.nContentHeight * h;
-        node.contentArea.pivot.set(contentX, contentY);
-        node.contentArea.position.set(contentX, contentY);
-        if (node.labelArea) {
-          node.labelArea.pivot.set(node.x, node.y);
-          node.labelArea.position.set(node.x, node.y);
-          node.label.style = _.extend({}, nodeLabelTextStyle, {wordWrap: true, wordWrapWidth: nodeLabelRadius*1.9, align: 'center'});
-          node.label.position.set(node.x, node.y);
-        }
-        // update sprite
-        var x = contentX - contentWidth * 0.5;
-        var y = contentY - contentHeight * 0.5;
-        // DEBUG: uncomment to debug content placement
-        // node.contentArea.clear();
-        // node.contentArea.beginFill(0xff0000);
-        // node.contentArea.drawRect(x, y, contentWidth, contentHeight);
-        // node.contentArea.endFill();
-        var contentMargin = contentWidth * 0.1;
-        if (node.sprite) {
-          node.imageX = UTIL.lerp(x0, x1, node.imageNx);
-          node.imageY = UTIL.lerp(y0, y1, node.imageNy);
-          node.sprite.width = node.nImageWidth * contentWidth;
-          node.sprite.height = node.sprite.width / node.imageRatio;
-          var multiply = node.originalWidth / node.sprite.width;
-          var diameter = Math.min(node.sprite.width, node.sprite.height);
-          var radius = diameter/2 * multiply;
-          node.imageX -= diameter*0.5;
-          node.imageY -= diameter*0.5;
-          node.sprite.mask.clear();
-          node.sprite.mask.beginFill();
-          node.sprite.mask.drawCircle(radius, radius, radius);
-          node.sprite.mask.endFill();
-          node.sprite.position.set(node.imageX, node.imageY);
-        }
-        if (node.description) {
-          node.description.position.set(contentMargin + x, y);
-          node.description.style = _.extend({}, nodeBodyTextStyle, {wordWrapWidth: contentWidth-contentMargin});
-        }
+
+        node.contentWidth = contentWidth;
+        node.contentHeight = contentHeight;
+        node.contentX = contentX;
+        node.contentY = contentY;
+        node.contentMargin = contentWidth * 0.1;
+        node.imageX = UTIL.lerp(x0, x1, node.imageNx);
+        node.imageY = UTIL.lerp(y0, y1, node.imageNy);
+
         // radius is based on severity
         node.radius = node.nRadius * h;
         // line width based on probability
@@ -479,13 +472,10 @@ var Network = (function() {
         node.dashWidth = UTIL.lerp(nodeDashWidthRange[0], nodeDashWidthRange[1], (node.probability - 1) / 4.0);
         return node;
       });
-      branch.container.pivot.set(rootNodeX, rootNodeY);
-      branch.container.position.set(rootNodeX, rootNodeY);
       return branch;
     });
 
     this.nodeRadius = nodeRadiusRange[0];
-
   };
 
   Network.prototype.render = function(){
@@ -533,8 +523,8 @@ var Network = (function() {
       $document.trigger("factbox.show", [branch]);
     }
     var angleDeltaProgress = this.angleDeltaProgress;
-    var circleGraphics = this.branch.circleGraphics;
-    var bgGraphics = this.branch.bgGraphics;
+    var circleGraphics = this.circleGraphics;
+    var bgGraphics = this.bgGraphics;
     circleGraphics.clear();
     bgGraphics.clear();
     var nodeRadius = this.nodeRadius;
@@ -545,6 +535,7 @@ var Network = (function() {
       var p = UTIL.norm(progress, node.start, node.end);
       p = UTIL.clamp(p, 0, 1);
       _this.branch.nodes[id].progress = p;
+      var content = node.contentArea;
 
       if (p > 0) {
         if (!node.drawn) {
@@ -576,7 +567,7 @@ var Network = (function() {
         bgGraphics.drawCircle(x1, y1, radius);
         bgGraphics.endFill();
 
-        if (node.label) {
+        if (content.label) {
           circleGraphics.beginFill(0x000000);
           circleGraphics.lineStyle(4, color);
           circleGraphics.drawCircle(x1, y1, nodeLabelRadius);
@@ -600,8 +591,8 @@ var Network = (function() {
       var contentP = UTIL.norm(progress, node.contentStart, node.contentEnd);
       contentP = UTIL.clamp(contentP, 0, 1);
       // if (node.label) contentP = 1;
-      node.contentArea.alpha = contentP;
-      if (node.labelArea) node.labelArea.alpha = contentP;
+      content.container.alpha = contentP;
+      if (content.label) content.label.area.alpha = contentP;
     });
 
     this.renderDashes();
@@ -613,7 +604,7 @@ var Network = (function() {
     var dashOffset = now % nodeDashMs;
     var dashProgress = dashOffset / nodeDashMs;
 
-    var lineGraphics = this.branch.lineGraphics;
+    var lineGraphics = this.lineGraphics;
     lineGraphics.clear();
 
     var dashLine = function(g, x0, y0, x1, y1, width, gap, offset) {
@@ -684,11 +675,12 @@ var Network = (function() {
     this.angleDeltaProgress = Math.abs(this.angleDelta) / this.angleThreshold;
 
     var alpha = UTIL.lerp(1.0-this.resetAngleProgressStart, 1.0, progressEased);
-    this.branch.alphaFilter.alpha = alpha;
-    this.branch.container.rotation = radians;
+    this.alphaFilter.alpha = alpha;
+    this.container.rotation = radians;
     _.each(this.branch.nodes, function(node, id){
-      node.contentArea.rotation = -radians;
-      if (node.labelArea) node.labelArea.rotation = -radians;
+      var content = node.contentArea;
+      content.container.rotation = -radians;
+      if (content.label) content.label.area.rotation = -radians;
     });
     this.$document.trigger("factbox.transition", [alpha]);
   };
@@ -793,18 +785,13 @@ var Network = (function() {
     var radians = angle * (Math.PI / 180);
     this.rootNode.rotation = radians;
 
-    this.branch.alphaFilter.alpha = progressEased;
-    this.branch.container.rotation = -radians;
+    this.alphaFilter.alpha = progressEased;
+    this.container.rotation = -radians;
     _.each(this.branch.nodes, function(node, id){
-      node.contentArea.rotation = radians;
-      if (node.labelArea) node.labelArea.rotation = radians;
+      var content = node.contentArea;
+      content.container.rotation = radians;
+      if (content.label) content.label.area.rotation = radians;
     });
-
-    if (this.transitionFromBranch) {
-      // var p = 1.0 - progress;
-      // if (p < this.transitionFromBranch.alphaFilter.alpha) this.transitionFromBranch.alphaFilter.alpha = p;
-      this.transitionFromBranch.alphaFilter.alpha = 0;
-    }
 
     // transition title
     this.renderSectionTitle(progressEased);
@@ -840,6 +827,63 @@ var Network = (function() {
     _.each(this.sleepers, function(g){
       g.alpha = alpha;
     });
+  };
+
+  Network.prototype.updateBranch = function(index){
+    // update node contents
+    var branch = this.network[index];
+    branch.nodes = _.mapObject(branch.nodes, function(node, id){
+      node.drawn = false;
+      node.done = false;
+
+      // set container
+      var content = node.contentArea;
+      content.container.pivot.set(node.contentX, node.contentY);
+      content.container.position.set(node.contentX, node.contentY);
+
+      // DEBUG: uncomment to debug content placement
+      // content.container.clear();
+      // content.container.beginFill(0xff0000);
+      // content.container.drawRect(x, y, node.contentWidth, node.contentHeight);
+      // content.container.endFill();
+
+      // set label
+      if (content.label) {
+        content.label.text.text = node.label;
+        content.label.area.pivot.set(node.x, node.y);
+        content.label.area.position.set(node.x, node.y);
+        content.label.text.position.set(node.x, node.y);
+      }
+
+      // set desription
+      var x = node.contentX - node.contentWidth * 0.5;
+      var y = node.contentY - node.contentHeight * 0.5;
+      content.description.text = node.description;
+      content.description.position.set(node.contentMargin + x, y);
+      content.description.style.wordWrapWidth = node.contentWidth - node.contentMargin;
+
+      // set sprite
+      if (node.texture) {
+        content.sprite.texture = node.texture;
+        content.sprite.width = node.nImageWidth * node.contentWidth;
+        content.sprite.height = content.sprite.width / node.imageRatio;
+        var multiply = node.originalWidth / content.sprite.width;
+        var diameter = Math.min(content.sprite.width, content.sprite.height);
+        var radius = diameter/2 * multiply;
+        content.sprite.mask.clear();
+        content.sprite.mask.beginFill();
+        content.sprite.mask.drawCircle(radius, radius, radius);
+        content.sprite.mask.endFill();
+        content.sprite.position.set(node.imageX - diameter*0.5, node.imageY - diameter*0.5);
+        content.sprite.alpha = 1;
+      } else {
+        content.sprite.alpha = 0;
+      }
+
+      return node;
+    });
+
+    this.branch = branch;
   };
 
   return Network;

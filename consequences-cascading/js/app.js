@@ -31,7 +31,7 @@ var AppCascading = (function() {
 
     // get image paths from content
     var network = this.content.network;
-    var imagePaths = ['img/placeholder.png'];
+    var imagePaths = [];
     _.each(network, function(branch, i){
       _.each(branch.nodes, function(node, j){
         if (node.image) imagePaths.push(node.image);
@@ -58,6 +58,7 @@ var AppCascading = (function() {
             _this.content.network[i].nodes[j].texture = texture;
             _this.content.network[i].nodes[j].originalWidth = texture.width;
             _this.content.network[i].nodes[j].originalHeight = texture.height;
+            _this.content.network[i].nodes[j].imageRatio = texture.width / texture.height;
           }
         });
       });
