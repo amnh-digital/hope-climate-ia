@@ -1,23 +1,19 @@
 'use strict';
 
-var Particles = (function() {
-  function Particles(options) {
+var Sleeper = (function() {
+  function Sleeper(options) {
     var defaults = {
       "el": "#app",
       "role": "subscriber", // or publisher
-      "mode": "wind",       // or emissions, cascading
       "duration": 60,       // in seconds
       "position": "left",   // or right
-      "particleCount": 100,
-      "particleColor": "0x111111",
-      "particleRadius": 0.05,
-      "channel": "particles"
+      "channel": "sleeper"
     };
     this.opt = _.extend({}, defaults, options);
     this.init();
   }
 
-  Particles.prototype.init = function(){
+  Sleeper.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.role = this.opt.role;
     this.progress = 0;
@@ -28,25 +24,28 @@ var Particles = (function() {
 
     this.refreshDimensions();
     this.loadView();
-    this.loadParticles();
+    this.loadData();
     this.loadListeners();
   };
 
-  Particles.prototype.loadListeners = function(){
+  Sleeper.prototype.loadData = function(){
+    // override me
+  };
+
+  Sleeper.prototype.loadListeners = function(){
     var _this = this;
     var $document = $(document);
 
-    var onParticleUpdate = function(progress) {
-      _this.onParticleUpdate(progress);
+    var onUpdate = function(progress) {
+      _this.onUpdate(progress);
     };
     if (this.role === "subscriber") {
       var channel = new Channel(this.opt.channel, {"role": "subscriber"});
-      channel.addCallback("particles.update", onParticleUpdate);
+      channel.addCallback("sleeper.update", onUpdate);
       channel.listen();
     } else {
       this.channel = new Channel(this.opt.channel, {"role": "publisher"});
     }
-
 
     var onSleepStart = function(e, value) {
       _this.onSleepStart();
@@ -58,11 +57,7 @@ var Particles = (function() {
     $document.on("sleep.end", onSleepEnd);
   };
 
-  Particles.prototype.loadParticles = function(){
-
-  };
-
-  Particles.prototype.loadView = function(){
+  Sleeper.prototype.loadView = function(){
     var app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var graphics = new PIXI.Graphics();
 
@@ -73,34 +68,33 @@ var Particles = (function() {
     this.graphics = graphics;
   };
 
-  Particles.prototype.onParticleUpdate = function(progress){
-    this.progress = progress;
-  };
-
-  Particles.prototype.onResize = function(){
+  Sleeper.prototype.onResize = function(){
     this.refreshDimensions();
     this.app.renderer.resize(this.width, this.height);
   };
 
-  Particles.prototype.onSleepStart = function(){
+  Sleeper.prototype.onSleepStart = function(){
     this.active = true;
     this.render();
   };
 
-  Particles.prototype.onSleepEnd = function(){
+  Sleeper.prototype.onSleepEnd = function(){
     this.active = false;
   };
 
-  Particles.prototype.refreshDimensions = function(){
+  Sleeper.prototype.onUpdate = function(progress){
+    this.progress = progress;
+  };
+
+  Sleeper.prototype.refreshDimensions = function(){
     var width = this.$el.width();
     var height = this.$el.height();
 
     this.width = width;
     this.height = height;
-    this.particleRadius = this.opt.particleRadius * height;
   };
 
-  Particles.prototype.render = function(){
+  Sleeper.prototype.render = function(){
     if (!this.active && this.role !== "publisher") return false;
 
     var _this = this;
@@ -113,14 +107,17 @@ var Particles = (function() {
     }
 
     if (this.active) {
-      if (this.mode === "wind") this.renderWind(progress);
-      else if (this.mode === "emissions") this.renderEmissions(progress);
-      else this.renderCascading(progress);
+      // render progress
+      this.renderGraphics(progress);
     }
 
     requestAnimationFrame(function(){ _this.render(); });
   };
 
-  return Particles;
+  Sleeper.prototype.renderGraphics = function(progress){
+    // override me
+  };
+
+  return Sleeper;
 
 })();

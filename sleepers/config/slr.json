@@ -1,0 +1,8 @@
+{
+  "file": "../data/GMSL_TPJAOS_4.2_199209_201801.txt",
+  "timeKey": "year",
+  "valueKey": "smoothed",
+  "startTime": 1993,
+  "endTime": 2018,
+  "outfile": "../data/slr.json"
+}

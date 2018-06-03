@@ -1,0 +1,8 @@
+{
+  "file": "../data/greenland_mass_200204_201706.txt",
+  "timeKey": "time",
+  "valueKey": "mass",
+  "startTime": 2003,
+  "endTime": 2017,
+  "outfile": "../data/greenland.json"
+}

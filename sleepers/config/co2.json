@@ -1,0 +1,8 @@
+{
+  "file": "../data/co2_mm_mlo.txt",
+  "timeKey": "yeardec",
+  "valueKey": "interpolated",
+  "startTime": 1959,
+  "endTime": 2017,
+  "outfile": "../data/co2.json"
+}
