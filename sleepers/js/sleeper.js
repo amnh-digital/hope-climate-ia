@@ -3,9 +3,10 @@
 var Sleeper = (function() {
   function Sleeper(options) {
     var defaults = {
-      "el": "#app",
+      "parent": "#app",
       "role": "subscriber", // or publisher
-      "duration": 60,       // in seconds
+      "duration": 120,       // in seconds
+      "fade": 2, // in seconds
       "position": "left",   // or right
       "channel": "sleeper"
     };
@@ -14,10 +15,13 @@ var Sleeper = (function() {
   }
 
   Sleeper.prototype.init = function(){
-    this.$el = $(this.opt.el);
+    this.$parent = $(this.opt.parent);
     this.role = this.opt.role;
     this.progress = 0;
     this.durationMs = this.opt.duration * 1000;
+    this.fadeMs = this.opt.fade * 1000;
+    this.fadePercent = this.fadeMs / this.durationMs;
+    this.dataLoaded = false;
 
     this.offsetX = 0;
     if (this.opt.position === "right") this.offsetX = 0.5;
@@ -28,9 +32,7 @@ var Sleeper = (function() {
     this.loadListeners();
   };
 
-  Sleeper.prototype.loadData = function(){
-    // override me
-  };
+  Sleeper.prototype.loadData = function(){}; // override me
 
   Sleeper.prototype.loadListeners = function(){
     var _this = this;
@@ -58,15 +60,21 @@ var Sleeper = (function() {
   };
 
   Sleeper.prototype.loadView = function(){
+    var $el = $('<div class="sleeper '+this.opt.position+'"></div>');
     var app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var graphics = new PIXI.Graphics();
 
     app.stage.addChild(graphics);
-    this.$el.append(app.view);
+    $el.append(app.view);
 
     this.app = app;
     this.graphics = graphics;
+
+    this.$parent.prepend($el);
+    this.$el = $el;
   };
+
+  Sleeper.prototype.onDataLoaded = function(data){}; // override me
 
   Sleeper.prototype.onResize = function(){
     this.refreshDimensions();
@@ -87,8 +95,8 @@ var Sleeper = (function() {
   };
 
   Sleeper.prototype.refreshDimensions = function(){
-    var width = this.$el.width();
-    var height = this.$el.height();
+    var width = this.$parent.width() * 2;
+    var height = this.$parent.height();
 
     this.width = width;
     this.height = height;
@@ -102,21 +110,26 @@ var Sleeper = (function() {
 
     if (this.role==="publisher") {
       var now = new Date().getTime();
-      progress = now % this.durationMs;
-      this.channel.post("particles.update", progress);
+      progress = now % this.durationMs / this.durationMs;
+      this.channel.post("sleeper.update", progress);
+      this.progress = progress;
     }
 
     if (this.active) {
+      // check if we're fading
+      var alpha = 1.0;
+      var fadePercent = this.fadePercent;
+      if (progress < fadePercent && fadePercent > 0) alpha = progress / fadePercent;
+      else if ((1.0-progress) < fadePercent && fadePercent > 0) alpha = (1.0-progress) / fadePercent;
+
       // render progress
-      this.renderGraphics(progress);
+      this.renderGraphics(progress, alpha);
     }
 
     requestAnimationFrame(function(){ _this.render(); });
   };
 
-  Sleeper.prototype.renderGraphics = function(progress){
-    // override me
-  };
+  Sleeper.prototype.renderGraphics = function(progress){}; // override me
 
   return Sleeper;
 

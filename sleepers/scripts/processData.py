@@ -60,6 +60,15 @@ for d in data:
     else:
         groupedData[-1].append((x, y))
 
+# slice data to account for mismatch of # of data points
+minPointCount = len(groupedData[0])
+for d in groupedData:
+    if len(d) < minPointCount:
+        minPointCount = len(d)
+for i, d in enumerate(groupedData):
+    if len(d) > minPointCount:
+        groupedData[i] = d[:minPointCount]
+
 if SHOW_GRAPH:
     showGraph(groupedData)
 

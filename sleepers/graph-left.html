@@ -11,15 +11,23 @@
   <link rel="stylesheet" href="../shared/css/base.css">
 
   <style type="text/css">
-
+  .sleeper {
+    position: absolute;
+    width: 200vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
+  .sleeper.right {
+    left: -100vw;
+  }
   </style>
 
 </head>
 <body>
 
-  <div id="app" class="app">
-
-  </div>
+  <div id="app" class="app"></div>
 
   <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
   <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
@@ -31,9 +39,15 @@
 
   <script src="js/sleeper.js"></script>
   <script src="js/graph_sleeper.js"></script>
-
   <script>
-
+  var sleep = new Sleep({
+    "enable": 1,
+    "checkInterval": 1,
+    "sleepAfter": 2
+  });
+  var sleeper = new GraphSleeper({
+    "role": "publisher"
+  });
   </script>
 </body>
 </html>
