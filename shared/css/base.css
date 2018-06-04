@@ -6,12 +6,12 @@
 /* define global colors */
 :root {
   --primary-color: #058599;
-  --primary-dark-color: #29494e;
-  --primary-darker-color: #0a2126;
-  --primary-darkest-color: #061416;
+  --primary-dark-color: #216d79;
+  --primary-darker-color: #1b565f;
+  --primary-darkest-color: #0f363c;
   --secondary-color: #c98f20;
   --highlight-color: #e2bb3d;
-  --white-color: #aaaaaa;
+  --white-color: #d9dfe8;
   --gray-color: #231f20;
   --black-color: #000000;
   --warm-color: #eb5229;

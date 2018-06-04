@@ -61,11 +61,11 @@
   transition: opacity 1s ease-in-out, transform 1s ease-in-out;
 }
 .information h2 {
-  font-size: 1vh;
+  font-size: 1.25vh;
 }
 .information p {
-  font-size: 0.8vh;
-  line-height: 1.6;
+  font-size: 1vh;
+  line-height: 1.8;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }

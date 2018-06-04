@@ -1,12 +1,12 @@
 var CONFIG = {
   "colors": {
     "primary": "058599",
-    "primaryDark": "29494e",
-    "primaryDarker": "0a2126",
-    "primaryDarkest": "061416",
+    "primaryDark": "216d79",
+    "primaryDarker": "1b565f",
+    "primaryDarkest": "0f363c",
     "secondary": "c98f20",
     "highlight": "e2bb3d",
-    "white": "aaaaaa",
+    "white": "d9dfe8",
     "gray": "231f20",
     "black": "000000",
     "warm": "eb5229",

@@ -18,7 +18,7 @@
       },
       "subtextStyle": {
         "fill": "$#primaryDark",
-        "fontSize": 0.022,
+        "fontSize": 0.0275,
         "fontFamily": "Balance"
       }
     },

@@ -164,12 +164,12 @@
 }
 .caption p {
   margin: 0.5rem 0;
-  font-size: 0.8rem;
+  font-size: 1vh;
   /* max-height: 2.8rem;
   overflow: hidden; */
 }
 .caption h2 {
-  font-size: 1rem;
+  font-size: 1.25vh;
 }
 
 .title h2 {

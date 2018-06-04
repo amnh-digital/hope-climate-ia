@@ -35,7 +35,7 @@
   position: absolute;
   width: 13%;
   height: auto;
-  left: 5%;
+  right: 5%;
   bottom: 5%;
   opacity: 1;
   transition: opacity 2s ease-in-out;
@@ -59,7 +59,7 @@
 }
 .fact-box .caption {
   line-height: 1.8;
-  font-size: 1.5vh;
+  font-size: 1.25vh;
   margin-top: 1vh;
 }
 .sleeping .fact-boxes {

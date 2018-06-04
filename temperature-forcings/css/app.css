@@ -48,8 +48,8 @@
   letter-spacing: 0.1vh;
 }
 .message p {
-  font-size: 0.9vh;
-  line-height: 1.5;
+  font-size: 1vh;
+  line-height: 1.8;
 }
 .message.active {
   opacity: 1;

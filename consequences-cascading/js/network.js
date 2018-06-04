@@ -727,6 +727,7 @@ var Network = (function() {
 
     var rootNodeY = this.rootNodeY;
     var rootNodeTextStyle = this.rootNodeTextStyle;
+    var nodeBodyTextStyle = this.opt.nodeBodyTextStyle;
     var sectionTitleFrom = this.sectionTitleFrom;
     var sectionTitleTo = this.sectionTitleTo;
     var sectionTitleBg = this.sectionTitleBg;
@@ -738,7 +739,7 @@ var Network = (function() {
     sectionTitleTo.alpha = progress;
 
     sectionTitleFrom.anchor.set(0, 0.5);
-    sectionTitleFrom.style = _.extend({}, rootNodeTextStyle, {fill: "#aaaaaa"});
+    sectionTitleFrom.style = _.extend({}, rootNodeTextStyle, {fill: nodeBodyTextStyle.fill});
     sectionTitleFrom.x = sublabel.x + sublabel.width * 1.1;
     sectionTitleFrom.y = rootNodeY;
 
