@@ -8,7 +8,7 @@
 }
 .sleeping .title h2 {
   opacity: 1;
-  background: #000;
+  /* background: #000; */
 }
 .content {
   top: 0;

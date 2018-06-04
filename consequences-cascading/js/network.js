@@ -41,7 +41,7 @@ var Network = (function() {
 
   Network.prototype.loadView = function(){
     var _this = this;
-    this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
+    this.app = new PIXI.Application(this.width, this.height, {transparent: true, antialias: true});
     var rootNode = new PIXI.Graphics();
 
     this.sectionTitleBg = new PIXI.Graphics();
@@ -447,7 +447,7 @@ var Network = (function() {
         node.fromY = UTIL.lerp(y0, y1, node.pny);
         if (node.pny <= 0) {
           node.fromX = rootNodeX;
-          node.fromY = rootNodeY;
+          node.fromY = rootNodeY * 1.125;
         }
         // position content area
         var contentX = UTIL.lerp(x0, x1, node.contentNx);

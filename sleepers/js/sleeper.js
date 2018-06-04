@@ -83,11 +83,13 @@ var Sleeper = (function() {
 
   Sleeper.prototype.onSleepStart = function(){
     this.active = true;
+    this.$el.addClass("active");
     this.render();
   };
 
   Sleeper.prototype.onSleepEnd = function(){
     this.active = false;
+    this.$el.removeClass("active");
   };
 
   Sleeper.prototype.onUpdate = function(progress){
