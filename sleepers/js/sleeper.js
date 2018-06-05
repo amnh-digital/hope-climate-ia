@@ -8,7 +8,8 @@ var Sleeper = (function() {
       "duration": 120,       // in seconds
       "fade": 2, // in seconds
       "position": "left",   // or right
-      "channel": "sleeper"
+      "channel": "sleeper",
+      "className": "sleeper"
     };
     this.opt = _.extend({}, defaults, options);
     this.init();
@@ -60,7 +61,7 @@ var Sleeper = (function() {
   };
 
   Sleeper.prototype.loadView = function(){
-    var $el = $('<div class="sleeper '+this.opt.position+'"></div>');
+    var $el = $('<div class="'+this.opt.className+' '+this.opt.position+'"></div>');
     var app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var graphics = new PIXI.Graphics();
 

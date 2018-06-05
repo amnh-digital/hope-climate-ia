@@ -155,6 +155,9 @@ a {
   opacity: 0;
   transition: opacity 2s ease-in-out;
 }
+.globe-sleeper {
+  top: 50vh;
+}
 .sleeper.active {
   opacity: 1;
 }

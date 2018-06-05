@@ -27,8 +27,8 @@
 
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
-    <script src="../shared/js/vendor/pixi-4.6.2.min.js"></script>
     <script src="../shared/js/vendor/howler-2.0.7.min.js"></script>
+    <script src="../shared/js/vendor/three-0.89.0.min.js"></script>
 
     <script src="../shared/js/config.js"></script>
     <script src="../shared/js/channel.js"></script>
@@ -40,5 +40,15 @@
     <script src="js/quiz.js"></script>
     <script src="js/app.js"></script>
     <script src="js/init-physical.js"></script>
+
+    <script src="../sleepers/js/sleeper.js"></script>
+    <script src="../sleepers/js/globe_sleeper.js"></script>
+    <script>
+    var sleeper = new GlobeSleeper({
+      "duration": 240,
+      "role": "publisher",
+      "textureFile": "../sleepers/img/world_map_blank_without_borders.png"
+    });
+    </script>
   </body>
 </html>
