@@ -24,6 +24,10 @@ var Sleeper = (function() {
     this.fadePercent = this.fadeMs / this.durationMs;
     this.dataLoaded = false;
 
+    var $el = $('<div class="'+this.opt.className+' '+this.opt.position+'"></div>');
+    this.$parent.prepend($el);
+    this.$el = $el;
+
     this.offsetX = 0;
     if (this.opt.position === "right") this.offsetX = 0.5;
 
@@ -61,18 +65,14 @@ var Sleeper = (function() {
   };
 
   Sleeper.prototype.loadView = function(){
-    var $el = $('<div class="'+this.opt.className+' '+this.opt.position+'"></div>');
     var app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
     var graphics = new PIXI.Graphics();
 
     app.stage.addChild(graphics);
-    $el.append(app.view);
+    this.$el.append(app.view);
 
     this.app = app;
     this.graphics = graphics;
-
-    this.$parent.prepend($el);
-    this.$el = $el;
   };
 
   Sleeper.prototype.onDataLoaded = function(data){}; // override me
@@ -98,8 +98,8 @@ var Sleeper = (function() {
   };
 
   Sleeper.prototype.refreshDimensions = function(){
-    var width = this.$parent.width() * 2;
-    var height = this.$parent.height();
+    var width = this.$el.width();
+    var height = this.$el.height();
 
     this.width = width;
     this.height = height;

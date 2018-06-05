@@ -155,7 +155,7 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.initView = function(){
-    this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
+    this.app = new PIXI.Application(this.width, this.height, {transparent: true, antialias: true});
     var axes = new PIXI.Graphics();
     var plot = new PIXI.Graphics();
     var cords = new PIXI.Graphics();

@@ -22,7 +22,7 @@ var GlobeSleeper = (function() {
   GlobeSleeper.prototype.constructor = GlobeSleeper;
 
   GlobeSleeper.prototype.loadView = function(){
-    var $el = $('<div class="'+this.opt.className+' '+this.opt.position+'"></div>');
+    var $el = this.$el;
 
     var _this = this;
     var w = this.width;
@@ -71,9 +71,7 @@ var GlobeSleeper = (function() {
       _this.earth = earth;
       _this.dataLoaded = true;
     });
-
-    this.$parent.prepend($el);
-    this.$el = $el;
+    
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;

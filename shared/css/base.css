@@ -158,11 +158,18 @@ a {
 .globe-sleeper {
   top: 50vh;
 }
+.particle-sleeper {
+  width: 100vw;
+  left: 50vw;
+}
 .sleeper.active {
   opacity: 1;
 }
 .sleeper.right {
   left: -100vw;
+}
+.particle-sleeper.right {
+  left: -50vw;
 }
 
 .ui {
