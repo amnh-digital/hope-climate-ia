@@ -9,7 +9,7 @@ var ParticleSleeper = (function() {
       "margin": 0.1,
       "radiusRange": [0.05, 0.1],
       "className": "sleeper particle-sleeper",
-      "duration": 60,
+      "duration": 120,
     };
     options = _.extend({}, defaults, options);
     Sleeper.call(this, options);
@@ -58,16 +58,19 @@ var ParticleSleeper = (function() {
     var y0 = h;
     var y1 = 0;
     var yStart = [1.0, 0.25]; // start from bottom to x up the screen
+    var padding = 0.5 * h;
 
     this.particles = _.map(this.particles, function(p){
       var rand1 = p.rand1;
       var rand2 = p.rand2;
       var rand3 = p.rand3;
       var rand4 = p.rand4;
-      p.y0 = UTIL.lerp(y0*yStart[0], y0*yStart[1], rand2);
-      p.y1 = p.y0 - UTIL.lerp(y0*yStart[0], y0*yStart[1], rand3);
       p.x = UTIL.lerp(x0, x1, rand4);
       p.radius = UTIL.lerp(radiusRange[0], radiusRange[1], rand1) * h;
+      var pad0 = p.radius + rand2 * padding;
+      var pad1 = p.radius + rand3 * padding;
+      p.y0 = y0 + pad0;
+      p.y1 = y1 - pad1;
       return p;
     });
   };
@@ -82,11 +85,12 @@ var ParticleSleeper = (function() {
 
     _.each(this.particles, function(p){
       var pprogress = (progress + p.rand1) % 1;
-      var alpha = pprogress * 2;
-      if (pprogress > 0.5) alpha = (1.0-pprogress) * 2;
       var x = p.x;
       var y = UTIL.lerp(p.y0, p.y1, pprogress);
-      g.beginFill(color, alpha);
+      // var alpha = pprogress * 2;
+      // if (pprogress > 0.5) alpha = (1.0-pprogress) * 2;
+      // var lerpedColor = UTIL.lerpColor(0x000000, color, alpha);
+      g.beginFill(color);
       g.drawCircle(x, y, p.radius);
       g.endFill();
     });
