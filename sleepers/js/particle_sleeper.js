@@ -4,7 +4,7 @@ var ParticleSleeper = (function() {
 
   function ParticleSleeper(options) {
     var defaults = {
-      "particleCount": 40,
+      "particleCount": 20,
       "color": 0x272a2b,
       "margin": 0.1,
       "radiusRange": [0.05, 0.1],
