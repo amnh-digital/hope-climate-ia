@@ -62,7 +62,7 @@ var Network = (function() {
       var nodeContent = {};
 
       // container
-      var contentContainer = new PIXI.Graphics();
+      var contentContainer = new PIXI.Container();
       contentContainer.alpha = 0;
 
       // only add label for first node
