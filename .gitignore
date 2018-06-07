@@ -1,5 +1,6 @@
 build/
 *.bak
+electron-packager/
 
 oversize-assets/*
 !oversize-assets/README.md

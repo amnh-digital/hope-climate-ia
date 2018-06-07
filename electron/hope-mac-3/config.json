@@ -1,26 +1,9 @@
 {
   "windows": [
     {
-      "url": "temperature-regions/physical.html",
+      "url": "temperature-timescales/physical.html",
       "debug": false,
       "browserWindow": {
-        "x": 0,
-        "y": 0,
-        "width": 1920,
-        "height": 1080,
-        "kiosk": true,
-        "webPreferences": {
-          "nodeIntegration": false
-        }
-      }
-    },{
-      "url": "temperature-forcings/physical.html",
-      "debug": false,
-      "browserWindow": {
-        "x": 1920,
-        "y": 0,
-        "width": 1920,
-        "height": 1080,
         "kiosk": true,
         "webPreferences": {
           "nodeIntegration": false
