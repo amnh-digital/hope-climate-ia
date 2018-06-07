@@ -1,6 +1,6 @@
 $(function() {
   $.when(
-    $.getJSON("../config/controls.json"),
+    $.getJSON("../controls.json"),
     $.getJSON("config/base.json"),
     $.getJSON("config/physical.json"),
     $.getJSON("../temperature-forcings/config/physical.json"),

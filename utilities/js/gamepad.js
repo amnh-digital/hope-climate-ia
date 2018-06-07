@@ -167,7 +167,7 @@ var GamepadConfig = (function() {
       };
     });
     postData = {
-      "filename": "./config/controls.json",
+      "filename": "./controls.json",
       "data": {
         "gamepad": {
           "axes": postData
