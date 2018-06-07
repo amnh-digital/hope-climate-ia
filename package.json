@@ -1,9 +1,13 @@
 {
   "name": "hope-climate-ia",
+  "description": "HoPE Climate Wall interactives",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build:mac4": "./electron/build-hope-mac-4.sh"
   },
   "devDependencies": {
+    "electron": "^1.8.7",
+    "electron-packager": "^12.0.0",
     "express": "^4.16.3"
   }
 }
