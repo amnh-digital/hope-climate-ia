@@ -1,3 +1,9 @@
+build/
+*.bak
+
+oversize-assets/*
+!oversize-assets/README.md
+
 *.pyc
 node_modules/
 *.nc

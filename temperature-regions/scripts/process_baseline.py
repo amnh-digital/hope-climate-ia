@@ -12,11 +12,11 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv5_annual.nc", help="Temperature input file with wrong baseline")
-parser.add_argument('-ref', dest="REF_FILE", default="../data/giss/amaps_%s.nc", help="Reference input file with target baseline")
+parser.add_argument('-in', dest="INPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5_annual.nc", help="Temperature input file with wrong baseline")
+parser.add_argument('-ref', dest="REF_FILE", default="../../oversize-assets/giss/amaps_%s.nc", help="Reference input file with target baseline")
 parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
 parser.add_argument('-ryears', dest="REF_YEARS", default="2017,2016,2015,2014,2013,2012,2011,2010", help="Reference years")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc", help="Output file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc", help="Output file")
 args = parser.parse_args()
 
 # config

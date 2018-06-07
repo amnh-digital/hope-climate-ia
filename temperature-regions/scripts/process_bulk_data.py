@@ -19,7 +19,7 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/giss/amaps_%s.nc", help="Temperature input file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../../oversize-assets/giss/amaps_%s.nc", help="Temperature input file")
 parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
 parser.add_argument('-end', dest="END_YEAR", default=2017, type=int, help="End year")
 parser.add_argument('-zones', dest="ZONES", default=9, type=int, help="Number of zones")

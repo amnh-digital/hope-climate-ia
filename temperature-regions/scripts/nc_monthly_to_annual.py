@@ -5,7 +5,7 @@
 
 # Convert to annual
 # python nc_monthly_to_annual.py
-# inspect: ncdump -h data/gistemp1200_ERSSTv4.nc
+# inspect: ncdump -h ../oversize-assets/gistemp1200_ERSSTv4.nc
 
 import argparse
 import datetime
@@ -18,8 +18,8 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/gistemp1200_ERSSTv5.nc", help="Temperature input file")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/gistemp1200_ERSSTv5_annual.nc", help="Output file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5.nc", help="Temperature input file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5_annual.nc", help="Output file")
 args = parser.parse_args()
 
 # config
