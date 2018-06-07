@@ -211,7 +211,6 @@ var Controls = (function() {
 
   Controls.prototype.loadPointerlockListeners = function(mappings){
     var channel = this.channel;
-    var el = $(this.opt.el)[0];
 
     function updatePosition(e){
       _.each(mappings, function(props, orientation){
@@ -226,20 +225,21 @@ var Controls = (function() {
 
     document.addEventListener("mousemove", updatePosition, false);
 
-    // Initiate pointer lock
-    document.addEventListener('pointerlockchange', function(){
-      if (document.pointerLockElement === el) {
-        console.log('The pointer lock status is now locked');
-        // document.addEventListener("mousemove", updatePosition, false);
-      } else {
-        console.log('The pointer lock status is now unlocked');
-      }
-    }, false);
-
-    el.onclick = function() {
-      console.log('Requesting pointer lock...');
-      el.requestPointerLock();
-    };
+    // // Initiate pointer lock
+    // document.addEventListener('pointerlockchange', function(){
+    //   if (document.pointerLockElement === el) {
+    //     console.log('The pointer lock status is now locked');
+    //     // document.addEventListener("mousemove", updatePosition, false);
+    //   } else {
+    //     console.log('The pointer lock status is now unlocked');
+    //   }
+    // }, false);
+    //
+    // var el = $(this.opt.el)[0];
+    // el.onclick = function() {
+    //   console.log('Requesting pointer lock...');
+    //   el.requestPointerLock();
+    // };
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){
