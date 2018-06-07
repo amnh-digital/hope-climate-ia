@@ -82,7 +82,7 @@ var ParticleSleeper = (function() {
     var g = this.graphics;
     var color = this.opt.color;
     g.clear();
-
+    g.beginFill(color);
     _.each(this.particles, function(p){
       var pprogress = (progress + p.rand1) % 1;
       var x = p.x;
@@ -90,10 +90,9 @@ var ParticleSleeper = (function() {
       // var alpha = pprogress * 2;
       // if (pprogress > 0.5) alpha = (1.0-pprogress) * 2;
       // var lerpedColor = UTIL.lerpColor(0x000000, color, alpha);
-      g.beginFill(color);
       g.drawCircle(x, y, p.radius);
-      g.endFill();
     });
+    g.endFill();
   };
 
   return ParticleSleeper;
