@@ -3,6 +3,8 @@
 # Shapefile source: http://www.naturalearthdata.com/downloads/110m-physical-vectors/
 
 # python process_map.py -land "#2b5b62" -water "#000000" -out "../img/map_resting.svg"
+# python process_map.py -land "#333333" -water "#000000" -out "../img/map.svg"
+# python process_map.py -land "#555555" -water "#000000" -out "../img/map_highlight.svg"
 
 import argparse
 from lib import *

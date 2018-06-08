@@ -16,7 +16,7 @@
   position: relative;
   width: 33.33333vw;
   height: 16.666667vw;
-  background: url(../img/worldmap.png) 0 0 no-repeat;
+  background: url(../img/map.svg) 0 0 no-repeat;
   background-size: 100% auto;
 }
 .map > img {
