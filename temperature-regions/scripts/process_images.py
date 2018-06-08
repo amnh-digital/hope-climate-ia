@@ -22,7 +22,8 @@ parser.add_argument('-end', dest="END_YEAR", default=2017, type=int, help="End y
 parser.add_argument('-out', dest="OUTPUT_DIR", default="../img/frames/", help="Output directory")
 parser.add_argument('-width', dest="TARGET_WIDTH", default=1024, type=int, help="Target width")
 parser.add_argument('-format', dest="IMAGE_FORMAT", default="png", help="Image format")
-parser.add_argument('-grad', dest="GRADIENT", default="#43fff5,#88b5b3,#000000,#dd6952,#f92900", help="Color gradient")
+parser.add_argument('-grad', dest="GRADIENT", default="#00ffed,#65c6c2,#000000,#dd6952,#ff2600", help="Color gradient")
+parser.add_argument('-stops', dest="STOPS", default="0.0,0.1,0.5,0.9,1.0", help="Color gradient stops")
 args = parser.parse_args()
 
 # config
@@ -34,12 +35,14 @@ TARGET_WIDTH = args.TARGET_WIDTH
 IMAGE_FORMAT = args.IMAGE_FORMAT
 # GRADIENT = ["#42a6ff", "#89a2b7", "#000000", "#e05050", "#fc0000"]
 GRADIENT = args.GRADIENT.split(",")
+STOPS = [float(s) for s in args.STOPS.split(",")]
 
 MIN_VALUE = -3.5
 MAX_VALUE = 3.5
 TARGET_HEIGHT = TARGET_WIDTH / 2
 LATLON_OFFSET = 0.8
-RADIUS_RANGE = [1.0, 1.4]
+RADIUS_RANGE = [1.0, 1.8]
+ALPHA_RANGE = [0.0, 1.0]
 
 robinsonProj = Proj(ellps='WGS84',proj='robin')
 
@@ -103,8 +106,10 @@ def tempToColor(v):
             n = 0.5 - v / MIN_VALUE * 0.5
         # n = norm(v, MIN_VALUE, MAX_VALUE)
         n = clamp(n)
-        rgb = getColor(GRADIENT, n)
+        rgb = getColor(GRADIENT, n, stops=STOPS)
+        # n = lerpList(STOPS, n)
         a = abs(n * 2 - 1)
+        # a = lerp(ALPHA_RANGE[0], ALPHA_RANGE[1], a)
         rgba = (rgb[0]/255.0, rgb[1]/255.0, rgb[2]/255.0, a)
     return rgba
 
@@ -142,6 +147,10 @@ print "Generating images..."
 years = []
 yearData = []
 index = 1
+
+# START_YEAR = 2005
+# END_YEAR = 2005
+
 for i, year in enumerate(times):
     if START_YEAR <= year <= END_YEAR:
         data = tempData[i]

@@ -1,20 +1,29 @@
+import numpy as np
 
 def clamp(value, v0=0, v1=1):
     value = min(value, v1)
     value = max(value, v0)
     return value
 
-def getColor(grad, amount, toInt=False):
+def getColor(grad, amount, toInt=False, stops=False):
     gradLen = len(grad)
+
+    if stops is False:
+        stops = np.linspace(0.0, 1.0, gradLen)
+    amount = lerpList(stops, amount)
+
     i = (gradLen-1) * amount
     remainder = i % 1
+    i = int(i)
     rgb = (0,0,0)
+
     if amount > 1:
-        print amount
+        print "Warning: gradient amount is %s" % amount
+
     if remainder > 0:
-        rgb = lerpColor(grad[int(i)], grad[int(i)+1], remainder)
+        rgb = lerpColor(grad[i], grad[i+1], remainder)
     else:
-        rgb = grad[int(i)]
+        rgb = grad[i]
     if toInt:
         return int(rgb2hex(rgb), 16)
     else:
@@ -46,6 +55,15 @@ def lerpColor(s, f, amount):
       for j in range(3)
     ]
     return tuple(rgb)
+
+def lerpList(a, amount):
+    i = (len(a)-1) * amount
+    remainder = i % 1
+    i = int(i)
+    if (i+1) >= len(a):
+        return a[-1]
+    else:
+        return lerp(a[i], a[i+1], remainder)
 
 def norm(value, a, b):
     n = 1.0 * (value - a) / (b - a)
