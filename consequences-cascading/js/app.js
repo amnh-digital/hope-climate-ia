@@ -16,56 +16,12 @@ var AppCascading = (function() {
 
     var controlPromise = this.loadControls();
     var soundPromise = this.loadSounds();
-    var assetPromise = this.loadAssets();
+    var imagesPromise = this.loadImages();
 
-    $.when.apply($, [controlPromise, soundPromise, assetPromise]).then(function(){
+    $.when.apply($, [controlPromise, soundPromise, imagesPromise]).then(function(){
       _this.onReady();
       _this.loadListeners();
     });
-  };
-
-  AppCascading.prototype.loadAssets = function(){
-    var _this = this;
-    var deferred = $.Deferred();
-    var loader = new PIXI.loaders.Loader();
-
-    // get image paths from content
-    var network = this.content.network;
-    var imagePaths = [];
-    _.each(network, function(branch, i){
-      _.each(branch.nodes, function(node, j){
-        if (node.image) imagePaths.push(node.image);
-      });
-    });
-
-    // load images
-    imagePaths = _.uniq(imagePaths);
-    var imageIndex = {};
-    _.each(imagePaths, function(path){
-      var filename = path.split("/").pop();
-      var id = filename.split(".").shift();
-      imageIndex[path] = id;
-      loader.add(id, path);
-    });
-
-    // on load, assign textures to content and resolve
-    loader.load(function(loader, resources){
-      _.each(network, function(branch, i){
-        _.each(branch.nodes, function(node, j){
-          if (node.image) {
-            var imageId = imageIndex[node.image];
-            var texture = resources[imageId].texture;
-            _this.content.network[i].nodes[j].texture = texture;
-            _this.content.network[i].nodes[j].originalWidth = texture.width;
-            _this.content.network[i].nodes[j].originalHeight = texture.height;
-            _this.content.network[i].nodes[j].imageRatio = texture.width / texture.height;
-          }
-        });
-      });
-      deferred.resolve();
-    });
-
-    return deferred.promise();
   };
 
   AppCascading.prototype.loadControls = function(){
@@ -74,6 +30,16 @@ var AppCascading = (function() {
     var controls = new Controls(this.opt.controls);
 
     return controls.load();
+  };
+
+  AppCascading.prototype.loadImages = function(){
+    var _this = this;
+
+    // Initialize images
+    var opt = _.extend({}, this.opt.images, this.content);
+    this.images = new Images(opt);
+
+    return this.images.load();
   };
 
   AppCascading.prototype.loadListeners = function(){

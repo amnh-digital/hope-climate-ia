@@ -66,3 +66,25 @@
 .sleeping .fact-boxes {
   opacity: 0;
 }
+
+.images-wrapper {
+  transition: opacity 2s ease-in-out;
+}
+.images {
+  transform-origin: 50% 50%;
+}
+.images .image {
+  clip-path: circle(50%);
+  position: absolute;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  transition-delay: 1s;
+  visibility: hidden;
+}
+.images .image.active {
+  opacity: 1;
+  visibility: visible;
+}
+.sleeping .images-wrapper {
+  opacity: 0;
+}

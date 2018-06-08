@@ -84,19 +84,9 @@ var Network = (function() {
       var description = new PIXI.Text("");
       contentContainer.addChild(description);
 
-      // sprite
-      var sprite = new PIXI.Sprite();
-      contentContainer.addChild(sprite);
-
-      // sprite mask
-      var spriteMask = new PIXI.Graphics();
-      sprite.addChild(spriteMask);
-      sprite.mask = spriteMask;
-
       nodeContent.container = contentContainer;
       nodeContent.label = label;
       nodeContent.description = description;
-      nodeContent.sprite = sprite;
 
       nodeContents.push(nodeContent);
       contentArea.addChild(contentContainer);
@@ -145,6 +135,7 @@ var Network = (function() {
     var index = 0;
     var changed = false;
     var branchTransitioning = this.branchTransitioning;
+    var $document = this.$document;
 
     // check to see if we reached the threshold for going to the next branch
     var angleDelta = this.angleDelta + delta;
@@ -198,8 +189,9 @@ var Network = (function() {
       this.branchTransitioning = true;
 
       this.resetCountingDown = false;
-      this.$document.trigger("factbox.hide", [true]);
-      this.$document.trigger("factbox.reset", [this.branch]);
+      $document.trigger("factbox.hide", [true]);
+      $document.trigger("factbox.reset", [this.branch]);
+      $document.trigger("images.reset", [true]);
 
     } else {
       var radians = this.angleDelta * (Math.PI / 180);
@@ -211,7 +203,8 @@ var Network = (function() {
         node.container.rotation = -radians;
         if (node.label) node.label.area.rotation = -radians;
       });
-      this.$document.trigger("factbox.transition", [1.0 - angleDeltaProgress]);
+      $document.trigger("factbox.transition", [1.0 - angleDeltaProgress]);
+      $document.trigger("images.transition", [this.angleDelta, 1.0 - angleDeltaProgress]);
     }
   };
 
@@ -352,7 +345,7 @@ var Network = (function() {
         var node = _.clone(n);
 
         // determine position of content
-        var contentDistance = node.label ? nodeLabelRadius * 1.5 + node.nContentWidth * 0.5 : nodeRadiusRange[0] * 2.25 + node.nContentWidth * 0.5;
+        var contentDistance = node.label ? nodeLabelRadius * 1.5 + node.nContentWidth * 0.5 : nodeRadiusRange[0] * 3.25 + node.nContentWidth * 0.5;
         contentDistance = node.contentDistance || contentDistance;
 
         var contentAngle = 0;
@@ -388,6 +381,7 @@ var Network = (function() {
     var _this = this;
     var w = this.$el.width();
     var h = this.$el.height();
+    var $document = this.$document;
 
     this.width = w;
     this.height = h;
@@ -436,7 +430,9 @@ var Network = (function() {
       }
       node.description.style = _.extend({}, nodeBodyTextStyle);
       return node;
-    })
+    });
+
+    var imageData = {};
 
     this.network = _.map(this.network, function(branch, i){
       branch.nodes = _.mapObject(branch.nodes, function(node, id){
@@ -460,8 +456,6 @@ var Network = (function() {
         node.contentX = contentX;
         node.contentY = contentY;
         node.contentMargin = contentWidth * 0.1;
-        node.imageX = UTIL.lerp(x0, x1, node.imageNx);
-        node.imageY = UTIL.lerp(y0, y1, node.imageNy);
 
         // radius is based on severity
         node.radius = node.nRadius * h;
@@ -470,11 +464,25 @@ var Network = (function() {
         // line dash based on propability
         node.dashGapWidth = UTIL.lerp(nodeDashGapRange[0], nodeDashGapRange[1], (node.probability - 1) / 4.0);
         node.dashWidth = UTIL.lerp(nodeDashWidthRange[0], nodeDashWidthRange[1], (node.probability - 1) / 4.0);
+
+        if (node.image) {
+          var imageX = UTIL.lerp(x0, x1, node.imageNx);
+          var imageY = UTIL.lerp(y0, y1, node.imageNy);
+          var imageWidth = node.nImageWidth * node.contentWidth;
+          imageData[id] = {
+            x: imageX,
+            y: imageY,
+            width: imageWidth
+          };
+        }
+
+
         return node;
       });
       return branch;
     });
 
+    $document.trigger("images.resize", [imageData]);
     this.nodeRadius = nodeRadiusRange[0];
   };
 
@@ -540,6 +548,7 @@ var Network = (function() {
       if (p > 0) {
         if (!node.drawn) {
           $document.trigger("sound.play.percent", [node.soundMu]);
+          if (node.image) $document.trigger("image.show", [id]);
           _this.branch.nodes[id].drawn = true;
         }
 
@@ -659,6 +668,7 @@ var Network = (function() {
   Network.prototype.renderReset = function(t){
     if (this.transitioning) return false;
 
+    var $document = this.$document;
     var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.resetStart, this.resetEnd);
     var progressEased = UTIL.easeInElastic(progress, this.opt.elasticAmount);
@@ -682,7 +692,8 @@ var Network = (function() {
       content.container.rotation = -radians;
       if (content.label) content.label.area.rotation = -radians;
     });
-    this.$document.trigger("factbox.transition", [alpha]);
+    $document.trigger("factbox.transition", [alpha]);
+    $document.trigger("images.transition", [this.angleDelta, alpha]);
   };
 
   Network.prototype.renderRootNode = function(){
@@ -796,6 +807,8 @@ var Network = (function() {
 
     // transition title
     this.renderSectionTitle(progressEased);
+
+    this.$document.trigger("images.transition", [angle, progressEased]);
   };
 
   Network.prototype.sleepEnd = function(){
@@ -862,24 +875,6 @@ var Network = (function() {
       content.description.text = node.description;
       content.description.position.set(node.contentMargin + x, y);
       content.description.style.wordWrapWidth = node.contentWidth - node.contentMargin;
-
-      // set sprite
-      if (node.texture) {
-        content.sprite.texture = node.texture;
-        content.sprite.width = node.nImageWidth * node.contentWidth;
-        content.sprite.height = content.sprite.width / node.imageRatio;
-        var multiply = node.originalWidth / content.sprite.width;
-        var diameter = Math.min(content.sprite.width, content.sprite.height);
-        var radius = diameter/2 * multiply;
-        content.sprite.mask.clear();
-        content.sprite.mask.beginFill();
-        content.sprite.mask.drawCircle(radius, radius, radius);
-        content.sprite.mask.endFill();
-        content.sprite.position.set(node.imageX - diameter*0.5, node.imageY - diameter*0.5);
-        content.sprite.alpha = 1;
-      } else {
-        content.sprite.alpha = 0;
-      }
 
       return node;
     });
