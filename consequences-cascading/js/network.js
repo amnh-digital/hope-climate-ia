@@ -352,7 +352,7 @@ var Network = (function() {
         var node = _.clone(n);
 
         // determine position of content
-        var contentDistance = node.label ? nodeLabelRadius + node.nContentWidth * 0.5 : nodeRadiusRange[0] * 1.5 + node.nContentWidth * 0.5;
+        var contentDistance = node.label ? nodeLabelRadius * 1.5 + node.nContentWidth * 0.5 : nodeRadiusRange[0] * 2.25 + node.nContentWidth * 0.5;
         contentDistance = node.contentDistance || contentDistance;
 
         var contentAngle = 0;
@@ -369,7 +369,7 @@ var Network = (function() {
 
         node.nImageWidth = node.nImageWidth ? node.nImageWidth * nodeImageWidth : nodeImageWidth;
         var imgAngle = node.imageAngle ? node.imageAngle : contentAngle;
-        var imgDistance = node.imageDistance ? node.imageDistance : node.nContentWidth * 1.4;
+        var imgDistance = node.imageDistance ? node.imageDistance : node.nContentWidth * 1.75;
         var imagePoint = UTIL.translatePoint([node.contentNx, node.contentNy], imgAngle, imgDistance);
         node.imageNx = imagePoint[0];
         node.imageNy = imagePoint[1];

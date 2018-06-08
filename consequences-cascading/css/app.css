@@ -25,10 +25,11 @@
 
 .network {
   height: 100%;
-  width: 100%;
+  width: 66.666667%;
   position: absolute;
-  left: 0;
+  left: 47%;
   top: 0;
+  margin-left: -33.33333%;
 }
 
 .fact-boxes {
