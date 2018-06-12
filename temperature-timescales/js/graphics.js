@@ -730,14 +730,14 @@ var Graphics = (function() {
     marker.clear();
 
     var cx = pd[0];
-    var cy = pd[1];
+    var cy = 0;
     var cw = pd[2];
     var ch = pd[3]
     var x = pd[0] + cw * time;
     var marginX = cw * 0.02;
-    var marginY = cw * 0.01;
+    var marginY = cw * 0.008;
 
-    var rectSmall = 0.2;
+    var rectSmall = 0.23;
     var rectBig = 0.28;
     var rectW = cw * rectSmall;
     if (showAnnotation) rectW = cw * rectBig;
@@ -777,7 +777,7 @@ var Graphics = (function() {
     // marker.endFill();
 
     marker.lineStyle(markerW, markerColor);
-    marker.moveTo(x, cy).lineTo(x, cy + ch);
+    marker.moveTo(x, cy).lineTo(x, cy + ch + pd[1]);
 
     var textStyle = this.markerTextStyle;
     var dc = UTIL.round(current.value, 1);
@@ -800,7 +800,8 @@ var Graphics = (function() {
     cLabel.text = dc + "°C";
     fLabel.text = "(" + df + "°F)";
     aLabel.text = annotation;
-    lLabel.text = "difference from 20th century average temperature"
+    var than = dc >= 0 ? "warmer": "cooler";
+    lLabel.text = than + " than 20th cent. avg"
 
     // set style
     cLabel.style = textStyle;
