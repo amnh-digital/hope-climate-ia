@@ -68,19 +68,46 @@ a {
   z-index: 200;
   top: 10%;
   width: 40%;
+  position: relative;
+  height: 1.8vw;
+}
+.title:before,
+.title:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 1vw;
+  height: 1.6vw;
+  background: var(--primary-color);
+  top: 0;
+  left: -2vw;
+}
+.title:after {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-style: solid;
+  border-width: 0 0 0.4vw 0.4vw;
+  border-color: transparent transparent var(--black-color) transparent;
+  left: -1.3vw;
+  top: 1.2vw;
+
 }
 .title h1 {
   line-height: 1.2;
   font-size: 1.8vw;
   letter-spacing: 0.1vw;
   margin-top: 1vh;
+  margin-bottom: 0;
 }
 .title h2 {
   font-size: 1.333vw;
   letter-spacing: 0.05vw;
   font-weight: normal;
+  margin-top: 1.333vh;
   margin-bottom: 0;
   line-height: 1.5;
+  color: var(--primary-color);
 }
 
 .content {

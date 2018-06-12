@@ -49,9 +49,13 @@
   bottom: 0;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  color: var(--primary-color);
 }
 .fact-box.active {
   opacity: 1;
+}
+.fact-box .image {
+  position: relative;
 }
 .fact-box img {
   display: block;
@@ -61,7 +65,31 @@
 .fact-box .caption {
   line-height: 1.8;
   font-size: 1.25vh;
-  margin-top: 1vh;
+  margin-top: 1.5vh;
+}
+.fact-box .tab {
+  position: absolute;
+  background: var(--black-color);
+  bottom: 0;
+  left: 0;
+  width: 25%;
+  height: 1.2vw;
+}
+.fact-box .tab:before {
+  content: "ℹ";
+  font-size: 3vh;
+}
+.fact-box .tab:after {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 1.2vw 0 0 1.2vw;
+  border-color: transparent transparent transparent var(--black-color);
+  right: -1.2vw;
+  bottom: 0;
 }
 .sleeping .fact-boxes {
   opacity: 0;

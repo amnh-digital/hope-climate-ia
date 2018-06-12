@@ -11,7 +11,7 @@
 .slideshow {
   position: relative;
   width: 50vw; /* images are 1366 x 768 */
-  height: 26vw;
+  height: 25vw;
   overflow: hidden;
   transition: width 2s ease-in-out;
 }
@@ -88,6 +88,11 @@
   white-space: nowrap;
   text-shadow: 0.2vh 0.2vh 0.25vh rgba(0,0,0,0.8);
   color: #fff;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+.slide.active .label {
+  opacity: 1;
 }
 .slide .image.after .label {
   left: auto;
@@ -164,12 +169,12 @@
 }
 .caption p {
   margin: 0.5rem 0;
-  font-size: 1vh;
+  font-size: 1.1vh;
   /* max-height: 2.8rem;
   overflow: hidden; */
 }
 .caption h2 {
-  font-size: 1.25vh;
+  font-size: 1.333vh;
 }
 
 .title h2 {
