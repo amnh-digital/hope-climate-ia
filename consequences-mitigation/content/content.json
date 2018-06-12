@@ -7,7 +7,7 @@
         "className": "hunts-point",
         "image": "img/hunts_point.png"
       },
-      "description": "To combat the effects of rising temperatures and extreme heat, NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
+      "description": "NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
       "image": "img/cool_roofs.jpg",
       "video": "video/coolroofs.mp4"
     },{
@@ -17,7 +17,7 @@
         "className": "red-hook",
         "image": "img/red_hook.png"
       },
-      "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges in providing mobility to residents of the New York City region.",
+      "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges.",
       "image": "img/mta.jpg",
       "video": "video/mta.mp4"
     },{
@@ -27,7 +27,7 @@
         "className": "rockaway",
         "image": "img/rockaway_peninsula.png"
       },
-      "description": "Daylighting systems capture sunlight through a rooftop dome and use reflective tubing to channel the light through a diffuser, spreading sunlight to interior spaces, reducing energy costs and demand on the grid.",
+      "description": "Daylighting systems capture sunlight through a rooftop dome to reduce energy costs and demand on the grid.",
       "image": "img/daylighting.jpg",
       "video": "video/daylighting.mp4"
     },{
@@ -38,7 +38,7 @@
         "className": "coney-island",
         "image": "img/coney_island.png"
       },
-      "description": "Geosyntec, an environmental consulting and engineering firm is working with small businesses in the city to perform resiliency audits to assess vulnerability and installing physical flood protection systems.",
+      "description": "Geosyntec works with small businesses to assess vulnerability and installing physical flood protection systems.",
       "image": "img/geosyntec.jpg",
       "video": "video/cat2.mp4"
     },{
@@ -49,7 +49,7 @@
         "className": "staten-island",
         "image": "img/staten_island.png"
       },
-      "description": "The Living Breakwaters Project uses rocky sloped partially submerged walls within the water column to promote a layered resiliency approach to risk reduction through erosion prevention, wave energy attenuation, and enhancement of ecosystems resiliency.",
+      "description": "The Living Breakwaters project reduces risk, revives ecologies, and connects educators to the shoreline.",
       "image": "img/living_breakwaters.jpg",
       "video": "video/cat5.mp4"
     }
