@@ -9,13 +9,13 @@
 .title,
 .content,
 .sleepMode {
-  left: 60%;
+  left: 53%;
 }
 
 .map {
   position: relative;
-  width: 33.33333vw;
-  height: 16.666667vw;
+  width: 42vw;
+  height: 21vw;
   background: url(../img/map.svg) 0 0 no-repeat;
   background-size: 100% auto;
 }
@@ -47,6 +47,7 @@
 }
 .map-key {
   width: 25vw;
+  margin: 2vw auto 0;
 }
 .map-key img {
   display: block;
