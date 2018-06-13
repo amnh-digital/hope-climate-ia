@@ -12,14 +12,8 @@ var AppRegions = (function() {
   }
 
   AppRegions.prototype.init = function(){
-    var _this = this;
-
-    var controlPromise = this.loadControls();
-
-    $.when.apply($, [controlPromise]).then(function(){
-      _this.onReady();
-    });
-
+    this.loadControls();
+    this.onReady();
   };
 
   AppRegions.prototype.loadControls = function(){
