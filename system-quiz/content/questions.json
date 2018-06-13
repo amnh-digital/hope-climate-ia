@@ -36,6 +36,81 @@
         }
       ]
     },{
+      "id": "q-greenhouse",
+      "q": "<p>Without the natural greenhouse effect, Earth’s temperature would be well below freezing.</p>",
+      "htmlBefore": "<div class='imagery'><div class='polar-bear-correct'></div><div class='polar-bear-incorrect'></div><div class='flakes'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>",
+      "a": [
+        {
+          "htmlBefore": "<p class='left'>Is this</p>",
+          "htmlAfter": "<p class='center'>or</p><div class='polar-bear'></div>",
+          "label": "true",
+          "className": "circle",
+          "isCorrect": true,
+          "feedback": "<p><strong>Correct!</strong> Without the natural greenhouse effect, the average global temperature would be around <strong>-18˚C (0˚F)</strong>.</p>"
+        },{
+          "htmlAfter": "<p class='right'>?</p>",
+          "label": "false",
+          "className": "circle",
+          "isCorrect": false,
+          "feedback": "<p><strong>Sorry!</strong> Without the natural greenhouse effect, the average global temperature would be around <strong>-18˚C (0˚F)</strong>.</p>"
+        }
+      ]
+    },{
+      "id": "q-co2",
+      "q": "<p>How much carbon dioxide does the average American add to the atmosphere each year?</p>",
+      "htmlBefore": "<div class='imagery'></div>",
+      "a": [
+        {
+          "htmlAfter": "<p class='center'>or</p>",
+          "label": "16 metric tons",
+          "isCorrect": true,
+          "feedback": "<p><strong>Correct!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>.<sup>*</sup></p>",
+          "className": "long-text"
+        },{
+          "htmlAfter": "<p class='right'>?</p>",
+          "label": "6 metric tons",
+          "isCorrect": false,
+          "feedback": "<p><strong>Sorry!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>.<sup>*</sup></p>",
+          "className": "long-text"
+        }
+      ]
+    },{
+      "id": "q-activities",
+      "q": "<p>In the U.S., which activity contributes more to carbon dioxide emissions:</p>",
+      "htmlBefore": "<div class='imagery'></div>",
+      "a": [
+        {
+          "htmlAfter": "<p class='center'>or</p>",
+          "label": "producing electricity &amp; heat",
+          "isCorrect": false,
+          "feedback": "<p><strong>Sorry! Transportation causes more CO2 emissions in the U.S.</strong>—but just barely. In 2016, 35% of U.S. CO2 emissions came from the generation of electricity and heat; 36% from transportation.</p>",
+          "className": "long-text"
+        },{
+          "htmlAfter": "<p class='right'>?</p>",
+          "label": "using transportation",
+          "isCorrect": true,
+          "feedback": "<p><strong>Correct! Transportation causes more CO2 emissions in the U.S.</strong>—but just barely. In 2016, 35% of U.S. CO2 emissions came from the generation of electricity and heat; 36% from transportation.</p>",
+          "className": "long-text"
+        }
+      ]
+    },{
+      "id": "q-hot",
+      "q": "<p>When you hear it’s unusually hot today, is that about the...</p>",
+      "htmlBefore": "<div class='imagery'></div>",
+      "a": [
+        {
+          "htmlAfter": "<p class='center'>or</p>",
+          "label": "climate",
+          "isCorrect": false,
+          "feedback": "<p><strong>Sorry!</strong> Whether it’s hot or cold, or sunny or rainy today is a reflection of daily <strong>weather</strong> conditions—not climate.</p>"
+        },{
+          "htmlAfter": "<p class='right'>?</p>",
+          "label": "weather",
+          "isCorrect": true,
+          "feedback": "<p><strong>Correct!</strong> Whether it’s hot or cold, or sunny or rainy today is a reflection of daily <strong>weather</strong> conditions—not climate.</p>"
+        }
+      ]
+    },{
       "id": "q-ocean",
       "q": "<p>The ocean affects Earth’s climate.</p>",
       "htmlBefore": "<div class='ocean imagery'></div>",
