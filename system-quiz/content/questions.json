@@ -65,13 +65,13 @@
           "label": "16 metric tons",
           "isCorrect": true,
           "feedback": "<p><strong>Correct!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>.<sup>*</sup></p>",
-          "className": "long-text"
+          "className": "hover"
         },{
           "htmlAfter": "<p class='right'>?</p>",
           "label": "6 metric tons",
           "isCorrect": false,
           "feedback": "<p><strong>Sorry!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>.<sup>*</sup></p>",
-          "className": "long-text"
+          "className": "hover"
         }
       ]
     },{

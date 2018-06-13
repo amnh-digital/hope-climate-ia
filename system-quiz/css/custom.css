@@ -353,3 +353,7 @@
     opacity: 0;
   }
 }
+
+#q-co2 .a .label {
+  font-size: 1.8vh;
+}
