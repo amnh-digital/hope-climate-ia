@@ -71,6 +71,7 @@
   letter-spacing: 0.1vh;
   text-transform: uppercase;
   z-index: 10;
+  white-space: nowrap;
 }
 .a .label:before {
   content: " ";

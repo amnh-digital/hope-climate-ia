@@ -259,3 +259,97 @@
     transform: translate3d(10vh, 5vh, 2vh) scale3d(1.05,1.05,1.05)  rotate3d(0, 0, 1, -1deg);
   }
 }
+
+
+#q-greenhouse .polar-bear {
+  background: url(../img/polar_bear.png) no-repeat;
+  background-size: 100% auto;
+  width: 20vw;
+  height: 16vw;
+  position: absolute;
+  margin-left: -10vw;
+  left: 125%;
+  bottom: -220%;
+  z-index: 20;
+  animation: fadeOutDown 1s ease-in-out;
+}
+#q-greenhouse.active .polar-bear {
+  animation: fadeInUp 4s ease-in-out;
+}
+#q-greenhouse.active.answered .polar-bear {
+  animation: fadeOutDown 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+#q-greenhouse .a .label:before {
+  z-index: 1;
+}
+#q-greenhouse .a:first-child .label:before {
+  z-index: 3;
+}
+#q-greenhouse .polar-bear-correct {
+  background: url(../img/polar_bear_correct.png) no-repeat;
+  background-size: 100% auto;
+  width: 12vw;
+  height: 25vw;
+  animation: fadeOutDown 1s ease-in-out;
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  animation-fill-mode: both;
+}
+#q-greenhouse.answered.correct .polar-bear-correct {
+  animation: fadeInUp 2s ease-in-out;
+}
+#q-greenhouse .polar-bear-incorrect {
+  background: url(../img/polar_bear_incorrect.png) no-repeat;
+  background-size: 100% auto;
+  width: 20vw;
+  height: 16vw;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  transform: translate3d(-20vw, 20vw, 0);
+  opacity: 1;
+  transition: opacity 5s ease-in-out, transform 5s linear;
+}
+#q-greenhouse.answered.incorrect .polar-bear-incorrect {
+  transform: translate3d(0, 0, 0);
+  opacity: 0;
+}
+#q-greenhouse .flakes {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+#q-greenhouse .flakes > div {
+  width: 20px;
+  height: 18px;
+  background: url(../img/snowflake.png) no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: flake 5s linear infinite;
+}
+#q-greenhouse .flakes > div:nth-child(2) { top: 20%; left: 80%; animation-duration: 5s; }
+#q-greenhouse .flakes > div:nth-child(3) { top: 40%; left: 60%; animation-duration: 10s; }
+#q-greenhouse .flakes > div:nth-child(4) { top: 60%; left: 10%; animation-duration: 15s; }
+#q-greenhouse .flakes > div:nth-child(5) { top: 10%; left: 30%; animation-duration: 4s; }
+#q-greenhouse .flakes > div:nth-child(6) { top: 30%; left: 50%; animation-duration: 8s; }
+#q-greenhouse .flakes > div:nth-child(7) { top: 50%; left: 70%; animation-duration: 12s; }
+#q-greenhouse .flakes > div:nth-child(8) { top: 80%; left: 20%; animation-duration: 16s; }
+#q-greenhouse.answered .flakes {
+  opacity: 1;
+}
+@keyframes flake {
+  from {
+    transform: translate3d(-1vw, 0, 0) scale3d(1, 1, 1)  rotate3d(0, 0, 1, -10deg);
+    opacity: 0;
+  }
+  50% {
+    transform: translate3d(0, 10vh, 0) scale3d(1.05,1.05,1.05)  rotate3d(0, 0, 1, 10deg);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(1vw, 20vh, 0) scale3d(1, 1, 1)  rotate3d(0, 0, 1, -10deg);
+    opacity: 0;
+  }
+}
