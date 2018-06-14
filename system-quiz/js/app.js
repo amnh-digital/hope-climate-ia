@@ -7,11 +7,15 @@ var AppQuiz = (function() {
     this.opt = _.extend({}, defaults, config);
     this.content = content;
 
+    // this.content.questions = this.content.questions.slice(3);
+
     this.init();
   }
 
   AppQuiz.prototype.init = function(){
     var _this = this;
+
+    this.content.questions = _.filter(this.content.questions, function(q){ return !q.disabled; });
 
     this.loadControls();
     // var soundPromise = this.loadSounds();
