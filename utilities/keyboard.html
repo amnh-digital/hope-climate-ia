@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Pointer lock demo</title>
+  <link rel="stylesheet" href="../shared/css/vendor/normalize.css">
+  <style type="text/css">
+  body {
+    background: black;
+  }
+  .app {
+    line-height: 100vh;
+    text-align: center;
+    font-size: 40vh;
+    color: white;
+  }
+  </style>
+</head>
+<body>
+
+  <div id="app" class="app"></div>
+
+  <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
+  <script>
+  $(window).keypress(function(e){
+    var key = String.fromCharCode(e.which);
+    $('#app').text(key);
+  });
+  </script>
+</body>
+</html>
