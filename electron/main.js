@@ -16,21 +16,15 @@ if ( config.commandLineSwitches){
 let windows=[];
 
 function init(){
-  // startClient();
+  startClient();
   // ... or, if you need a server to start first, comment line above and uncomment line below
-  startServer().then(startClient);
+  // startServer().then(startClient);
 }
 
 function startServer() {
   return new Promise(function(resolve,reject){
-    // Launch an express web app
-    const webapp = express();
-    webapp.use(express.urlencoded({ extended: true }));
-    webapp.use(express.static('./'));
-    webapp.listen(8080, function(){
-      console.log('Listening on port 8080');
-      resolve();
-    });
+    // Launch a server
+    resolve();
   });
 }
 
