@@ -19,6 +19,9 @@
   background: url(../img/map.svg) 0 0 no-repeat;
   background-size: 100% auto;
 }
+.map > * {
+  transition: opacity 2s ease-in-out;
+}
 .map > img {
   display: block;
   width: 100%;
@@ -72,6 +75,23 @@ svg text {
   border-top-left-radius: 0.5vh;
   border-bottom-left-radius: 0.5vh;
 }
+.map .helper {
+  transition: border-color 1s ease-in-out;
+}
+.helper:before {
+  content: " ";
+  display: block;
+  border: 0.2vw solid var(--secondary-color);
+  border-radius: 0.5vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  z-index: 2;
+}
 .helper:after {
   content: " ";
   display: block;
@@ -94,6 +114,7 @@ svg text {
   text-align: center;
   border-radius: 0.5vh;
   border-top-left-radius: 0;
+  transition: opacity 2s ease-in-out;
 }
 .graph-title {
   position: absolute;
@@ -177,14 +198,20 @@ svg text {
   opacity: 1;
 }
 
-.map > * {
-  transition: opacity 2s ease-in-out;
-}
+
 .sleeping .map {
   background: none;
 }
-.sleeping .map > * {
+.sleeping .map > *,
+.sleeping .graph {
   opacity: 0;
+}
+.sleeping .map .helper,
+.sleeping .map .helper:before {
+  opacity: 1;
+}
+.sleeping .map .helper {
+  border-color: rgba(0,0,0,0);
 }
 
 .sleeping .content {

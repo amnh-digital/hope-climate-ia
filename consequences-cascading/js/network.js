@@ -612,6 +612,11 @@ var Network = (function() {
     var nodeDashMs = this.opt.nodeDashMs;
     var dashOffset = now % nodeDashMs;
     var dashProgress = dashOffset / nodeDashMs;
+    var nodeLineColor = parseInt(this.opt.nodeLineColor);
+
+    if (this.sleeping) {
+      nodeLineColor = parseInt(this.opt.nodeLineSleepingColor);
+    }
 
     var lineGraphics = this.lineGraphics;
     lineGraphics.clear();
@@ -658,7 +663,7 @@ var Network = (function() {
         var x1 = node.toX;
         var y0 = node.fromY;
         var y1 = node.toY;
-        lineGraphics.lineStyle(node.lineWidth, node.lineColor, alpha);
+        lineGraphics.lineStyle(node.lineWidth, nodeLineColor);
         dashLine(lineGraphics, x0, y0, x1, y1, node.dashWidth, node.dashGapWidth, dashProgress*(node.dashGapWidth+node.dashWidth));
       }
 

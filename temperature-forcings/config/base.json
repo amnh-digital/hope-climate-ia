@@ -7,6 +7,7 @@
     "plotLineColor": "$0xblack",
     "plotTickColor": "$0xprimaryDark",
     "observedColor": "$0xprimaryDarker",
+    "restingLineColor": "$0xsecondary",
     "xAxis": {
       "height": 0.0667,
       "labelEvery": 20,

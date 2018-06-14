@@ -148,8 +148,18 @@ a {
   line-height: 1.8;
   letter-spacing: 0.06vw;
 }
+.sleepMode p:first-child:before {
+  content: "⇐";
+  transform: rotate3d(0,0,1,-90deg);
+  display: inline-block;
+  margin-right: 0.5vw;
+  color: var(--secondary-color);
+  font-size: 1.5em;
+  animation: point 4s linear infinite;
+}
 .sleepMode p strong {
   font-size: 1.2vw;
+  color: var(--secondary-color);
 }
 .sleepMode.active,
 #app.sleeping .sleepMode {
@@ -272,9 +282,13 @@ a {
   background: rgba(0, 0, 0, 0.333);
 }
 
-@keyframes blink {
+@keyframes point {
+  from,
+  to {
+    transform: translate3d(0, -0.5vw, 0) rotate3d(0, 0, 1, -90deg);
+  }
   50% {
-    opacity: 0.2;
+    transform: translate3d(0, 0.5vw, 0) rotate3d(0, 0, 1, -90deg);
   }
 }
 

@@ -19,7 +19,8 @@
   margin-left: -40vh;
   top: 30vh;
   opacity: 1;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  transform-origin: 0% 100%;
 }
 
 .story-wrapper {
@@ -27,8 +28,25 @@
   width: 16vh;
   height: 9vh;
   transform-origin: 0% 50%;
+  transition: opacity 2s ease-in-out;
   /* transition: transform 1s ease-in-out;
   transform: scale3d(1, 1, 1); */
+}
+.story-wrapper:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  border: 0.2vw solid var(--secondary-color);
+  box-sizing: border-box;
+}
+story-wrapper.active > div {
+  transition: opacity 2s ease-in-out;
 }
 .story-wrapper.active {
   /* transform: scale3d(1.5, 1.5, 1.5); */
@@ -211,11 +229,19 @@
   opacity: 1;
 }
 
-.sleeping .map {
+.sleeping .map,
+.sleeping .stories {
   transform: scale3d(0.83, 0.83, 0.83);
 }
-.sleeping .stories,
+.sleeping .story-wrapper,
 .sleeping .map .overlay.active {
+  opacity: 0;
+}
+.sleeping .story-wrapper.active,
+.sleeping .story-wrapper.active:after {
+  opacity: 1;
+}
+.sleeping .story-wrapper.active > div {
   opacity: 0;
 }
 .sleeping .map svg .filled {

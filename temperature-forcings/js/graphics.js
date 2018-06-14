@@ -500,7 +500,8 @@ var Graphics = (function() {
 
   Graphics.prototype.renderCombined = function(){
     var combined = this.combined;
-    var forcing = _.extend({}, this.forcingsState["all"], {color: 0x058599});
+    var color = parseInt(this.opt.restingLineColor);
+    var forcing = _.extend({}, this.forcingsState["all"], {color: color});
 
     combined.clear();
     this.renderLine(combined, forcing, 1.0);

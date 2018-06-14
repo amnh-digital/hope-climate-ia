@@ -15,7 +15,7 @@
   },
   "sleep": {
     "enable": 1,
-    "checkInterval": 5,
+    "checkInterval": 10,
     "sleepAfter": 60
   }
 }

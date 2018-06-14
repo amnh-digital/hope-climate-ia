@@ -20,7 +20,9 @@
     "sleepTransitionMs": 2000,
     "markerOpacity": 0.5,
     "circleOpacity": 0.8,
-    "markerColor": "$0xhighlight"
+    "markerColor": "$0xhighlight",
+    "arrowColor": "0x333333",
+    "restingColor": "$0xsecondary"
   },
   "globes": [
     {

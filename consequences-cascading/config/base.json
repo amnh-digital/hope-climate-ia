@@ -23,6 +23,7 @@
     "nodeImageWidth": 1.25,
     "nodeColor": "$0xprimary",
     "nodeLineColor": "$0xprimary",
+    "nodeLineSleepingColor": "$0xsecondary",
     "nodeBgColor": "$0xprimaryDarkest",
     "elasticAmount": 0.02,
     "nodeLabelTextStyle": {

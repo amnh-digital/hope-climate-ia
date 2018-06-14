@@ -100,8 +100,9 @@ var Graphics = (function() {
     var annotations = new PIXI.Graphics();
     var images = new PIXI.Container();
     var marker = new PIXI.Graphics();
+    var flag = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, plot, trend, annotations, marker, images);
+    this.app.stage.addChild(axes, plot, trend, annotations, marker, flag, images);
 
     // add images as sprites
     _.each(this.annualData, function(d, i){
@@ -118,7 +119,7 @@ var Graphics = (function() {
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(axes, 24);
     addLabelBuffers(plot, 30);
-    addLabelBuffers(marker, 5);
+    addLabelBuffers(flag, 5);
     addLabelBuffers(annotations, this.opt.annotations.length);
 
     // add resting filter
@@ -133,13 +134,14 @@ var Graphics = (function() {
     this.trend = trend;
     this.annotations = annotations;
     this.marker = marker;
+    this.flag = flag;
     this.images = images;
 
     this.images.visible = false;
 
     // for what to show during "sleep mode"
-    this.sleepers = [axes, trend, annotations, marker, images];
-    this.dreamers = [plot];
+    this.sleepers = [axes, trend, annotations, flag, images];
+    this.dreamers = [plot, marker];
 
     this.$el.append(this.app.view);
   };
@@ -711,11 +713,12 @@ var Graphics = (function() {
     var current = this.plotCurrentValue;
     var pd = this.plotDimensions;
     var marker = this.marker;
-    var yLabel = marker.children[0];
-    var cLabel = marker.children[1];
-    var fLabel = marker.children[2];
-    var aLabel = marker.children[3];
-    var lLabel = marker.children[4];
+    var flag = this.flag;
+    var yLabel = flag.children[0];
+    var cLabel = flag.children[1];
+    var fLabel = flag.children[2];
+    var aLabel = flag.children[3];
+    var lLabel = flag.children[4];
     var markerColor = parseInt(this.opt.marker.color);
     var markerFill = parseInt(this.opt.marker.fill);
     var widthStep = this.markerWidthStep;
@@ -727,6 +730,7 @@ var Graphics = (function() {
     var showAnnotation = (this.scale <= scaleThreshold && current.annotation);
     var showAnnotationImage = showAnnotation && current.annotation.sprite;
 
+    flag.clear();
     marker.clear();
 
     var cx = pd[0];
@@ -856,18 +860,18 @@ var Graphics = (function() {
       images.visible = false;
     }
 
-    marker.lineStyle(0);
-    marker.beginFill(markerFill);
-    marker.drawRect(rectX, cy, rectW, rectH);
-    marker.endFill();
+    flag.lineStyle(0);
+    flag.beginFill(markerFill);
+    flag.drawRect(rectX, cy, rectW, rectH);
+    flag.endFill();
 
-    marker.beginFill(0x000000, 0.25);
-    marker.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
-    marker.endFill();
+    flag.beginFill(0x000000, 0.25);
+    flag.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
+    flag.endFill();
 
-    // marker.lineStyle(1, 0x000000, 0.5);
-    // marker.moveTo(labelX + labelW * 0.5, cLabel.y);
-    // marker.lineTo(labelX + labelW * 0.5, cLabel.y+cLabel.height);
+    // flag.lineStyle(1, 0x000000, 0.5);
+    // flag.moveTo(labelX + labelW * 0.5, cLabel.y);
+    // flag.lineTo(labelX + labelW * 0.5, cLabel.y+cLabel.height);
 
     this.prev = current;
   };

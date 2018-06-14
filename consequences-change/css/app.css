@@ -134,7 +134,7 @@
   opacity: 1;
 }
 .sleeping .slide .marker {
-  background: var(--black-color);
+  background: var(--secondary-color);
   width: 1vw;
   margin-left: -0.5vw;
 }

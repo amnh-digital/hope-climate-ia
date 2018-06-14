@@ -25,7 +25,7 @@
       }
     },
     "marker": {
-      "color": "$0xhighlight",
+      "color": "$0xsecondary",
       "fill": "$0xprimaryDark",
       "dotRadius": 0.01,
       "widthStep": 0.005,
@@ -103,7 +103,7 @@
   },
   "sleep": {
     "enable": 1,
-    "checkInterval": 5,
+    "checkInterval": 10,
     "sleepAfter": 60
   },
   "messages": {

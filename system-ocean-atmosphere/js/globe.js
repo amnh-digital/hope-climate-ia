@@ -216,19 +216,20 @@ var Globe = (function() {
     var dir = new THREE.Vector3(0, 1, 0);
     var origin = new THREE.Vector3(0, 0, 0);
     var length = radius * 1.5;
-    var hex = 0x333333;
+    var hex = parseInt(this.opt.arrowColor);
     var northArrow = new THREE.ArrowHelper(dir, origin, length, hex);
     earth.add(northArrow);
 
     // add south arrow
     dir = new THREE.Vector3(0, -1, 0);
-    hex = 0x333333;
     var southArrow = new THREE.ArrowHelper(dir, origin, length, hex);
     earth.add(southArrow);
 
     this.xContainer.add(earth);
 
     this.earth = earth;
+    this.northArrow = northArrow;
+    this.southArrow = southArrow;
   };
 
   Globe.prototype.loadEarthResting = function(){
@@ -324,6 +325,10 @@ var Globe = (function() {
       this.sleepTransitionStart = new Date();
       this.sleepTransitioning = true;
       this.sleeping = false;
+
+      var color = new THREE.Color(parseInt(this.opt.arrowColor));
+      this.northArrow.setColor(color);
+      this.southArrow.setColor(color);
     }
   };
 
@@ -331,6 +336,10 @@ var Globe = (function() {
     this.sleepTransitionStart = new Date();
     this.sleepTransitioning = true;
     this.sleeping = true;
+
+    var color = new THREE.Color(parseInt(this.opt.restingColor));
+    this.northArrow.setColor(color);
+    this.southArrow.setColor(color);
   };
 
   Globe.prototype.sleepTransition = function(){
