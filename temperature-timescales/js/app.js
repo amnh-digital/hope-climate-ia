@@ -14,11 +14,11 @@ var AppTimescales = (function() {
   AppTimescales.prototype.init = function(){
     var _this = this;
 
-    var controlPromise = this.loadControls();
+    this.loadControls();
     var soundPromise = this.loadSounds();
     this.$sidebar = $(".sidebar");
 
-    $.when.apply($, [controlPromise, soundPromise]).then(function(){
+    $.when.apply($, [soundPromise]).then(function(){
       _this.onReady();
     });
 
