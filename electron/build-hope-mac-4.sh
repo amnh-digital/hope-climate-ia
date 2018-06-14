@@ -19,7 +19,7 @@ mkdir -p build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/u
 mkdir -p build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/sleepers
 mkdir -p build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/temperature-regions
 mkdir -p build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/temperature-forcings
-cp -i controls.json build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/controls.json
+cp -i electron/hope-mac-4/controls.json build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/controls.json
 cp -a shared/. build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/shared/
 cp -a utilities/. build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/utilities/
 cp -a sleepers/. build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/sleepers/

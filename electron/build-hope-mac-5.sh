@@ -19,7 +19,7 @@ mkdir -p build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/u
 mkdir -p build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/sleepers
 mkdir -p build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/system-ocean-atmosphere
 mkdir -p build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/system-quiz
-cp -i controls.json build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/controls.json
+cp -i electron/hope-mac-5/controls.json build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/controls.json
 cp -a shared/. build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/shared/
 cp -a utilities/. build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/utilities/
 cp -a sleepers/. build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/sleepers/

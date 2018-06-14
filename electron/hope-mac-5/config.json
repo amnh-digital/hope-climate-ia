@@ -1,7 +1,7 @@
 {
   "windows": [
     {
-      "url": "system-ocean-atmosphere/physical.html",
+      "url": "system-quiz/physical.html",
       "debug": false,
       "browserWindow": {
         "x": 0,
@@ -14,7 +14,7 @@
         }
       }
     },{
-      "url": "system-quiz/physical.html",
+      "url": "system-ocean-atmosphere/physical.html",
       "debug": false,
       "browserWindow": {
         "x": 1920,

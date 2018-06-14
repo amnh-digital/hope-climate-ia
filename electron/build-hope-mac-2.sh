@@ -19,7 +19,7 @@ mkdir -p build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/u
 mkdir -p build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/sleepers
 mkdir -p build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/consequences-mitigation
 mkdir -p build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/consequences-cascading
-cp -i controls.json build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/controls.json
+cp -i electron/hope-mac-2/controls.json build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/controls.json
 cp -a shared/. build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/shared/
 cp -a utilities/. build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/utilities/
 cp -a sleepers/. build/mac/hope-mac-2-darwin-x64/hope-mac-2.app/Contents/Resources/app/sleepers/
