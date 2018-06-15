@@ -58,19 +58,19 @@
     },{
       "id": "q-co2",
       "q": "<p>How much carbon dioxide does the average American add to the atmosphere each year?</p>",
-      "htmlBefore": "<div class='imagery'></div>",
+      "htmlBefore": "<div class='imagery'><div class='co2-group'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='co2-group right'><span></span><span></span><span></span></div><div class='shipping'></div></div>",
       "a": [
         {
           "htmlAfter": "<p class='center'>or</p>",
           "label": "16 metric tons",
           "isCorrect": true,
-          "feedback": "<p><strong>Correct!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>.<sup>*</sup></p>",
+          "feedback": "<p><strong>Correct!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>, enough to fill 192 shipping containers.</p>",
           "className": "hover"
         },{
           "htmlAfter": "<p class='right'>?</p>",
           "label": "6 metric tons",
           "isCorrect": false,
-          "feedback": "<p><strong>Sorry!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>.<sup>*</sup></p>",
+          "feedback": "<p><strong>Sorry!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>, enough to fill 192 shipping containers.</p>",
           "className": "hover"
         }
       ]
@@ -78,6 +78,7 @@
       "id": "q-activities",
       "q": "<p>In the U.S., which activity contributes more to carbon dioxide emissions:</p>",
       "htmlBefore": "<div class='imagery'></div>",
+      "disabled": true,
       "a": [
         {
           "htmlAfter": "<p class='center'>or</p>",
@@ -97,6 +98,7 @@
       "id": "q-hot",
       "q": "<p>When you hear it’s unusually hot today, is that about the...</p>",
       "htmlBefore": "<div class='imagery'></div>",
+      "disabled": true,
       "a": [
         {
           "htmlAfter": "<p class='center'>or</p>",

@@ -357,3 +357,61 @@
 #q-co2 .a .label {
   font-size: 1.8vh;
 }
+#q-co2 .co2-group {
+  position: absolute;
+  top: 0;
+  left: -20%;
+  width: 50%;
+  height: 50vh;
+}
+#q-co2 .co2-group.right {
+  right: -20%;
+  left: auto;
+}
+#q-co2 .co2-group span {
+  display: block;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  margin: -200px 0 0 -200px;
+}
+#q-co2 .co2-group span:before {
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url(../img/co2.png) no-repeat;
+  animation: spin 20s linear infinite;
+}
+#q-co2 .co2-group span:nth-child(1) { top: 50%; left: 50%; transform: rotate3d(0,0,1,15deg); }
+#q-co2 .co2-group span:nth-child(2) { top: 25%; left: 25%; transform: rotate3d(0,0,1,25deg); }
+#q-co2 .co2-group span:nth-child(3) { top: 75%; left: 75%; transform: rotate3d(0,0,1,45deg); }
+#q-co2 .co2-group span:nth-child(4) { top: 33%; left: 33%; transform: rotate3d(0,0,1,75deg); }
+#q-co2 .co2-group span:nth-child(5) { top: 66%; left: 66%; transform: rotate3d(0,0,1,90deg); }
+#q-co2 .co2-group span:nth-child(6) { top: 16%; left: 83%; transform: rotate3d(0,0,1,135deg); }
+#q-co2 .co2-group span:nth-child(7) { top: 80%; left: 20%; transform: rotate3d(0,0,1,180deg); }
+#q-co2 .co2-group span:nth-child(8) { top: 60%; left: 40%; transform: rotate3d(0,0,1,215deg); }
+#q-co2 .shipping {
+  width: 33vw;
+  height: 20vw;
+  background: url(../img/shipping.png) no-repeat;
+  background-size: 100% auto;
+  opacity: 0;
+  position: absolute;
+  bottom: -20vw;
+  left: 70%;
+  transition: opacity 2s ease-in-out, bottom 2s ease-in-out;
+  transform: scale3d(-1,1,1);
+}
+#q-co2.answered .shipping {
+  opacity: 1;
+  bottom: 0;
+}
+#q-co2.answered.correct .shipping {
+
+}
+#q-co2.answered.incorrect .shipping {
+
+}
