@@ -9,7 +9,7 @@ $(function() {
 
   ).done(function(baseConfig, config, configSibling, feedback, prompts, questions){
     baseConfig = baseConfig[0];
-    _.extend(config[0].controls, configSibling[0].controls);
+    // _.extend(config[0].controls, configSibling[0].controls);
     config = _.extend({}, baseConfig, config[0]);
     content = _.extend({}, feedback[0], prompts[0], questions[0]);
 
