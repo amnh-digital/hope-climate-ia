@@ -27,15 +27,18 @@ var Stories = (function() {
     _.each(stories, function(story, i){
       var html = '';
       html += '<div id="'+story.id+'" class="story-wrapper">';
-        html += '<div class="loading"><div class="loading-bar"></div></div>';
-        html += '<div class="story">';
-          html += '<div class="video-container">';
-            html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
-            html += '<video src="'+story.video+'" preload="auto" crossorigin="anonymous" />';
+        html += '<div class="story-overlay"></div>';
+        html += '<div class="story-content">';
+          html += '<div class="loading"><div class="loading-bar"></div></div>';
+          html += '<div class="story">';
+            html += '<div class="video-container">';
+              html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
+              html += '<video src="'+story.video+'" preload="auto" crossorigin="anonymous" />';
+            html += '</div>';
           html += '</div>';
+          html += '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
+          html += '<div class="information"><div class="information-inner"><h2>'+story.title+'</h2><p>'+story.description+'</p></div></div>';
         html += '</div>';
-        html += '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
-        html += '<div class="information"><h2>'+story.title+'</h2><p>'+story.description+'</p></div>';
       html += '</div>';
       var $story = $(html);
       if (story.className) $story.addClass(story.className);

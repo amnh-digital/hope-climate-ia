@@ -28,9 +28,19 @@
   width: 16vh;
   height: 9vh;
   transform-origin: 0% 50%;
-  transition: opacity 2s ease-in-out;
+  transition: opacity 2s ease-in-out, box-shadow 2s ease-in-out;
   /* transition: transform 1s ease-in-out;
   transform: scale3d(1, 1, 1); */
+}
+.story-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-shadow: rgba(0,0,0,0.5) 0 0 0 50vw;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
 }
 .story-wrapper:after {
   content: " ";
@@ -45,16 +55,25 @@
   border: 0.2vw solid var(--secondary-color);
   box-sizing: border-box;
 }
-story-wrapper.active > div {
-  transition: opacity 2s ease-in-out;
+.story-wrapper.active .story-content {
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 .story-wrapper.active {
   /* transform: scale3d(1.5, 1.5, 1.5); */
+  z-index: 100;
 }
-/* .story-wrapper.playing {
+.story-wrapper.playing .story-overlay {
+  opacity: 1;
+}
+.story-wrapper.playing .story-content {
   transition-duration: 3s;
-  transform: scale3d(1.25, 1.25, 1.25);
-} */
+  transform: scale3d(1.5, 1.5, 1.5);
+}
 .story {
   position: absolute;
   width: 100%;
@@ -75,8 +94,13 @@ story-wrapper.active > div {
   right: -17.5vh;
   top: 0;
   opacity: 0.5;
+  text-shadow: 2px 2px #000000;
   transform: translate3d(0, 3vh, 0);
   transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+.information-inner {
+  transition: transform 2s ease-in-out;
+  transform-origin: left top;
 }
 .information h2 {
   font-size: 1.25vh;
@@ -92,12 +116,18 @@ story-wrapper.active > div {
   left: -17.5vh;
   text-align: right;
 }
+.story-wrapper.textRight .information-inner {
+  transform-origin: right top;
+}
 .story-wrapper.active .information {
   opacity: 1;
   transform: translate3d(0, 0, 0);
 }
 .story-wrapper.active .information p {
   opacity: 1;
+}
+.story-wrapper.playing .information-inner {
+  transform: scale3d(0.66667, 0.66667, 0.66667);
 }
 
 .video-container {
@@ -180,14 +210,23 @@ story-wrapper.active > div {
   top: -20vh;
   transform-origin: right center;
 }
+#story1 .story-content {
+  transform-origin: left center;
+}
 #story2 {
   top: 12vh;
   right: 7vh;
+}
+#story2 .story-content {
+  transform-origin: right center;
 }
 #story3 {
   bottom: -6vh;
   right: -16vh;
   transform-origin: right bottom;
+}
+#story3 .story-content {
+  transform-origin: right center;
 }
 #story4 {
   bottom: -10vh;
@@ -241,7 +280,7 @@ story-wrapper.active > div {
 .sleeping .story-wrapper.active:after {
   opacity: 1;
 }
-.sleeping .story-wrapper.active > div {
+.sleeping .story-wrapper.active .story-content {
   opacity: 0;
 }
 .sleeping .map svg .filled {
