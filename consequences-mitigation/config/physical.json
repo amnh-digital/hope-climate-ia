@@ -5,7 +5,7 @@
     "pointerlockMappings": {
       "vertical": {
         "name": "rotate.vertical",
-        "multiplier": -2.0
+        "multiplier": -1.5
       }
     }
   }
