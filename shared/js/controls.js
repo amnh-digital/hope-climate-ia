@@ -211,35 +211,46 @@ var Controls = (function() {
 
   Controls.prototype.loadPointerlockListeners = function(mappings){
     var channel = this.channel;
+    var maxDelta = 100;
 
     function updatePosition(e){
       _.each(mappings, function(props, orientation){
         var delta = e.movementY;
         if (orientation==="horizontal") delta = event.movementX;
+        delta = Math.min(maxDelta, delta);
+        delta = Math.max(-maxDelta, delta);
         if (Math.abs(delta) > 0) {
           delta *= props.multiplier;
           channel.post("controls."+props.name, delta);
         }
       });
     };
-
     document.addEventListener("mousemove", updatePosition, false);
 
-    // // Initiate pointer lock
-    // document.addEventListener('pointerlockchange', function(){
-    //   if (document.pointerLockElement === el) {
-    //     console.log('The pointer lock status is now locked');
-    //     // document.addEventListener("mousemove", updatePosition, false);
-    //   } else {
-    //     console.log('The pointer lock status is now unlocked');
-    //   }
-    // }, false);
-    //
-    // var el = $(this.opt.el)[0];
-    // el.onclick = function() {
-    //   console.log('Requesting pointer lock...');
-    //   el.requestPointerLock();
-    // };
+    var locked = false;
+
+    // Listen for pointer lock
+    document.addEventListener('pointerlockchange', function(){
+      if (document.pointerLockElement === el) {
+        console.log('The pointer lock status is now locked');
+        locked = true;
+        // document.addEventListener("mousemove", updatePosition, false);
+      } else {
+        console.log('The pointer lock status is now unlocked');
+        locked = false;
+      }
+    }, false);
+
+    // attempt to lock pointer
+    var el = $(this.opt.el)[0];
+    el.requestPointerLock();
+    // initiate lock on click
+    el.onclick = function() {
+      if (!locked) {
+        console.log('Requesting pointer lock...');
+        el.requestPointerLock();
+      }
+    };
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){
@@ -346,7 +357,7 @@ var Controls = (function() {
         // console.log("State change", key, state)
         // don't trigger if delta is too big
         var delta = Math.abs(prev-state);
-        if (delta < 0.25 || prev < 0) {
+        if (delta < 1.0 || prev < 0) {
           channel.post("controls.axes.change", {"key": key, "value": state});
           _this.gamepadState[key] = state;
         }
