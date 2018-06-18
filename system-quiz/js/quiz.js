@@ -99,6 +99,8 @@ var Quiz = (function() {
       return;
     }
 
+    if (this.currentIndex < 0) this.currentIndex = 0;
+
     if (this.activeQuestion) {
       this.activeQuestion.$el.removeClass('active');
     }
