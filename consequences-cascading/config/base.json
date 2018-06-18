@@ -58,7 +58,7 @@
     "el": "#network"
   },
   "sound": {
-    "enable": 1,
+    "enable": 0,
     "audio": ["../shared/audio/horn.mp3"],
     "volume": 0.4,
     "limitLastPlayedMs": 50,
