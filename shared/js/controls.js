@@ -5,7 +5,7 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothingWindow": 5
+        "smoothingWindow": 10
       }
     };
     // override nested defaults
@@ -17,6 +17,17 @@ var Controls = (function() {
     });
     this.opt = _.extend({}, defaults, options);
     this.init();
+  }
+
+  function add(a, b) {
+    return a + b;
+  }
+
+  function mean(values) {
+    var len = values.length;
+    if (len <= 0) return 0;
+    var sum = values.reduce(add, 0);
+    return sum/len;
   }
 
   function weightedMean(values, weights) {
@@ -62,6 +73,7 @@ var Controls = (function() {
       var sum = _.reduce(weights, function(memo, v){ return memo + v; }, 0);
       weights = _.map(weights, function(v){ return v / sum; })
       this.gamepadWeights = weights;
+      console.log(weights)
     }
 
     // parse axes
@@ -347,7 +359,8 @@ var Controls = (function() {
         // calculate weighted average if window has enough values
         var axesWindow = axesConfig[index].window;
         if (axesWindow.length === smoothingWindow) {
-          state = weightedMean(axesWindow, gamepadWeights);
+          // state = weightedMean(axesWindow, gamepadWeights);
+          state = mean(axesWindow);
         }
       }
 
@@ -355,12 +368,9 @@ var Controls = (function() {
       // state has changed, execute callback
       if (prev != state) {
         // console.log("State change", key, state)
-        // don't trigger if delta is too big
-        var delta = Math.abs(prev-state);
-        if (delta < 1.0 || prev < 0) {
-          channel.post("controls.axes.change", {"key": key, "value": state});
-          _this.gamepadState[key] = state;
-        }
+        // var delta = Math.abs(prev-state);
+        channel.post("controls.axes.change", {"key": key, "value": state});
+        _this.gamepadState[key] = state;
       }
     });
 
