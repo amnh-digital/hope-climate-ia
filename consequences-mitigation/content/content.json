@@ -8,7 +8,7 @@
         "image": "img/hunts_point.png"
       },
       "description": "NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
-      "image": "img/cool_roofs.jpg",
+      "image": "img/coolroofs.jpg",
       "video": "video/coolroofs.mp4"
     },{
       "id": "story2",
@@ -39,8 +39,8 @@
         "image": "img/coney_island.png"
       },
       "description": "Geosyntec works with small businesses to assess vulnerability and installing physical flood protection systems.",
-      "image": "img/geosyntec.jpg",
-      "video": "video/cat2.mp4"
+      "image": "img/mesh.jpg",
+      "video": "video/mesh.mp4"
     },{
       "id": "story5",
       "className": "textRight",
@@ -50,8 +50,8 @@
         "image": "img/staten_island.png"
       },
       "description": "The Living Breakwaters project reduces risk, revives ecologies, and connects educators to the shoreline.",
-      "image": "img/living_breakwaters.jpg",
-      "video": "video/cat5.mp4"
+      "image": "img/breakwaters.jpg",
+      "video": "video/breakwaters.mp4"
     }
   ]
 }
