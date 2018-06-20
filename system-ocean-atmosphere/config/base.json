@@ -21,7 +21,7 @@
     "markerOpacity": 0.5,
     "circleOpacity": 0.8,
     "markerColor": "$0xhighlight",
-    "arrowColor": "0x333333",
+    "arrowColor": "0x666666",
     "restingColor": "$0xsecondary"
   },
   "globes": [
@@ -32,7 +32,7 @@
       "near": 0.01,
       "far": 1000,
       "radius": 0.5,
-      "geojsonLineColor": "#333333"
+      "geojsonLineColor": "#888888"
     },{
       "el": "#atmosphere-wind",
       "title": "Wind speed and air temperature<br />at sea level",
@@ -41,7 +41,7 @@
       "near": 0.01,
       "far": 1000,
       "radius": 0.5,
-      "geojsonLineColor": "#333333"
+      "geojsonLineColor": "#888888"
     }
   ],
   "sleep": {
