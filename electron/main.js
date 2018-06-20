@@ -58,6 +58,7 @@ function createWindow (browserWindowSetting) {
   var webContents = mainWindow.webContents;
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
+    mainWindow.focus();
     if (browserWindowSetting.debug) webContents.openDevTools();
   });
 
