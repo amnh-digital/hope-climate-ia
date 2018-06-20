@@ -20,7 +20,7 @@ var Map = (function() {
   Map.prototype.loadView = function(){
     var $container = $('<div />');
     this.stories = _.map(this.stories, function(story, i){
-      var $el = $('<div class="overlay '+story.className+'"><img src="'+story.image+'" /></div>');
+      var $el = $('<div class="overlay '+story.className+'"><img src="'+story.image+'" /><div class="label">'+story.label+'</div></div>');
       $container.append($el);
       story.$el = $el;
       return story;

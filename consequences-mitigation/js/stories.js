@@ -33,7 +33,7 @@ var Stories = (function() {
           html += '<div class="story">';
             html += '<div class="video-container">';
               html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
-              html += '<video src="'+story.video+'" preload="auto" crossorigin="anonymous" />';
+              if (story.video) html += '<video src="'+story.video+'" preload="auto" crossorigin="anonymous" />';
             html += '</div>';
           html += '</div>';
           html += '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
@@ -47,15 +47,15 @@ var Stories = (function() {
       stories[i].$loadProgressBar = $story.find(".loading-bar").first();
       stories[i].$progressBar = $story.find(".progress-bar").first();
       stories[i].$progressText = $story.find(".progress-text").first();
-      var $video = $story.find("video").first();
-      var video = $video[0];
-      stories[i].video = $video[0];
-
-      video.load();
-      video.onended = function() {
-        _this.onVideoEnded(stories[i]);
-      };
-
+      if (story.video) {
+        var $video = $story.find("video").first();
+        var video = $video[0];
+        stories[i].video = $video[0];
+        video.load();
+        video.onended = function() {
+          _this.onVideoEnded(stories[i]);
+        };
+      }
       $container.append($story);
     });
 
@@ -69,8 +69,10 @@ var Stories = (function() {
     // pause previous story
     if (this.story) {
       this.story.$el.removeClass('active playing');
-      this.story.video.currentTime = 0;
-      this.story.video.pause();
+      if (this.story.video) {
+        this.story.video.currentTime = 0;
+        this.story.video.pause();
+      }
       firstLoad = false;
     }
 
@@ -129,8 +131,10 @@ var Stories = (function() {
     this.playing = false;
     story.$el.removeClass('playing');
     this.$body.removeClass('playing');
-    story.video.currentTime = 0;
-    story.video.pause();
+    if (story.video) {
+      story.video.currentTime = 0;
+      story.video.pause();
+    }
     // if (this.story && story.index === this.story.index) {
     //   this.loadStart = new Date().getTime();
     //   this.loadEnd = this.loadStart + this.opt.loadingMs;
@@ -141,8 +145,7 @@ var Stories = (function() {
   Stories.prototype.playStory = function(story){
     story.$el.addClass('playing');
     this.$body.addClass('playing');
-    story.video.play();
-
+    if (story.video) story.video.play();
   };
 
   Stories.prototype.render = function(){
@@ -161,15 +164,17 @@ var Stories = (function() {
     if (this.playing) {
       var video = this.story.video;
       var progress = 0;
-      if (video.duration) progress = video.currentTime / video.duration;
+      if (video && video.duration) progress = video.currentTime / video.duration;
       this.story.$progressBar.css('transform', 'scale3d('+progress+',1,1)');
       var durationString = this.story.durationString;
-      if (!durationString) {
+      if (!durationString && video) {
         durationString = UTIL.secondsToString(video.duration);
         this.story.durationString = durationString;
       }
-      var progressText = UTIL.secondsToString(video.currentTime) + " / " + durationString;
-      this.story.$progressText.text(progressText);
+      if (video) {
+        var progressText = UTIL.secondsToString(video.currentTime) + " / " + durationString;
+        this.story.$progressText.text(progressText);
+      }
     }
 
   };

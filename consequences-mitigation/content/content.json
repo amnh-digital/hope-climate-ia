@@ -5,7 +5,8 @@
       "title": "Heat Mitigation",
       "map": {
         "className": "hunts-point",
-        "image": "img/hunts_point.png"
+        "image": "img/hunts_point.png",
+        "label": "Hunts Point, Bronx"
       },
       "description": "NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
       "image": "img/coolroofs.jpg",
@@ -14,8 +15,9 @@
       "id": "story2",
       "title": "Extreme Weather Events",
       "map": {
-        "className": "red-hook",
-        "image": "img/red_hook.png"
+        "className": "downtown",
+        "image": "img/downtown.png",
+        "label": "Downtown Manhattan"
       },
       "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges.",
       "image": "img/mta.jpg",
@@ -25,7 +27,8 @@
       "title": "Reducing the Carbon Footprint",
       "map": {
         "className": "rockaway",
-        "image": "img/rockaway_peninsula.png"
+        "image": "img/rockaway_peninsula.png",
+        "label": "Rockaway, Queens"
       },
       "description": "Daylighting systems capture sunlight through a rooftop dome to reduce energy costs and demand on the grid.",
       "image": "img/daylighting.jpg",
@@ -33,21 +36,23 @@
     },{
       "id": "story4",
       "className": "textRight",
-      "title": "Flood Mitigation",
+      "title": "Making housing resilient",
       "map": {
         "className": "coney-island",
-        "image": "img/coney_island.png"
+        "image": "img/coney_island.png",
+        "label": "Coney Island, Brooklyn"
       },
-      "description": "Geosyntec works with small businesses to assess vulnerability and installing physical flood protection systems.",
-      "image": "img/mesh.jpg",
-      "video": "video/mesh.mp4"
+      "description": "The New York City Housing Authority (NYCHA) is redesigning its buildings to withstand extreme weather events.",
+      "image": "img/housing.jpg",
+      "video": false
     },{
       "id": "story5",
       "className": "textRight",
-      "title": "Sea Level Rise and Coastal Erosion",
+      "title": "Sea Level Rise and<br />Coastal Erosion",
       "map": {
         "className": "staten-island",
-        "image": "img/staten_island.png"
+        "image": "img/staten_island.png",
+        "label": "Staten Island"
       },
       "description": "The Living Breakwaters project reduces risk, revives ecologies, and connects educators to the shoreline.",
       "image": "img/breakwaters.jpg",
