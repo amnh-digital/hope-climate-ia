@@ -1,9 +1,12 @@
-.title,
-.sleepMode {
+.title {
   left: 60%;
 }
 .content {
   height: 32vw;
+}
+
+.sleepMode {
+  right: 45%;
 }
 
 .messages {

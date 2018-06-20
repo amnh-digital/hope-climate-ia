@@ -1,11 +1,14 @@
-.title,
-.sleepMode {
+.title {
   left: 62%;
 }
 .content {
   width: 50%;
   margin-left: -25%;
   top: 27.5%;
+}
+
+.sleepMode {
+  right: 45%;
 }
 
 .graphics {

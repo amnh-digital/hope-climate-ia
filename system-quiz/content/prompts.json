@@ -34,7 +34,7 @@
     },
     "start": {
       "id": "p-start",
-      "q": "<p><strong>Hi there. Are you a climate expert?</strong></p><p>Start by pressing one of the buttons below the screen.</p>",
+      "q": "<p><strong>Do you know how climate works?</strong></p><p><span class='highlight'>Press buttons below the screen</span><br />to answer the questions</p>",
       "htmlBefore": "<div class='arrows imagery'><div class='arrow'></div><div class='arrow'></div></div>",
       "a": [
         {

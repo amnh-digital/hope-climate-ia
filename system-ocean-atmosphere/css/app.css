@@ -1,14 +1,16 @@
 .content {
   top: 26.666667%;
 }
-.title,
-.sleepMode {
+.title {
   left: 56%;
 }
 
-.content,
-.title,
 .sleepMode {
+  right: 40%;
+}
+
+.content,
+.title {
   width: 50%;
   margin-left: -25%;
 }

@@ -159,6 +159,10 @@
   opacity: 0;
 }
 
+.q .highlight {
+  color: var(--secondary-color);
+}
+
 .arrow {
   content: " ";
   display: block;

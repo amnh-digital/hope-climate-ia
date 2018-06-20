@@ -1,8 +1,11 @@
 .title,
-.content,
-.sleepMode {
+.content {
   width: 50vw;
   margin-left: -25vw;
+}
+
+.sleepMode {
+  right: 45%;
 }
 
 .title {
@@ -11,7 +14,7 @@
 .slideshow {
   position: relative;
   width: 50vw; /* images are 1366 x 768 */
-  height: 25vw;
+  height: 27vw;
   overflow: hidden;
   transition: width 2s ease-in-out;
 }
@@ -154,7 +157,7 @@
   left: auto;
 }
 .captions {
-  width: 66.66667%;
+  width: 70%;
   height: 8vw;
 }
 .caption {
@@ -169,16 +172,20 @@
 }
 .caption p {
   margin: 0.5rem 0;
-  font-size: 1.1vh;
+  font-size: 1.333vh;
   /* max-height: 2.8rem;
   overflow: hidden; */
 }
 .caption h2 {
-  font-size: 1.333vh;
+  font-size: 1.5vh;
 }
 
 .title h2 {
   font-weight: normal;
+}
+
+.credit a {
+  text-decoration: none;
 }
 
 .ui-slider-horizontal {

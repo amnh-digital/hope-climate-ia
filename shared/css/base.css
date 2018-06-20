@@ -125,51 +125,36 @@ a {
 
 .sleepMode {
   position: absolute;
-  width: 60%;
-  left: 50%;
-  margin-left: -30%;
-  height: 26.6667%;
-  bottom: 0;
-
-  /* display: none; */
+  width: 20vw;
+  height: 3.65497076023vw;
+  background: url(../img/instruction_arrow.svg);
+  background-size: 100% auto;
+  right: 50%;
+  bottom: 5vh;
   box-sizing: border-box;
-  padding: 0.5vw;
-  /* background: rgba(0,0,0,0.9); */
   text-shadow: 2px 2px #000000;
   opacity: 0;
   transition: opacity 3s ease-in-out;
 }
+.sleepMode h3 {
+  font-size: 1vw;
+  margin: -3vh 0 2.4vh 0;
+  letter-spacing: 0.06vw;
+  color: var(--secondary-color);
+}
 .sleepMode p {
   font-size: 1vw;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  margin: 0;
-  line-height: 1.8;
-  letter-spacing: 0.06vw;
-}
-.sleepMode p:first-child:before {
-  content: "⇐";
-  transform: rotate3d(0,0,1,-90deg);
-  display: inline-block;
-  margin-right: 0.5vw;
-  color: var(--secondary-color);
-  font-size: 1.5em;
-  animation: point 4s linear infinite;
-}
-.sleepMode p strong {
-  font-size: 1.2vw;
-  color: var(--secondary-color);
 }
 .sleepMode.active,
 #app.sleeping .sleepMode {
   /* display: block; */
   opacity: 1;
+  animation: point 5s linear infinite;
 }
-.sleepMode.active p,
+/* .sleepMode.active p,
 #app.sleeping .sleepMode p {
-  /* animation: blink 3s infinite; */
-}
+  animation: blink 3s infinite;
+} */
 
 .sidebar {
   position: absolute;
@@ -285,10 +270,10 @@ a {
 @keyframes point {
   from,
   to {
-    transform: translate3d(0, -0.5vw, 0) rotate3d(0, 0, 1, -90deg);
+    transform: translate3d(0, -0.5vw, 0);
   }
   50% {
-    transform: translate3d(0, 0.5vw, 0) rotate3d(0, 0, 1, -90deg);
+    transform: translate3d(0, 0.5vw, 0);
   }
 }
 
