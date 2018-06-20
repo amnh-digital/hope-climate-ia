@@ -2,7 +2,7 @@
   "network": {
     "el": "#network",
     "angleThreshold": 25,
-    "transitionMs": 1500,
+    "transitionMs": 1000,
     "resetAfterMs": 500,
     "resetTransitionMs": 1500,
     "sleepTransitionMs": 2000,

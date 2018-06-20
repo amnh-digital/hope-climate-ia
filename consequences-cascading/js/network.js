@@ -561,7 +561,7 @@ var Network = (function() {
         var color = node.color;
         var bgColor = node.bgColor;
 
-        if (p < 1.0) {
+        if (p < 1.0 && node.parent!=="root") {
           var mu = UTIL.easeInElastic(p, elasticAmount);
           var lerpPoint = UTIL.lerpLine(node.fromX, node.fromY, node.x, node.y, mu);
           x1 = lerpPoint[0];
@@ -791,7 +791,7 @@ var Network = (function() {
   Network.prototype.renderTransition = function(t){
     var now = t ? t : new Date().getTime();
     var progress = UTIL.norm(now, this.transitionStart, this.transitionEnd);
-    var progressEased = UTIL.easeInElastic(progress, this.opt.elasticAmount);
+    var progressEased = UTIL.easeInOutSin(progress, this.opt.elasticAmount);
     if (progress >= 1) {
       progress = 1;
       this.transitioning = false;
