@@ -143,9 +143,11 @@ var Stories = (function() {
   };
 
   Stories.prototype.playStory = function(story){
-    story.$el.addClass('playing');
     this.$body.addClass('playing');
-    if (story.video) story.video.play();
+    if (story.video) {
+      story.$el.addClass('playing');
+      story.video.play();
+    }
   };
 
   Stories.prototype.render = function(){
