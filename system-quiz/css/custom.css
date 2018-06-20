@@ -37,10 +37,10 @@
   top: 0;
   transition: transform 5s, opacity 5s;
 }
-#q-climate-weather.quiz-question.answered.incorrect .cloud {
+#q-climate-weather.quiz-question.answered.correct .cloud {
   transform: translate3d(-24vw, 0, 0);
 }
-#q-climate-weather.quiz-question.answered.correct .cloud {
+#q-climate-weather.quiz-question.answered.incorrect .cloud {
   transform: translate3d(-37vw, 0, 0);
 }
 #q-climate-weather .cloud .animate {
