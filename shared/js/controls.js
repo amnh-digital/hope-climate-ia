@@ -68,13 +68,13 @@ var Controls = (function() {
     this.smoothingWindow = this.opt.gamepad.smoothingWindow
     this.gamepadSmoothing = this.smoothingWindow > 0;
 
-    if (this.gamepadSmoothing) {
-      var weights = _.map(linspace(-1, 0, this.opt.gamepad.smoothingWindow), function(v){ return Math.exp(v); });
-      var sum = _.reduce(weights, function(memo, v){ return memo + v; }, 0);
-      weights = _.map(weights, function(v){ return v / sum; })
-      this.gamepadWeights = weights;
-      console.log(weights)
-    }
+    // if (this.gamepadSmoothing) {
+    //   var weights = _.map(linspace(-1, 0, this.opt.gamepad.smoothingWindow), function(v){ return Math.exp(v); });
+    //   var sum = _.reduce(weights, function(memo, v){ return memo + v; }, 0);
+    //   weights = _.map(weights, function(v){ return v / sum; })
+    //   this.gamepadWeights = weights;
+    //   // console.log(weights)
+    // }
 
     // parse axes
     this.axesConfig = _.map(this.opt.gamepad.axes, function(a){
@@ -342,17 +342,15 @@ var Controls = (function() {
     var axesConfig = this.axesConfig;
     var gamepadSmoothing = this.gamepadSmoothing;
     var smoothingWindow = this.smoothingWindow;
-    var gamepadWeights = this.gamepadWeights;
+    // var gamepadWeights = this.gamepadWeights;
 
     $.each(gamepadMappings, function(key, index){
-      var state = norm(axes[index], axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
-      state = +state.toFixed(2);
-      state = Math.min(state, 1);
-      state = Math.max(state, 0);
+
+      var value = axes[index];
 
       if (gamepadSmoothing) {
         // add value to the axis' window
-        axesConfig[index].window.push(state);
+        axesConfig[index].window.push(value);
         if (axesConfig[index].window.length > smoothingWindow) {
           axesConfig[index].window = axesConfig[index].window.slice(1);
         }
@@ -363,6 +361,11 @@ var Controls = (function() {
           state = mean(axesWindow);
         }
       }
+
+      var state = norm(value, axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
+      state = +state.toFixed(2);
+      state = Math.min(state, 1);
+      state = Math.max(state, 0);
 
       var prev = prevState[key];
       // state has changed, execute callback
