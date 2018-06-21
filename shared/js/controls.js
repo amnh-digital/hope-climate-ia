@@ -340,38 +340,40 @@ var Controls = (function() {
     var gamepadMappings = this.gamepadMappings;
     var channel = this.channel;
     var axesConfig = this.axesConfig;
-    var gamepadSmoothing = this.gamepadSmoothing;
-    var smoothingWindow = this.smoothingWindow;
+    // var gamepadSmoothing = this.gamepadSmoothing;
+    // var smoothingWindow = this.smoothingWindow;
     // var gamepadWeights = this.gamepadWeights;
 
     $.each(gamepadMappings, function(key, index){
 
       var value = axes[index];
 
-      if (gamepadSmoothing) {
-        // add value to the axis' window
-        axesConfig[index].window.push(value);
-        if (axesConfig[index].window.length > smoothingWindow) {
-          axesConfig[index].window = axesConfig[index].window.slice(1);
-        }
-        // calculate weighted average if window has enough values
-        var axesWindow = axesConfig[index].window;
-        if (axesWindow.length === smoothingWindow) {
-          // state = weightedMean(axesWindow, gamepadWeights);
-          state = mean(axesWindow);
-        }
-      }
+      // if (gamepadSmoothing) {
+      //   // add value to the axis' window
+      //   axesConfig[index].window.push(value);
+      //   if (axesConfig[index].window.length > smoothingWindow) {
+      //     axesConfig[index].window = axesConfig[index].window.slice(1);
+      //   }
+      //   // calculate weighted average if window has enough values
+      //   var axesWindow = axesConfig[index].window;
+      //   if (axesWindow.length === smoothingWindow) {
+      //     // state = weightedMean(axesWindow, gamepadWeights);
+      //     state = mean(axesWindow);
+      //   }
+      // }
 
+      // value = +value.toFixed(2);
       var state = norm(value, axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
-      state = +state.toFixed(2);
       state = Math.min(state, 1);
       state = Math.max(state, 0);
 
+      var threshold = 0.001;
       var prev = prevState[key];
+      var delta = Math.abs(prev-state);
+
       // state has changed, execute callback
-      if (prev != state) {
+      if (delta > threshold) {
         // console.log("State change", key, state)
-        // var delta = Math.abs(prev-state);
         channel.post("controls.axes.change", {"key": key, "value": state});
         _this.gamepadState[key] = state;
       }
