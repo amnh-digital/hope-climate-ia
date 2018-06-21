@@ -149,7 +149,7 @@ a {
 #app.sleeping .sleepMode {
   /* display: block; */
   opacity: 1;
-  animation: point 5s linear infinite;
+  /* animation: point 5s linear infinite; */
 }
 /* .sleepMode.active p,
 #app.sleeping .sleepMode p {
