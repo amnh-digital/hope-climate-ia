@@ -1,8 +1,8 @@
 'use strict';
 
-var GamepadConfig = (function() {
+var GamepadUtility = (function() {
 
-  function GamepadConfig(config) {
+  function GamepadUtility(config) {
     var defaults = {
       listEl: "#slider-list",
       maxGamepads: 4
@@ -15,14 +15,14 @@ var GamepadConfig = (function() {
     return (1.0 * value - a) / (b - a);
   };
 
-  GamepadConfig.prototype.init = function(){
+  GamepadUtility.prototype.init = function(){
     this.loadGamepads();
     this.loadUI();
     this.loadListeners();
     this.pollGamepads();
   };
 
-  GamepadConfig.prototype.loadGamepad = function(data, i){
+  GamepadUtility.prototype.loadGamepad = function(data, i){
     console.log('Found gamepad', data, i);
     var gp = this.gamepads[i];
     var $el = gp.$el;
@@ -67,7 +67,7 @@ var GamepadConfig = (function() {
     this.gamepads[i].axes = axes;
   };
 
-  GamepadConfig.prototype.loadGamepads = function(){
+  GamepadUtility.prototype.loadGamepads = function(){
     var maxGamepads = this.opt.maxGamepads;
     this.gamepads = _.times(this.opt.maxGamepads, function(i){
       return {
@@ -76,7 +76,7 @@ var GamepadConfig = (function() {
     });
   };
 
-  GamepadConfig.prototype.loadListeners = function(){
+  GamepadUtility.prototype.loadListeners = function(){
     var _this = this;
 
     $('body').on('click', '.button-save', function(e){
@@ -99,7 +99,7 @@ var GamepadConfig = (function() {
     });
   };
 
-  GamepadConfig.prototype.loadUI = function(){
+  GamepadUtility.prototype.loadUI = function(){
     var maxGamepads = this.opt.maxGamepads;
     var $listEl = $(this.opt.listEl);
 
@@ -111,7 +111,7 @@ var GamepadConfig = (function() {
     }
   };
 
-  GamepadConfig.prototype.pollGamepads = function(){
+  GamepadUtility.prototype.pollGamepads = function(){
     var _this = this;
     var gamepads = navigator.getGamepads();
 
@@ -130,14 +130,14 @@ var GamepadConfig = (function() {
     requestAnimationFrame(function(){ _this.pollGamepads(); });
   };
 
-  GamepadConfig.prototype.record = function(i, j){
+  GamepadUtility.prototype.record = function(i, j){
     this.recording = true;
     this.recordingData = [];
     this.recordGamepad = i;
     this.recordAxis = j;
   }
 
-  GamepadConfig.prototype.renderGamepad = function(gamepadData, i){
+  GamepadUtility.prototype.renderGamepad = function(gamepadData, i){
     var _this = this;
     var gp = this.gamepads[i];
     var $el = gp.$el;
@@ -185,7 +185,7 @@ var GamepadConfig = (function() {
 
   };
 
-  GamepadConfig.prototype.save = function(i){
+  GamepadUtility.prototype.save = function(i){
     var gp = this.gamepads[i];
     var postData = _.map(gp.axes, function(a){
       var swapped = a.$checkbox[0].checked;
@@ -217,14 +217,14 @@ var GamepadConfig = (function() {
     });
   }
 
-  GamepadConfig.prototype.saveRecord = function(i, j){
+  GamepadUtility.prototype.saveRecord = function(i, j){
     this.recording = false;
     var dataObjectString = JSON.stringify(this.recordingData);
     console.log(dataObjectString);
   }
 
-  return GamepadConfig;
+  return GamepadUtility;
 
 })();
 
-var app = new GamepadConfig({});
+var app = new GamepadUtility({});

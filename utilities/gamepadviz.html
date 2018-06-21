@@ -1,0 +1,86 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>HoPE Climate Wall</title>
+  <link rel="stylesheet" href="../shared/css/vendor/normalize.css">
+  <style>
+  html {
+    font-size: 22px;
+    font-family: helvetica, sans-serif;
+  }
+  h2 {
+    margin: 0;
+  }
+  .container {
+    position: relative;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 50vh;
+    padding: 1vh 1vw;
+  }
+  .track {
+    margin: 1rem 0;
+    width: 96%;
+    height: 10vh;
+    position: relative;
+    background: #ccc;
+  }
+  .indicator {
+    width: 2vh;
+    height: 10vh;
+    margin-left: -1vh;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background: red;
+  }
+  .state {
+    position: fixed;
+    left: 1vh;
+    bottom: 1vh;
+  }
+  .controls {
+    position: fixed;
+    right: 1vh;
+    bottom: 1vh;
+  }
+  .controls label,
+  .controls select,
+  .controls input {
+    margin-right: 1rem;
+  }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h2>Raw</h2>
+      <div class="track"><div id="raw" class="indicator"></div></div>
+    </div>
+    <div class="container">
+      <h2>Rounded</h2>
+      <div class="track"><div id="smoothed" class="indicator"></div></div>
+    </div>
+    <div class="state">
+      <div>step: <span id="step">--</span></div>
+      <div>value: <span id="value">--</span></div>
+      <div>smoothed: <span id="value-smoothed">--</span></div>
+    </div>
+    <div class="controls">
+      <label for="data">Select data:</label>
+      <select id="select-data" name="data">
+        <option value="data/sample.json">Normal</option>
+        <option value="data/jitter.json">Jitter</option>
+      </select>
+      <label for="speed">Speed:</label>
+      <input type="range" min="0" max="100" value="100" class="slider" name="speed" id="speed">
+    </div>
+  </div>
+
+  <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
+  <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
+  <script src="js/gamepadviz.js"></script>
+</body>
+</html>
