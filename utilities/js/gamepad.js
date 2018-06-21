@@ -27,7 +27,7 @@ var GamepadConfig = (function() {
     var gp = this.gamepads[i];
     var $el = gp.$el;
 
-    $el.html('<h2>'+data.id+' <button data-index="'+i+'">Save</button></h2>');
+    $el.html('<h2>'+data.id+' <button data-index="'+i+'" class="button-save">Save</button></h2>');
 
     var $axesList = $('<ol></ol>');
     var axesCount = data.axes.length;
@@ -40,12 +40,14 @@ var GamepadConfig = (function() {
       var $max = $('<span class="max">'+value+'</span>');
       var $current = $('<span class="current">'+value+'</span>');
       var $bar = $('<div class="bar"></div>');
-      var $checkbox = $('<input type="checkbox" title="reversed?" />')
+      var $checkbox = $('<label><input type="checkbox" title="reversed?" /> reverse?</label>');
+      var $button = $('<button class="button-record" data-gamepad="'+i+'" data-axis="'+j+'">record</button>')
       $axis.append($min);
       $axis.append($current);
       $axis.append($max);
       $axis.append($bar);
       $axis.append($checkbox);
+      $axis.append($button);
       $axesList.append($axis);
       axes.push({
         index: j,
@@ -54,6 +56,7 @@ var GamepadConfig = (function() {
         $max: $max,
         $bar: $bar,
         $checkbox: $checkbox,
+        $button: $button,
         value: value,
         min: value,
         max: value
@@ -76,10 +79,24 @@ var GamepadConfig = (function() {
   GamepadConfig.prototype.loadListeners = function(){
     var _this = this;
 
-    $('body').on('click', 'button', function(e){
+    $('body').on('click', '.button-save', function(e){
       var i = parseInt($(this).attr('data-index'));
       _this.save(i);
-    })
+    });
+
+    $('body').on('click', '.button-record', function(e){
+      var i = parseInt($(this).attr('data-gamepad'));
+      var j = parseInt($(this).attr('data-axis'));
+      var text = $(this).text();
+      if (text==="record") {
+        _this.record(i, j);
+        $(this).text("stop");
+      } else {
+        _this.saveRecord(i, j);
+        $(this).text("record");
+      }
+
+    });
   };
 
   GamepadConfig.prototype.loadUI = function(){
@@ -113,6 +130,13 @@ var GamepadConfig = (function() {
     requestAnimationFrame(function(){ _this.pollGamepads(); });
   };
 
+  GamepadConfig.prototype.record = function(i, j){
+    this.recording = true;
+    this.recordingData = [];
+    this.recordGamepad = i;
+    this.recordAxis = j;
+  }
+
   GamepadConfig.prototype.renderGamepad = function(gamepadData, i){
     var _this = this;
     var gp = this.gamepads[i];
@@ -129,11 +153,22 @@ var GamepadConfig = (function() {
       this.gamepads[i].loaded = true;
     }
 
+    var recordingData = this.recordingData;
+    var recordGamepad = this.recordGamepad;
+    var recordAxis = this.recordAxis;
+    var recording = this.recording && (recordGamepad===i);
+
     var axes = gp.axes;
     var axesData = gamepadData.axes;
     for (var j=0; j<axes.length; j++) {
       var axis = axes[j];
       var value = axesData[j];
+      if (recording && recordAxis===j) {
+        recordingData.push(value);
+        if (recordingData.length > 100000) {
+          recordingData = recordingData.slice(1);
+        }
+      }
       var percent = norm(value, -1, 1) * 100;
       axes[j].$bar.css('width', percent+"%");
       axes[j].value = value;
@@ -180,6 +215,12 @@ var GamepadConfig = (function() {
       console.log(data);
       alert('Config saved!');
     });
+  }
+
+  GamepadConfig.prototype.saveRecord = function(i, j){
+    this.recording = false;
+    var dataObjectString = JSON.stringify(this.recordingData);
+    console.log(dataObjectString);
   }
 
   return GamepadConfig;
