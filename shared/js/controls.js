@@ -240,6 +240,8 @@ var Controls = (function() {
     document.addEventListener("mousemove", updatePosition, false);
 
     var locked = false;
+    // attempt to lock pointer
+    var el = $(this.opt.el)[0];
 
     // Listen for pointer lock
     document.addEventListener('pointerlockchange', function(){
@@ -253,9 +255,13 @@ var Controls = (function() {
       }
     }, false);
 
-    // attempt to lock pointer
-    var el = $(this.opt.el)[0];
-    el.requestPointerLock();
+    setTimeout(function(){
+      if (!locked) {
+        console.log('Requesting pointer lock...');
+        el.requestPointerLock();
+      }
+    }, 2000);
+
     // initiate lock on click
     el.onclick = function() {
       if (!locked) {

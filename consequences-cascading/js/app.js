@@ -18,7 +18,7 @@ var AppCascading = (function() {
     var soundPromise = this.loadSounds();
     var imagesPromise = this.loadImages();
 
-    $.when.apply($, [controlPromise, soundPromise, imagesPromise]).then(function(){
+    $.when.apply($, [imagesPromise]).then(function(){
       _this.onReady();
       _this.loadListeners();
     });
