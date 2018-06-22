@@ -7,7 +7,8 @@
     "build:mac2": "chmod +x ./electron/build-hope-mac-2.sh && ./electron/build-hope-mac-2.sh",
     "build:mac3": "chmod +x ./electron/build-hope-mac-3.sh && ./electron/build-hope-mac-3.sh",
     "build:mac4": "chmod +x ./electron/build-hope-mac-4.sh && ./electron/build-hope-mac-4.sh",
-    "build:mac5": "chmod +x ./electron/build-hope-mac-5.sh && ./electron/build-hope-mac-5.sh"
+    "build:mac5": "chmod +x ./electron/build-hope-mac-5.sh && ./electron/build-hope-mac-5.sh",
+    "build:mouselock": "chmod +x ./electron/build-test-mouselock.sh && ./electron/build-test-mouselock.sh"
   },
   "devDependencies": {
     "electron": "^1.8.7",

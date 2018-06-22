@@ -69,7 +69,7 @@ function createWindow (browserWindowSetting, index) {
     if (index===0) {
       setTimeout(function(){
         webContents.focus();
-      }, 2000);
+      }, 5000);
     }
   });
 

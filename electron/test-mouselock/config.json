@@ -1,0 +1,42 @@
+{
+  "windows": [
+    {
+      "url": "utilities/mousetest.html",
+      "debug": false,
+      "browserWindow": {
+        "x": 0,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "kiosk": true,
+        "webPreferences": {
+          "nodeIntegration": false
+        }
+      }
+    },{
+      "url": "utilities/mouse.html",
+      "debug": false,
+      "browserWindow": {
+        "x": 1920,
+        "y": 0,
+        "width": 1920,
+        "height": 1080,
+        "kiosk": true,
+        "webPreferences": {
+          "nodeIntegration": false
+        }
+      }
+    }
+  ],
+  "commandLineSwitches": {
+    "incognito":"true",
+    "ignore-gpu-blacklist":"true",
+    "high-dpi-support":"1",
+    "force-device-scale-factor":"1",
+    "overscroll-history-navigation":"0",
+    "start-fullscreen":"true",
+    "disable-pinch":"true",
+    "disable-touch-feedback":"true",
+    "disable-touch-drag-drop":"true"
+  }
+}

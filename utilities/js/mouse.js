@@ -41,21 +41,26 @@ canvas.onclick = function() {
 
 // Hook pointer lock state change events for different browsers
 document.addEventListener('pointerlockchange', lockChangeAlert, false);
-document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
-document.addEventListener("mousemove", updatePosition, false);
+// document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
+// document.addEventListener("mousemove", updatePosition, false);
+
+var message = document.getElementById('message');
 
 function lockChangeAlert() {
   if (document.pointerLockElement === canvas ||
       document.mozPointerLockElement === canvas) {
     console.log('The pointer lock status is now locked');
-    // document.addEventListener("mousemove", updatePosition, false);
+    message.textContent = 'Locked';
+    document.addEventListener("mousemove", updatePosition, false);
   } else {
     console.log('The pointer lock status is now unlocked');
-    // document.removeEventListener("mousemove", updatePosition, false);
+    message.textContent = 'Unlocked';
+    document.removeEventListener("mousemove", updatePosition, false);
   }
 }
 
 var tracker = document.getElementById('tracker');
+
 
 var animation;
 function updatePosition(e) {
