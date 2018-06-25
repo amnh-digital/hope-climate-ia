@@ -72,41 +72,50 @@
 }
 
 .calendar-key {
-  width: 25%;
-  height: auto;
-  float: left;
-  margin-top: -3.75vw;
-}
-.calendar-key svg {
   width: 100%;
-  height: auto;
+  height: 4vh;
+  margin-top: 1.5vw;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-key:before,
+.calendar-key:after {
+  content: " ";
   display: block;
+  position: absolute;
+  height: 2vh;
+  width: 100%;
+  left: 0;
+  z-index: 10;
 }
-.calendar-key text {
-  fill: var(--primary-dark-color);
-  font-size: 0.7vw;
+.calendar-key:before {
+  background: linear-gradient(to bottom, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+  top: 0;
 }
-#calendar {
-  transform-origin: 50% 50%;
+.calendar-key:after {
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+  bottom: 0;
 }
-#calendar path {
-  fill: var(--gray-color);
+.calendar {
+  position: relative;
+  height: 36vh;
 }
-#calendar path:last-child {
-  fill: var(--primary-color);
+.calendar-mo {
+  box-sizing: border-box;
+  height: 3vh;
+  font-size: 1.5vh;
+  line-height: 3vh;
+  letter-spacing: 0.1vh;
 }
 
-.calendar-key,
-.calendar-key svg {
+.calendar-key {
   -webkit-transform: translateZ(0);
 }
 
 .color-key {
   position: relative;
-  width: auto;
+  width: 100%;
   height: 0.7vw;
-  margin-left: 30%;
-  margin-right: 5%;
 }
 .color-key-canvas {
   position: absolute;

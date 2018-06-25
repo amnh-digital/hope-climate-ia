@@ -2,7 +2,9 @@
 
 var Calendar = (function() {
   function Calendar(options) {
-    var defaults = {};
+    var defaults = {
+      year: 2016
+    };
     this.opt = $.extend({}, defaults, options);
     this.init();
   }
@@ -13,16 +15,26 @@ var Calendar = (function() {
 
   Calendar.prototype.init = function(){
     this.$el = $(this.opt.el);
+    this.loadUI();
+    this.onResize();
+  };
+
+  Calendar.prototype.loadUI = function(){
+    var year = this.opt.year;
+    $('.calendar-mo').each(function(){
+      var text = $(this).text();
+      $(this).text(text + " " + year)
+    });
   };
 
   Calendar.prototype.onResize = function(){
-
+    this.calendarHeight = this.$el.height();
   };
 
   Calendar.prototype.render = function(yearProgress){
-    var angle = yearProgress * 360;
+    var offsetY = yearProgress * this.calendarHeight;
     this.$el.css({
-      'transform': 'rotate3d(0, 0, 1, '+angle+'deg)'
+      'transform': 'translate3d(0, -'+offsetY+'px, 0)'
     });
   };
 

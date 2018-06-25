@@ -1,6 +1,7 @@
 {
   "calendar": {
-    "el": "#calendar"
+    "el": "#calendar",
+    "year": 2016
   },
   "colorKey": {
     "el": "#color-key-canvas"
