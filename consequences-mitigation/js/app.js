@@ -82,6 +82,8 @@ var AppMitigation = (function() {
   };
 
   AppMitigation.prototype.onRotate = function(delta){
+    var wasSleeping = this.sleep.isSleeping;
+
     this.sleep.wakeUp();
     if (this.delaying) return false;
 
@@ -127,6 +129,9 @@ var AppMitigation = (function() {
       this.currentStoryIndex = index;
       this.$document.trigger("sound.play.sprite", ["tick"]);
       this.angleDelta = 0;
+
+    } else if (wasSleeping) {
+      this.stories.queueCurrentStory();
     }
   };
 

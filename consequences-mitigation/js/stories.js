@@ -86,10 +86,7 @@ var Stories = (function() {
       this.$transformer.css('transform', 'translate3d('+story.dx+'px,'+story.dy+'px,0)');
     }
 
-    this.playing = false;
-    this.loadStart = new Date().getTime();
-    this.loadEnd = this.loadStart + this.opt.loadingMs;
-    this.loading = true;
+    this.queueCurrentStory();
   };
 
   Stories.prototype.onResize = function(){
@@ -150,6 +147,13 @@ var Stories = (function() {
     }
   };
 
+  Stories.prototype.queueCurrentStory = function(){
+    this.playing = false;
+    this.loadStart = new Date().getTime();
+    this.loadEnd = this.loadStart + this.opt.loadingMs;
+    this.loading = true;
+  };
+
   Stories.prototype.render = function(){
     if (this.loading) {
       var now = new Date().getTime();
@@ -160,7 +164,7 @@ var Stories = (function() {
         this.playing = true;
         this.playStory(this.story);
       }
-      this.story.$loadProgressBar.css('transform', 'scale3d('+(1-progress)+',1,1)');
+      this.story.$loadProgressBar.css('transform', 'scale3d('+progress+',1,1)');
     }
 
     if (this.playing) {
