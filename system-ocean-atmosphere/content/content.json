@@ -5,13 +5,15 @@
       "lon": -65.890461,
       "width": 50,
       "height": 30,
-      "globeEl": "#ocean-currents",
-      "arrow": {
-        "radius": 0.4,
-        "distance": 1.0,
-        "anchor": [1.0, 0.5]
-      },
       "parentEl": "#content",
+      "arrows": [
+        {
+          "globeEl": "#ocean-currents",
+          "radius": 0.4,
+          "distance": 1.0,
+          "anchor": [1.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-gulf-stream",
@@ -25,13 +27,15 @@
       "lon": 136.508709,
       "width": 50,
       "height": 30,
-      "globeEl": "#ocean-currents",
       "parentEl": "#content",
-      "arrow": {
-        "radius": 0.35,
-        "distance": 1.0,
-        "anchor": [1.0, 0.5]
-      },
+      "arrows": [
+        {
+          "globeEl": "#ocean-currents",
+          "radius": 0.35,
+          "distance": 1.0,
+          "anchor": [1.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-kuroshio-current",
@@ -46,38 +50,24 @@
       "lonThreshold": 180,
       "width": 30,
       "height": 50,
-      "globeEl": "#ocean-currents",
       "parentEl": "#content",
-      "arrow": {
-        "radius": 0.7,
-        "distance": 0.8,
-        "anchor": [0.0, 0.5]
-      },
+      "arrows": [
+        {
+          "globeEl": "#ocean-currents",
+          "radius": 0.7,
+          "distance": 0.8,
+          "anchor": [0.0, 0.5]
+        },{
+          "globeEl": "#atmosphere-wind",
+          "radius": 0.7,
+          "distance": 0.8,
+          "anchor": [0.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-southern-ocean",
           "className": "content-both",
-          "title": "Southern Ocean",
-          "text": "Powerful eastward winds drive the surface currents circling Antarctica."
-        }
-      ]
-    },{
-      "lat": -90,
-      "lon": 0,
-      "lonThreshold": 180,
-      "width": 30,
-      "height": 50,
-      "globeEl": "#atmosphere-wind",
-      "parentEl": "#content",
-      "arrow": {
-        "radius": 0.7,
-        "distance": 0.8,
-        "anchor": [1.0, 0.5]
-      },
-      "els": [
-        {
-          "id": "content-southern-ocean2",
-          "className": "content-both hidden",
           "title": "Southern Ocean",
           "text": "Powerful eastward winds drive the surface currents circling Antarctica."
         }
@@ -88,13 +78,15 @@
       "lon": -48.502286,
       "width": 50,
       "height": 30,
-      "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
-      "arrow": {
-        "radius": 0.4,
-        "distance": 1.0,
-        "anchor": [0.0, 0.5]
-      },
+      "arrows": [
+        {
+          "globeEl": "#atmosphere-wind",
+          "radius": 0.4,
+          "distance": 1.0,
+          "anchor": [0.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-northern-polar",
@@ -108,13 +100,15 @@
       "lon": -130,
       "width": 50,
       "height": 30,
-      "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
-      "arrow": {
-        "radius": 0.4,
-        "distance": 1.0,
-        "anchor": [0.0, 0.5]
-      },
+      "arrows": [
+        {
+          "globeEl": "#atmosphere-wind",
+          "radius": 0.4,
+          "distance": 1.0,
+          "anchor": [0.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-trade-winds",
@@ -128,13 +122,15 @@
       "lon": -48.502286,
       "width": 50,
       "height": 30,
-      "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
-      "arrow": {
-        "radius": 0.4,
-        "distance": 1.0,
-        "anchor": [0.0, 0.5]
-      },
+      "arrows": [
+        {
+          "globeEl": "#atmosphere-wind",
+          "radius": 0.4,
+          "distance": 1.0,
+          "anchor": [0.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-coriolis-effect",
@@ -144,11 +140,11 @@
         }
       ]
     },{
+      "disabled": true,
       "lat": 0,
       "lon": 140,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
-      "disabled": true,
       "els": [
         {
           "id": "content-hadley-current",
@@ -164,35 +160,24 @@
     },{
       "lat": 0,
       "lon": -160,
-      "globeEl": "#ocean-currents",
       "parentEl": "#content",
-      "arrow": {
-        "radius": 0.5,
-        "distance": 1.0,
-        "anchor": [0.0, 0.5]
-      },
+      "arrows": [
+        {
+          "globeEl": "#ocean-currents",
+          "radius": 0.5,
+          "distance": 1.0,
+          "anchor": [0.0, 0.5]
+        },{
+          "globeEl": "#atmosphere-wind",
+          "radius": 0.5,
+          "distance": 1.0,
+          "anchor": [0.0, 0.5]
+        }
+      ],
       "els": [
         {
           "id": "content-thermal-equator",
           "className": "content-both",
-          "title": "Thermal Equator",
-          "text": "This band of warm air rises from where solar energy is most concentrated. This changes seasonally, moving slightly north in June and south in December."
-        }
-      ]
-    },{
-      "lat": 0,
-      "lon": -160,
-      "globeEl": "#atmosphere-wind",
-      "parentEl": "#content",
-      "arrow": {
-        "radius": 0.5,
-        "distance": 1.0,
-        "anchor": [1.0, 0.5]
-      },
-      "els": [
-        {
-          "id": "content-thermal-equator2",
-          "className": "content-both hidden",
           "title": "Thermal Equator",
           "text": "This band of warm air rises from where solar energy is most concentrated. This changes seasonally, moving slightly north in June and south in December."
         }

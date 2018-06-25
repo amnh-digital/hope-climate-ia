@@ -73,7 +73,8 @@ var Globe = (function() {
 
     this.rotateX = 0.5;
     this.rotateY = 0.5;
-    this.annotations = _.where(this.opt.annotations, {globeEl: el});
+    this.annotations = this.opt.annotations;
+    // console.log(this.annotations)
     this.video = this.opt.video;
 
     this.initScene();
@@ -179,6 +180,7 @@ var Globe = (function() {
     var markerColor = parseInt(this.opt.markerColor);
 
     this.annotations = _.map(annotations, function(a, i){
+      a = _.clone(a);
       var geometry = new THREE.ConeBufferGeometry(markerRadius, markerRadius*2, 8);
       geometry.rotateX(Math.PI / 2)
       var material = new THREE.MeshBasicMaterial({color: markerColor, opacity: markerOpacity, transparent: true});
@@ -368,8 +370,7 @@ var Globe = (function() {
   };
 
   Globe.prototype.updateAnnotation = function(annotation){
-    if (annotation && annotation.globeEl !== this.opt.el
-      || annotation && !annotation.arrow) return false;
+    if (annotation && !annotation.arrows) return false;
 
     // // prep transition properties
     // if (this.currentAnnotation) {
@@ -398,7 +399,8 @@ var Globe = (function() {
       var radius = this.opt.radius;
       var lat = annotation.lat;
       var lon = annotation.lon;
-      var arrow = annotation.arrow;
+      var el = this.opt.el;
+      var arrow = _.findWhere(annotation.arrows, {globeEl: el});
       var arrowRadius = arrow.radius || 0.3;
       var arrowDistance = arrow.distance || 1.0;
       this.annotationCircle.scale.set(arrowRadius, arrowRadius, arrowRadius);

@@ -50,6 +50,8 @@ var AppOceanAtmosphere = (function() {
       copy.index = i;
       copy.id = ""+i;
 
+      copy.globeEls = _.pluck(a.arrows, "globeEl");
+
       var lonThreshold = a.lonThreshold || annotationLonThreshold;
       var latThreshold = a.latThreshold || annotationLatThreshold;
 
@@ -158,14 +160,16 @@ var AppOceanAtmosphere = (function() {
     var globeOpt = this.opt.globe;
     var globesOpt = this.opt.globes;
     var content = this.content;
-    var annotations = this.content.annotations;
     var video = this.video;
 
     _.each(globesOpt, function(opt){
+      var annotations = _.filter(content.annotations, function(a){
+        return a.globeEls.indexOf(opt.el) >= 0;
+      })
       var globe = _.extend({}, opt, {
         currentAnnotation: false,
         currentAnnotationId: false,
-        obj: new Globe(_.extend({}, opt, globeOpt, content, {video: video}))
+        obj: new Globe(_.extend({}, opt, globeOpt, {video: video, annotations: annotations}))
       })
       globes.push(globe);
     });
@@ -212,6 +216,9 @@ var AppOceanAtmosphere = (function() {
     });
     // console.log(annotations)
 
+    var foundAnnotation = false;
+    var foundAnnotationId = false;
+
     // multiple found, sort by distance
     if (annotations.length > 1) {
       annotations = _.sortBy(annotations, function(a){
@@ -219,18 +226,25 @@ var AppOceanAtmosphere = (function() {
       });
     }
 
+    if (annotations.length > 0) {
+      foundAnnotation = annotations[0];
+      foundAnnotationId = foundAnnotation.id;
+    }
+
     var globes = this.globes;
     _.each(globes, function(globe, i){
-      var globeAnnotations = _.filter(annotations, function(a){ return a.globeEl===globe.el; });
-      var globeAnnotation = false;
-      var globeAnnotationId = false;
-      // found annotation
-      if (globeAnnotations.length > 0) {
-        globeAnnotation = globeAnnotations[0];
+      var globeAnnotation = _.clone(foundAnnotation);
+      var globeAnnotationId = foundAnnotationId;
+
+      if (globeAnnotation) {
+        var globeElFound = globeAnnotation.globeEls.indexOf(globe.el) >= 0;
+        if (!globeElFound) {
+          globeAnnotation = false;
+          globeAnnotationId = false;
+        }
       }
 
       // check if we changed annotation
-      if (globeAnnotation) globeAnnotationId = globeAnnotation.id;
       var changed = (globeAnnotationId !== globe.currentAnnotationId);
       if (changed) {
         _this.contentObj.update(globe.el, globeAnnotation);

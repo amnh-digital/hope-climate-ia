@@ -48,9 +48,10 @@ var Content = (function() {
     _.each(this.annotations, function(a, i){
       var $container = $(a.parentEl);
       var $els = [];
-      var globeEl = a.globeEl.substring(1);
+      var globeEls = _.map(a.globeEls, function(g){return g.slice(1);})
+      globeEls = globeEls.join(' ');
       _.each(a.els, function(el, j){
-        var $annotation = $('<div id="'+el.id+'" class="annotation '+globeEl+'"></div>');
+        var $annotation = $('<div id="'+el.id+'" class="annotation '+globeEls+'"></div>');
         if (el.className) $annotation.addClass(el.className);
         if (el.title) $annotation.append('<h3>'+el.title+'</h3>');
         if (el.image) $annotation.append('<img src="'+el.image+'" alt="'+el.imageAlt+'" />');
