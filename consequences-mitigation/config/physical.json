@@ -2,6 +2,7 @@
   "controls": {
     "el": "#app",
     "channel": "mitigation-cascading",
+    "autolock": true,
     "pointerlockMappings": {
       "vertical": {
         "name": "rotate.vertical",

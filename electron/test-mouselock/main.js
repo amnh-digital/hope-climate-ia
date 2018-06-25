@@ -65,7 +65,7 @@ function createWindow (browserWindowSetting, index) {
   });
 
   webContents.on('dom-ready', function(e){
-    // Focus the app
+    // Focus the app if we are the first screen
     if (index===0) {
       setTimeout(function(){
         webContents.focus();

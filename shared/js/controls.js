@@ -255,12 +255,15 @@ var Controls = (function() {
       }
     }, false);
 
-    setTimeout(function(){
-      if (!locked) {
-        console.log('Requesting pointer lock...');
-        el.requestPointerLock();
-      }
-    }, 2000);
+    var autolock = this.opt.autolock;
+    if (autolock) {
+      setTimeout(function(){
+        if (!locked) {
+          console.log('Requesting pointer lock...');
+          el.requestPointerLock();
+        }
+      }, 3000);
+    }
 
     // initiate lock on click
     el.onclick = function() {

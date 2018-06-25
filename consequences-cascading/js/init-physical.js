@@ -11,7 +11,8 @@ $(function() {
     updateColorsFromConfig(baseConfig);
     _.extend(config[0].controls.pointerlockMappings, configSibling[0].controls.pointerlockMappings);
     config = _.extend({}, baseConfig, config[0]);
-    delete config.controls.pointerlockMappings; // disabled controls; this will be controlled by sibling
+    config.controls.autolock = false;
+    // delete config.controls.pointerlockMappings; // disabled controls; this will be controlled by sibling
     content = content[0];
     data = data[0];
 
