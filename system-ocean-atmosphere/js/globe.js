@@ -69,7 +69,7 @@ var Globe = (function() {
     var el = this.opt.el;
     this.$document = $(document);
     this.$el = $(el);
-    this.$el.append($('<h2>'+this.opt.title+'</h2>'));
+    this.$el.append($(this.opt.title));
 
     this.rotateX = 0.5;
     this.rotateY = 0.5;
@@ -108,7 +108,7 @@ var Globe = (function() {
     var near = this.opt.near;
     var far = this.opt.far;
     this.camera = new THREE.PerspectiveCamera(viewAngle, w / h, near, far);
-    this.camera.position.z = radius * 4.5;
+    this.camera.position.z = radius * 3.5;
 
     // master container, rotate to the angle of the Earth's tilt
     this.container = new THREE.Object3D();
@@ -215,7 +215,7 @@ var Globe = (function() {
     // add north arrow
     var dir = new THREE.Vector3(0, 1, 0);
     var origin = new THREE.Vector3(0, 0, 0);
-    var length = radius * 1.5;
+    var length = radius * 1.45;
     var hex = parseInt(this.opt.arrowColor);
     var northArrow = new THREE.ArrowHelper(dir, origin, length, hex);
     earth.add(northArrow);

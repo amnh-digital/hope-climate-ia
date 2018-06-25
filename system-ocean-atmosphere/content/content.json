@@ -148,6 +148,7 @@
       "lon": 140,
       "globeEl": "#atmosphere-wind",
       "parentEl": "#content",
+      "disabled": true,
       "els": [
         {
           "id": "content-hadley-current",

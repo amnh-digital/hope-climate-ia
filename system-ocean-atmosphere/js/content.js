@@ -11,7 +11,7 @@ var Content = (function() {
     this.annotations = this.opt.annotations.slice(0);
     this.markers = {};
 
-    this.loadMarkers();
+    // this.loadMarkers();
     this.loadUI();
   };
 
@@ -66,6 +66,8 @@ var Content = (function() {
   };
 
   Content.prototype.onAnnotationPositionUpdate = function(el, x, y){
+    return false;
+
     var m = this.markers[el];
     var graphics = m.graphics;
     var annotation = m.currentAnnotation;
@@ -86,28 +88,28 @@ var Content = (function() {
   };
 
   Content.prototype.onResize = function(){
-    var _this = this;
-
-    _.each(this.markers, function(marker, key){
-      var w = marker.$el.width();
-      var h = marker.$el.height();
-      marker.app.renderer.resize(w, h);
-      _this.markers[key].bb = marker.$el[0].getBoundingClientRect();
-    });
-
-    _.each(this.annotations, function(a, i){
-      _this.annotations[i].bb = a.$els[0][0].getBoundingClientRect();
-    });
+    // var _this = this;
+    //
+    // _.each(this.markers, function(marker, key){
+    //   var w = marker.$el.width();
+    //   var h = marker.$el.height();
+    //   marker.app.renderer.resize(w, h);
+    //   _this.markers[key].bb = marker.$el[0].getBoundingClientRect();
+    // });
+    //
+    // _.each(this.annotations, function(a, i){
+    //   _this.annotations[i].bb = a.$els[0][0].getBoundingClientRect();
+    // });
   };
 
   Content.prototype.update = function(globeEl, annotation){
     var _this = this;
     $(".annotation."+globeEl.substring(1)).removeClass('active');
 
-    var marker = this.markers[globeEl];
-    if (!annotation) marker.graphics.clear();
-    this.markers[globeEl].active = annotation !== false;
-    this.markers[globeEl].currentAnnotation = annotation;
+    // var marker = this.markers[globeEl];
+    // if (!annotation) marker.graphics.clear();
+    // this.markers[globeEl].active = annotation !== false;
+    // this.markers[globeEl].currentAnnotation = annotation;
 
     if (!annotation) {
       return false;

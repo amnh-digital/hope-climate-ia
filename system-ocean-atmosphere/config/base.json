@@ -10,7 +10,7 @@
   ],
   "globe": {
     "rotateX": [-20, 380],
-    "rotateY": [-45, 45],
+    "rotateY": [-65, 65],
     "bgWidth": 1024,
     "bgHeight": 512,
     "bgTransparency": 100,
@@ -27,7 +27,7 @@
   "globes": [
     {
       "el": "#ocean-currents",
-      "title": "Ocean surface currents<br />and temperature",
+      "title": "<h2>Ocean</h2><h3>Surface currents and temperature</h3>",
       "viewAngle": 45,
       "near": 0.01,
       "far": 1000,
@@ -35,7 +35,7 @@
       "geojsonLineColor": "#888888"
     },{
       "el": "#atmosphere-wind",
-      "title": "Wind speed and air temperature<br />at sea level",
+      "title": "<h2>Atmosphere</h2><h3>Wind and air temperature at sea level</h3>",
       "videoOffset": 0.5,
       "viewAngle": 45,
       "near": 0.01,
