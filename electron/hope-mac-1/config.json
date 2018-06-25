@@ -1,4 +1,5 @@
 {
+  "launchDelay": 15000,
   "windows": [
     {
       "url": "consequences-change/physical.html",

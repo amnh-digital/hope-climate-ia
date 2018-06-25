@@ -33,7 +33,9 @@ function startClient(){
   if (config.launchDelay){
     // workaround ala https://github.com/atom/electron/issues/1054#issuecomment-173368614
     setTimeout(function(){
-      createWindow();
+      for (var i=0; i<browserWindowSettings.length; i++) {
+        createWindow(browserWindowSettings[i], i);
+      }
     }, config.launchDelay);
   }else{
     for (var i=0; i<browserWindowSettings.length; i++) {
@@ -69,7 +71,7 @@ function createWindow (browserWindowSetting, index) {
     if (index===0) {
       setTimeout(function(){
         webContents.focus();
-      }, 2000);
+      }, 3000);
     }
   });
 
