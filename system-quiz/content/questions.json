@@ -98,17 +98,18 @@
     },{
       "id": "q-hot",
       "q": "<p>When you hear it’s unusually hot today, is that about the...</p>",
-      "htmlBefore": "<div class='imagery'></div>",
-      "disabled": true,
+      "htmlBefore": "<div class='imagery'><div class='sun-rays'><span></span><span></span><span></span></div><div class='ice-cream'></div></div>",
       "a": [
         {
           "htmlAfter": "<p class='center'>or</p>",
           "label": "climate",
+          "className": "hover",
           "isCorrect": false,
           "feedback": "<p><strong>Sorry!</strong> Whether it’s hot or cold, or sunny or rainy today is a reflection of daily <strong>weather</strong> conditions—not climate.</p>"
         },{
           "htmlAfter": "<p class='right'>?</p>",
           "label": "weather",
+          "className": "hover",
           "isCorrect": true,
           "feedback": "<p><strong>Correct!</strong> Whether it’s hot or cold, or sunny or rainy today is a reflection of daily <strong>weather</strong> conditions—not climate.</p>"
         }

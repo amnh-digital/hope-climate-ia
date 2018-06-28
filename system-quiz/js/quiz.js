@@ -34,6 +34,7 @@ var Quiz = (function() {
 
   Quiz.prototype.init = function(){
     this.$el = $(this.opt.el);
+    this.$body = $('body');
     this.loadUI();
     this.restart();
   };
@@ -109,7 +110,7 @@ var Quiz = (function() {
 
     this.activeQuestion = this.questions[this.currentIndex];
     this.activeQuestion.$el.addClass('active');
-
+    this.$body.attr('question', this.activeQuestion.id);
   };
 
   Quiz.prototype.onAnswer = function(value){
@@ -123,6 +124,7 @@ var Quiz = (function() {
     var _this = this;
     var index = parseInt(value);
     var $el = this.activeQuestion.$el;
+    var $body = this.$body;
 
     var answer = this.activeQuestion.a[index];
     var $answers = $el.find('.a');
@@ -140,6 +142,7 @@ var Quiz = (function() {
     this.answered = true;
 
     setTimeout(function(){
+      $body.attr('question', '');
       _this.next();
       _this.answered = false;
       $answer.removeClass('active');

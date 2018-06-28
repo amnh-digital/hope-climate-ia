@@ -244,6 +244,9 @@
 #q-ocean.quiz-question.answered .ocean:before {
   opacity: 1;
 }
+body[question="q-ocean"] .sun {
+  opacity: 0;
+}
 @keyframes wave {
   from,
   50%,
@@ -462,4 +465,70 @@
 }
 #q-activities.answered .imagery {
   opacity: 1;
+}
+
+#q-hot .q {
+  transform: translate3d(0, 20vh, 0);
+}
+#q-hot .as {
+  transform: translate3d(0, 15vh, 0);
+}
+#q-hot .ice-cream {
+  width: 6vw;
+  height: 15.17vw;
+  background: url(../img/ice_cream.png) no-repeat;
+  background-position: center bottom;
+  background-size: 100% auto;
+  position: absolute;
+  left: 50%;
+  margin-left: -3vw;
+  top: -5vw;
+}
+#q-hot.answered .ice-cream {
+  background-image: url(../img/ice_cream_melt.png);
+}
+#q-hot .sun-rays {
+  transform-origin: 50% 50%;
+  transform: rotate3d(0, 0, 1, -35deg);
+  position: absolute;
+  top: 10vw;
+  left: 0;
+}
+#q-hot .sun-rays span {
+  position: relative;
+  margin-top: 10px;
+  display: block;
+  width: 500px;
+  height: 23px;
+  background: url(../img/sun_ray.png) repeat-x;
+  animation: sunray 3s infinite linear;
+}
+#q-hot .sun-rays span:before,
+#q-hot .sun-rays span:after {
+  content: " ";
+  position: absolute;
+  width: 10%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,1) 0%,rgba(0,0,0,0) 100%);
+  top: 0;
+  left: 0;
+}
+#q-hot .sun-rays span:after {
+  left: auto;
+  right: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 100%);
+}
+#q-hot .sun-rays span:first-child {
+  margin-top: 0;
+}
+#q-hot .a .feedback {
+  margin-top: 10vh;
+}
+@keyframes sunray {
+  from {
+    background-position: -83px 0px;
+  }
+  to {
+    background-position: 0px 0px;
+  }
 }
