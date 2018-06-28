@@ -357,25 +357,25 @@
 #q-co2 .a .label {
   font-size: 1.8vh;
 }
-#q-co2 .co2-group {
+#q-co2 .particle-group {
   position: absolute;
   top: 0;
   left: -20%;
   width: 50%;
   height: 50vh;
 }
-#q-co2 .co2-group.right {
+#q-co2 .particle-group.right {
   right: -20%;
   left: auto;
 }
-#q-co2 .co2-group span {
+#q-co2 .particle-group span {
   display: block;
   width: 400px;
   height: 400px;
   position: absolute;
   margin: -200px 0 0 -200px;
 }
-#q-co2 .co2-group span:before {
+#q-co2 .particle-group span:before {
   content: " ";
   position: absolute;
   width: 100%;
@@ -385,14 +385,6 @@
   background: url(../img/co2.png) no-repeat;
   animation: spin 20s linear infinite;
 }
-#q-co2 .co2-group span:nth-child(1) { top: 50%; left: 50%; transform: rotate3d(0,0,1,15deg); }
-#q-co2 .co2-group span:nth-child(2) { top: 25%; left: 25%; transform: rotate3d(0,0,1,25deg); }
-#q-co2 .co2-group span:nth-child(3) { top: 75%; left: 75%; transform: rotate3d(0,0,1,45deg); }
-#q-co2 .co2-group span:nth-child(4) { top: 33%; left: 33%; transform: rotate3d(0,0,1,75deg); }
-#q-co2 .co2-group span:nth-child(5) { top: 66%; left: 66%; transform: rotate3d(0,0,1,90deg); }
-#q-co2 .co2-group span:nth-child(6) { top: 16%; left: 83%; transform: rotate3d(0,0,1,135deg); }
-#q-co2 .co2-group span:nth-child(7) { top: 80%; left: 20%; transform: rotate3d(0,0,1,180deg); }
-#q-co2 .co2-group span:nth-child(8) { top: 60%; left: 40%; transform: rotate3d(0,0,1,215deg); }
 #q-co2 .shipping {
   width: 33vw;
   height: 20vw;
@@ -409,9 +401,65 @@
   opacity: 1;
   bottom: 0;
 }
-#q-co2.answered.correct .shipping {
 
+
+#q-activities .electricity-image,
+#q-activities .transportation-image {
+  position: absolute;
+  width: 16.66667vw;
+  height: 8.1vw;
+  top: 10vh;
+  right: 0;
+  background: black url(../img/electricity_heat.png) no-repeat;
+  background-size: 100% auto;
+  background-position: center bottom;
+  border-bottom: 0.25vh solid var(--primary-color);
+  z-index: 100;
 }
-#q-co2.answered.incorrect .shipping {
-
+#q-activities .transportation-image {
+  height: 9.1vw;
+  right: auto;
+  left: 0;
+  border-color: var(--secondary-color);
+  background-image: url(../img/transportation.png);
+}
+#q-activities .label-text {
+  position: absolute;
+  right: 0;
+  top: 0;
+  color: var(--primary-color);
+}
+#q-activities .a:last-child .label-text {
+  right: auto;
+  left: 0;
+  color: var(--secondary-color);
+}
+#q-activities .label-wrapper .right {
+  right: -350%;
+}
+#q-activities .particle-group {
+  top: -10vh;
+  height: 40vh;
+}
+#q-activities .particle-group span {
+  width: 59px;
+  height: 59px;
+  position: absolute;
+}
+#q-activities .particle-group span:before {
+  display: block;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: url(../img/co2alt.png) no-repeat;
+  animation: spin 20s linear infinite;
+}
+#q-activities.active .imagery {
+  opacity: 0;
+}
+#q-activities.answered .imagery {
+  opacity: 1;
 }

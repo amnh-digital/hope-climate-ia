@@ -58,7 +58,7 @@
     },{
       "id": "q-co2",
       "q": "<p>How much carbon dioxide does the average American add to the atmosphere each year?</p>",
-      "htmlBefore": "<div class='imagery'><div class='co2-group'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='co2-group right'><span></span><span></span><span></span></div><div class='shipping'></div></div>",
+      "htmlBefore": "<div class='imagery'><div class='particle-group'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><div class='particle-group right'><span></span><span></span><span></span></div><div class='shipping'></div></div>",
       "a": [
         {
           "htmlAfter": "<p class='center'>or</p>",
@@ -77,21 +77,22 @@
     },{
       "id": "q-activities",
       "q": "<p>In the U.S., which activity contributes more to carbon dioxide emissions:</p>",
-      "htmlBefore": "<div class='imagery'></div>",
-      "disabled": true,
+      "htmlBefore": "<div class='imagery'><div class='particle-group'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>",
       "a": [
         {
+          "htmlBefore": "<div class='electricity-image'></div>",
           "htmlAfter": "<p class='center'>or</p>",
           "label": "producing electricity &amp; heat",
           "isCorrect": false,
           "feedback": "<p><strong>Sorry! Transportation causes more CO2 emissions in the U.S.</strong>—but just barely. In 2016, 35% of U.S. CO2 emissions came from the generation of electricity and heat; 36% from transportation.</p>",
-          "className": "long-text"
+          "className": "long-text hover"
         },{
+          "htmlBefore": "<div class='transportation-image'></div>",
           "htmlAfter": "<p class='right'>?</p>",
           "label": "using transportation",
           "isCorrect": true,
           "feedback": "<p><strong>Correct! Transportation causes more CO2 emissions in the U.S.</strong>—but just barely. In 2016, 35% of U.S. CO2 emissions came from the generation of electricity and heat; 36% from transportation.</p>",
-          "className": "long-text"
+          "className": "long-text hover"
         }
       ]
     },{

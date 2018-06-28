@@ -236,3 +236,20 @@
 .progress.active {
   opacity: 1;
 }
+
+.particle-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+}
+.particle-group span { position: absolute; }
+.particle-group span:nth-child(1) { top: 50%; left: 50%; transform: rotate3d(0,0,1,15deg); }
+.particle-group span:nth-child(2) { top: 25%; left: 25%; transform: scale3d(1.1, 1.1, 1.1) rotate3d(0,0,1,25deg); }
+.particle-group span:nth-child(3) { top: 75%; left: 75%; transform: rotate3d(0,0,1,45deg); }
+.particle-group span:nth-child(4) { top: 33%; left: 33%; transform: rotate3d(0,0,1,75deg); }
+.particle-group span:nth-child(5) { top: 66%; left: 66%; transform: scale3d(0.9, 0.9, 0.9) rotate3d(0,0,1,90deg); }
+.particle-group span:nth-child(6) { top: 16%; left: 83%; transform: rotate3d(0,0,1,135deg); }
+.particle-group span:nth-child(7) { top: 80%; left: 20%; transform: rotate3d(0,0,1,180deg); }
+.particle-group span:nth-child(8) { top: 60%; left: 40%; transform: scale3d(0.8, 0.8, 0.8) rotate3d(0,0,1,215deg); }

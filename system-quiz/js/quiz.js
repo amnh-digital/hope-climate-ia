@@ -21,7 +21,7 @@ var Quiz = (function() {
       var htmlBefore = a.htmlBefore || '';
       var htmlAfter = a.htmlAfter || '';
       html += '<div class="'+className+'">';
-        html += '<div class="label-wrapper">'+htmlBefore+'<div class="label">'+a.label+'</div>'+htmlAfter+'</div>';
+        html += '<div class="label-wrapper">'+htmlBefore+'<div class="label"><div class="label-text">'+a.label+'</div></div>'+htmlAfter+'</div>';
         if (a.feedback) html += '<div class="feedback">'+a.feedback+'</div>';
       html += '</div>'
     });

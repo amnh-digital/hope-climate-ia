@@ -127,7 +127,7 @@ a {
   position: absolute;
   width: 20vw;
   height: 3.65497076023vw;
-  background: url(../img/instruction_arrow.svg);
+  background: url(../img/instruction_arrow.svg) no-repeat;
   background-size: 100% auto;
   right: 50%;
   bottom: 5vh;
