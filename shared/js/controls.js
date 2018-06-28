@@ -262,7 +262,7 @@ var Controls = (function() {
           console.log('Requesting pointer lock...');
           el.requestPointerLock();
         }
-      }, 3000);
+      }, 15000);
     }
 
     // initiate lock on click
