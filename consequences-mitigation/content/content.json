@@ -44,7 +44,7 @@
       },
       "description": "The New York City Housing Authority (NYCHA) is redesigning its buildings to withstand extreme weather events.",
       "image": "img/housing.jpg",
-      "video": false
+      "video": "video/housing.mp4"
     },{
       "id": "story5",
       "className": "textRight",
