@@ -200,6 +200,8 @@ var Graphics = (function() {
     _.each(states, function(s, key){
       var state = s.state;
       if (state !== false && state !== true && state > 0) {
+        // var curr = UTIL.easeOutQuad(s.progress);
+        // var prev = UTIL.easeOutQuad(s.prevProgress);
         var curr = s.progress;
         var prev = s.prevProgress;
         var amp = UTIL.lerp(ampRange[0], ampRange[1], curr-prev);
@@ -303,8 +305,6 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.render = function(){
-
-
     if (this.plotActive) {
       this.transitionPlot();
       this.checkForPluck();
@@ -319,8 +319,6 @@ var Graphics = (function() {
     if (this.sleepTransitioning) {
       this.sleepTransition();
     }
-
-
   };
 
   Graphics.prototype.renderAxes = function(){
@@ -455,8 +453,6 @@ var Graphics = (function() {
       // else axes.lineStyle(1, 0xffffff);
       // axes.moveTo(xLine, y).lineTo(cx, y);
 
-
-
       value -= tickEvery;
     }
 
@@ -562,6 +558,7 @@ var Graphics = (function() {
     var pointRadius = this.pointRadius;
 
     progress = progress || forcing.progress;
+    // progress = UTIL.easeOutQuad(progress);
     var data = forcing.data;
     var color = forcing.color;
 

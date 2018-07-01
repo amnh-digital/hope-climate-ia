@@ -42,7 +42,7 @@
       "hotColor": "$0xwarm",
       "coolColor": "$0xcool"
     },
-    "transitionStep": 0.025,
+    "transitionStep": 0.01,
     "cord": {
       "curveRatio": 0.45,
       "ampMin": 0.05,
