@@ -7,6 +7,7 @@
 
 .sleepMode {
   right: 45%;
+  transition: opacity 2s ease-in-out;
 }
 
 .messages {
@@ -61,5 +62,46 @@
   margin-top: 0.2vw;
 }
 .message.active {
+  opacity: 1;
+}
+
+.key {
+  color: var(--primary-dark-color);
+  vertical-align: middle;
+  padding: 33vw 0 0 9.5vw;
+  font-size: 0.75vw;
+  line-height: 1.5;
+  transition: opacity 2s ease-in-out;
+  opacity: 0;
+}
+.key span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.key .line {
+  width: 5vw;
+  height: 0.2vw;
+  background: var(--highlight-color);
+  margin-right: 1vw;
+  position: relative;
+}
+.key .line:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 0.8vw;
+  height: 0.8vw;
+  border-radius: 50%;
+  background: var(--highlight-color);
+  top: 50%;
+  margin-top: -0.4vw;
+  right: 0;
+}
+.sleeping .key {
+  opacity: 0;
+}
+
+#instruction.active,
+#key.active {
   opacity: 1;
 }

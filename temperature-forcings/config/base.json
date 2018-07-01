@@ -36,7 +36,7 @@
       },
       "subtextStyle": {
         "fill": "$#primaryDark",
-        "fontSize": 0.02,
+        "fontSize": 0.03,
         "fontFamily": "Balance"
       },
       "hotColor": "$0xwarm",
