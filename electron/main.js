@@ -112,9 +112,12 @@ function createWindow (browserWindowSetting, index) {
 // User RobotJS to move mouse and click the top left screen
 function focusWindow(){
   var delay = 5000;
+  // low enough so we don't evoke menubar
+  var x = 100;
+  var y = 100;
 
   setTimeout(function(){
-    robot.moveMouse(0, 0);
+    robot.moveMouse(x, y);
 
     setTimeout(function(){
       robot.mouseClick();

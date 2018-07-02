@@ -33,7 +33,11 @@ var Stories = (function() {
           html += '<div class="story">';
             html += '<div class="video-container">';
               html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
-              if (story.video) html += '<video src="'+story.video+'" preload="auto" crossorigin="anonymous" />';
+              if (story.video) {
+                html += '<video src="'+story.video+'"';
+                if (story.video.startsWith("http")) html += ' crossorigin="anonymous"';
+                html += ' />';
+              }
             html += '</div>';
           html += '</div>';
           html += '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
