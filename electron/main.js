@@ -1,9 +1,11 @@
 'use strict';
 
-const { app, BrowserWindow, globalShortcut } = require('electron');
+const electron = require('electron');
+const { app, BrowserWindow, globalShortcut } = electron;
 const express = require('express');
 const config = require('./config.json');
 const browserWindowSettings = config.windows || [{ fullscreen: true }];
+const robot = require("robotjs");
 
 if ( config.commandLineSwitches){
   Object.keys( config.commandLineSwitches ).forEach(function(s){
@@ -36,11 +38,13 @@ function startClient(){
       for (var i=0; i<browserWindowSettings.length; i++) {
         createWindow(browserWindowSettings[i], i);
       }
+      focusWindow();
     }, config.launchDelay);
   }else{
     for (var i=0; i<browserWindowSettings.length; i++) {
       createWindow(browserWindowSettings[i], i);
     }
+    focusWindow();
   }
 }
 
@@ -58,21 +62,11 @@ function createWindow (browserWindowSetting, index) {
 
   var mainWindow = new BrowserWindow( browserWindowSetting.browserWindow );
   mainWindow.on('unresponsive',     function(e){ reload(mainWindow, appUrl, 'window unresponsive',e); });
-
   var webContents = mainWindow.webContents;
 
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
     if (browserWindowSetting.debug) webContents.openDevTools();
-  });
-
-  webContents.on('dom-ready', function(e){
-    // Focus the app
-    if (index===0) {
-      setTimeout(function(){
-        webContents.focus();
-      }, 12000);
-    }
   });
 
   globalShortcut.register('CommandOrControl+Shift+D', () => {
@@ -114,6 +108,21 @@ function createWindow (browserWindowSetting, index) {
   windows.push(mainWindow);
 
 }
+
+// User RobotJS to move mouse and click the top left screen
+function focusWindow(){
+  var delay = 5000;
+
+  setTimeout(function(){
+    robot.moveMouse(0, 0);
+
+    setTimeout(function(){
+      robot.mouseClick();
+    }, 10);
+
+  }, delay);
+
+};
 
 function reload(mainWindow, appUrl, eventName, eventObject) {
   setTimeout( function(){
