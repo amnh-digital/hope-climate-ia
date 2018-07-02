@@ -34,6 +34,10 @@
     return (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
   };
 
+  UTIL.easeOutQuad = function (t) {
+    return t*(2-t);
+  };
+
   UTIL.floorToNearest = function(value, nearest) {
     return Math.floor(value / nearest) * nearest;
   };

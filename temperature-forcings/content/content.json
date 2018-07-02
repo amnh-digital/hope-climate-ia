@@ -8,67 +8,63 @@
       "label": "Earth's orbital changes",
       "title": "Is it orbital changes?",
       "sub": "No. Shifts in Earth’s orbit affect climate over thousands of years and longer, not over the time shown here.",
-      "color": "#29BECE",
+      "color": "#5ec0ed",
+      "bgColor": "#00243e",
       "image": "img/orbital.png",
-      "x": 0.43,
-      "y": 0.56
+      "x": 0.18,
+      "y": 0.1
     },
     "solar": {
       "type": "natural",
       "label": "Solar temperature",
       "title": "Is it solar activity?",
       "sub": "No. The Sun’s energy output has varied only slightly over the last century, producing almost no impact on recent climate.",
-      "color": "#FF8200",
+      "color": "#fd8224",
+      "bgColor": "#320000",
       "image": "img/solar.png",
-      "x": 0.35,
-      "y": 0.12
+      "x": 0.6,
+      "y": 0.75
     },
     "volcanic": {
       "type": "natural",
       "label": "Volcanic activity",
       "title": "Is it volcanoes?",
       "sub": "No. Climate records show that large eruptions often cool the planet for several years.",
-      "color": "#ea4d4d",
+      "color": "#ed1c24",
+      "bgColor": "#2d0018",
       "image": "img/volcanic.png",
       "x": 0.2,
       "y": 0.68
-    },
-    "land_use": {
-      "type": "human",
-      "label": "Land use",
-      "title": "Is it change in land cover?",
-      "sub": "No. When trees are cleared for crops and livestock, the exposed land surface reflects incoming sunlight. This has a slight cooling effect.",
-      "color": "#a8b749",
-      "image": "img/land_use.png",
-      "x": 0.84,
-      "y": 0.56
     },
     "aerosols": {
       "type": "human",
       "label": "Aerosols",
       "title": "Is aerosol pollution?",
       "sub": "No. Some airborne pollutants reflect solar energy back to space, producing a cooling effect. However, they also have negative effects such as smog and acid rain.",
-      "color": "#fd9bff",
+      "color": "#d29ac5",
+      "bgColor": "#37142c",
       "image": "img/aerosols.png",
-      "x": 0.13,
-      "y": 0.1
+      "x": 0.4,
+      "y": 0.68
     },
     "ghgs": {
       "type": "human",
       "label": "Greenhouse gases",
       "title": "Is it greenhouse gases?",
       "sub": "Yes. The rise in heat-trapping greenhouse gases is the only factor that can account for observed warming since 1880.",
-      "color": "#5cad51",
+      "color": "#5fac55",
+      "bgColor": "#1f3528",
       "image": "img/ghgs.png",
-      "x": 0.57,
-      "y": 0.01
+      "x": 0.4,
+      "y": 0
     },
     "all": {
       "type": "all",
       "label": "All factors",
       "title": "Combined human and natural factors",
       "sub": "Greenhouse gases from human activity warm the planet, while natural factors cool it slightly. The combination of these human and natural factors closely matches the rise in global temperature since 1880.",
-      "color": "#a8b749",
+      "color": "#cab61f",
+      "bgColor": "#2d3900",
       "image": "img/all.png",
       "x": 0.84,
       "y": 0.56

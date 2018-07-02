@@ -74,6 +74,9 @@ var Graphics = (function() {
     this.plotLineColor = parseInt(this.opt.plotLineColor);
     this.plotTickColor = parseInt(this.opt.plotTickColor);
 
+    this.$key = $("#key");
+    this.$instruction = $("#instruction");
+
     // cord config details:
     // curveRatio: 0.45,
     // ampMin: 0.1, // min oscillation height in px
@@ -85,6 +88,7 @@ var Graphics = (function() {
 
     this.cordsActive = false;
     this.plotActive = false;
+    this.forcingsSelected = 0;
 
     this.refreshDimensions();
     this.initCords();
@@ -200,6 +204,8 @@ var Graphics = (function() {
     _.each(states, function(s, key){
       var state = s.state;
       if (state !== false && state !== true && state > 0) {
+        // var curr = UTIL.easeOutQuad(s.progress);
+        // var prev = UTIL.easeOutQuad(s.prevProgress);
         var curr = s.progress;
         var prev = s.prevProgress;
         var amp = UTIL.lerp(ampRange[0], ampRange[1], curr-prev);
@@ -224,11 +230,13 @@ var Graphics = (function() {
   Graphics.prototype.forcingOff = function(value){
     this.forcingsState[value].state = -1;
     this.plotActive = true;
+    this.forcingsSelected -= 1;
   };
 
   Graphics.prototype.forcingOn = function(value){
     this.forcingsState[value].state = 1;
     this.plotActive = true;
+    this.forcingsSelected += 1;
   };
 
   Graphics.prototype.onResize = function(){
@@ -303,7 +311,15 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.render = function(){
-
+    if ((this.plotActive || this.forcingsSelected > 0) && this.instructionShowing) {
+      this.instructionShowing = false;
+      this.$instruction.removeClass('active');
+      this.$key.addClass('active');
+    } else if (!this.plotActive && this.forcingsSelected <= 0 && !this.instructionShowing) {
+      this.instructionShowing = true;
+      this.$instruction.addClass('active');
+      this.$key.removeClass('active');
+    }
 
     if (this.plotActive) {
       this.transitionPlot();
@@ -319,8 +335,6 @@ var Graphics = (function() {
     if (this.sleepTransitioning) {
       this.sleepTransition();
     }
-
-
   };
 
   Graphics.prototype.renderAxes = function(){
@@ -455,8 +469,6 @@ var Graphics = (function() {
       // else axes.lineStyle(1, 0xffffff);
       // axes.moveTo(xLine, y).lineTo(cx, y);
 
-
-
       value -= tickEvery;
     }
 
@@ -562,6 +574,7 @@ var Graphics = (function() {
     var pointRadius = this.pointRadius;
 
     progress = progress || forcing.progress;
+    // progress = UTIL.easeOutQuad(progress);
     var data = forcing.data;
     var color = forcing.color;
 
