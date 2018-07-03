@@ -31,9 +31,9 @@ var Slideshow = (function() {
     var slides = this.slides;
     _.each(slides, function(slide, i){
       var $caption = $('<div class="caption"></div>');
+      $caption.append('<p class="credit"><a href="'+slide.creditUrl+'">'+slide.credit+'</a></p>');
       $caption.append('<h2>'+slide.caption+'</h2>');
       $caption.append('<p class="text">'+slide.longDescription+'</p>');
-      $caption.append('<p class="credit">Image credit: <a href="'+slide.creditUrl+'">'+slide.credit+'</a></p>');
       if (i===0) $caption.addClass("active");
       $wrapper.append($caption);
       _this.slides[i].$caption = $caption;

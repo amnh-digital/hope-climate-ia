@@ -9,7 +9,7 @@
 }
 
 .title {
-  width: 30vw;
+  width: 35vw;
 }
 .slideshow {
   position: relative;
@@ -94,12 +94,25 @@
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
+.slide .label:before {
+  content: "Before:";
+  display: block;
+  font-size: 0.5em;
+  letter-spacing: 0.2vh;
+  color: #ccc;
+  text-transform: uppercase;
+  margin-bottom: 0.5vh;
+}
 .slide.active .label {
   opacity: 1;
 }
 .slide .image.after .label {
   left: auto;
   right: 1vh;
+  text-align: right;
+}
+.slide .image.after .label:before {
+  content: "After:";
 }
 .slide .marker {
   content: " ";
@@ -184,8 +197,15 @@
   font-weight: normal;
 }
 
+.caption p.credit {
+  font-size: 0.6em;
+  margin-top: -3vh;
+  margin-bottom: 2vh;
+  color: var(--gray-light-color);
+}
 .credit a {
   text-decoration: none;
+  color: var(--gray-light-color);
 }
 
 .ui-slider-horizontal {
