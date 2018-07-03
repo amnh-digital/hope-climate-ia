@@ -16,8 +16,8 @@
   },
   "check": {
     "enable": 1,
-    "checkInterval": 5,
-    "sleepAfter": 30,
+    "checkInterval": 10,
+    "sleepAfter": 60,
     "custom": {
       "prompt": "check"
     }
@@ -25,7 +25,7 @@
   "sleep": {
     "enable": 1,
     "checkInterval": 10,
-    "sleepAfter": 60,
+    "sleepAfter": 120,
     "custom": {
       "prompt": "start"
     }

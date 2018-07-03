@@ -34,7 +34,7 @@
     },
     "start": {
       "id": "p-start",
-      "q": "<p><strong>Do you know how climate works?</strong></p><p><span class='highlight'>Press buttons below the screen</span><br />to answer the questions</p>",
+      "q": "<p><strong>Do you know how climate works?</strong></p><p><span class='highlight'>Press buttons below the screen</span><br />to answer questions</p>",
       "htmlBefore": "<div class='arrows imagery'><div class='arrow'></div><div class='arrow'></div></div>",
       "a": [
         {
@@ -46,7 +46,7 @@
         },{
           "label": "No",
           "action": "reset",
-          "feedback": "<p><strong>No problem!</strong> Here are some questions to boost your climate knowledge.</p>",
+          "feedback": "<p><strong>No problem!</strong> Take this quiz to boost your climate knowledge.</p>",
           "className": "hover",
           "delay": 4000
         }

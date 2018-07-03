@@ -55,11 +55,9 @@
   letter-spacing: 0.1vh;
   line-height: 1.6;
 }
-.as {
-
-}
-.a {
-
+.q p strong {
+  font-weight: bold;
+  text-transform: uppercase;
 }
 .a .label-wrapper {
   width: 16vh;
