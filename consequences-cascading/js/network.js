@@ -56,7 +56,7 @@ var Network = (function() {
     var alphaFilter = new PIXI.filters.AlphaFilter();
     alphaFilter.resolution = 2;
 
-    var maxNodeCount = 7;
+    var maxNodeCount = 8;
     var nodeContents = [];
     _.times(maxNodeCount, function(i){
       var nodeContent = {};

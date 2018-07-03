@@ -4,15 +4,16 @@
       "id": "a",
       "title": "food shortages",
       "factbox": {
-        "description": "In 2010, the global price of wheat doubled after poor harvests in Russia, China and the Ukraine. The high price of bread that year became an aggravating factor in the social unrest known as the “Arab Spring.”",
+        "description": "In 2010, the global price of wheat doubled after poor harvests in Russia, China and the Ukraine. The high price of bread that year became an aggravating factor in the social unrest known as the Arab Spring.",
         "image": "img/factbox_food.jpg"
       },
+      "credits": "Mint Images/Frans Lanting/Science Source, Jim West/Science Source, Earl Roberge/Science Source",
       "nodes": [
         {
           "parent": "root",
           "id": "a1",
-          "label": "Extreme heat waves",
-          "description": "Heat waves become longer and hotter",
+          "label": "Heat waves",
+          "description": "Extreme heat waves become longer and more severe",
           "angle": 100
         },{
           "parent": "a1",
@@ -31,7 +32,7 @@
           "parent": "a3",
           "id": "a4",
           "label": "",
-          "description": "Food shortages could cause famine",
+          "description": "Food shortages contribute to food insecurity and famine",
           "image": "img/food_shortage.jpg",
           "angle": 75
         },{
@@ -49,6 +50,7 @@
         "description": "A series of droughts between 2006 and 2011 devastated rural areas in Syria. Unemployed refugees fled to the cities, contributing to civil war and disputes over refugees in Europe.",
         "image": "img/factbox_conflicts.jpg"
       },
+      "credits": "NOOR/Redux Pictures, Sarah Errington/UIG/Science Source, A. Hart-Davis/Science Source, Associated Press",
       "nodes": [
         {
           "parent": "root",
@@ -67,9 +69,9 @@
           "parent": "b2",
           "id": "b3",
           "label": "",
-          "description": "\"Climate refugees\" flee drought-stricken areas",
+          "description": "People flee drought-stricken areas to become \"climate refugees\"",
           "angle": 90,
-          "nContentWidth": 0.1
+          "nContentWidth": 0.2
         },{
           "parent": "b3",
           "id": "b4",
@@ -92,6 +94,7 @@
         "description": "Parts of Argentina have already seen a surge of malaria as the climate warms and mosquito ranges expand.",
         "image": "img/factbox_disease.jpg"
       },
+      "credits": "Sciepro/Science Source, Science Artwork/Science Source,<br />Andrew/Centers for Disease Control & Prevention/Science Source, Richard T. Nowitz/Science Source",
       "nodes": [
         {
           "parent": "root",
@@ -152,6 +155,7 @@
         "description": "Many birds have already shifted the timing of their migrations in response to climate change.",
         "image": "img/factbox_species.jpg"
       },
+      "credits": "Nigel Cattlin/Science Source, Oliver Gerhard/ImageBroker/AGE Fotostock, Samuel R. Maglione/Science Source",
       "nodes": [
         {
           "parent": "root",
@@ -183,7 +187,7 @@
           "parent": "d4",
           "id": "d5",
           "label": "",
-          "description": "Plant, insect and bird ranges shrink or move when possible",
+          "description": "Plant, insect and bird ranges shrink or move, when possible",
           "angle": 80
         },{
           "parent": "d5",
@@ -191,14 +195,22 @@
           "label": "",
           "description": "Invasive pests such as bark beetles could devastate forests",
           "image": "img/pests.jpg",
-          "angle": 80,
+          "angle": 70,
           "nImageWidth": 0.85
         },{
           "parent": "d5",
           "id": "d7",
           "label": "",
           "description": "Trees could die when ranges shift",
-          "angle": 110
+          "angle": 100,
+          "contentAngle": 100,
+          "contentDistance": 0.12
+        },{
+          "parent": "d5",
+          "id": "d8",
+          "label": "",
+          "description": "Wildfires become larger and more frequent",
+          "angle": 140
         }
       ]
     },{
@@ -208,12 +220,13 @@
         "description": "The Solomon Islands, an island nation in the Pacific Ocean, has already lost six islands to rising waters.",
         "image": "img/factbox_displaced.jpg"
       },
+      "credits": "Edna Douthat/Science Source, Michael McCoy/Science Source, Dr. Neil Overy/Science Source",
       "nodes": [
         {
           "parent": "root",
           "id": "e1",
           "label": "sea level rise",
-          "description": "Ice-sheet melting quickens and warming oceans expand",
+          "description": "Ice-sheet and glacial melting quickens, and warming oceans expand",
           "angle": 100
         },{
           "parent": "e1",

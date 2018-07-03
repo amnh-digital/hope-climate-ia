@@ -72,12 +72,14 @@
   background: var(--black-color);
   bottom: 0;
   left: 0;
-  width: 25%;
+  width: 42%;
   height: 1.2vw;
 }
 .fact-box .tab:before {
-  content: "ℹ";
-  font-size: 3vh;
+  content: "CASE STUDY";
+  font-size: 1.3vh;
+  white-space: nowrap;
+  letter-spacing: 0.1vh;
 }
 .fact-box .tab:after {
   content: " ";
@@ -93,6 +95,16 @@
 }
 .sleeping .fact-boxes {
   opacity: 0;
+}
+
+.credits {
+  position: fixed;
+  left: 2vw;
+  bottom: 2vh;
+}
+.credits p {
+  color: var(--gray-light-color);
+  font-size: 1vh;
 }
 
 .images-wrapper {
