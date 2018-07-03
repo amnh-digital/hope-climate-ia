@@ -2,37 +2,40 @@
   "stories": [
     {
       "id": "story1",
-      "title": "Heat Mitigation",
+      "title": "Cooling an urban heat island",
       "map": {
         "className": "hunts-point",
         "image": "img/hunts_point.png",
         "label": "Hunts Point, Bronx"
       },
-      "description": "NYC Cool Roofs coats building roofs with reflective paint which reduces cooling costs and cuts energy usage.",
+      "description": "<p>Cities tend to be much warmer than their surrounding areas. Global warming is exacerbating this heat island effect.</p><p>Painting roofs white helps cool buildings and lower energy demand.</p>",
       "image": "img/coolroofs.jpg",
-      "video": "video/coolroofs.mp4"
+      "video": "video/coolroofs.mp4",
+      "captions": "vtt/coolroofs.vtt"
     },{
       "id": "story2",
-      "title": "Extreme Weather Events",
+      "title": "Shoring up subways",
       "map": {
         "className": "downtown",
         "image": "img/downtown.png",
         "label": "Downtown Manhattan"
       },
-      "description": "Being prepared for an increase in heavy downpours and extreme weather events is one of the MTA's foremost challenges.",
+      "description": "<p>In over 150 cities, people rely on underground transportation. With more extreme weather, subway infrastructure is increasingly vulnerable to flooding.</p><p>The MTA is preparing by flood-proofing New York City’s subway system.</p>",
       "image": "img/mta.jpg",
-      "video": "video/mta.mp4"
+      "video": "video/mta.mp4",
+      "captions": "vtt/mta.vtt"
     },{
       "id": "story3",
-      "title": "Reducing the Carbon Footprint",
+      "title": "Preparing for power loss",
       "map": {
         "className": "rockaway",
         "image": "img/rockaway_peninsula.png",
         "label": "Rockaway, Queens"
       },
-      "description": "Daylighting systems capture sunlight through a rooftop dome to reduce energy costs and demand on the grid.",
+      "description": "<p>As the climate warms, intense storms are becoming more common, placing power grids at risk.</p><p>Creative use of sunlight can reduce energy demand and help keep cities running during power outages.</p>",
       "image": "img/daylighting.jpg",
-      "video": "video/daylighting.mp4"
+      "video": "video/daylighting.mp4",
+      "captions": "vtt/daylighting.vtt"
     },{
       "id": "story4",
       "className": "textRight",
@@ -42,21 +45,22 @@
         "image": "img/coney_island.png",
         "label": "Coney Island, Brooklyn"
       },
-      "description": "The New York City Housing Authority (NYCHA) is redesigning its buildings to withstand extreme weather events.",
+      "description": "<p>Around the world, climate change is expected to affect poor communities disproportionately.</p><p>In New York City, public housing is being redesigned to better withstand extreme weather events.</p>",
       "image": "img/housing.jpg",
       "video": "video/housing.mp4"
     },{
       "id": "story5",
       "className": "textRight",
-      "title": "Sea Level Rise and<br />Coastal Erosion",
+      "title": "Slowing coastal erosion",
       "map": {
         "className": "staten-island",
         "image": "img/staten_island.png",
         "label": "Staten Island"
       },
-      "description": "The Living Breakwaters project reduces risk, revives ecologies, and connects educators to the shoreline.",
+      "description": "<p>Rising sea levels are quickening the pace of beach erosion around the world, endangering coastal cities and shoreline habitats.</p><p>Building oyster reefs can help restore beaches and create new habitats, even as oceans rise.</p>",
       "image": "img/breakwaters.jpg",
-      "video": "video/breakwaters.mp4"
+      "video": "video/breakwaters.mp4",
+      "captions": "vtt/breakwaters.vtt"
     }
   ]
 }

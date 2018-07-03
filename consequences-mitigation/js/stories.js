@@ -34,14 +34,19 @@ var Stories = (function() {
             html += '<div class="video-container">';
               html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
               if (story.video) {
-                html += '<video src="'+story.video+'"';
-                if (story.video.startsWith("http")) html += ' crossorigin="anonymous"';
-                html += ' />';
+                html += '<video';
+                  if (story.video.startsWith("http")) html += ' crossorigin="anonymous"';
+                html += '>';
+                  html += '<source src="'+story.video+'" type="video/mp4">';
+                  if (story.captions) {
+                    html += '<track label="English" kind="subtitles" srclang="en" src="'+story.captions+'" default>';
+                  }
+                html += '</video>'
               }
             html += '</div>';
           html += '</div>';
           html += '<div class="progress"><div class="progress-bar"></div><div class="progress-text"></div></div>';
-          html += '<div class="information"><div class="information-inner"><h2>'+story.title+'</h2><p>'+story.description+'</p></div></div>';
+          html += '<div class="information"><div class="information-inner"><h2>'+story.title+'</h2>'+story.description+'</div></div>';
         html += '</div>';
       html += '</div>';
       var $story = $(html);
