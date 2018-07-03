@@ -36,7 +36,7 @@
   height: 100%;
 }
 .message polygon {
-  stroke-width: 0.1vw;
+  stroke-width: 0.4vw;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
 }
 .message img {
