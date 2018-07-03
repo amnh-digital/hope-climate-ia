@@ -15,7 +15,7 @@
     "annotationsUI": {
       "color": "$0xprimary",
       "highlightColor": "$0xhighlight",
-      "scaleThreshold": 0.72
+      "scaleThreshold": 1.0
     },
     "plot": {
       "bgColor": "$0xprimaryDarkest",
