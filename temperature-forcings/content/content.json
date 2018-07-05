@@ -10,7 +10,7 @@
       "sub": "No. Shifts in Earth’s orbit affect climate over thousands of years and longer, not over the time shown here.",
       "color": "#5ec0ed",
       "bgColor": "#00243e",
-      "image": "img/orbital.png",
+      "image": "img/orbital.jpg",
       "x": 0.18,
       "y": 0.1
     },
@@ -21,7 +21,7 @@
       "sub": "No. The Sun’s energy output has varied only slightly over the last century, producing almost no impact on recent climate.",
       "color": "#fd8224",
       "bgColor": "#320000",
-      "image": "img/solar.png",
+      "image": "img/solar.jpg",
       "x": 0.6,
       "y": 0.75
     },
@@ -32,7 +32,7 @@
       "sub": "No. Climate records show that large eruptions often cool the planet for several years.",
       "color": "#ed1c24",
       "bgColor": "#2d0018",
-      "image": "img/volcanic.png",
+      "image": "img/volcanic.jpg",
       "x": 0.2,
       "y": 0.68
     },
@@ -43,7 +43,7 @@
       "sub": "No. Some airborne pollutants reflect solar energy back into space, producing a cooling effect—but these pollutants can also cause smog and acid rain.",
       "color": "#d29ac5",
       "bgColor": "#37142c",
-      "image": "img/aerosols.png",
+      "image": "img/aerosols.jpg",
       "x": 0.4,
       "y": 0.68
     },
@@ -54,8 +54,8 @@
       "sub": "Yes. The rise in heat-trapping greenhouse gases is the only factor that can account for observed warming since 1880.",
       "color": "#5fac55",
       "bgColor": "#1f3528",
-      "image": "img/ghgs.png",
-      "x": 0.4,
+      "image": "img/ghgs.jpg",
+      "x": 0.38,
       "y": 0
     },
     "all": {
@@ -65,7 +65,7 @@
       "sub": "Greenhouse gases from human activity are warming the planet. Combined with the slight cooling influence of natural factors, the expected increase temperature closely matches observed warming since 1880.",
       "color": "#cab61f",
       "bgColor": "#2d3900",
-      "image": "img/all.png",
+      "image": "img/all.jpg",
       "x": 0.84,
       "y": 0.56
     }

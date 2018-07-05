@@ -35,7 +35,7 @@ var Messages = (function() {
           html += svgBg(392, 383, 35);
         else
           html += svgBg(392, 275, 35);
-        html += '<div class="text"><h3>'+forcing.title+'</h3><p>'+forcing.sub+'</p></div>'
+        html += '<div class="text"><h3 style="color: '+forcing.color+'">'+forcing.title+'</h3><p>'+forcing.sub+'</p></div>'
       html += '</div>';
 
       var $message = $(html);
