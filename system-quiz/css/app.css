@@ -65,7 +65,7 @@
   line-height: 16vh;
   text-align: center;
   top: 30%;
-  left: 30%;
+  left: 33%;
   position: absolute;
   z-index: 1;
   transform: translate3d(0, 50vh, 0);
@@ -118,7 +118,7 @@
 }
 .a:last-child .label-wrapper {
   left: auto;
-  right: 30%;
+  right: 33%;
 }
 .label-wrapper .left,
 .label-wrapper .right,
@@ -184,12 +184,12 @@
   border-top: 3vh solid var(--primary-color);
   position: fixed;
   bottom: -0.2%;
-  left: 40.8%;
+  left: 42.6%;
 }
 .arrow:last-child {
   border-top: 3vh solid var(--secondary-color);
   left: auto;
-  right: 40.8%;
+  right: 42.6%;
 }
 .quiz-question.answered .arrow {
   display: none;
