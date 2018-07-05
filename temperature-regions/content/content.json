@@ -7,11 +7,11 @@
     },{
       "lat": [60, 30],
       "label": "Northern mid-latitudes",
-      "text": "Seasonal extremes are becoming more common, including reduced snow cover in winter and a longer forest fire season."
+      "text": "Seasonal extremes are becoming more common, including reduced snow cover in winter and longer forest fire seasons."
     },{
       "lat": [30, -30],
       "label": "Tropics",
-      "text": "Even relatively modest warming around the equator is affecting tropical species."
+      "text": "Relatively modest warming around the equator significantly impacts tropical species."
     },{
       "lat": [-30, -60],
       "label": "Southern mid-latitudes",
@@ -19,7 +19,7 @@
     },{
       "lat": [-60, -90],
       "label": "Southern high latitudes",
-      "text": "Antarctica is not warming as quickly as the Arctic, though unusually warm years are becoming more frequent."
+      "text": "Even in Antarctica, unusually warm years are becoming more frequent."
     }
   ],
   "cities": [

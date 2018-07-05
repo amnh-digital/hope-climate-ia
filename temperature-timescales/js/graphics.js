@@ -805,7 +805,7 @@ var Graphics = (function() {
     fLabel.text = "(" + df + "°F)";
     aLabel.text = annotation;
     var than = dc >= 0 ? "warmer": "cooler";
-    lLabel.text = than + " than 20th cent. avg"
+    lLabel.text = than + " than average"
 
     // set style
     cLabel.style = textStyle;

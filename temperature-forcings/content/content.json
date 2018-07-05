@@ -1,6 +1,6 @@
 {
   "observedContent": {
-    "label": "Observed global temperature change since 1880"
+    "label": "Bars show observed global temperature change"
   },
   "forcings": {
     "orbital": {
@@ -40,7 +40,7 @@
       "type": "human",
       "label": "Aerosols",
       "title": "Is aerosol pollution?",
-      "sub": "No. Some airborne pollutants reflect solar energy back to space, producing a cooling effect. However, they also have negative effects such as smog and acid rain.",
+      "sub": "No. Some airborne pollutants reflect solar energy back into space, producing a cooling effect—but these pollutants can also cause smog and acid rain.",
       "color": "#d29ac5",
       "bgColor": "#37142c",
       "image": "img/aerosols.png",
@@ -61,8 +61,8 @@
     "all": {
       "type": "all",
       "label": "All factors",
-      "title": "Combined human and natural factors",
-      "sub": "Greenhouse gases from human activity warm the planet, while natural factors cool it slightly. The combination of these human and natural factors closely matches the rise in global temperature since 1880.",
+      "title": "Human and natural factors",
+      "sub": "Greenhouse gases from human activity are warming the planet. Combined with the slight cooling influence of natural factors, the expected increase temperature closely matches observed warming since 1880.",
       "color": "#cab61f",
       "bgColor": "#2d3900",
       "image": "img/all.png",

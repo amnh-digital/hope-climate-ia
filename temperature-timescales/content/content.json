@@ -1,25 +1,27 @@
 {
   "messages": [
     {"text": "Temperature can vary greatly month-to-month. You need more time to see a pattern.", "years": 1.2},
-    {"text": "Short-term records can reflect natural variations in the climate system. What happens if you look at more years?", "years": 10},
+    {"text": "Short-term records can reflect natural variations in the climate system. What happens if you look at more years?", "years": 20},
     {"text": "Climate trends become clear over 20 or more years of data. More time will show an even more distinct trend.", "years": 50},
     {"text": "The rise in global temperature becomes very pronounced over several decades. What can you see in 100 years or more of data?", "years": 100},
     {"text": "The world has warmed rapidly over the last century. The pace of warming has also increased—16 of the 17 hottest years on record have occurred since 2001.", "years": 200}
   ],
   "annotations": [
-    {"years": [1911, 1944], "text": "Warming from both human CO₂ emissions and natural factors."},
-    {"years": [1945, 1975], "text": "Temperature levels off, possibly due the cooling effect of aerosol pollution."},
-    {"year": 1975, "text": "Warming starts to accelerate, driven by human CO₂ emissions."},
+    {"years": [1911, 1944], "text": "Warming over the first part of the century, from both human CO₂ emissions and natural factors"},
+    {"years": [1945, 1975], "text": "Temperature briefly levels off mid-century, possibly due to cooling from aerosol pollution."},
+    {"year": 1975, "text": "Warming starts to accelerate in the late 1970s, driven by human CO₂ emissions."},
     {"year": 1979, "text": "Rate of warming increases to 0.3°C (0.5°F) per decade."},
-    {"year": 1990, "text": "Sea level rise accelerates to 3 cm (1.1 in) per decade, doubling the rate of rise since 1901"},
-    {"year": 1998, "text": "Warmer oceans boost warming from greenhouse gases, breaking 118 years of heat records."},
-    {"year": 2003, "text": "Historic heat wave in Europe kills 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
-    {"year": 2005, "text": "Global average temperature breaks the 1998 record."},
-    {"year": 2010, "text": "Russian heat wave kills 25% of the country’s crops, causing grain prices worldwide to soar."},
-    {"year": 2012, "text": "Lowest recorded Arctic sea ice extent in the satellite record.", "image": "img/sea_ice.jpg", "imageW": 400, "imageH": 225},
-    {"year": 2013, "text": "Australian “Angry Summer” peaks, setting a new record for hottest daily average: 40.3°C (104.5°F)."},
-    {"year": 2015, "text": "Second hottest year on record."},
-    {"year": 2016, "text": "Hottest year on record."},
-    {"year": 2017, "text": "Third hottest year on record."}
+    {"year": 1990, "text": "Sea level rise starts to accelerate, eventually doubling the rate of rise since 1901."},
+    {"year": 1998, "text": "Strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
+    {"year": 2003, "text": "Historic heat wave in Europe kills about 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
+    {"year": 2005, "text": "Global average temperature breaks the record high set in 1998."},
+    {"year": 2010, "text": "Russian heat wave kills roughly 25% of the country’s crops, contributing to a worldwide jump in grain prices."},
+    {"year": 2011, "text": "High temperatures and the failure of spring rains contribute to severe drought in East Africa."},
+    {"year": 2012, "text": "Lowest summer Arctic sea ice extent in the satellite record.", "image": "img/sea_ice.jpg", "imageW": 400, "imageH": 225},
+    {"year": 2013, "text": "Japan, Korea and eastern China experience one of the hottest summers in the regional record."},
+    {"year": 2014, "text": "Rainfall in the Middle East along the Mediterranean is lowest on record, exacerbating persistent drought."},
+    {"year": 2015, "text": "Second hottest year on record"},
+    {"year": 2016, "text": "Hottest year on record"},
+    {"year": 2017, "text": "Third hottest year on record"}
   ]
 }
