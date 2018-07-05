@@ -26,13 +26,18 @@
             <img id="worldmap" class="worldmap" src="img/map_highlight.svg" />
             <img id="temperature-map" class="temperature" src="img/frames/frame1948.png" />
             <div id="map-helper" class="helper">
+              <div id="map-year" class="map-year label"></div>
+              <div class="corner top"></div>
+              <div class="corner bottom"></div>
+              <div class="map-latitude label">
+                <div id="map-latitude-upper"></div>
+                <div id="map-latitude-lower"></div>
+              </div>
               <div id="graph" class="graph">
-                <div class="graph-title"><h3>Temperature difference from 1901-2000 regional average at <span class="map-latitude"></span><span>° latitude</span>.</h3></div>
                 <div id="messages" class="graph-messages"></div>
                 <div id="graphics" class="graphics"></div>
               </div>
             </div>
-            <div id="map-label" class="map-label"><h3><span class="map-year"></span> temperature difference from 1901-2000 regional average</h3></div>
             <div class="map-key clearfix">
               <div class="dots">
                 <div class="warmer hh"></div>

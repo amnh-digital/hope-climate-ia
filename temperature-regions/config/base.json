@@ -10,7 +10,7 @@
       "color": "$0xhighlight",
       "textStyle": {
         "fill": "$#highlight",
-        "fontSize": 0.05,
+        "fontSize": 0.06,
         "fontWeight": "bold",
         "fontFamily": "Balance"
       }
@@ -49,8 +49,9 @@
     "imgEl": "#temperature-map",
     "helperEl": "#map-helper",
     "clipImgEl": "#worldmap",
-    "yearEl": ".map-year",
-    "latEl": ".map-latitude"
+    "yearEl": "#map-year",
+    "latUpperEl": "#map-latitude-upper",
+    "latLowerEl": "#map-latitude-lower"
   },
   "messages": {
     "el": "#messages"

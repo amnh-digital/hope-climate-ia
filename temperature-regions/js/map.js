@@ -16,10 +16,12 @@ var Map = (function() {
     this.$helper = $(this.opt.helperEl);
     this.$clipImg = $(this.opt.clipImgEl);
     this.$year = $(this.opt.yearEl);
-    this.$latitude = $(this.opt.latEl);
+    this.$latitudeUpper = $(this.opt.latUpperEl);
+    this.$latitudeLower = $(this.opt.latLowerEl);
 
     var zoneCount = this.opt.zoneData.length;
     this.zoneCount = zoneCount;
+    this.degreesPerZone = Math.round(180 / zoneCount);
 
     this.$helper.css({
       height: (1/zoneCount * 100) + "%",
@@ -69,6 +71,7 @@ var Map = (function() {
     var zone = value;
     var h = this.height;
     var hh = this.helperHeight;
+    var degreesPerZone = this.degreesPerZone;
     var maxTop = (h - hh) / h * 100;
     var top = zone * maxTop;
 
@@ -79,8 +82,19 @@ var Map = (function() {
     var y1 = y0 + hh;
     this.$clipImg.css('clip', 'rect('+y0+'px,'+hw+'px,'+y1+'px,0px)');
 
-    var lat = Math.round(UTIL.lerp(90, -90, zone));
-    this.$latitude.text(lat);
+    var latUpper = Math.round(UTIL.lerp(90, degreesPerZone-90, zone));
+    var latLower = latUpper - degreesPerZone;
+
+    var latUpperLabel = "°";
+    var latLowerLabel = "°";
+
+    if (latUpper > 0) latUpperLabel += "N";
+    else if (latUpper < 0) latUpperLabel += "S";
+    if (latLower > 0) latLowerLabel += "N";
+    else if (latLower < 0) latLowerLabel += "S";
+
+    this.$latitudeUpper.text(Math.abs(latUpper)+latUpperLabel);
+    this.$latitudeLower.text(Math.abs(latLower)+latLowerLabel);
 
     this.updateCities(value);
   };
