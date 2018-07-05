@@ -19,7 +19,7 @@
           "id": "content-gulf-stream",
           "className": "content-ocean",
           "title": "Gulf Stream",
-          "text": "This fast-moving current carries a significant proportion of ocean heat from the tropics to the Arctic."
+          "text": "This fast-moving surface current carries heat from the tropics to the Arctic."
         }
       ]
     },{
@@ -114,7 +114,7 @@
           "id": "content-trade-winds",
           "className": "content-atmosphere",
           "title": "Trade Winds",
-          "text": "In the age of sailing ships, sailors used these steady winds to navigate the globe. These surface winds blow southwest in the Northern Hemisphere and northwest the Southern Hemisphere toward the equator."
+          "text": "Early sailors used these calm, steady winds to navigate the globe. The trade winds blow to southwest above the equator, and to the northwest below the equator."
         }
       ]
     },{
@@ -136,7 +136,7 @@
           "id": "content-coriolis-effect",
           "className": "content-atmosphere",
           "title": "Coriolis Effect",
-          "text": "The process by which Earth’s rotation deflects the flow of water or air to the right in the Northern Hemisphere and left in the Southern Hemisphere when facing the direction of movement. The Coriolis effect accounts for the westerly component of the trade winds."
+          "text": "The force of Earth’s rotation changes the path of circulating water and air. Currents are deflected to the east in the Northern Hemisphere and to the west in the Southern Hemisphere."
         }
       ]
     },{
@@ -179,7 +179,7 @@
           "id": "content-thermal-equator",
           "className": "content-both",
           "title": "Thermal Equator",
-          "text": "This band of warm air rises from where solar energy is most concentrated. This changes seasonally, moving slightly north in June and south in December."
+          "text": "This band of warm air rises from the area where solar energy is most concentrated."
         }
       ]
     }

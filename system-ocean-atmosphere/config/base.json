@@ -28,7 +28,7 @@
   "globes": [
     {
       "el": "#ocean-currents",
-      "title": "<h2>Ocean</h2><h3>Surface currents and temperature</h3>",
+      "title": "<h2>Ocean</h2><h3>Surface temperature and currents</h3>",
       "viewAngle": 45,
       "near": 0.01,
       "far": 1000,
@@ -36,7 +36,7 @@
       "geojsonLineColor": "#888888"
     },{
       "el": "#atmosphere-wind",
-      "title": "<h2>Atmosphere</h2><h3>Wind and air temperature at sea level</h3>",
+      "title": "<h2>Atmosphere</h2><h3>Air temperature and winds</h3>",
       "videoOffset": 0.5,
       "viewAngle": 45,
       "near": 0.01,

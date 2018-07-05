@@ -168,10 +168,13 @@ a {
 }
 .credits dt {
   float: left;
+  text-align: right;
+  display: block;
+  width: 9.5vw;
 }
 .credits dd {
   display: block;
-  margin-left: 2.5vw;
+  margin-left: 10vw;
 }
 .credits:after {
   content: "";
