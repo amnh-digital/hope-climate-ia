@@ -64,15 +64,16 @@ def readCSV(filename):
     return rows
 
 def getColor(grad, amount):
-    gradLen = len(grad)
-    i = (gradLen-1) * amount
-    remainder = i % 1
-    rgb = (0,0,0)
-    # if remainder > 0:
-    #     rgb = lerpColor(grad[int(i)], grad[int(i)+1], remainder)
-    # else:
-    #     rgb = grad[int(i)]
-    rgb = grad[int(round(i))]
+    # gradLen = len(grad)
+    # i = (gradLen-1) * amount
+    # remainder = i % 1
+    # rgb = (0,0,0)
+    # rgb = grad[int(round(i))]
+
+    # HARDCODE: just make either hot or cold color
+    rgb = grad[1]
+    if amount >= 0.5:
+        rgb = grad[-2]
     return int(rgb2hex(rgb), 16)
 
 # Add colors

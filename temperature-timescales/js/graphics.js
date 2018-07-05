@@ -495,7 +495,7 @@ var Graphics = (function() {
       annotations.drawCircle(aMarkerX, aMarkerY, markerRadius);
       annotations.endFill();
       var label = annotations.children[labelIndex];
-      label.text = "?";
+      label.text = "i";
       label.style = textStyle;
       label.x = aMarkerX;
       label.y = aMarkerY;
