@@ -13,7 +13,7 @@
     {"year": 1979, "text": "Rate of warming increases to 0.3°C (0.5°F) per decade."},
     {"year": 1990, "text": "Sea level rise starts to accelerate, eventually doubling the rate of rise since 1901."},
     {"year": 1998, "text": "Strong El Niño event boosts warming from greenhouse gases, breaking 118 years of heat records."},
-    {"year": 2003, "text": "Historic heat wave in Europe kills about 70,000 people.", "image": "img/heat_wave.jpg", "imageW": 400, "imageH": 275},
+    {"year": 2003, "text": "Historic heat wave in Europe kills about 70,000 people."},
     {"year": 2005, "text": "Global average temperature breaks the record high set in 1998."},
     {"year": 2010, "text": "Russian heat wave kills roughly 25% of the country’s crops, contributing to a worldwide jump in grain prices."},
     {"year": 2011, "text": "High temperatures and the failure of spring rains contribute to severe drought in East Africa."},
