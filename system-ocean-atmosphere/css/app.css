@@ -68,7 +68,7 @@
 .key {
   width: 78%;
   position: relative;
-  margin: 4vw auto 0;
+  margin: 6vw auto 0;
 }
 .key:after {
   content: "";
@@ -77,9 +77,9 @@
 }
 
 .calendar-key {
-  width: 100%;
+  width: 15%;
   height: 4vh;
-  margin-top: 1.5vw;
+  margin: 1.5vw auto 0;
   overflow: hidden;
   position: relative;
 }
@@ -111,6 +111,8 @@
   font-size: 1.5vh;
   line-height: 3vh;
   letter-spacing: 0.1vh;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .calendar-key {
@@ -119,8 +121,9 @@
 
 .color-key {
   position: relative;
-  width: 100%;
+  width: 60%;
   height: 0.7vw;
+  margin: 0 auto;
 }
 .color-key-canvas {
   position: absolute;
@@ -139,9 +142,11 @@
 }
 .color-key .label:first-child {
   left: 0;
+  color: var(--cool-color);
 }
 .color-key .label:last-child {
   right: 0;
+  color: var(--warm-color);
 }
 
 .annotation {
