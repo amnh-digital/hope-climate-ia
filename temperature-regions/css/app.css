@@ -53,17 +53,56 @@
   /* border-bottom: 0.4vh solid #e2bb3d; */
 }
 .map-key {
-  width: 25vw;
+  width: 70%;
   margin: 2vw auto 0;
 }
-.map-key img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
+.map-key > div {
+  float: left;
+  margin-right: 1vw;
+  position: relative;
+  height: 5vw;
 }
-svg text {
-  fill: var(--white-color);
+.map-key .hh {
+  height: 2.5vw;
+  line-height: 2.5vw;
+}
+.map-key .dots {
+  width: 27%;
+}
+.map-key .dots div {
+  background: no-repeat;
+  background-position: right center;
+  width: 100%;
+}
+.map-key .dots .warmer {
+  background-image: url(../img/map_key_warmer.png);
+}
+.map-key .dots .cooler {
+  background-image: url(../img/map_key_cooler.png);
+}
+.map-key .labels .warmer {
+  color: var(--warm-color);
+}
+.map-key .labels .cooler {
+  color: var(--cool-color);
+}
+.map-key .bracket svg {
+  height: 3vw;
+  width: 0.676vw;
+  display: block;
+  margin-top: 1vw;
+}
+.map-key .bracket polyline {
+  stroke: var(--gray-light-color);
+  stroke-width: 0.3vw;
+  fill: none;
+  stroke-miterlimit: 10;
+}
+.map-key .description {
+  color: var(--gray-light-color);
+  font-size: 0.8vw;
+  line-height: 1.667;
+  margin-top: 0.5vw;
 }
 .helper {
   width: 100%;
