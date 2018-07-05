@@ -47,7 +47,8 @@
       },
       "description": "<p>Around the world, climate change is expected to affect poor communities disproportionately.</p><p>In New York City, public housing is being redesigned to better withstand extreme weather events.</p>",
       "image": "img/housing.jpg",
-      "video": "video/housing.mp4"
+      "video": "video/housing.mp4",
+      "captions": "vtt/housing.vtt"
     },{
       "id": "story5",
       "className": "textRight",
