@@ -157,6 +157,31 @@ a {
   animation: blink 3s infinite;
 } */
 
+.credits {
+  position: fixed;
+  left: 3vw;
+  bottom: 5vh;
+  font-size: 1.2vh;
+  line-height: 1.8;
+  color: var(--gray-light-color);
+  transition: opacity 1s ease-in-out;
+}
+.credits dt {
+  float: left;
+}
+.credits dd {
+  display: block;
+  margin-left: 2.5vw;
+}
+.credits:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.sleeping .credits {
+  opacity: 0;
+}
+
 .sidebar {
   position: absolute;
   width: 30vw;

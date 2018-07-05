@@ -11,6 +11,11 @@
   left: 53%;
 }
 
+.credits {
+  right: 3vw;
+  left: auto;
+}
+
 .map {
   position: relative;
   width: 42vw;

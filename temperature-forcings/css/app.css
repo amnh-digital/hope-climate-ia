@@ -10,6 +10,11 @@
   transition: opacity 2s ease-in-out;
 }
 
+.credits {
+  right: 3vw;
+  left: auto;
+}
+
 .messages {
   position: absolute;
   width: 100%;

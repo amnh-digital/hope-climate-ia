@@ -9,6 +9,11 @@
   right: 40%;
 }
 
+.credits {
+  right: 3vw;
+  left: auto;
+}
+
 .content,
 .title {
   width: 56%;
