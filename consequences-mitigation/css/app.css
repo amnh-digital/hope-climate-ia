@@ -226,7 +226,7 @@
   height: 100vh;
   position: absolute;
   top: -25vh;
-  right: 0;
+  right: 10vw;
   transition: transform 2s ease-in-out;
   transform-origin: 0% 100%;
 }
@@ -241,6 +241,17 @@
 .map svg .filled {
   fill: #3f3b3c;
   transition: fill 2s ease-in-out;
+}
+.map svg .outlined {
+  fill: none;
+  stroke: var(--secondary-color);
+  stroke-miterlimit: 10;
+  stroke-width: 0.5vw;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+.map svg g.active .outlined {
+  opacity: 1;
 }
 .map > div,
 .map .overlay {
@@ -258,50 +269,50 @@
   opacity: 1;
 }
 .map .label {
-  color: #999999;
+  color: var(--secondary-color);
   position: absolute;
   font-size: 1.2vh;
 }
-.hunts-point .label {
+.overlay.hunts-point .label {
   right: 22%;
   top: 36%;
 }
-.downtown .label {
+.overlay.downtown .label {
   right: 58%;
   top: 70%;
   text-align: right;
 }
-.rockaway .label {
-  bottom: -20%;
+.overlay.rockaway .label {
+  bottom: -15%;
   right: 10%;
 }
-.coney-island .label {
+.overlay.coney-island .label {
   left: 34%;
-  bottom: -20%;
+  bottom: -15%;
 }
-.staten-island .label {
+.overlay.staten-island .label {
   left: 2%;
   bottom: -10%;
 }
 
 #story1 {
-  right: 30vh;
-  top: -20vh;
-  transform-origin: right center;
+  right: 20vh;
+  top: -15vh;
+  transform-origin: right top;
 }
 #story1 .story-content {
-  transform-origin: left center;
+  transform-origin: right top;
 }
 #story2 {
-  top: 12vh;
-  right: 7vh;
+  top: 7vh;
+  right: 15vh;
   transform-origin: left center;
 }
 #story2 .story-content {
   transform-origin: left center;
 }
 #story3 {
-  bottom: -6vh;
+  bottom: 3vh;
   right: -16vh;
   transform-origin: right bottom;
 }
@@ -310,7 +321,7 @@
 }
 #story4 {
   bottom: -10vh;
-  left: 45vh;
+  left: 40vh;
   transform-origin: center bottom;
 }
 #story4 .story-content {
@@ -333,10 +344,10 @@
 .sleeping .map .overlay.active {
   opacity: 0;
 }
-.sleeping .story-wrapper.active,
+/* .sleeping .story-wrapper.active,
 .sleeping .story-wrapper.active:after {
   opacity: 1;
-}
+} */
 .sleeping .story-wrapper.active .story-content {
   opacity: 0;
 }

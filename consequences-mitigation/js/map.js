@@ -20,9 +20,10 @@ var Map = (function() {
   Map.prototype.loadView = function(){
     var $container = $('<div />');
     this.stories = _.map(this.stories, function(story, i){
-      var $el = $('<div class="overlay '+story.className+'"><img src="'+story.image+'" /><div class="label">'+story.label+'</div></div>');
-      $container.append($el);
-      story.$el = $el;
+      var $overlay = $('<div class="overlay '+story.className+'"><div class="label">'+story.label+'</div></div>');
+      $container.append($overlay);
+      story.$overlay = $overlay;
+      story.$el = $(story.el);
       return story;
     });
     this.$el.append($container);
@@ -35,10 +36,12 @@ var Map = (function() {
 
     if (prevStory) {
       prevStory.$el.removeClass('active');
+      prevStory.$overlay.removeClass('active');
       $body.removeClass(prevStory.className);
     }
 
     story.$el.addClass('active');
+    story.$overlay.addClass('active');
     $body.addClass(story.className);
     this.story = story;
   };

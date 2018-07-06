@@ -3,9 +3,11 @@
     {
       "id": "story1",
       "title": "Cooling an urban heat island",
+      "className": "textRight",
       "map": {
         "className": "hunts-point",
         "image": "img/hunts_point.png",
+        "el": "#hunts-point",
         "label": "Hunts Point, Bronx"
       },
       "description": "<p>Cities tend to be much warmer than their surrounding areas. Global warming is exacerbating this heat island effect.</p><p>Painting roofs white helps cool buildings and lower energy demand.</p>",
@@ -18,6 +20,7 @@
       "map": {
         "className": "downtown",
         "image": "img/downtown.png",
+        "el": "#lower-manhattan",
         "label": "Downtown Manhattan"
       },
       "description": "<p>In over 150 cities, people rely on underground transportation. With more extreme weather, subway infrastructure is increasingly vulnerable to flooding.</p><p>The MTA is preparing by flood-proofing New York City’s subway system.</p>",
@@ -30,6 +33,7 @@
       "map": {
         "className": "rockaway",
         "image": "img/rockaway_peninsula.png",
+        "el": "#rockaway",
         "label": "Rockaway, Queens"
       },
       "description": "<p>As the climate warms, intense storms are becoming more common, placing power grids at risk.</p><p>Creative use of sunlight can reduce energy demand and help keep cities running during power outages.</p>",
@@ -43,6 +47,7 @@
       "map": {
         "className": "coney-island",
         "image": "img/coney_island.png",
+        "el": "#coney-island",
         "label": "Coney Island, Brooklyn"
       },
       "description": "<p>Around the world, climate change is expected to affect poor communities disproportionately.</p><p>In New York City, public housing is being redesigned to better withstand extreme weather events.</p>",
@@ -56,6 +61,7 @@
       "map": {
         "className": "staten-island",
         "image": "img/staten_island.png",
+        "el": "#staten-island",
         "label": "Staten Island"
       },
       "description": "<p>Rising sea levels are quickening the pace of beach erosion around the world, endangering coastal cities and shoreline habitats.</p><p>Building oyster reefs can help restore beaches and create new habitats, even as oceans rise.</p>",
