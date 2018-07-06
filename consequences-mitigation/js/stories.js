@@ -60,7 +60,7 @@ var Stories = (function() {
         var $video = $story.find("video").first();
         var video = $video[0];
         stories[i].video = $video[0];
-        video.load();
+        // video.load();
         video.onended = function() {
           _this.onVideoEnded(stories[i]);
         };
