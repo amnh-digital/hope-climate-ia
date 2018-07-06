@@ -59,11 +59,14 @@ var Stories = (function() {
       if (story.video) {
         var $video = $story.find("video").first();
         var video = $video[0];
-        stories[i].video = $video[0];
+        var player = new Plyr(video, {
+          controls: []
+        });
         // video.load();
-        video.onended = function() {
+        player.on('ended', function(){
           _this.onVideoEnded(stories[i]);
-        };
+        });
+        stories[i].video = player;
       }
       $container.append($story);
     });
@@ -79,8 +82,9 @@ var Stories = (function() {
     if (this.story) {
       this.story.$el.removeClass('active playing');
       if (this.story.video) {
-        this.story.video.currentTime = 0;
-        this.story.video.pause();
+        // this.story.video.currentTime = 0;
+        // this.story.video.pause();
+        this.story.video.stop();
       }
       firstLoad = false;
     }
@@ -138,8 +142,9 @@ var Stories = (function() {
     story.$el.removeClass('playing');
     this.$body.removeClass('playing');
     if (story.video) {
-      story.video.currentTime = 0;
-      story.video.pause();
+      // story.video.currentTime = 0;
+      // story.video.pause();
+      story.video.stop();
     }
     // if (this.story && story.index === this.story.index) {
     //   this.loadStart = new Date().getTime();
@@ -179,7 +184,7 @@ var Stories = (function() {
     if (this.playing) {
       var video = this.story.video;
       var progress = 0;
-      if (video && video.duration) progress = video.currentTime / video.duration;
+      if (video && video.duration && video.duration > 0) progress = video.currentTime / video.duration;
       this.story.$progressBar.css('transform', 'scale3d('+progress+',1,1)');
       var durationString = this.story.durationString;
       if (!durationString && video) {
