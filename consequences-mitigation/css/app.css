@@ -9,8 +9,10 @@
 
 ::cue {
   font-size: 0.6vh;
-  line-height: 1.2;
+  line-height: 1.1vh;
   letter-spacing: 0.05vh;
+  padding: 0;
+  margin: 0
 }
 
 .stories {

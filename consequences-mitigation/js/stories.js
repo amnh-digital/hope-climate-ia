@@ -179,7 +179,7 @@ var Stories = (function() {
     if (this.playing) {
       var video = this.story.video;
       var progress = 0;
-      if (video && video.duration) progress = video.currentTime / video.duration;
+      if (video && video.duration && video.duration > 0) progress = video.currentTime / video.duration;
       this.story.$progressBar.css('transform', 'scale3d('+progress+',1,1)');
       var durationString = this.story.durationString;
       if (!durationString && video) {
