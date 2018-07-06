@@ -1,20 +1,6 @@
 {
   "stories": [
     {
-      "id": "story1",
-      "title": "Cooling an urban heat island",
-      "className": "textRight",
-      "map": {
-        "className": "hunts-point",
-        "image": "img/hunts_point.png",
-        "el": "#hunts-point",
-        "label": "Hunts Point, Bronx"
-      },
-      "description": "<p>Cities tend to be much warmer than their surrounding areas. Global warming is exacerbating this heat island effect.</p><p>Painting roofs white helps cool buildings and lower energy demand.</p>",
-      "image": "img/coolroofs.jpg",
-      "video": "video/coolroofs.mp4",
-      "captions": "vtt/coolroofs.vtt"
-    },{
       "id": "story2",
       "title": "Shoring up subways",
       "map": {
@@ -68,6 +54,20 @@
       "image": "img/breakwaters.jpg",
       "video": "video/breakwaters.mp4",
       "captions": "vtt/breakwaters.vtt"
+    },{
+      "id": "story1",
+      "title": "Cooling an urban heat island",
+      "className": "textRight",
+      "map": {
+        "className": "hunts-point",
+        "image": "img/hunts_point.png",
+        "el": "#hunts-point",
+        "label": "Hunts Point, Bronx"
+      },
+      "description": "<p>Cities tend to be much warmer than their surrounding areas. Global warming is exacerbating this heat island effect.</p><p>Painting roofs white helps cool buildings and lower energy demand.</p>",
+      "image": "img/coolroofs.jpg",
+      "video": "video/coolroofs.mp4",
+      "captions": "vtt/coolroofs.vtt"
     }
   ]
 }
