@@ -245,9 +245,10 @@ var Controls = (function() {
 
     // Listen for pointer lock
     document.addEventListener('pointerlockchange', function(){
+      locked = true;
       if (document.pointerLockElement === el) {
         console.log('The pointer lock status is now locked');
-        locked = true;
+
         // document.addEventListener("mousemove", updatePosition, false);
       } else {
         console.log('The pointer lock status is now unlocked');
@@ -259,7 +260,7 @@ var Controls = (function() {
     if (autolock) {
       setTimeout(function(){
         if (!locked) {
-          console.log('Requesting pointer lock...');
+          console.log('Auto-requesting pointer lock...');
           el.requestPointerLock();
         }
       }, 15000);
@@ -268,7 +269,7 @@ var Controls = (function() {
     // initiate lock on click
     el.onclick = function() {
       if (!locked) {
-        console.log('Requesting pointer lock...');
+        console.log('Requesting pointer lock via click...');
         el.requestPointerLock();
       }
     };

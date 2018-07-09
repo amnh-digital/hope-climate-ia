@@ -38,13 +38,11 @@ function startClient(){
       for (var i=0; i<browserWindowSettings.length; i++) {
         createWindow(browserWindowSettings[i], i);
       }
-      focusWindow();
     }, config.launchDelay);
   }else{
     for (var i=0; i<browserWindowSettings.length; i++) {
       createWindow(browserWindowSettings[i], i);
     }
-    focusWindow();
   }
 }
 
@@ -67,6 +65,7 @@ function createWindow (browserWindowSetting, index) {
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
     if (browserWindowSetting.debug) webContents.openDevTools();
+    if (index===0) focusWindow(webContents);
   });
 
   globalShortcut.register('CommandOrControl+Shift+D', () => {
@@ -110,18 +109,23 @@ function createWindow (browserWindowSetting, index) {
 }
 
 // User RobotJS to move mouse and click the top left screen
-function focusWindow(){
+function focusWindow(contents){
   var delay = 5000;
-  // low enough so we don't evoke menubar
+  // click low enough so we don't evoke menubar
   var x = 100;
   var y = 100;
 
   setTimeout(function(){
-    robot.moveMouse(x, y);
+    contents.focus();
+
+    setTimeout(function(){
+      // robot.typeStringDelayed("12345", 60);
+      robot.moveMouse(x, y);
+    }, 10);
 
     setTimeout(function(){
       robot.mouseClick();
-    }, 10);
+    }, delay);
 
   }, delay);
 
