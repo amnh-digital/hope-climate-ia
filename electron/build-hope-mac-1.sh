@@ -10,7 +10,7 @@ sed -i .bak 's/APP_NAME/hope-mac-1/g' package.json # replace app name in package
 
 # install dependencies
 npm install
-npm rebuild --runtime=electron --target=2.0.3 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
+npm rebuild --runtime=electron --target=2.0.4 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
 cd ../..
 electron-packager electron/hope-mac-1 hope-mac-1 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
