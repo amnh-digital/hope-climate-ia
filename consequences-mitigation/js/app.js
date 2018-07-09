@@ -37,10 +37,12 @@ var AppMitigation = (function() {
   AppMitigation.prototype.loadListeners = function(){
     var _this = this;
     var $window = $(window);
+    var throttleMs = this.opt.throttleMs;
 
-    var onRotate = function(value) {
+    var onRotate = _.throttle(function(value) {
       _this.onRotate(value);
-    };
+    }, throttleMs);
+
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
     channel.addCallback("controls.rotate.vertical", onRotate);
     channel.listen();

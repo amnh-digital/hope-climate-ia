@@ -3,6 +3,7 @@
   "resetAfterMs": 2000,
   "resetTransitionMs": 2000,
   "delayMs": 1000,
+  "throttleMs": 10,
   "stories": {
     "el": "#stories",
     "transformer": "#transformer",
