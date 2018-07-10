@@ -18,12 +18,18 @@ var Network = (function() {
     this.$el = $(this.opt.el);
     this.$document = $(document);
     this.network = this.parseNetwork(this.opt.network);
+    var fps = 60.0;
 
     this.branchCount = this.network.length;
     this.angleThreshold = this.opt.angleThreshold;
     this.angleDelta = 0;
     this.angleDeltaProgress = 0;
     this.currentIndex = 0;
+    this.nodeLineColor = parseInt(this.opt.nodeLineColor);
+    this.nodeLineSleepingColor = parseInt(this.opt.nodeLineSleepingColor);
+
+    this.dashProgress = 0;
+    this.dashStep = 1.0 / (this.opt.nodeDashMs / 1000.0 * fps);
 
     this.width = this.$el.width();
     this.height = this.$el.height();
@@ -608,14 +614,19 @@ var Network = (function() {
   };
 
   Network.prototype.renderDashes = function(t){
-    var now = t ? t : new Date().getTime();
-    var nodeDashMs = this.opt.nodeDashMs;
-    var dashOffset = now % nodeDashMs;
-    var dashProgress = dashOffset / nodeDashMs;
-    var nodeLineColor = parseInt(this.opt.nodeLineColor);
+    // var now = t ? t : new Date().getTime();
+    // var nodeDashMs = this.opt.nodeDashMs;
+    // var dashOffset = now % nodeDashMs;
+    // var dashProgress = dashOffset / nodeDashMs;
+    var dashProgress = this.dashProgress
+    dashProgress += this.dashStep;
+    dashProgress = dashProgress % 1;
+    this.dashProgress = dashProgress;
+
+    var nodeLineColor = this.nodeLineColor;
 
     if (this.sleeping) {
-      nodeLineColor = parseInt(this.opt.nodeLineSleepingColor);
+      nodeLineColor = this.nodeLineSleepingColor;
     }
 
     var lineGraphics = this.lineGraphics;
