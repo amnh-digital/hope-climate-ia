@@ -240,6 +240,9 @@ var Controls = (function() {
     document.addEventListener("mousemove", updatePosition, false);
 
     var locked = false;
+    var autolock = this.opt.autolock;
+    var autolockInitialMs = 15000;
+    var autolockIntervalMs = 5000;
     // attempt to lock pointer
     var el = $(this.opt.el)[0];
 
@@ -253,17 +256,25 @@ var Controls = (function() {
       } else {
         console.log('The pointer lock status is now unlocked');
         locked = false;
+        if (autolock) {
+          setTimeout(function(){
+            if (!locked) {
+              console.log('Auto-requesting pointer lock after unlock...');
+              el.requestPointerLock();
+            }
+          }, autolockIntervalMs);
+        }
       }
     }, false);
 
-    var autolock = this.opt.autolock;
+
     if (autolock) {
       setTimeout(function(){
         if (!locked) {
           console.log('Auto-requesting pointer lock...');
           el.requestPointerLock();
         }
-      }, 15000);
+      }, autolockInitialMs);
     }
 
     // initiate lock on click
