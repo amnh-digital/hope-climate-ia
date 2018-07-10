@@ -26,7 +26,7 @@
     "nodeLineSleepingColor": "$0xsecondary",
     "nodeBgColor": "$0xprimaryDarkest",
     "elasticAmount": 0.02,
-    "throttleMs": 10,
+    "throttleMs": 50,
     "nodeLabelTextStyle": {
       "fontSize": 0.02,
       "fill": "$#primary",
