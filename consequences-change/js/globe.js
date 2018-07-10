@@ -25,14 +25,8 @@ var Globe = (function() {
 
   Globe.prototype.init = function(){
     this.$el = $(this.opt.el);
-    this.slides = this.opt.slideshow.slice(0);
-
-    this.slideCount = this.slides.length;
-    this.currentSlide = 0;
-    this.transitioning = false;
 
     this.initScene();
-    this.loadEarth();
   };
 
   Globe.prototype.initScene = function() {
@@ -68,6 +62,7 @@ var Globe = (function() {
     var radius = this.opt.radius;
     var color = this.opt.oceanColor;
     var scene = this.scene;
+    var promise = $.Deferred();
 
     // load image texture
     var loader = new THREE.TextureLoader();
@@ -80,12 +75,16 @@ var Globe = (function() {
       scene.add(earth);
       _this.earth = earth;
       _this.loadMarker();
+      _this.render();
+
+      console.log("Globe loaded");
+      promise.resolve();
     });
+
+    return promise;
   };
 
   Globe.prototype.loadMarker = function(){
-    var slide = this.slides[this.currentSlide];
-
     var radius = this.opt.radius * 0.05;
     var color = this.opt.highlightColor;
 
@@ -98,19 +97,12 @@ var Globe = (function() {
     this.marker = new THREE.Mesh(geo, mat);
     this.earth.add(this.marker);
 
-    this.updateMarker(slide);
-    this.updateEarth(slide);
+    // var slide = this.opt.slideshow[0];
+    // this.updateMarker(slide);
+    // this.updateEarth(slide);
   };
 
-  Globe.prototype.next = function(){
-    if (this.transitioning) return false;
-
-    this.currentSlide += 1;
-    if (this.currentSlide >= this.slideCount) {
-      this.currentSlide = 0;
-    }
-
-    var slide = this.slides[this.currentSlide];
+  Globe.prototype.next = function(slide){
     this.updateMarker(slide);
     this.updateEarth(slide);
   };
@@ -131,22 +123,17 @@ var Globe = (function() {
     //
     // this.updateEarth(animationProgress);
 
-    if (this.transitioning) {
-      var now = new Date();
-      var delta = now - this.transitionStart;
-      var progress = delta / this.opt.animationMs;
-      this.transitionEarth(progress);
-    }
+    // if (this.transitioning) {
+    //   var now = new Date();
+    //   var delta = now - this.transitionStart;
+    //   var progress = delta / this.opt.animationMs;
+    //   this.transitionEarth(progress);
+    // }
 
     this.renderer.render(this.scene, this.camera);
   };
 
   Globe.prototype.transitionEarth = function(progress) {
-    if (progress > 1.0) {
-      progress = 1.0;
-      this.transitioning = false;
-    }
-
     var qtemp = new THREE.Quaternion();
     THREE.Quaternion.slerp(this.qstart, this.qend, qtemp, progress);
     this.earth.quaternion.copy(qtemp);
@@ -165,8 +152,6 @@ var Globe = (function() {
     var qstart = new THREE.Quaternion().copy(earth.quaternion); // src quaternion
     var qend = new THREE.Quaternion().setFromEuler(euler); //dst quaternion
 
-    this.transitioning = true;
-    this.transitionStart = new Date();
     this.qstart = qstart;
     this.qend = qend;
   };

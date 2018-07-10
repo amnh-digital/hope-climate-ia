@@ -13,6 +13,18 @@ var AppChange = (function() {
   AppChange.prototype.init = function(){
     var _this = this;
 
+    var slides = this.content.slideshow.slice(0);
+    var slideCount = slides.length;
+    this.slides = _.map(slides, function(slide, i){
+      slide.index = i;
+      slide.isLast = (i >= (slideCount-1));
+      return slide;
+    });
+
+    this.slideCount = slideCount;
+    this.currentSlide = -1;
+    this.transitioning = false;
+
     this.onReady();
     this.loadListeners();
     this.loadControls();
@@ -33,7 +45,7 @@ var AppChange = (function() {
       _this.onSlide(resp.value);
     };
     var onButtonUp = function(value) {
-      _this.onButtonUp(value);
+      _this.onButtonUp();
     };
 
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
@@ -48,20 +60,38 @@ var AppChange = (function() {
   };
 
   AppChange.prototype.onButtonUp = function(){
-    this.globe.next();
-    this.slideshow.next();
+    if (this.transitioning) return false;
     this.sleep.wakeUp();
+
+    this.transitioning = true;
+    this.transitionStart = new Date();
+
+    this.currentSlide += 1;
+    if (this.currentSlide >= this.slideCount) {
+      this.currentSlide = 0;
+    }
+
+    var slide = this.slides[this.currentSlide];
+    this.globe.next(slide);
+    this.slideshow.next(slide);
   };
 
   AppChange.prototype.onReady = function(){
-    var opt = _.extend({}, this.opt.slideshow, this.content);
+    var _this = this;
+    var opt = _.extend({}, this.opt.slideshow, {"slides": this.slides});
 
     // Initialize slideshow
     this.slideshow = new Slideshow(opt);
 
     // Init globe
-    opt = _.extend({}, this.opt.globe, this.content);
+    opt = _.extend({}, this.opt.globe, {"slides": this.slides});
     this.globe = new Globe(opt);
+    var globePromise = this.globe.loadEarth();
+
+    // Go to first slide when ready
+    $.when(globePromise).done(function(resp){
+      _this.onButtonUp();
+    });
 
     // Init sleep mode utilitys
     opt = _.extend({}, this.opt.sleep);
@@ -72,6 +102,7 @@ var AppChange = (function() {
 
   AppChange.prototype.onResize = function(){
     this.globe.onResize();
+    this.slideshow.onResize();
   };
 
   AppChange.prototype.onSlide = function(value) {
@@ -82,7 +113,19 @@ var AppChange = (function() {
   AppChange.prototype.render = function() {
     var _this = this;
 
-    this.globe.render();
+    if (this.transitioning) {
+      var now = new Date();
+      var delta = now - this.transitionStart;
+      var progress = delta / this.opt.animationMs;
+      if (progress >= 1.0) progress = 1.0;
+
+      this.globe.transitionEarth(progress);
+      this.globe.render();
+
+      if (progress >= 1.0) {
+        this.transitioning = false;
+      }
+    }
 
     requestAnimationFrame(function(){ _this.render(); });
   };

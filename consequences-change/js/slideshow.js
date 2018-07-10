@@ -13,12 +13,10 @@ var Slideshow = (function() {
   Slideshow.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.$captions = $(this.opt.captionsEl);
-    this.slides = this.opt.slideshow.slice(0);
+    this.slides = this.opt.slides.slice(0);
     this.aspectRatio = this.opt.width / this.opt.height;
     this.slideCount = this.slides.length;
-
     this.currentSlide = 0;
-    this.transitioning = false;
 
     this.initSlides();
     this.initCaptions();
@@ -92,45 +90,38 @@ var Slideshow = (function() {
     this.$el.append($wrapper);
   };
 
-  Slideshow.prototype.next = function(){
-    if (this.transitioning) return false;
-
+  Slideshow.prototype.next = function(_slide){
     var _this = this;
     var $wrapper = $('.slideshow-wrapper');
-    this.currentSlide += 1;
+    var currentSlide = _slide.index;
 
-    if (this.currentSlide >= this.slideCount) {
+    // we are resetting
+    if (currentSlide <= 0) {
       $wrapper.addClass('resetting');
       $wrapper.css('left', '0px');
-      this.currentSlide = -1;
-      setTimeout(function(){
-        _this.next();
-      }, 50);
-      return;
     }
 
-    var slide = this.slides[this.currentSlide];
+    var slide = this.slides[currentSlide];
+    this.currentSlide = currentSlide;
 
-    $wrapper.removeClass('resetting');
-    var slideOffset = this.slideOffset * (this.currentSlide+1);
-    $wrapper.css('left', -slideOffset+'px');
-
-    $('.caption, .slide').removeClass('active');
-    slide.$caption.addClass('active');
-    _.each(slide.$slides, function($slide) {
-      $slide.addClass('active');
-    });
-
-    this.transitioning = true;
     setTimeout(function(){
-      _this.transitioning = false;
-    }, this.opt.animationMs);
+      $wrapper.removeClass('resetting');
+      var slideOffset = _this.slideOffset * (currentSlide+1);
+      $wrapper.css('left', -slideOffset+'px');
+
+      $('.caption, .slide').removeClass('active');
+      slide.$caption.addClass('active');
+      _.each(slide.$slides, function($slide) {
+        $slide.addClass('active');
+      });
+    }, 50);
   };
 
   Slideshow.prototype.onResize = function(){
     var w = this.$el.width();
     var h = this.$el.height();
     var currentSlide = this.currentSlide;
+    var slideLen = this.slideCount;
 
     var slideH = h;
     var slideW = slideH * this.aspectRatio;

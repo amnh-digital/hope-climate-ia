@@ -1,17 +1,16 @@
 {
+  "animationMs": 1000,
   "slideshow": {
     "el": "#slideshow",
     "captionsEl": "#captions",
     "width": 1366,
-    "height": 768,
-    "animationMs": 1000
+    "height": 768
   },
   "globe": {
     "el": "#globe",
     "borderColor": "$#primaryDarker",
     "oceanColor": "$#primaryDark",
-    "highlightColor": "$#highlight",
-    "animationMs": 1000
+    "highlightColor": "$#highlight"
   },
   "sleep": {
     "enable": 1,
