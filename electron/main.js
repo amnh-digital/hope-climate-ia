@@ -16,7 +16,6 @@ if ( config.commandLineSwitches){
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let windows=[];
-let isAWindowFocused = false;
 
 function init(){
   startClient();
@@ -60,7 +59,12 @@ function createWindow (browserWindowSetting, index) {
 
   var mainWindow = new BrowserWindow( browserWindowSetting.browserWindow );
   mainWindow.on('unresponsive',     function(e){ reload(mainWindow, appUrl, 'window unresponsive',e); });
+
   var webContents = mainWindow.webContents;
+
+  mainWindow.on('blur', function(e){
+    if (index===0) focusWindow(webContents);
+  });
 
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
