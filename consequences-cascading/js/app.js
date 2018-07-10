@@ -46,9 +46,10 @@ var AppCascading = (function() {
     var _this = this;
     var $document = $(document);
     var $window = $(window);
-    var throttleMs = this.opt.throttleMs;
+    var throttleMs = this.opt.network.throttleMs;
 
     var onRotate = _.throttle(function(value) {
+      // console.log(value)
       _this.onRotate(value);
     }, throttleMs);
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
