@@ -62,12 +62,13 @@ function createWindow (browserWindowSetting, index) {
 
   var webContents = mainWindow.webContents;
 
+  // mainWindow.on('blur', function(e){ focusWindow(webContents); });
+
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
     if (browserWindowSetting.debug) webContents.openDevTools();
     if (index===0) {
       focusWindow(webContents);
-      mainWindow.on('blur', function(e){ focusWindow(webContents); });
     }
   });
 
@@ -119,7 +120,8 @@ function focusWindow(contents){
   var y = 100;
 
   setTimeout(function(){
-    if (!contents.isFocused()) contents.focus();
+    contents.focus();
+    // if (!contents.isFocused()) contents.focus();
 
     setTimeout(function(){
       // robot.typeStringDelayed("12345", 60);

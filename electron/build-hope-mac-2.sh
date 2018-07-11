@@ -4,13 +4,13 @@ set -o errexit # Exit on error
 
 # Copy over main files
 rsync -avz electron/main.js -avz electron/hope-mac-2/main.js
-rsync -avz electron/package.json -avz electron/hope-mac-2/package.json
+rsync -avz electron/package-v1.json -avz electron/hope-mac-2/package.json
 cd electron/hope-mac-2
 sed -i .bak 's/APP_NAME/hope-mac-2/g' package.json # replace app name in package
 
 # install dependencies
 npm install
-npm rebuild --runtime=electron --target=2.0.4 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
+npm rebuild --runtime=electron --target=1.8.7 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
 cd ../..
 electron-packager electron/hope-mac-2 hope-mac-2 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
