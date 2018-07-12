@@ -169,6 +169,20 @@ var Controls = (function() {
       }, 10);
     }
 
+    // document.addEventListener("keydown", function(e){
+    //   var charStr = String.fromCharCode(e.which);
+    //   switch(charStr) {
+    //     case "b":
+    //     case "B":
+    //       console.log("event: blur");
+    //       break;
+    //     case "f":
+    //     case "F":
+    //       console.log("event: focus");
+    //       break
+    //   }
+    // });
+
     return this.deferred.promise();
   };
 

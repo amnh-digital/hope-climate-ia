@@ -50,6 +50,9 @@ function createWindow (browserWindowSetting, index) {
   if (!/:\/\//.test(appUrl)){
     appUrl = 'file://' + __dirname + '/' + appUrl;
   }
+  var isDebug = browserWindowSetting.debug;
+  var isPrimary = (index===0);
+  var isPageLoaded = false;
 
   // workaround ala https://github.com/atom/electron/issues/1054#issuecomment-173368614
   var kiosk = browserWindowSetting.kiosk;
@@ -62,20 +65,44 @@ function createWindow (browserWindowSetting, index) {
 
   var webContents = mainWindow.webContents;
 
-  // mainWindow.on('blur', function(e){ focusWindow(webContents); });
+  if (isPrimary) {
+    mainWindow.on('blur', function(e){
+      if (isDebug) {
+        // mainWindow.webContents.send('debug', 'event: blur');
+        robot.keyTap("b");
+      }
+      if (isPageLoaded) {
+        setTimeout(function(){
+          // mainWindow.focusOnWebView();
+          focusWindow(mainWindow.webContents);
+        }, 1000);
+      }
+    });
+
+    mainWindow.on('focus', function(e){
+      if (isDebug) {
+        // mainWindow.webContents.send('debug', 'event: focus');
+        robot.keyTap("f");
+      }
+    });
+  }
 
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
-    if (browserWindowSetting.debug) webContents.openDevTools();
-    if (index===0) {
+    if (isDebug) {
+      webContents.openDevTools();
+      // webContents.send('debug', 'event: did-finish-load');
+    }
+    if (isPrimary) {
       focusWindow(webContents);
     }
+    isPageLoaded = true;
   });
 
   globalShortcut.register('CommandOrControl+Shift+D', () => {
     console.log('Debug pressed');
-    browserWindowSetting.debug = !browserWindowSetting.debug;
-    if (browserWindowSetting.debug){
+    isDebug = !isDebug;
+    if (isDebug){
       webContents.openDevTools();
     }else{
       webContents.closeDevTools();
