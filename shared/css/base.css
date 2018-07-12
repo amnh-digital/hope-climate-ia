@@ -20,7 +20,7 @@
 }
 
 body {
-  font-size: 1vw;
+  font-size: 1.77777777778vh;
   font-family: Balance, arial, helvetica, sans-serif;
 }
 
@@ -32,15 +32,27 @@ body {
   color: var(--white-color);
   background-color: var(--black-color);
 }
+.app.left,
+.app.right {
+  width: 50vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.app.right {
+  right: 0;
+  left: auto;
+}
 h1 {
-  font-size: 3vw;
-  letter-spacing: 0.05vw;
+  font-size: 3rem;
+  letter-spacing: 0.05rem;
 }
 h2 {
-  font-size: 2.6667vw;
+  font-size: 2.6667rem;
 }
 p {
-  font-size: 1.2vw;
+  font-size: 1.2rem;
 }
 a {
   color: var(--white-color);
@@ -54,6 +66,11 @@ a {
   left: 0;
   margin-top: -28.125vw;
   /* background-color: var(--black-color); */
+}
+.app.left .view,
+.app.right .view {
+  width: 50vw;
+  margin-top: -14.0625vw;
 }
 
 .title,
@@ -70,40 +87,40 @@ a {
   top: 10%;
   width: 40%;
   position: relative;
-  height: 1.8vw;
+  height: 3.2vh;
 }
 .title:before,
 .title:after {
   content: " ";
   display: block;
   position: absolute;
-  width: 1vw;
-  height: 1.6vw;
+  width: 1.7777778vh;
+  height: 2.8444vh;
   background: var(--primary-color);
   top: 0;
-  left: -2vw;
+  left: -3.55555555556vh;
 }
 .title:after {
   width: 0;
   height: 0;
   background: transparent;
   border-style: solid;
-  border-width: 0 0 0.4vw 0.4vw;
+  border-width: 0 0 0.7vh 0.7vh;
   border-color: transparent transparent var(--black-color) transparent;
-  left: -1.3vw;
-  top: 1.2vw;
+  left: -2.3vh;
+  top: 2.13vh;
 
 }
 .title h1 {
   line-height: 1.2;
-  font-size: 1.8vw;
-  letter-spacing: 0.1vw;
+  font-size: 3.2vh;
+  letter-spacing: 0.177vh;
   margin-top: 1vh;
   margin-bottom: 0;
 }
 .title h2 {
-  font-size: 1.333vw;
-  letter-spacing: 0.05vw;
+  font-size: 2.37vh;
+  letter-spacing: 0.09vh;
   font-weight: normal;
   margin-top: 1.333vh;
   margin-bottom: 0;
@@ -126,8 +143,8 @@ a {
 
 .sleepMode {
   position: absolute;
-  width: 20vw;
-  height: 3.65497076023vw;
+  width: 35.5555555556vh;
+  height: 6.49772579596vh;
   background: url(../img/instruction_arrow.svg) no-repeat;
   background-size: 100% auto;
   right: 50%;
@@ -138,16 +155,16 @@ a {
   transition: opacity 3s ease-in-out;
 }
 .sleepMode h3 {
-  font-size: 1vw;
+  font-size: 1.777vh;
   margin: -3vh 0 2.4vh 0;
-  letter-spacing: 0.06vw;
+  letter-spacing: 0.1066vh;
   color: var(--secondary-color);
 }
 .sleepMode p {
-  font-size: 1vw;
+  font-size: 1.7778vh;
 }
 .sleepMode.active,
-#app.sleeping .sleepMode {
+.app.sleeping .sleepMode {
   /* display: block; */
   opacity: 1;
   /* animation: point 5s linear infinite; */
@@ -159,7 +176,7 @@ a {
 
 .credits {
   position: fixed;
-  left: 3vw;
+  left: 5.333vh;
   bottom: 5vh;
   font-size: 1.2vh;
   line-height: 1.8;
@@ -170,11 +187,11 @@ a {
   float: left;
   text-align: right;
   display: block;
-  width: 9.5vw;
+  width: 16.88888vh;
 }
 .credits dd {
   display: block;
-  margin-left: 10vw;
+  margin-left: 17.77778vh;
 }
 .credits:after {
   content: "";
@@ -182,17 +199,6 @@ a {
   clear: both;
 }
 .sleeping .credits {
-  opacity: 0;
-}
-
-.sidebar {
-  position: absolute;
-  width: 30vw;
-  left: 3vw;
-  bottom: 5vh;
-  transition: opacity 1s ease-in-out;
-}
-.sleeping .sidebar {
   opacity: 0;
 }
 
@@ -299,10 +305,10 @@ a {
 @keyframes point {
   from,
   to {
-    transform: translate3d(0, -0.5vw, 0);
+    transform: translate3d(0, -0.8888vh, 0);
   }
   50% {
-    transform: translate3d(0, 0.5vw, 0);
+    transform: translate3d(0, 0.8888vh, 0);
   }
 }
 
@@ -316,6 +322,7 @@ a {
     margin-top: 0;
     margin-left: -88.888888889vh;
   }
+
 }
 
 .clearfix:after {

@@ -4,7 +4,7 @@
 .title h2 {
   opacity: 0;
   transition: opacity 2s ease-in-out;
-  padding-bottom: 1.2vw;
+  padding-bottom: 2.133vh;
 }
 .sleeping .title h2 {
   opacity: 1;
@@ -73,7 +73,7 @@
   bottom: 0;
   left: 0;
   width: 42%;
-  height: 1.2vw;
+  height: 2.133vh;
 }
 .fact-box .tab:before {
   content: "CASE STUDY";
@@ -88,9 +88,9 @@
   width: 0;
   height: 0;
   border-style: solid;
-  border-width: 1.2vw 0 0 1.2vw;
+  border-width: 2.133vh 0 0 2.133vh;
   border-color: transparent transparent transparent var(--black-color);
-  right: -1.2vw;
+  right: -2.133vh;
   bottom: 0;
 }
 .sleeping .fact-boxes {
@@ -99,7 +99,7 @@
 
 .credits {
   position: fixed;
-  left: 2vw;
+  left: 3.5555vh;
   bottom: 2vh;
 }
 .credits p {
