@@ -14,6 +14,7 @@ var ctx = canvas.getContext('2d');
 
 var x = 50;
 var y = 50;
+var locked = false;
 
 function canvasDraw() {
   ctx.fillStyle = "black";
@@ -34,7 +35,12 @@ document.exitPointerLock = document.exitPointerLock ||
                            document.mozExitPointerLock;
 
 canvas.onclick = function() {
-  canvas.requestPointerLock();
+  if (!locked) {
+    console.log('requesting pointer lock via click...');
+    canvas.requestPointerLock();
+  } else {
+    console.log('clicked, but already locked...');
+  }
 };
 
 // pointer lock event listeners
@@ -52,12 +58,27 @@ function lockChangeAlert() {
     console.log('The pointer lock status is now locked');
     message.textContent = 'Locked';
     document.addEventListener("mousemove", updatePosition, false);
+    locked = true;
   } else {
     console.log('The pointer lock status is now unlocked');
     message.textContent = 'Unlocked';
     document.removeEventListener("mousemove", updatePosition, false);
+    locked = false;
+    setTimeout(function(){
+      if (!locked && AUTOLOCK) {
+        console.log('auto-requesting pointer lock after unlock...');
+        canvas.requestPointerLock();
+      }
+    }, 5000);
   }
 }
+
+setTimeout(function(){
+  if (!locked && AUTOLOCK) {
+    console.log('auto-requesting pointer lock via timeout...');
+    canvas.requestPointerLock();
+  }
+}, 15000);
 
 var tracker = document.getElementById('tracker');
 

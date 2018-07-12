@@ -1,8 +1,9 @@
 {
+  "launchDelay": 15000,
   "windows": [
     {
       "url": "utilities/mousetest.html",
-      "debug": false,
+      "debug": true,
       "browserWindow": {
         "x": 0,
         "y": 0,
@@ -15,7 +16,7 @@
       }
     },{
       "url": "utilities/mouse.html",
-      "debug": false,
+      "debug": true,
       "browserWindow": {
         "x": 1920,
         "y": 0,

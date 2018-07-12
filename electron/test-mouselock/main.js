@@ -1,9 +1,12 @@
 'use strict';
 
-const { app, BrowserWindow, globalShortcut } = require('electron');
+const electron = require('electron');
+const { app, BrowserWindow, globalShortcut } = electron;
+const { ipcRenderer } = electron;
 const express = require('express');
 const config = require('./config.json');
 const browserWindowSettings = config.windows || [{ fullscreen: true }];
+const robot = require("robotjs");
 
 if ( config.commandLineSwitches){
   Object.keys( config.commandLineSwitches ).forEach(function(s){
@@ -14,7 +17,6 @@ if ( config.commandLineSwitches){
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let windows=[];
-let isAWindowFocused = false;
 
 function init(){
   startClient();
@@ -33,7 +35,9 @@ function startClient(){
   if (config.launchDelay){
     // workaround ala https://github.com/atom/electron/issues/1054#issuecomment-173368614
     setTimeout(function(){
-      createWindow();
+      for (var i=0; i<browserWindowSettings.length; i++) {
+        createWindow(browserWindowSettings[i], i);
+      }
     }, config.launchDelay);
   }else{
     for (var i=0; i<browserWindowSettings.length; i++) {
@@ -47,6 +51,9 @@ function createWindow (browserWindowSetting, index) {
   if (!/:\/\//.test(appUrl)){
     appUrl = 'file://' + __dirname + '/' + appUrl;
   }
+  var isDebug = browserWindowSetting.debug;
+  var isPrimary = (index===0);
+  var isPageLoaded = false;
 
   // workaround ala https://github.com/atom/electron/issues/1054#issuecomment-173368614
   var kiosk = browserWindowSetting.kiosk;
@@ -59,24 +66,44 @@ function createWindow (browserWindowSetting, index) {
 
   var webContents = mainWindow.webContents;
 
+  if (isPrimary) {
+    mainWindow.on('blur', function(e){
+      if (isDebug) {
+        // mainWindow.webContents.send('debug', 'event: blur');
+        robot.keyTap("b");
+      }
+      if (isPageLoaded) {
+        setTimeout(function(){
+          mainWindow.focusOnWebView();
+          // focusWindow(mainWindow.webContents);
+        }, 1000);
+      }
+    });
+
+    mainWindow.on('focus', function(e){
+      if (isDebug) {
+        // mainWindow.webContents.send('debug', 'event: focus');
+        robot.keyTap("f");
+      }
+    });
+  }
+
   webContents.on('did-finish-load', function (e) {
     // Open the DevTools.
-    if (browserWindowSetting.debug) webContents.openDevTools();
-  });
-
-  webContents.on('dom-ready', function(e){
-    // Focus the app if we are the first screen
-    if (index===0) {
-      setTimeout(function(){
-        webContents.focus();
-      }, 5000);
+    if (isDebug) {
+      webContents.openDevTools();
+      // webContents.send('debug', 'event: did-finish-load');
     }
+    if (isPrimary) {
+      focusWindow(webContents);
+    }
+    isPageLoaded = true;
   });
 
   globalShortcut.register('CommandOrControl+Shift+D', () => {
     console.log('Debug pressed');
-    browserWindowSetting.debug = !browserWindowSetting.debug;
-    if (browserWindowSetting.debug){
+    isDebug = !isDebug;
+    if (isDebug){
       webContents.openDevTools();
     }else{
       webContents.closeDevTools();
@@ -112,6 +139,30 @@ function createWindow (browserWindowSetting, index) {
   windows.push(mainWindow);
 
 }
+
+// User RobotJS to move mouse and click the top left screen
+function focusWindow(contents){
+  var delay = 5000;
+  // click low enough so we don't evoke menubar
+  var x = 100;
+  var y = 100;
+
+  setTimeout(function(){
+    contents.focus();
+    // if (!contents.isFocused()) contents.focus();
+
+    setTimeout(function(){
+      // robot.typeStringDelayed("12345", 60);
+      robot.moveMouse(x, y);
+    }, 10);
+
+    setTimeout(function(){
+      robot.mouseClick();
+    }, delay);
+
+  }, delay);
+
+};
 
 function reload(mainWindow, appUrl, eventName, eventObject) {
   setTimeout( function(){

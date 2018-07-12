@@ -50,11 +50,27 @@
   <div id="tracker"></div>
   <div id="message">Listening to lock</div>
 
-  <script src="js/mouse.js"></script>
   <script>
-  setTimeout(function(){
-    canvas.requestPointerLock();
-  }, 2000);
+  const AUTOLOCK = true;
+  </script>
+  <script src="js/mouse.js"></script>
+
+  <div id="mywebview"></div>
+
+  <script>
+  document.addEventListener("keydown", function(e){
+    var charStr = String.fromCharCode(e.which);
+    switch(charStr) {
+      case "b":
+      case "B":
+        console.log("event: blur");
+        break;
+      case "f":
+      case "F":
+        console.log("event: focus");
+        break
+    }
+  });
   </script>
 </body>
 </html>
