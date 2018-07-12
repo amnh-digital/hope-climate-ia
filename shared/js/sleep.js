@@ -3,6 +3,7 @@
 var Sleep = (function() {
   function Sleep(options) {
     var defaults = {
+      "el": "#app",
       "enable": 1,
       "checkInterval": 10,
       "sleepAfter": 60
@@ -19,6 +20,8 @@ var Sleep = (function() {
     this.sleepAfterMs = this.opt.sleepAfter * 1000;
     this.isSleeping = false;
     this.customVars = this.opt.custom || {};
+    this.$el = $(this.opt.el);
+    this.$document = $(document);
 
     this.load();
   };
@@ -43,8 +46,8 @@ var Sleep = (function() {
     var elapsed = now - this.lastActivity;
     if (elapsed > this.sleepAfterMs) {
       this.isSleeping = true;
-      $('#app').addClass('sleeping');
-      $(document).trigger("sleep.start", [this.customVars]);
+      this.$el.addClass('sleeping');
+      this.$document.trigger("sleep.start", [this.customVars]);
     }
   };
 
@@ -54,8 +57,8 @@ var Sleep = (function() {
     var now = new Date();
     this.lastActivity = now;
     this.isSleeping = false;
-    $('#app').removeClass('sleeping');
-    $(document).trigger("sleep.end", [this.customVars]);
+    this.$el.removeClass('sleeping');
+    this.$document.trigger("sleep.end", [this.customVars]);
   };
 
   return Sleep;

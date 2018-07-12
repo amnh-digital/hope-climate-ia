@@ -169,19 +169,22 @@ var Controls = (function() {
       }, 10);
     }
 
-    // document.addEventListener("keydown", function(e){
-    //   var charStr = String.fromCharCode(e.which);
-    //   switch(charStr) {
-    //     case "b":
-    //     case "B":
-    //       console.log("event: blur");
-    //       break;
-    //     case "f":
-    //     case "F":
-    //       console.log("event: focus");
-    //       break
-    //   }
-    // });
+    /*
+    document.addEventListener("keydown", function(e){
+      var now = new Date();
+      var charStr = String.fromCharCode(e.which);
+      switch(charStr) {
+        case "b":
+        case "B":
+          console.log("event: blur", now);
+          break;
+        case "f":
+        case "F":
+          console.log("event: focus", now);
+          break
+      }
+    });
+    */
 
     return this.deferred.promise();
   };
@@ -296,6 +299,8 @@ var Controls = (function() {
       if (!locked) {
         console.log('Requesting pointer lock via click...');
         el.requestPointerLock();
+      } else {
+        console.log('Heard click, but already locked');
       }
     };
   };
