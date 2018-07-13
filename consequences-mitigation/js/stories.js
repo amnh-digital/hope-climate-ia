@@ -189,13 +189,13 @@ var Stories = (function() {
       var progress = 0;
       if (video && video.duration && video.duration > 0) progress = video.currentTime / video.duration;
       this.story.$progressBar.css('transform', 'scale3d('+progress+',1,1)');
-      var durationString = this.story.durationString;
-      if (!durationString && video) {
-        durationString = UTIL.secondsToString(video.duration);
-        this.story.durationString = durationString;
-      }
+      // var durationString = this.story.durationString;
+      // if (!durationString && video) {
+      //   durationString = UTIL.secondsToString(video.duration);
+      //   this.story.durationString = durationString;
+      // }
       if (video) {
-        var progressText = UTIL.secondsToString(video.currentTime) + " / " + durationString;
+        var progressText = '-'+UTIL.secondsToString(video.duration-video.currentTime);
         this.story.$progressText.text(progressText);
       }
     }

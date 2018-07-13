@@ -165,7 +165,10 @@
     d.setSeconds(seconds);
     var start = 11;
     var len = 8;
-    if (seconds < 3600) {
+    if (seconds < 600) {
+      start = 15;
+      len = 4;
+    } else if (seconds < 3600) {
       start = 14;
       len = 5;
     }
