@@ -84,6 +84,12 @@ function createWindow (browserWindowSetting, index) {
         // mainWindow.webContents.send('debug', 'event: focus');
         robot.keyTap("f");
       }
+      if (isPageLoaded) {
+        setTimeout(function(){
+          // mainWindow.focusOnWebView();
+          focusWindow(mainWindow.webContents);
+        }, 1000);
+      }
     });
   }
 
@@ -139,25 +145,34 @@ function createWindow (browserWindowSetting, index) {
 
 }
 
+var focusInterval = false;
+
 // User RobotJS to move mouse and click the top left screen
 function focusWindow(contents){
   var delay = 5000;
+  var clickDelay = 1000;
   // click low enough so we don't evoke menubar
   var x = 100;
   var y = 100;
 
-  setTimeout(function(){
-    contents.focus();
+  // do it a few times just in case
+  var times = 3;
+  var count = 0;
+
+  if (focusInterval) clearInterval(focusInterval);
+
+  var focusInterval = setInterval(function(){
+    // contents.focus();
     // if (!contents.isFocused()) contents.focus();
 
-    setTimeout(function(){
-      // robot.typeStringDelayed("12345", 60);
-      robot.moveMouse(x, y);
-    }, 10);
+    robot.moveMouse(x, y);
 
     setTimeout(function(){
       robot.mouseClick();
-    }, delay);
+    }, clickDelay);
+
+    count++;
+    if (count >= times) clearInterval(focusInterval);
 
   }, delay);
 
