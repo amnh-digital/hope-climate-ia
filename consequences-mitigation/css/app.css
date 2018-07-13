@@ -7,6 +7,14 @@
   right: 45%;
 }
 
+.plyr--video,
+.plyr__video-wrapper {
+  overflow: visible;
+}
+.plyr__captions {
+  font-size: 0.6vh;
+  transform: translateY(1vh);
+}
 ::cue {
   font-size: 0.6vh;
   line-height: 1.1vh;

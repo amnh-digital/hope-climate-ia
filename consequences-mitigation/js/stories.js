@@ -59,11 +59,17 @@ var Stories = (function() {
       if (story.video) {
         var $video = $story.find("video").first();
         var video = $video[0];
-        stories[i].video = $video[0];
+        var player = new Plyr(video, {
+          controls: [],
+          iconUrl: '../../img/vendor/plyr.svg',
+          captions: {active: true},
+          resetOnEnd: true
+        });
         // video.load();
-        video.onended = function() {
+        player.on('ended', function(){
           _this.onVideoEnded(stories[i]);
-        };
+        });
+        stories[i].video = player;
       }
       $container.append($story);
     });
@@ -79,8 +85,9 @@ var Stories = (function() {
     if (this.story) {
       this.story.$el.removeClass('active playing');
       if (this.story.video) {
-        this.story.video.currentTime = 0;
-        this.story.video.pause();
+        // this.story.video.currentTime = 0;
+        // this.story.video.pause();
+        this.story.video.stop();
       }
       firstLoad = false;
     }
@@ -138,8 +145,9 @@ var Stories = (function() {
     story.$el.removeClass('playing');
     this.$body.removeClass('playing');
     if (story.video) {
-      story.video.currentTime = 0;
-      story.video.pause();
+      // story.video.currentTime = 0;
+      // story.video.pause();
+      // story.video.stop();
     }
     // if (this.story && story.index === this.story.index) {
     //   this.loadStart = new Date().getTime();
