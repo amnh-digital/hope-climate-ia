@@ -33,15 +33,19 @@ var Stories = (function() {
           html += '<div class="story">';
             html += '<div class="video-container">';
               html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
-              if (story.video) {
-                html += '<video';
-                  if (story.video.startsWith("http")) html += ' crossorigin="anonymous"';
-                html += '>';
-                  html += '<source src="'+story.video+'" type="video/mp4">';
+              if (story.videos) {
+                html += '<video>';
+                  _.each(story.videos, function(video){
+                    html += '<source src="'+video.src+'" type="'+video.type+'">';
+                  });
                   if (story.captions) {
-                    html += '<track label="English" kind="subtitles" srclang="en" src="'+story.captions+'" default>';
+                    _.each(story.captions, function(caption, i){
+                      var defaultString = "";
+                      if (i<=0) defaultString = "default";
+                      html += '<track label="'+caption.label+'" kind="subtitles" srclang="'+caption.srclang+'" src="'+caption.src+'" '+defaultString+'>';
+                    });
                   }
-                html += '</video>'
+                html += '</video>';
               }
             html += '</div>';
           html += '</div>';
@@ -56,7 +60,7 @@ var Stories = (function() {
       stories[i].$loadProgressBar = $story.find(".loading-bar").first();
       stories[i].$progressBar = $story.find(".progress-bar").first();
       stories[i].$progressText = $story.find(".progress-text").first();
-      if (story.video) {
+      if (story.videos) {
         var $video = $story.find("video").first();
         var video = $video[0];
         var player = new Plyr(video, {

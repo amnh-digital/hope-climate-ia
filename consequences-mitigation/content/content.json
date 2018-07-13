@@ -11,8 +11,13 @@
       },
       "description": "<p>In over 150 cities, people rely on underground transportation. With more extreme weather, subway infrastructure is increasingly vulnerable to flooding.</p><p>The MTA is preparing by flood-proofing New York City’s subway system.</p>",
       "image": "img/mta.jpg",
-      "video": "video/mta.mp4",
-      "captions": "vtt/mta.vtt"
+      "videos": [
+        {"src": "video/mta.webm", "type": "video/webm"},
+        {"src": "video/mta.mp4", "type": "video/mp4"}
+      ],
+      "captions": [
+        {"src": "vtt/mta.vtt", "srclang": "en", "label": "English"}
+      ]
     },{
       "id": "story3",
       "title": "Preparing for power loss",
@@ -24,8 +29,13 @@
       },
       "description": "<p>As the climate warms, intense storms are becoming more common, placing power grids at risk.</p><p>Creative use of sunlight can reduce energy demand and help keep cities running during power outages.</p>",
       "image": "img/daylighting.jpg",
-      "video": "video/daylighting.mp4",
-      "captions": "vtt/daylighting.vtt"
+      "videos": [
+        {"src": "video/daylighting.webm", "type": "video/webm"},
+        {"src": "video/daylighting.mp4", "type": "video/mp4"}
+      ],
+      "captions": [
+        {"src": "vtt/mta.vtt", "srclang": "en", "label": "English"}
+      ]
     },{
       "id": "story4",
       "className": "textRight",
@@ -38,8 +48,13 @@
       },
       "description": "<p>Around the world, climate change is expected to affect poor communities disproportionately.</p><p>In New York City, public housing is being redesigned to better withstand extreme weather events.</p>",
       "image": "img/housing.jpg",
-      "video": "video/housing.mp4",
-      "captions": "vtt/housing.vtt"
+      "videos": [
+        {"src": "video/housing.webm", "type": "video/webm"},
+        {"src": "video/housing.mp4", "type": "video/mp4"}
+      ],
+      "captions": [
+        {"src": "vtt/housing.vtt", "srclang": "en", "label": "English"}
+      ]
     },{
       "id": "story5",
       "className": "textRight",
@@ -52,8 +67,13 @@
       },
       "description": "<p>Rising sea levels are quickening the pace of beach erosion around the world, endangering coastal cities and shoreline habitats.</p><p>Building oyster reefs can help restore beaches and create new habitats, even as oceans rise.</p>",
       "image": "img/breakwaters.jpg",
-      "video": "video/breakwaters.mp4",
-      "captions": "vtt/breakwaters.vtt"
+      "videos": [
+        {"src": "video/breakwaters.webm", "type": "video/webm"},
+        {"src": "video/breakwaters.mp4", "type": "video/mp4"}
+      ],
+      "captions": [
+        {"src": "vtt/breakwaters.vtt", "srclang": "en", "label": "English"}
+      ]
     },{
       "id": "story1",
       "title": "Cooling an urban heat island",
@@ -66,8 +86,13 @@
       },
       "description": "<p>Cities tend to be much warmer than their surrounding areas. Global warming is exacerbating this heat island effect.</p><p>Painting roofs white helps cool buildings and lower energy demand.</p>",
       "image": "img/coolroofs.jpg",
-      "video": "video/coolroofs.mp4",
-      "captions": "vtt/coolroofs.vtt"
+      "videos": [
+        {"src": "video/coolroofs.webm", "type": "video/webm"},
+        {"src": "video/coolroofs.mp4", "type": "video/mp4"}
+      ],
+      "captions": [
+        {"src": "vtt/coolroofs.vtt", "srclang": "en", "label": "English"}
+      ]
     }
   ]
 }
