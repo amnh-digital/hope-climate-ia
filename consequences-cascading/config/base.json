@@ -89,7 +89,6 @@
     }
   },
   "sleep": {
-    "el": "#app-cascading",
     "enable": 1,
     "checkInterval": 10,
     "sleepAfter": 60

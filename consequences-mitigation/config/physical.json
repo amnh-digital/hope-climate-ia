@@ -1,6 +1,6 @@
 {
   "controls": {
-    "el": "#app-mitigation",
+    "el": "#app",
     "channel": "mitigation-cascading",
     "autolock": true,
     "pointerlockMappings": {

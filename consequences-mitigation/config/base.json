@@ -25,7 +25,6 @@
     }
   },
   "sleep": {
-    "el": "#app-mitigation",
     "enable": 1,
     "checkInterval": 10,
     "sleepAfter": 120
