@@ -1,0 +1,21 @@
+body {
+  overflow: hidden;
+}
+
+iframe {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  border: none;
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+iframe:last-child {
+  left: auto;
+  right: 0;
+}

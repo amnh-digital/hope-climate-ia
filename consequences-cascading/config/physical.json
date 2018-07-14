@@ -2,6 +2,8 @@
   "controls": {
     "el": "#app",
     "channel": "mitigation-cascading",
+    "lock": false,
+    "autolock": false,
     "pointerlockMappings": {
       "horizontal": {
         "name": "rotate.horizontal",

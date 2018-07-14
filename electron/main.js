@@ -150,7 +150,7 @@ var focusInterval = false;
 // User RobotJS to move mouse and click the top left screen
 function focusWindow(contents){
   var delay = 5000;
-  var clickDelay = 1000;
+  var clickDelay = 100;
   // click low enough so we don't evoke menubar
   var x = 100;
   var y = 100;

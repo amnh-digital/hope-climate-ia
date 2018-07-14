@@ -257,9 +257,16 @@ var Controls = (function() {
     document.addEventListener("mousemove", updatePosition, false);
 
     var locked = false;
+    var shouldLock = this.opt.lock;
+
+    // check for pointerlock option
+    if (!shouldLock) return false;
+
+    // check for auto-lock option
     var autolock = this.opt.autolock;
     var autolockInitialMs = 15000;
     var autolockIntervalMs = 5000;
+    
     // attempt to lock pointer
     var el = $(this.opt.el)[0];
 

@@ -2,6 +2,7 @@
   "controls": {
     "el": "#app",
     "channel": "mitigation-cascading",
+    "lock": true,
     "autolock": true,
     "pointerlockMappings": {
       "vertical": {

@@ -1,0 +1,40 @@
+{
+  "launchDelay": 15000,
+  "windows": [
+    {
+      "url": "composites/consequences-mitigation-cascading.html",
+      "debug": true,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 3840,
+        "height": 1080
+      },
+      "browserWindow": {
+        "x": 0,
+        "y": 0,
+        "width": 3840,
+        "height": 1080,
+        "kiosk": false,
+        "frame": false,
+        "alwaysOnTop": true,
+        "autoHideMenuBar": true,
+        "enableLargerThanScreen": true,
+        "webPreferences": {
+          "nodeIntegration": false
+        }
+      }
+    }
+  ],
+  "commandLineSwitches": {
+    "incognito":"true",
+    "ignore-gpu-blacklist":"true",
+    "high-dpi-support":"1",
+    "force-device-scale-factor":"1",
+    "overscroll-history-navigation":"0",
+    "start-fullscreen":"false",
+    "disable-pinch":"true",
+    "disable-touch-feedback":"true",
+    "disable-touch-drag-drop":"true"
+  }
+}
