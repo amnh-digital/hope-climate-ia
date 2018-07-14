@@ -123,7 +123,12 @@
   };
 
   UTIL.norm = function(value, a, b){
-    return (1.0 * value - a) / (b - a);
+    var denom = (b - a);
+    if (denom > 0 || denom < 0) {
+      return (1.0 * value - a) / denom;
+    } else {
+      return 0;
+    }
   };
 
   UTIL.radians = function(angle) {

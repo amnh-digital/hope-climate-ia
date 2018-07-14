@@ -25,6 +25,7 @@ var Stories = (function() {
     var $container = $("<div />");
 
     _.each(stories, function(story, i){
+      var rand = "?r=" + parseInt(Math.random() * 1000000); // add random string at the end to prevent cache
       var html = '';
       html += '<div id="'+story.id+'" class="story-wrapper">';
         html += '<div class="story-overlay"></div>';
@@ -36,7 +37,7 @@ var Stories = (function() {
               if (story.videos) {
                 html += '<video>';
                   _.each(story.videos, function(video){
-                    html += '<source src="'+video.src+'" type="'+video.type+'">';
+                    html += '<source src="'+video.src+rand+'" type="'+video.type+'">';
                   });
                   if (story.captions) {
                     _.each(story.captions, function(caption, i){
@@ -148,11 +149,11 @@ var Stories = (function() {
     this.playing = false;
     story.$el.removeClass('playing');
     this.$body.removeClass('playing');
-    if (story.video) {
-      // story.video.currentTime = 0;
-      // story.video.pause();
-      // story.video.stop();
-    }
+    // if (story.video) {
+    //   story.video.currentTime = 0;
+    //   story.video.pause();
+    //   story.video.stop();
+    // }
     // if (this.story && story.index === this.story.index) {
     //   this.loadStart = new Date().getTime();
     //   this.loadEnd = this.loadStart + this.opt.loadingMs;
@@ -191,17 +192,18 @@ var Stories = (function() {
     if (this.playing) {
       var video = this.story.video;
       var progress = 0;
-      if (video && video.duration && video.duration > 0) progress = video.currentTime / video.duration;
+      var progressText = "-:--";
+      if (video && (video.currentTime || video.currentTime===0) && video.duration && video.duration > 0) {
+        progress = video.currentTime / video.duration;
+        progressText = '-'+UTIL.secondsToString(video.duration-video.currentTime);
+      }
       this.story.$progressBar.css('transform', 'scale3d('+progress+',1,1)');
       // var durationString = this.story.durationString;
       // if (!durationString && video) {
       //   durationString = UTIL.secondsToString(video.duration);
       //   this.story.durationString = durationString;
       // }
-      if (video) {
-        var progressText = '-'+UTIL.secondsToString(video.duration-video.currentTime);
-        this.story.$progressText.text(progressText);
-      }
+      this.story.$progressText.text(progressText);
     }
 
   };

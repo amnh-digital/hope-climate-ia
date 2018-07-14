@@ -34,7 +34,7 @@
         {"src": "video/daylighting.mp4", "type": "video/mp4"}
       ],
       "captions": [
-        {"src": "vtt/mta.vtt", "srclang": "en", "label": "English"}
+        {"src": "vtt/daylighting.vtt", "srclang": "en", "label": "English"}
       ]
     },{
       "id": "story4",
