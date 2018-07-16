@@ -67,7 +67,7 @@ var Stories = (function() {
         var player = new Plyr(video, {
           controls: [],
           iconUrl: '../../img/vendor/plyr.svg',
-          captions: {active: true},
+          captions: {active: true, language: 'en'},
           resetOnEnd: true
         });
         // video.load();
