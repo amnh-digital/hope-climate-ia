@@ -3,7 +3,7 @@
   "windows": [
     {
       "url": "composites/consequences-mitigation-cascading.html",
-      "debug": true,
+      "debug": false,
       "bounds": {
         "x": 0,
         "y": 0,

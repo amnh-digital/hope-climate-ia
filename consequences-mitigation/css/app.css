@@ -10,10 +10,26 @@
 .plyr--video,
 .plyr__video-wrapper {
   overflow: visible;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  min-width: 0px;
+}
+.plyr--video {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
 }
 .plyr__captions {
   font-size: 0.6vh;
-  transform: translateY(1vh);
+  transform: translateY(-9vh);
+  padding: 1vh;
+  display: block;
+  z-index: 1;
+}
+.story-wrapper.playing .plyr--video {
+  opacity: 1;
 }
 ::cue {
   font-size: 0.6vh;
@@ -159,6 +175,11 @@
 .video-container {
   opacity: 0.4;
   transition: opacity 0.5s ease-in-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
 }
 .video-container video,
 .video-container img {

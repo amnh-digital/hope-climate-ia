@@ -35,7 +35,7 @@ var Stories = (function() {
             html += '<div class="video-container">';
               html += '<img src="'+story.image+'" alt="'+story.title+' video placeholder" />';
               if (story.videos) {
-                html += '<video>';
+                html += '<video crossorigin="anonymous">';
                   _.each(story.videos, function(video){
                     html += '<source src="'+video.src+rand+'" type="'+video.type+'">';
                   });
