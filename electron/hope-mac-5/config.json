@@ -2,27 +2,24 @@
   "launchDelay": 15000,
   "windows": [
     {
-      "url": "system-quiz/physical.html",
+      "url": "composites/system-quiz-ocean-atmosphere.html",
       "debug": false,
+      "bounds": {
+        "x": 0,
+        "y": 0,
+        "width": 3840,
+        "height": 1080
+      },
       "browserWindow": {
         "x": 0,
         "y": 0,
-        "width": 1920,
+        "width": 3840,
         "height": 1080,
-        "kiosk": true,
-        "webPreferences": {
-          "nodeIntegration": false
-        }
-      }
-    },{
-      "url": "system-ocean-atmosphere/physical.html",
-      "debug": false,
-      "browserWindow": {
-        "x": 1920,
-        "y": 0,
-        "width": 1920,
-        "height": 1080,
-        "kiosk": true,
+        "kiosk": false,
+        "frame": false,
+        "alwaysOnTop": true,
+        "autoHideMenuBar": true,
+        "enableLargerThanScreen": true,
         "webPreferences": {
           "nodeIntegration": false
         }
@@ -35,7 +32,7 @@
     "high-dpi-support":"1",
     "force-device-scale-factor":"1",
     "overscroll-history-navigation":"0",
-    "start-fullscreen":"true",
+    "start-fullscreen":"false",
     "disable-pinch":"true",
     "disable-touch-feedback":"true",
     "disable-touch-drag-drop":"true"
