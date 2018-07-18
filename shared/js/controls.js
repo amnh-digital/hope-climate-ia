@@ -5,7 +5,7 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothingWindow": 10
+        "smoothingWindow": 2
       }
     };
     // override nested defaults
@@ -21,6 +21,44 @@ var Controls = (function() {
 
   function add(a, b) {
     return a + b;
+  }
+
+  function getSmoothedValue(value, dataWindow, windowSize) {
+    var threshold = 0.002;
+    var dataWindowLen = dataWindow.length;
+    if (dataWindowLen < windowSize) {
+      dataWindow.push(value);
+      return {
+        value: value,
+        dataWindow: dataWindow
+      }
+    }
+
+    var previous = dataWindow[0];
+    var current = dataWindow[1];
+    var next = value;
+
+    var delta1 = current - previous;
+    var delta2 = current - next;
+    var adelta1 = Math.abs(delta1);
+    var adelta2 = Math.abs(delta2);
+    var sign1 = 0;
+    var sign2 = 0;
+    if (adelta1 > 0) sign1 = delta1 / adelta1;
+    if (adelta2 > 0) sign2 = delta2 / adelta2;
+
+    var newWindow = [current, next];
+
+    // we've hit an anomaly, take the average of the previous and next
+    if (sign1===sign2 && adelta1 > threshold && adelta2 > threshold) {
+      current = (previous + next) / 2.0;
+      newWindow[0] = current;
+    }
+
+    return {
+      value: current,
+      dataWindow: newWindow
+    };
   }
 
   function mean(values) {
@@ -65,7 +103,7 @@ var Controls = (function() {
   };
 
   Controls.prototype.initGamepad = function(){
-    this.smoothingWindow = this.opt.gamepad.smoothingWindow
+    this.smoothingWindow = this.opt.gamepad.smoothingWindow;
     this.gamepadSmoothing = this.smoothingWindow > 0;
 
     // if (this.gamepadSmoothing) {
@@ -266,7 +304,7 @@ var Controls = (function() {
     var autolock = this.opt.autolock;
     var autolockInitialMs = 15000;
     var autolockIntervalMs = 5000;
-    
+
     // attempt to lock pointer
     var el = $(this.opt.el)[0];
 
@@ -387,27 +425,18 @@ var Controls = (function() {
     var gamepadMappings = this.gamepadMappings;
     var channel = this.channel;
     var axesConfig = this.axesConfig;
-    // var gamepadSmoothing = this.gamepadSmoothing;
-    // var smoothingWindow = this.smoothingWindow;
-    // var gamepadWeights = this.gamepadWeights;
+    var gamepadSmoothing = this.gamepadSmoothing;
+    var smoothingWindow = this.smoothingWindow;
 
     $.each(gamepadMappings, function(key, index){
 
       var value = axes[index];
 
-      // if (gamepadSmoothing) {
-      //   // add value to the axis' window
-      //   axesConfig[index].window.push(value);
-      //   if (axesConfig[index].window.length > smoothingWindow) {
-      //     axesConfig[index].window = axesConfig[index].window.slice(1);
-      //   }
-      //   // calculate weighted average if window has enough values
-      //   var axesWindow = axesConfig[index].window;
-      //   if (axesWindow.length === smoothingWindow) {
-      //     // state = weightedMean(axesWindow, gamepadWeights);
-      //     state = mean(axesWindow);
-      //   }
-      // }
+      if (gamepadSmoothing) {
+        var smoothed = getSmoothedValue(value, axesConfig[index].window, smoothingWindow);
+        axesConfig[index].window = smoothed.dataWindow.slice(0);
+        state = smoothed.value;
+      }
 
       // value = +value.toFixed(2);
       var state = norm(value, axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
