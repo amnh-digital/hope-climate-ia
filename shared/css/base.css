@@ -88,6 +88,7 @@ a {
   width: 40%;
   position: relative;
   height: 3.2vh;
+  opacity: 1;
 }
 .title:before,
 .title:after {
@@ -126,6 +127,9 @@ a {
   margin-bottom: 0;
   line-height: 1.5;
   color: var(--primary-color);
+}
+.app.sleeping .title {
+  animation: goToSleep 10s ease-in-out;
 }
 
 .content {
@@ -309,6 +313,16 @@ a {
   }
   50% {
     transform: translate3d(0, 0.8888vh, 0);
+  }
+}
+
+@keyframes goToSleep {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
   }
 }
 
