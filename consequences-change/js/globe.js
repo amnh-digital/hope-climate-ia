@@ -15,11 +15,22 @@ var Globe = (function() {
   }
 
   function toSphere(lon, lat, radius) {
+    // make slight adjustment; lat/lon is slightly off for some reason
+    lon -= 8;
+    lat += 5;
+
+    // account for earth being an ellipsoid
+    // https://stackoverflow.com/questions/10473852/convert-latitude-and-longitude-to-point-in-3d-space
+    var F = 1.0 / 298.257223563; // Flattening factor WGS84 Model
+    var FF = (1.0-F) * (1.0-F);
+    var C = 1.0 / Math.sqrt(Math.cos(lat) * Math.cos(lat) + Math.sin(lat) * Math.sin(lat) * FF);
+    var S = C * FF;
+
     var phi = (90-lat) * (Math.PI/180);
     var theta = (lon+180) * (Math.PI/180);
-    var x = -(radius * Math.sin(phi) * Math.cos(theta));
-    var y = (radius * Math.cos(phi));
-    var z = (radius * Math.sin(phi) * Math.sin(theta));
+    var x = -((radius * C) * Math.sin(phi) * Math.cos(theta));
+    var y = ((radius * C) * Math.cos(phi));
+    var z = ((radius * S) * Math.sin(phi) * Math.sin(theta));
     return [x, y, z];
   }
 
