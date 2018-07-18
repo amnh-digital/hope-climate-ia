@@ -187,6 +187,10 @@ a {
   color: var(--gray-light-color);
   transition: opacity 1s ease-in-out;
 }
+.credits.right {
+  left: auto;
+  right: 5.333vh;
+}
 .credits dt {
   float: left;
   text-align: right;

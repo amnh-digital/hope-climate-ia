@@ -491,8 +491,8 @@ body[question="q-ocean"] .sun {
   transform-origin: 50% 50%;
   transform: rotate3d(0, 0, 1, -35deg);
   position: absolute;
-  top: 10vw;
-  left: 0;
+  top: 5vw;
+  left: 5vh;
 }
 #q-hot .sun-rays span {
   position: relative;
@@ -500,7 +500,7 @@ body[question="q-ocean"] .sun {
   display: block;
   width: 500px;
   height: 23px;
-  background: url(../img/sun_ray.png) repeat-x;
+  background: url(../img/sun_ray.png) repeat-x transparent;
   animation: sunray 3s infinite linear;
 }
 #q-hot .sun-rays span:before,
