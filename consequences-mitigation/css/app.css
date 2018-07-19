@@ -59,7 +59,7 @@
   width: 16vh;
   height: 9vh;
   transform-origin: 0% 50%;
-  transition: opacity 2s ease-in-out, box-shadow 2s ease-in-out;
+  transition: opacity 1s ease-in-out;
   /* transition: transform 1s ease-in-out;
   transform: scale3d(1, 1, 1); */
 }
@@ -69,7 +69,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  box-shadow: rgba(0,0,0,0.6) 0 0 0 100vh;
   opacity: 0;
   transition: opacity 2s ease-in-out;
 }
@@ -87,7 +86,7 @@
   box-sizing: border-box;
 }
 .story-wrapper.active .story-content {
-  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  transition: opacity 1s ease-in-out, transform 2s ease-in-out;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -208,17 +207,18 @@
 .progress {
   position: absolute;
   width: 100%;
-  height: 1.5vh;
+  height: 1vh;
   bottom: 0;
   left: 0;
 }
 
 .loading {
   background: var(--primary-darker-color);
-  transition: bottom 1s ease-in-out;
+  transition: transform 1s ease-in-out;
+  line-height: 1vh;
 }
 .story-wrapper.active .loading {
-  bottom: -1.5vh;
+  transform: translate3d(0, 1vh, 0);
 }
 .loading-bar,
 .progress-bar {
@@ -233,18 +233,19 @@
 .progress-text {
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 1vh;
   right: 0.3vh;
-  top: 0;
+  top: 0.1vh;
   text-align: right;
   font-size: 0.6vh;
+  line-height: 1vh;
 }
 
 .progress {
   background: var(--primary-darker-color);
   opacity: 0;
-  bottom: -1.5vh;
-  line-height: 1.5vh;
+  transform: translate3d(0, 1vh, 0);
+  line-height: 1vh;
   transition: opacity 1s ease-in-out;
 }
 .story-wrapper.playing .progress {
@@ -261,8 +262,8 @@
   position: absolute;
   top: -25vh;
   right: 17.7778vh;
-  transition: transform 2s ease-in-out;
-  transform-origin: 0% 100%;
+  /* transition: transform 2s ease-in-out;
+  transform-origin: 0% 100%; */
 }
 .map img,
 .map svg {
@@ -274,7 +275,15 @@
 }
 .map svg .filled {
   fill: #3f3b3c;
-  transition: fill 2s ease-in-out;
+}
+.map svg .nyc {
+  transition: opacity 2s ease-in-out;
+}
+.map svg .nyc.sleeper {
+  opacity: 0;
+}
+.map svg .nyc.sleeper .filled {
+  fill: var(--primary-dark-color);
 }
 .map svg .outlined {
   fill: none;
@@ -286,6 +295,9 @@
 }
 .map svg g.active .outlined {
   opacity: 1;
+}
+.playing .map svg .nyc.awake {
+  opacity: 0.4;
 }
 .map > div,
 .map .overlay {
@@ -313,7 +325,7 @@
   width: 17.7778vh;
   height: 17.7778vh;
   box-sizing: border-box;
-  transition: opacity 1s ease-in-out, transform 2s ease-in-out;
+  transition: opacity 2s ease-in-out, transform 2s ease-in-out;
 }
 .arrow:after {
   content: " ";
@@ -451,6 +463,6 @@
 .sleeping .story-wrapper.active .story-content {
   opacity: 0;
 }
-.sleeping .map svg .filled {
-  fill: var(--primary-dark-color);
+.sleeping .map svg .nyc.sleeper {
+  opacity: 1;
 }
