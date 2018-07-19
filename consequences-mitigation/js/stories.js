@@ -89,6 +89,7 @@ var Stories = (function() {
     // pause previous story
     if (this.story) {
       this.story.$el.removeClass('active playing');
+      this.$body.removeClass('playing');
       if (this.story.video) {
         // this.story.video.currentTime = 0;
         // this.story.video.pause();

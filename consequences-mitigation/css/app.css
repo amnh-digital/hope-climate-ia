@@ -297,7 +297,7 @@
   opacity: 1;
 }
 .playing .map svg .nyc.awake {
-  opacity: 0.4;
+  opacity: 0.5;
 }
 .map > div,
 .map .overlay {
