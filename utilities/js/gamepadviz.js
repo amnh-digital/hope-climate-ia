@@ -4,48 +4,55 @@ var GamepadViz = (function() {
 
   function GamepadViz(config) {
     var defaults = {
-      windowSize: 2
+      windowSize: 20
     };
     this.opt = _.extend({}, defaults, config);
     this.init();
   }
 
   function getSmoothedValue(value, dataWindow, windowSize) {
-    var threshold = 0.001;
+    dataWindow.push(value);
     var dataWindowLen = dataWindow.length;
     if (dataWindowLen < windowSize) {
-      dataWindow.push(value);
       return {
         value: value,
         dataWindow: dataWindow
       }
+    } else {
+      if (dataWindowLen > windowSize) dataWindow = dataWindow.slice(1);
+      var sum = _.reduce(dataWindow, function(memo, num){ return memo + num; }, 0);
+      return {
+        value: sum/windowSize,
+        dataWindow: dataWindow
+      }
     }
 
-    var previous = dataWindow[0];
-    var current = dataWindow[1];
-    var next = value;
-
-    var delta1 = current - previous;
-    var delta2 = current - next;
-    var adelta1 = Math.abs(delta1);
-    var adelta2 = Math.abs(delta2);
-    var sign1 = 0;
-    var sign2 = 0;
-    if (adelta1 > 0) sign1 = delta1 / adelta1;
-    if (adelta2 > 0) sign2 = delta2 / adelta2;
-
-    var newWindow = [current, next];
-
-    // we've hit an anomaly, take the average of the previous and next
-    if (sign1===sign2 && adelta1 > threshold && adelta2 > threshold) {
-      current = (previous + next) / 2.0;
-      newWindow[0] = current;
-    }
-
-    return {
-      value: current,
-      dataWindow: newWindow
-    };
+    // var threshold = 0.01;
+    // var previous = dataWindow[0];
+    // var current = dataWindow[1];
+    // var next = value;
+    //
+    // var delta1 = current - previous;
+    // var delta2 = current - next;
+    // var adelta1 = Math.abs(delta1);
+    // var adelta2 = Math.abs(delta2);
+    // var sign1 = 0;
+    // var sign2 = 0;
+    // if (adelta1 > 0) sign1 = parseInt(delta1 / adelta1);
+    // if (adelta2 > 0) sign2 = parseInt(delta2 / adelta2);
+    //
+    // var newWindow = [current, next];
+    //
+    // // we've hit an anomaly, take the average of the previous and next
+    // if (sign1===sign2 && adelta1 > threshold && adelta2 > threshold) {
+    //   current = (previous + next) / 2.0;
+    //   newWindow[0] = current;
+    // }
+    //
+    // return {
+    //   value: current,
+    //   dataWindow: newWindow
+    // };
   }
 
   function norm(value, a, b){
