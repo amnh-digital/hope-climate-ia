@@ -54,7 +54,7 @@
   "sound": {
     "enable": 1,
     "audio": ["../shared/audio/orchestral_harp.mp3"],
-    "volume": 1.0,
+    "volume": 0.6,
     "limitLastPlayedMs": 50,
     "limitSameLastPlayedMs": 200,
     "sprites": {
