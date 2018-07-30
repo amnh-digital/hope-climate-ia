@@ -67,6 +67,17 @@
       "credit": "James Balog/Aurora Photos (before), Matthew Kennedy/Earth Vision Institute/Aurora Photos (after)",
       "creditUrl": "https://newatlas.com/before-after-photos-glaciers-climate-change/49143/"
     },{
+      "before": "img/harvey2_before.jpg",
+      "after": "img/harvey2_after.jpg",
+      "labelBefore": "June 2016",
+      "labelAfter": "August 2017",
+      "caption": "Hurricane Harvey floods roads in Houston",
+      "longDescription": "Many roads in Houston, Texas, were underwater after Hurricane Harvey dumped up to 122 cm (48 inches) of rain on the region in August 2017. An increasing number of people worldwide live in unprotected coastal communities that could be vulnerable to increased precipitation, more destructive storm surges and rising sea levels.",
+      "lon": -95.682169,
+      "lat": 29.8168809,
+      "credit": "Google (before), Alyssa Schukar/The New York Times/Redux Pictures (after)",
+      "creditUrl": "https://www.nytimes.com/interactive/2017/08/29/us/houston-before-and-after-hurricane-harvey.html"
+    },{
       "before": "img/poopo_before.jpg",
       "after": "img/poopo_after.jpg",
       "labelBefore": "April 2013",
