@@ -12,7 +12,7 @@
         {
           "parent": "root",
           "id": "a1",
-          "label": "Heat waves",
+          "label": "heat waves",
           "description": "Extreme heat waves become longer and more severe",
           "angle": 100
         },{
@@ -55,7 +55,7 @@
         {
           "parent": "root",
           "id": "b1",
-          "label": "Droughts",
+          "label": "droughts",
           "description": "Droughts become longer and more frequent",
           "angle": 100
         },{
@@ -99,7 +99,7 @@
         {
           "parent": "root",
           "id": "c1",
-          "label": "Habitat change",
+          "label": "habitat change",
           "description": "Insect and microbe ranges expand",
           "angle": 100
         },{
@@ -122,26 +122,18 @@
           "id": "c4",
           "label": "",
           "description": "Mosquitoes could spread malaria and dengue fever to new areas",
-          "angle": 60
+          "angle": 70
         },{
           "parent": "c2",
           "id": "c5",
           "label": "",
           "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water",
           "image": "img/cholera.png",
-          "angle": 90,
-          "contentAngle": 90,
-          "imageAngle": 75,
-          "imageDistance": 0.25
+          "angle": 110,
+          "imageAngle": 110
         },{
           "parent": "c2",
           "id": "c6",
-          "label": "",
-          "description": "Toxic algal blooms could contaminate seafood",
-          "angle": 120
-        },{
-          "parent": "c2",
-          "id": "c7",
           "label": "",
           "description": "Yellow fever, Chagas's disease, schistosomiasis and other warm-weather diseases could all become more common",
           "image": "img/disease.png",
