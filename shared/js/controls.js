@@ -5,7 +5,7 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothingWindow": 20
+        "smoothingWindow": 30
       }
     };
     // override nested defaults
