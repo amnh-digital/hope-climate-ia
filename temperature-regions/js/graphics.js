@@ -238,7 +238,7 @@ var Graphics = (function() {
 
         if (v===0) {
           label = axes.children[labelIndex];
-          label.text = "20th century";
+          label.text = "1901–2000";
           label.style = yAxisSubtextStyle;
           label.x = xLabel;
           label.y = y;

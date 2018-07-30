@@ -11,11 +11,6 @@
   left: 53%;
 }
 
-.credits {
-  right: 3vw;
-  left: auto;
-}
-
 .map {
   position: relative;
   width: 42vw;
@@ -86,7 +81,7 @@
   color: var(--gray-light-color);
   font-size: 0.8vw;
   line-height: 1.667;
-  margin-top: 0.5vw;
+  margin-top: 1vw;
 }
 .helper {
   width: 116%;

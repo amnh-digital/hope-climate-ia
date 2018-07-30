@@ -392,8 +392,8 @@ var Graphics = (function() {
         color = coolColor;
       }
       if (value === range[1] || value === range[0] || value === 0) {
-        var text = "20th century";
-        var subtext = "average";
+        var text = "1901–2000";
+        var subtext = "average temp.";
         if (value !== 0) {
           text = UTIL.round(value, 1) + "°C";
           subtext = UTIL.round(value * 1.8, 1) + "°F";

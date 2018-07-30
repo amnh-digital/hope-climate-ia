@@ -209,6 +209,15 @@ a {
 .sleeping .credits {
   opacity: 0;
 }
+.hanging {
+  text-indent: -7.25vh;
+}
+.credits.hanging {
+  left: 12.5vh;
+}
+.credits.hanging.right {
+  left: auto;
+}
 
 .sleeper {
   position: absolute;
