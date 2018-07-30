@@ -34,7 +34,7 @@
     },
     "start": {
       "id": "p-start",
-      "q": "<p><strong>Do you know how climate works?</strong></p><p><span class='highlight'>Press buttons below the screen</span><br />to answer questions</p>",
+      "q": "<p><span class='highlight'>Press buttons below the screen</span><br />to answer questions</p><p><strong>Do you know how climate works?</strong></p>",
       "htmlBefore": "<div class='arrows imagery'><div class='arrow'></div><div class='arrow'></div></div>",
       "a": [
         {

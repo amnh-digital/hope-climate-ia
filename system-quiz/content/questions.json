@@ -58,31 +58,31 @@
         {
           "label": "16 metric tons",
           "isCorrect": true,
-          "feedback": "<p><strong>Correct!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>, enough to fill 192 shipping containers.</p>",
+          "feedback": "<p><strong>Correct!</strong> The average American produces around <strong>16 metric tons of CO₂ annually</strong>, enough to fill 192 shipping containers.</p>",
           "className": "hover"
         },{
           "label": "6 metric tons",
           "isCorrect": false,
-          "feedback": "<p><strong>Sorry!</strong> The average American produces around <strong>16 metric tons of CO2 annually</strong>, enough to fill 192 shipping containers.</p>",
+          "feedback": "<p><strong>Sorry!</strong> The average American produces around <strong>16 metric tons of CO₂ annually</strong>, enough to fill 192 shipping containers.</p>",
           "className": "hover"
         }
       ]
     },{
       "id": "q-activities",
-      "q": "<p>In the U.S., which activity contributes more to carbon dioxide emissions?</p>",
+      "q": "<p>In the US, which activity contributes more to carbon dioxide emissions?</p>",
       "htmlBefore": "<div class='imagery'><div class='particle-group'><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>",
       "a": [
         {
           "htmlBefore": "<div class='electricity-image'></div>",
           "label": "producing electricity &amp; heat",
           "isCorrect": false,
-          "feedback": "<p><strong>Sorry! Transportation causes more CO2 emissions in the U.S.</strong>—but just barely. In 2016, 35% of U.S. CO2 emissions came from the generation of electricity and heat; 36% from transportation.</p>",
+          "feedback": "<p><strong>Sorry! Transportation causes more CO₂ emissions in the US</strong>—but just barely. In 2016, 35% of US CO₂ emissions came from the generation of electricity and heat; 36% from transportation.</p>",
           "className": "long-text hover"
         },{
           "htmlBefore": "<div class='transportation-image'></div>",
           "label": "using transportation",
           "isCorrect": true,
-          "feedback": "<p><strong>Correct! Transportation causes more CO2 emissions in the U.S.</strong>—but just barely. In 2016, 35% of U.S. CO2 emissions came from the generation of electricity and heat; 36% from transportation.</p>",
+          "feedback": "<p><strong>Correct! Transportation causes more CO₂ emissions in the US</strong>—but just barely. In 2016, 35% of US CO₂ emissions came from the generation of electricity and heat; 36% from transportation.</p>",
           "className": "long-text hover"
         }
       ]
