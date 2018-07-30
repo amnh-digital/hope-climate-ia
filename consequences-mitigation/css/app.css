@@ -60,6 +60,7 @@
   height: 9vh;
   transform-origin: 0% 50%;
   transition: opacity 1s ease-in-out;
+  will-change: transform;
   /* transition: transform 1s ease-in-out;
   transform: scale3d(1, 1, 1); */
 }
