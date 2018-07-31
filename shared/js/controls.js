@@ -5,7 +5,7 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothingWindow": 30
+        "smoothingWindow": 60
       }
     };
     // override nested defaults
@@ -23,21 +23,61 @@ var Controls = (function() {
     return a + b;
   }
 
+  function filterOutliers(someArray) {
+
+    // Copy the values, rather than operating on references to existing values
+    var values = someArray.concat();
+    var vlen = values.length;
+
+    // Then sort
+    values.sort( function(a, b) {
+      return a - b;
+    });
+
+    /* Then find a generous IQR. This is generous because if (values.length / 4)
+     * is not an int, then really you should average the two elements on either
+     * side to find q1.
+     */
+    var q1 = values[Math.floor((vlen / 4))];
+    // Likewise for q3.
+    var q3 = values[Math.ceil((vlen * (3 / 4)))];
+    var iqr = q3 - q1;
+
+    // Then find min and max values
+    var margin = 1.5;
+    var maxValue = q3 + iqr*margin;
+    var minValue = q1 - iqr*margin;
+
+    // Then filter anything beyond or beneath these values.
+    var filteredValues = values.filter(function(x) {
+      return (x <= maxValue) && (x >= minValue);
+    });
+
+    // Then return
+    return filteredValues;
+  }
+
   function getSmoothedValue(value, dataWindow, windowSize) {
     dataWindow.push(value);
     var dataWindowLen = dataWindow.length;
-    if (dataWindowLen < windowSize) {
-      return {
-        value: value,
-        dataWindow: dataWindow
-      }
-    } else {
+
+    // only smooth if we have enough data points
+    if (dataWindowLen >= windowSize) {
+      // slice to windown size
       if (dataWindowLen > windowSize) dataWindow = dataWindow.slice(1);
-      var sum = _.reduce(dataWindow, function(memo, num){ return memo + num; }, 0);
-      return {
-        value: sum/windowSize,
-        dataWindow: dataWindow
-      }
+      // remove outliers
+      var filteredDataWindow = filterOutliers(dataWindow);
+      // calculate mean
+      value = mean(filteredDataWindow);
+
+    // don't return value until we have enough data
+    } else {
+      value = 0;
+    }
+
+    return {
+      value: value,
+      dataWindow: dataWindow
     }
   }
 
