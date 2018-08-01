@@ -35,6 +35,7 @@
     "start-fullscreen":"false",
     "disable-pinch":"true",
     "disable-touch-feedback":"true",
-    "disable-touch-drag-drop":"true"
+    "disable-touch-drag-drop":"true",
+    "js-flags": "--max-old-space-size=4096"
   }
 }
