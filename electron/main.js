@@ -6,6 +6,8 @@ const express = require('express');
 const config = require('./config.json');
 const browserWindowSettings = config.windows || [{ fullscreen: true }];
 const robot = require("robotjs");
+const fs = require('fs');
+const path = require('path');
 
 if ( config.commandLineSwitches){
   Object.keys( config.commandLineSwitches ).forEach(function(s){
@@ -31,18 +33,35 @@ function startServer() {
 }
 
 function startClient(){
+  var heartbeat = config.heartbeat;
+
   if (config.launchDelay){
     // workaround ala https://github.com/atom/electron/issues/1054#issuecomment-173368614
     setTimeout(function(){
       for (var i=0; i<browserWindowSettings.length; i++) {
         createWindow(browserWindowSettings[i], i);
       }
+      if (heartbeat) startHeartBeat(heartbeat);
     }, config.launchDelay);
   }else{
     for (var i=0; i<browserWindowSettings.length; i++) {
       createWindow(browserWindowSettings[i], i);
     }
+    if (heartbeat) startHeartBeat(heartbeat);
   }
+}
+
+function startHeartBeat(intervalMs){
+  if (!intervalMs || intervalMs <= 0) return false;
+  var ms = 0;
+  var maxMs = 180000;
+  const userDataPath = app.getPath('userData');
+  const filename = path.join(userDataPath, "heartbeat.txt");
+  var heartbeatInterval = setInterval(function(){
+    fs.writeFile(filename, ""+ms);
+    ms += intervalMs;
+    if (ms > maxMs) clearInterval(heartbeatInterval);
+  }, intervalMs);
 }
 
 function createWindow (browserWindowSetting, index) {
@@ -145,8 +164,6 @@ function createWindow (browserWindowSetting, index) {
 
 }
 
-var focusInterval = false;
-
 // User RobotJS to move mouse and click the top left screen
 function focusWindow(contents){
   var delay = 5000;
@@ -155,27 +172,13 @@ function focusWindow(contents){
   var x = 100;
   var y = 100;
 
-  // do it a few times just in case
-  var times = 3;
-  var count = 0;
-
-  if (focusInterval) clearInterval(focusInterval);
-
-  var focusInterval = setInterval(function(){
-    // contents.focus();
-    // if (!contents.isFocused()) contents.focus();
-
+  setTimeout(function(){
     robot.moveMouse(x, y);
 
     setTimeout(function(){
       robot.mouseClick();
     }, clickDelay);
-
-    count++;
-    if (count >= times) clearInterval(focusInterval);
-
   }, delay);
-
 };
 
 function reload(mainWindow, appUrl, eventName, eventObject) {
