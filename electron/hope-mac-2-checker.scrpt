@@ -18,11 +18,12 @@ on listenForHeartbeat()
 				log "Found pid " & processId
 				do shell script ("kill -9 " & processId)
 				--log "Killed process and restarting heartbeat listener..."
-				delay 10
-				my listenForHeartbeat()
+				--delay 10
+				--my listenForHeartbeat()
 			else
 				log "Could not find processId"
 			end if
+			restart
 		end tell
 	else
 		log "Process okay."
