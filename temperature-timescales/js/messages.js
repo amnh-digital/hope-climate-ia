@@ -16,17 +16,26 @@ var Messages = (function() {
 
     this.domainCount = -1;
     this.scale = -1;
+    this.currentMessageIndex = -1;
 
     this.loadView();
     this.onScaleChange(this.opt.scale);
   };
 
   Messages.prototype.loadView = function(){
+    var _this = this;
     var $container = $('<div>');
-    $container.html("<h2>You are viewing <strong id=\"yearString\"></strong> of global temperature records.</h2><p id=\"messageString\"></p>");
+
+    _.each(this.messages, function(message, i){
+      var $message = $('<div class="message"><p>'+message.text+'</p></div>');
+      $container.append($message);
+      _this.messages[i].$el = $message;
+      _this.messages[i].index = i;
+    });
+
     this.$el.prepend($container);
     this.$year = $("#yearString");
-    this.$message = $("#messageString");
+    this.$messages = $('.message');
   };
 
   Messages.prototype.onScaleChange = function(scale){
@@ -50,12 +59,19 @@ var Messages = (function() {
     if (!message) {
       message = this.messages[this.messages.length-1];
     }
+    var messageChanged = (message.index !== this.currentMessageIndex);
+
     years = Math.round(years);
     var yearString = "year";
     if (years > 1) yearString += "s";
 
     this.$year.text(years+" "+yearString);
-    this.$message.text(message.text);
+
+    if (messageChanged) {
+      this.$messages.removeClass('active');
+      message.$el.addClass('active');
+    }
+
   };
 
   return Messages;

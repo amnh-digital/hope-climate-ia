@@ -395,6 +395,7 @@ var Graphics = (function() {
     this.xAxisSubtextStyle = xAxisSubtextStyle;
     this.yAxisSubtextStyle = yAxisSubtextStyle;
     this.yAxisTextStyle = yAxisTextStyle;
+    this.baselineTextStyle = _.extend({}, yAxisTextStyle, {fill: "#ffffff"})
 
     // make calculations for plot
     var plotX = yAxisX + yAxisW;
@@ -521,6 +522,7 @@ var Graphics = (function() {
     var xAxisSubtextStyle = this.xAxisSubtextStyle;
     var yAxisTextStyle = this.yAxisTextStyle;
     var yAxisSubtextStyle = this.yAxisSubtextStyle;
+    var baselineTextStyle = this.baselineTextStyle;
     var axes = this.axes;
     var labelCount = axes.children.length;
     var lineWidth = this.opt.yAxis.lineWidth;
@@ -543,7 +545,7 @@ var Graphics = (function() {
     var i = 0;
     var labelIndex = 0;
     var value = range[1];
-    var xLabel = yAxisBounds[0] + yAxisBounds[2] * 0.667;
+    var xLabel = yAxisBounds[0] + yAxisBounds[2] * 0;
     var lineX0 = xAxisBounds[0];
     var lineX1 = xAxisBounds[0] + xAxisBounds[2];
 
@@ -561,19 +563,11 @@ var Graphics = (function() {
 
       if (dc===0) {
         label = axes.children[labelIndex];
-        label.text = "1901–2000";
-        label.style = yAxisTextStyle;
-        label.x = xLabel;
+        label.text = "1901–2000 average";
+        label.style = baselineTextStyle;
+        label.x = 0;
         label.y = y;
-        label.anchor.set(1.0, 1.0);
-        labelIndex += 1;
-
-        label = axes.children[labelIndex];
-        label.text = "average";
-        label.style = yAxisTextStyle;
-        label.x = xLabel;
-        label.y = y;
-        label.anchor.set(1.0, 0);
+        label.anchor.set(0.0, 0.5);
         labelIndex += 1;
 
         // y axis label
@@ -597,9 +591,9 @@ var Graphics = (function() {
         }
         label.text = dc + "°C";
         label.style = yAxisTextStyle;
-        label.x = xLabel;
+        label.x = xLabel * 0.9;
         label.y = y;
-        label.anchor.set(1.0, 1.0);
+        label.anchor.set(1.0, 0.5);
         labelIndex += 1;
 
         label = axes.children[labelIndex];
@@ -607,7 +601,7 @@ var Graphics = (function() {
         label.style = yAxisSubtextStyle;
         label.x = xLabel;
         label.y = y;
-        label.anchor.set(1.0, 0);
+        label.anchor.set(0.0, 0.5);
         labelIndex += 1;
       }
 

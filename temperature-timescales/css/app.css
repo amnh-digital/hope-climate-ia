@@ -3,7 +3,7 @@
 }
 .content {
   width: 50%;
-  margin-left: -25%;
+  margin-left: -27%;
   top: 27.5%;
 }
 
@@ -16,47 +16,61 @@
   height: 31vw;
 }
 
-.messages,
-.messages * {
-  -webkit-transform: translateZ(0);
-}
 .messages {
+  position: absolute;
+  width: 14vw;
+  left: -15vw;
+  top: 5vh;
+  height: 50vh;
+}
+.messages,
+.message-status {
   letter-spacing: 0.05rem;
   opacity: 1;
   transition: opacity 2s ease-in-out;
+  -webkit-transform: translateZ(0);
 }
-.sleeping .messages {
+.sleeping .messages,
+.sleeping .message-status {
   opacity: 0;
 }
-.messages > div,
-.messages .bracket {
+.message-status > div {
   width: 80%;
-  margin-left: 14.5%;
+  margin-left: 18%;
 }
-.messages > div {
-}
-.messages p {
-  margin: 0;
-  line-height: 1.8;
-  font-size: 0.8vw;
-}
-.messages h2 {
+.message-status h2 {
   font-size: 1vw;
-  margin: 1.5vw 0 0.667vw;
-  /* padding-bottom: 1vh;
-  border-bottom: 2px solid #333; */
+  margin: 0.5vw 0 0.667vw;
+  color: var(--gray-light-color);
+  line-height: 1.5;
 }
-.messages h2 strong {
+.message-status h2 strong {
   color: var(--highlight-color);
 }
-.messages .bracket {
+.message-status .bracket {
   display: block;
-  width: 80%;
+  width: 97%;
   height: auto;
   margin-top: 1vh;
 }
-.messages .bracket path {
-  fill: var(--secondary-color);
+.message-status .bracket polygon {
+  fill: var(--gray-color);
+}
+
+.message {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.message.active {
+  opacity: 1;
+}
+.message p {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 0.8vw;
 }
 
 .sidebar {

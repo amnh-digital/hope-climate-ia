@@ -6,7 +6,7 @@
     "monthTransitionStep": 0.04,
     "targetWidth": 1920,
     "targetHeight": 1080,
-    "margin": [0.1, 0.05, 0.05, 0.075],
+    "margin": [0.1, 0.05, 0.05, 0.115],
     "time": 0.5,
     "scale": 0.5,
     "highlightMs": 1000,
@@ -63,8 +63,8 @@
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "$#primaryDark",
-        "fontSize": 0.024,
+        "fill": "$#grayLight",
+        "fontSize": 0.03,
         "fontFamily": "Balance"
       }
     },
