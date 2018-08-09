@@ -30,12 +30,12 @@
       "minBounds": [-0.2, 0.2],
       "tickEvery": 0.25,
       "textStyle": {
-        "fill": "$#primaryDark",
+        "fill": "$#white",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       },
       "subtextStyle": {
-        "fill": "$#primaryDark",
+        "fill": "$#grayLight",
         "fontSize": 0.03,
         "fontFamily": "Balance"
       },

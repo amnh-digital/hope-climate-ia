@@ -385,19 +385,23 @@ var Graphics = (function() {
 
       var color = textColor;
 
-      if (value === range[1]) {
-        color = hotColor;
-      }
-      if (value === range[0]) {
-        color = coolColor;
-      }
-      if (value === range[1] || value === range[0] || value === 0) {
-        var text = "1901–2000";
-        var subtext = "average temp.";
-        if (value !== 0) {
-          text = UTIL.round(value, 1) + "°C";
-          subtext = UTIL.round(value * 1.8, 1) + "°F";
-        }
+      if (value === 0) {
+        var text = "1901–2000 average";
+        var label = axes.children[labelIndex];
+        labelIndex += 1;
+        var style = _.extend({}, yAxisTextStyle, {fill: color});
+        label.text = text;
+        label.style = style;
+        label.anchor.set(1.0, 0.5);
+        label.x = xLabel;
+        label.y = y;
+
+      } else if (value === range[1] || value === range[0]) {
+        if (value === range[1]) color = hotColor;
+        if (value === range[0]) color = coolColor;
+
+        var text = UTIL.round(value, 1) + "°C";
+        var subtext = UTIL.round(value * 1.8, 1) + "°F";
         if (value > 0) {
           text = "+" + text;
           subtext = "+" + subtext;
@@ -408,18 +412,17 @@ var Graphics = (function() {
         labelIndex += 2;
 
         var style = _.extend({}, yAxisTextStyle, {fill: color});
-        var subStyle = _.extend({}, yAxisSubtextStyle, {fill: color});
-        if (value === 0.0) subStyle = _.extend({}, yAxisTextStyle, {fill: color});
+        var subStyle = yAxisSubtextStyle;
 
         label.text = text;
         label.style = style;
-        label.anchor.set(1.0, 1.0);
-        label.x = xLabel;
+        label.anchor.set(1.0, 0.5);
+        label.x = xLabel * 0.6;
         label.y = y;
 
         sublabel.text = subtext;
-        sublabel.anchor.set(1.0, 0);
-        sublabel.x = xLabel;
+        sublabel.anchor.set(0.0, 0.5);
+        sublabel.x = xLabel * 0.7;
         sublabel.y = y;
         sublabel.style = subStyle;
       }
