@@ -30,11 +30,15 @@ def getColor(grad, amount, toInt=False, stops=False):
         return rgb
 
 def getColorFixed(grad, amount, toInt=False):
-    gradLen = len(grad)
-    i = (gradLen-1) * amount
-    remainder = i % 1
-    rgb = (0,0,0)
-    rgb = grad[int(round(i))]
+    # gradLen = len(grad)
+    # i = (gradLen-1) * amount
+    # remainder = i % 1
+    # rgb = (0,0,0)
+    # rgb = grad[int(round(i))]
+    # HARDCODE: just make either hot or cold color
+    rgb = grad[1]
+    if amount >= 0.5:
+        rgb = grad[-2]
     if toInt:
         return int(rgb2hex(rgb), 16)
     else:

@@ -7,9 +7,10 @@
     "plotBGColor": "$0xprimaryDarkest",
     "plotLineColor": "$0xblack",
     "marker": {
-      "color": "$0xhighlight",
+      "color": "$0xsecondary",
+      "altColor": "$#grayLight",
       "textStyle": {
-        "fill": "$#highlight",
+        "fill": "$#secondary",
         "fontSize": 0.06,
         "fontWeight": "bold",
         "fontFamily": "Balance"

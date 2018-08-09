@@ -125,7 +125,7 @@
   height: 1vw;
   top: 50%;
   margin-top: -0.5vw;
-  color: var(--highlight-color);
+  color: var(--secondary-color);
   transition: opacity 1s ease-in-out;
 }
 .helper .label.map-year {
@@ -169,7 +169,7 @@
 }
 .graph-title h3 span,
 .map-latitude {
-  color: var(--highlight-color);
+  color: var(--secondary-color);
 }
 .graph-messages {
   display: block;
@@ -214,7 +214,7 @@
   height: 1vh;
   margin-left: -0.3vh;
   margin-top: -0.6vh;
-  color: var(--highlight-color);
+  color: var(--secondary-color);
 }
 .city span {
   opacity: 0;
@@ -225,7 +225,7 @@
   display: inline-block;
   width: 0.5vh;
   height: 0.5vh;
-  background: var(--highlight-color);
+  background: var(--secondary-color);
   margin-right: 0.5vh;
   border-radius: 0.25vh;
   opacity: 0.2;

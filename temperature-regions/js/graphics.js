@@ -75,7 +75,7 @@ var Graphics = (function() {
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(axes, 20);
-    addLabelBuffers(marker, 2);
+    addLabelBuffers(marker, 3);
 
     this.axes = axes;
     this.plot = plot;
@@ -314,8 +314,9 @@ var Graphics = (function() {
     // draw plot marker
     var pd = this.plotDimensions;
     var marker = this.marker;
-    var label = marker.children[0];
-    var sublabel = marker.children[1];
+    var labelYear = marker.children[0];
+    var labelC = marker.children[1];
+    var labelF = marker.children[2];
 
     marker.clear();
 
@@ -343,11 +344,11 @@ var Graphics = (function() {
     var ly = cy * 0.8;
     var padding = 0.01;
 
-    label.text = year;
-    label.style = textStyle;
-    label.x = x * (1-padding);
-    label.y = ly;
-    label.anchor.set(1, 1);
+    labelYear.text = year;
+    labelYear.style = textStyle;
+    labelYear.x = x * (1-padding);
+    labelYear.y = ly;
+    labelYear.anchor.set(1, 1);
 
     var dc = UTIL.round(value, 1);
     var df = UTIL.round(value * 1.8, 1);
@@ -355,29 +356,40 @@ var Graphics = (function() {
       df = "+" + df;
       dc = "+" + dc;
     }
-    var text = dc + "°C ("+df+" °F)";
+    var textC = dc + "°C";
+    var textF = df + "°F"
     textStyle.fill = color;
     textStyle.fontSize *= 0.9;
-    sublabel.text = text;
-    sublabel.style = textStyle;
-    sublabel.x = x * (1+padding);
-    sublabel.y = ly;
-    sublabel.anchor.set(0, 1);
 
-    var lw = label.width;
-    var lw2 = sublabel.width;
+    labelC.text = textC;
+    labelC.style = textStyle;
+    labelC.x = x * (1+padding);
+    labelC.y = ly;
+    labelC.anchor.set(0, 1);
+
+    textStyle.fill = this.opt.marker.altColor;
+    labelF.text = textF;
+    labelF.style = textStyle;
+    labelF.x = labelC.x + labelC.width + padding + 1;
+    labelF.y = ly;
+    labelF.anchor.set(0, 1);
+
+    var lw = labelYear.width;
+    var lw2 = labelC.width + padding + 1 + labelF.width;
     var left = x - cx;
     var right = cw + cx - x;
 
     if (lw > left) {
       var delta = lw - left;
-      label.x += delta;
-      sublabel.x += delta;
+      labelYear.x += delta;
+      labelC.x += delta;
+      labelF.x += delta;
 
     } else if (lw2 > right) {
       var delta = lw2 - right;
-      label.x -= delta;
-      sublabel.x -= delta;
+      labelYear.x -= delta;
+      labelC.x -= delta;
+      labelF.x -= delta;
     }
   };
 
