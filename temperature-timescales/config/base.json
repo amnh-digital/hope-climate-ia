@@ -6,7 +6,7 @@
     "monthTransitionStep": 0.04,
     "targetWidth": 1920,
     "targetHeight": 1080,
-    "margin": [0.1, 0.05, 0.05, 0.115],
+    "margin": [0.1, 0.05, 0.02, 0.115],
     "time": 0.5,
     "scale": 0.5,
     "highlightMs": 1000,
@@ -15,7 +15,8 @@
     "annotationsUI": {
       "color": "$0xprimary",
       "highlightColor": "$0xhighlight",
-      "scaleThreshold": 1.0
+      "scaleThreshold": 1.0,
+      "rangeColor": "$0xprimaryDarker"
     },
     "plot": {
       "bgColor": "$0xprimaryDarkest",
@@ -26,7 +27,10 @@
     },
     "marker": {
       "color": "$0xsecondary",
-      "fill": "$0xprimaryDark",
+      "fill": "$0xprimaryDarkest",
+      "lineFill": "$0xprimary",
+      "textFillAlt": "$#primary",
+      "textFillAltDark": "$#primaryDark",
       "dotRadius": 0.01,
       "widthStep": 0.005,
       "textStyle": {

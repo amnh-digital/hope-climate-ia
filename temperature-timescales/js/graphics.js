@@ -94,15 +94,16 @@ var Graphics = (function() {
   Graphics.prototype.initView = function(){
     var _this = this;
     this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
+    var bg = new PIXI.Graphics();
     var axes = new PIXI.Graphics();
     var plot = new PIXI.Graphics();
-    var trend = new PIXI.Graphics();
+    // var trend = new PIXI.Graphics();
     var annotations = new PIXI.Graphics();
     var images = new PIXI.Container();
     var marker = new PIXI.Graphics();
     var flag = new PIXI.Graphics();
 
-    this.app.stage.addChild(axes, plot, trend, annotations, marker, flag, images);
+    this.app.stage.addChild(bg, axes, plot, annotations, flag, marker, images);
 
     // add images as sprites
     _.each(this.annualData, function(d, i){
@@ -129,9 +130,10 @@ var Graphics = (function() {
     plot.filters = [restingFilter];
     this.restingFilter = restingFilter;
 
+    this.bg = bg;
     this.axes = axes;
     this.plot = plot;
-    this.trend = trend;
+    // this.trend = trend;
     this.annotations = annotations;
     this.marker = marker;
     this.flag = flag;
@@ -140,7 +142,7 @@ var Graphics = (function() {
     this.images.visible = false;
 
     // for what to show during "sleep mode"
-    this.sleepers = [axes, trend, annotations, flag, images];
+    this.sleepers = [bg, axes, annotations, flag, images];
     this.dreamers = [plot, marker];
 
     this.$el.append(this.app.view);
@@ -151,9 +153,10 @@ var Graphics = (function() {
     this.app.renderer.resize(this.width, this.height);
     this.onScaleChange(this.scale);
 
+    this.renderBg();
     this.renderAxes();
     this.renderPlot();
-    this.renderTrend();
+    // this.renderTrend();
     this.renderMarker();
     this.renderAnnotations();
   };
@@ -263,8 +266,9 @@ var Graphics = (function() {
     this.plotData = plotData;
 
     if (autoScrolled || monthTransitioning) this.onTimeChange(this.time, false);
+    this.renderBg();
     this.renderAxes();
-    this.renderTrend();
+    // this.renderTrend();
     this.renderMarker();
     this.renderPlot();
     this.renderAnnotations();
@@ -287,6 +291,7 @@ var Graphics = (function() {
     var plotCurrentIndex = Math.round(this.time*(plotDataLen-1));
     this.plotCurrentIndex = plotCurrentIndex;
     this.plotCurrentValue = plotData[plotCurrentIndex];
+    this.yearPrecise = yearPrecise;
 
     // add transition for index and play sound
     if ((prevIndex < plotCurrentIndex || time > prevTime && prevTime <= 0) && withSound !== false) {
@@ -299,9 +304,10 @@ var Graphics = (function() {
 
     this.transitioning = true;
     this.transition();
+    this.renderBg();
     this.renderMarker();
     this.renderAnnotations();
-    this.renderTrend();
+    // this.renderTrend();
   };
 
   Graphics.prototype.parseData = function(){
@@ -532,10 +538,6 @@ var Graphics = (function() {
 
     axes.clear();
 
-    axes.beginFill(this.bgColor);
-    axes.drawRect(pd[0], pd[1], pd[2], pd[3]);
-    axes.endFill();
-
     // determine labels and ticks for y axis
     var delta = range[1] - range[0];
     var yAxisStep = this.yAxisStep;
@@ -701,6 +703,43 @@ var Graphics = (function() {
     }
   };
 
+  Graphics.prototype.renderBg = function(){
+    var _this = this;
+    var pd = this.plotDimensions;
+    var bg = this.bg;
+
+    // draw bg
+    bg.clear();
+    bg.beginFill(this.bgColor);
+    bg.drawRect(pd[0], pd[1], pd[2], pd[3]);
+    bg.endFill();
+
+    var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
+    var showAnnotation = (this.scale <= scaleThreshold);
+    if (!showAnnotation) return false;
+
+    // Display annotation ranges
+    var annotationRanges = this.annotationRanges;
+    var domainp = this.plotDomainPrecise;
+    var yearPrecise = this.yearPrecise;
+    var foundRange = _.find(annotationRanges, function(r){
+      var y = r.years;
+      return UTIL.within(yearPrecise, y[0], y[1]);
+    });
+    if (!foundRange) return false;
+
+    var color = parseInt(this.opt.annotationsUI.rangeColor);
+    var y0 = foundRange.years[0];
+    var y1 = foundRange.years[1];
+    if (y0 < domainp[0]) y0 = domainp[0];
+    if (y1 > domainp[1]) y1 = domainp[1];
+    var w = (y1 - y0) / (domainp[1] - domainp[0]) * pd[2];
+    var x = UTIL.norm(y0, domainp[0], domainp[1]) * pd[2] + pd[0];
+    bg.beginFill(color);
+    bg.drawRect(x, pd[1], w, pd[3]);
+    bg.endFill();
+  };
+
   Graphics.prototype.renderMarker = function(){
     // draw plot marker
     var prev = this.prev;
@@ -720,6 +759,9 @@ var Graphics = (function() {
     var markerW = 6;
     var transitionMs = this.opt.marker.transitionMs;
     var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
+    var lineFill = this.opt.marker.lineFill;
+    var textFillAlt = this.opt.marker.textFillAlt;
+    var textFillAltDark = this.opt.marker.textFillAltDark;
 
     var showAnnotation = (this.scale <= scaleThreshold && current.annotation);
     var showAnnotationImage = showAnnotation && current.annotation.sprite;
@@ -736,7 +778,7 @@ var Graphics = (function() {
     var marginY = cw * 0.008;
 
     var rectSmall = 0.23;
-    var rectBig = 0.28;
+    var rectBig = 0.33;
     var rectW = cw * rectSmall;
     if (showAnnotation) rectW = cw * rectBig;
     var rectThreshold = cw * ((rectBig + rectSmall)/2);
@@ -764,6 +806,7 @@ var Graphics = (function() {
     var rectX = x + markerW/2;
     if (time > 0.5) {
       rectX = x - rectW - markerW/2;
+      marginX *= 1.5;
     }
 
     // label bg
@@ -796,25 +839,27 @@ var Graphics = (function() {
     // set text
     yLabel.text = yearText;
     cLabel.text = dc + "°C";
-    fLabel.text = "(" + df + "°F)";
+    fLabel.text = df + "°F";
     aLabel.text = annotation;
     var than = dc >= 0 ? "warmer": "cooler";
     lLabel.text = than + " than average"
 
     // set style
-    cLabel.style = textStyle;
-    textStyle = _.clone(textStyle);
-    textStyle.fontSize *= 0.9;
     yLabel.style = textStyle;
     textStyle = _.clone(textStyle);
-    textStyle.fontSize *= 0.8;
+    textStyle.fontSize *= 0.9;
+    cLabel.style = textStyle;
+    textStyle = _.clone(textStyle);
+    textStyle.fill = textFillAltDark;
     fLabel.style = textStyle;
-    fLabel.alpha = 0.8;
     textStyle.wordWrap = true;
     textStyle.wordWrapWidth = labelW;
+    textStyle.fontSize *= 0.8;
+    textStyle.fill = textFillAlt;
     aLabel.style = _.extend({}, textStyle, {lineHeight: textStyle.fontSize * 1.5});
     textStyle = _.clone(textStyle);
     textStyle.fontSize *= 0.9;
+    textStyle.fill = textFillAltDark;
     lLabel.style = textStyle;
 
     // set x position
@@ -825,15 +870,15 @@ var Graphics = (function() {
     lLabel.x = labelX;
 
     // set y position
-    yLabel.y = cy + marginY;
+    yLabel.y = cy + marginY * 1.5;
     cLabel.y = yLabel.y + yLabel.height + marginY * 2;
-    fLabel.y = cLabel.y * 1.04;
+    fLabel.y = cLabel.y;
     lLabel.y = cLabel.y + cLabel.height + marginY;
     aLabel.y = lLabel.y + lLabel.height + marginY * 2;
 
     // draw rectangles
     var rectH = marginY * 5 + yLabel.height + cLabel.height + lLabel.height;
-    if (showAnnotation) rectH += marginY * 2 + aLabel.height;
+    if (showAnnotation) rectH += marginY * 4 + aLabel.height;
     var imageW, imageH;
     var images = this.images;
     if (showAnnotationImage) {
@@ -854,14 +899,26 @@ var Graphics = (function() {
       images.visible = false;
     }
 
-    flag.lineStyle(0);
+    var lineWidth = markerW*0.6667;
+    var cornerRadius = rectH * 0.1;
+    var lineX = rectX - lineWidth/2;
+    var lineY = cy + lineWidth/2;
+    if (time > 0.5) lineX = rectX + lineWidth/2;
+    flag.lineStyle(lineWidth, lineFill);
     flag.beginFill(markerFill);
-    flag.drawRect(rectX, cy, rectW, rectH);
+    flag.moveTo(lineX, lineY).lineTo(lineX+rectW, lineY);
+    if (time > 0.5) {
+      flag.lineTo(lineX+rectW, lineY+rectH).lineTo(lineX+cornerRadius, lineY+rectH).lineTo(lineX, lineY+rectH-cornerRadius);
+    } else {
+      flag.lineTo(lineX+rectW, lineY+rectH-cornerRadius).lineTo(lineX+rectW-cornerRadius, lineY+rectH).lineTo(lineX, lineY+rectH);
+    }
+    flag.lineTo(lineX, lineY);
+    // flag.drawRect(lineX, lineY, rectW, rectH);
     flag.endFill();
 
-    flag.beginFill(0x000000, 0.25);
-    flag.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
-    flag.endFill();
+    // flag.beginFill(0x000000, 0.25);
+    // flag.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
+    // flag.endFill();
 
     // flag.lineStyle(1, 0x000000, 0.5);
     // flag.moveTo(labelX + labelW * 0.5, cLabel.y);

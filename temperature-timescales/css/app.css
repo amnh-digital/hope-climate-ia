@@ -54,7 +54,7 @@
   margin-top: 1vh;
 }
 .message-status .bracket polygon {
-  fill: var(--gray-color);
+  fill: var(--gray-light-color);
 }
 
 .message {
