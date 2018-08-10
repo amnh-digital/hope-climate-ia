@@ -74,7 +74,8 @@
     }
   },
   "messages": {
-    "el": "#messages"
+    "el": "#messages",
+    "elKey": "#lines"
   },
   "sleep": {
     "enable": 1,

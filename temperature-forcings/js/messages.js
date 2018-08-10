@@ -9,6 +9,7 @@ var Messages = (function() {
 
   Messages.prototype.init = function(){
     var $el = $(this.opt.el);
+    var $elKey = $(this.opt.elKey);
     this.forcings = this.opt.forcings;
 
     var svgBg = function(w, h, radius){
@@ -24,6 +25,7 @@ var Messages = (function() {
     };
 
     var $messages = {};
+    var $keys = {};
     var $wrapper = $('<div/>');
     _.each(this.forcings, function(forcing, key){
       var className = '';
@@ -52,17 +54,26 @@ var Messages = (function() {
 
       $wrapper.append($message);
       $messages[key] = $message;
+
+      var $key = $('<div class="line '+key+'"><div class="circle"></div></div>');
+      $key.css('background', forcing.color);
+      $key.find('.circle').css('background', forcing.color);
+      $elKey.append($key);
+      $keys[key] = $key;
     });
     $el.append($wrapper);
     this.$messages = $messages;
+    this.$keys = $keys;
   };
 
   Messages.prototype.forcingOff = function(value){
     this.$messages[value].removeClass('active');
+    this.$keys[value].removeClass('active');
   };
 
   Messages.prototype.forcingOn = function(value){
     this.$messages[value].addClass('active');
+    this.$keys[value].addClass('active');
   };
 
   return Messages;
