@@ -18,9 +18,9 @@
 
 .messages {
   position: absolute;
-  width: 14vw;
-  left: -15vw;
-  top: 5vh;
+  width: 12vw;
+  right: -11vw;
+  top: 6.5vh;
   height: 50vh;
 }
 .messages,

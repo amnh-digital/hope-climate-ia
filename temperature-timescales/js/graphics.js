@@ -217,6 +217,7 @@ var Graphics = (function() {
     if (delta > monthYearsDisplay*2) {
       monthTransitionValue = 0;
     }
+    var monthTransitioned = (this.monthTransitionValue !== monthTransitionValue) && (monthTransitionValue>=1 || monthTransitionValue<=0);
     this.monthTransitionValue = monthTransitionValue;
     var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
 
@@ -265,7 +266,7 @@ var Graphics = (function() {
     });
     this.plotData = plotData;
 
-    if (autoScrolled || monthTransitioning) this.onTimeChange(this.time, false);
+    if (autoScrolled || monthTransitioning || monthTransitioned) this.onTimeChange(this.time, false);
     this.renderBg();
     this.renderAxes();
     // this.renderTrend();
@@ -275,7 +276,6 @@ var Graphics = (function() {
   };
 
   Graphics.prototype.onTimeChange = function(time, withSound){
-    // console.log("time", value);
     var prevTime = this.time;
     this.time = time;
 
@@ -717,20 +717,19 @@ var Graphics = (function() {
     var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
     var showAnnotation = (this.scale <= scaleThreshold);
     if (!showAnnotation) return false;
-
-    // Display annotation ranges
-    var annotationRanges = this.annotationRanges;
-    var domainp = this.plotDomainPrecise;
+    
+    var current = this.plotCurrentValue;
     var yearPrecise = this.yearPrecise;
-    var foundRange = _.find(annotationRanges, function(r){
-      var y = r.years;
-      return UTIL.within(yearPrecise, y[0], y[1]);
-    });
-    if (!foundRange) return false;
+    if (!current.annotation || !current.annotation.years) return false;
 
+    var yrange = current.annotation.years;
+    var y0 = yrange[0];
+    var y1 = yrange[1];
+    if (!UTIL.within(yearPrecise, y0, y1)) return false;
+
+    // Display annotation range
+    var domainp = this.plotDomainPrecise;
     var color = parseInt(this.opt.annotationsUI.rangeColor);
-    var y0 = foundRange.years[0];
-    var y1 = foundRange.years[1];
     if (y0 < domainp[0]) y0 = domainp[0];
     if (y1 > domainp[1]) y1 = domainp[1];
     var w = (y1 - y0) / (domainp[1] - domainp[0]) * pd[2];
