@@ -53,14 +53,11 @@ function startClient(){
 
 function startHeartBeat(intervalMs){
   if (!intervalMs || intervalMs <= 0) return false;
-  var ms = 0;
-  var maxMs = 180000;
   const userDataPath = app.getPath('userData');
   const filename = path.join(userDataPath, "heartbeat.txt");
   var heartbeatInterval = setInterval(function(){
-    fs.writeFile(filename, ""+ms);
-    ms += intervalMs;
-    if (ms > maxMs) clearInterval(heartbeatInterval);
+    var t = new Date().getTime();
+    fs.writeFile(filename, ""+t);
   }, intervalMs);
 }
 

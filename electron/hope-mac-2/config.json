@@ -1,6 +1,6 @@
 {
   "launchDelay": 15000,
-  "heartbeat": 5000,
+  "heartbeat": 10000,
   "windows": [
     {
       "url": "composites/consequences-mitigation-cascading.html",
