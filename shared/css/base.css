@@ -219,6 +219,27 @@ a {
   left: auto;
 }
 
+.progress-dots {
+  width: 100vw;
+  height: 1vh;
+  text-align: center;
+  transition: opacity 2s ease-in-out;
+}
+.progress-dots .dot {
+  display: inline-block;
+  width: 1vh;
+  height: 1vh;
+  margin: 0 2vh;
+  background: var(--gray-light-color);
+  border-radius: 50%;
+}
+.progress-dots .dot.active {
+  background: var(--white-color);
+}
+.sleeping .progress-dots {
+  opacity: 0;
+}
+
 .sleeper {
   position: absolute;
   width: 200vw;

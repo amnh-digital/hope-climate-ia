@@ -895,6 +895,8 @@ var Network = (function() {
       return node;
     });
 
+    this.$document.trigger("progress.show", [index]);
+
     this.branch = branch;
   };
 

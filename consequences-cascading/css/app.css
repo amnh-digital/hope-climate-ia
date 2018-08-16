@@ -97,6 +97,13 @@
   opacity: 0;
 }
 
+.progress-dots {
+  padding-top: 92vh;
+}
+.progress-dots > div {
+  margin-left: 10vw;
+}
+
 .credits {
   position: fixed;
   left: 3.5555vh;

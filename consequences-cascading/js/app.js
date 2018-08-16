@@ -65,6 +65,9 @@ var AppCascading = (function() {
     $document.on("factbox.show", onFactboxShow);
     $document.on("factbox.transition", onFactboxTransition);
 
+    var onProgressShow = function(e, index) { _this.progress.show(index); }
+    $document.on("progress.show", onProgressShow);
+
     var onSleepStart = function(e, value) { _this.onSleepStart(); }
     var onSleepEnd = function(e, value) { _this.onSleepEnd(); }
     $document.on("sleep.start", onSleepStart);
@@ -89,14 +92,16 @@ var AppCascading = (function() {
   AppCascading.prototype.onReady = function(){
     var d = this.data;
 
+    // Initialize network
     var opt = _.extend({}, this.opt.network, this.content);
-
-    // Initialize slideshow
     this.network = new Network(opt);
 
     // Initialize factbox
     opt = _.extend({}, this.opt.factbox, this.content);
     this.factbox = new FactBox(opt);
+
+    // Initialize progress
+    this.progress = new Progress({count: this.content.network.length});
 
     // Init sleep mode utilitys
     opt = _.extend({}, this.opt.sleep);
