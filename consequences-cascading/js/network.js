@@ -297,7 +297,7 @@ var Network = (function() {
 
         // determine normal position
         var distance = node.distance ? node.distance : segment;
-        distance = Math.min(distance, 0.25);
+        if (!node.distance) distance = Math.min(distance, 0.25);
         var baseAngle = 90;
         var anglePad = 15;
         // evenly space children if multiple children
@@ -314,8 +314,8 @@ var Network = (function() {
         node.nx = point[0];
         node.ny = point[1];
 
-        node.nContentWidth = node.nContentWidth ? node.nContentWidth : nodeContentWidth;
-        node.nContentHeight = node.nContentHeight ? node.nContentHeight : nodeContentHeight;
+        node.nContentWidth = node.nContentWidth ? node.nContentWidth * nodeContentWidth : nodeContentWidth;
+        node.nContentHeight = node.nContentHeight ? node.nContentHeight * nodeContentHeight : nodeContentHeight;
 
         // determine sound based on severity
         node.soundMu = (node.severity - 1) / 4.0;

@@ -22,7 +22,7 @@
     "nodeContentHeight": 0.04,
     "nodeImageWidth": 1.25,
     "nodeColor": "$0xprimary",
-    "nodeLineColor": "$0xprimary",
+    "nodeLineColor": "$0xsecondary",
     "nodeLineSleepingColor": "$0xsecondary",
     "nodeBgColor": "$0xprimaryDarkest",
     "elasticAmount": 0.02,
@@ -33,7 +33,7 @@
       "fontFamily": "Balance"
     },
     "nodeBodyTextStyle": {
-      "fontSize": 0.013,
+      "fontSize": 0.0145,
       "fill": "$#white",
       "fontFamily": "Balance",
       "wordWrap": true,

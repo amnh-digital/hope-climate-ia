@@ -1,5 +1,5 @@
 .title {
-  left: 63.75%;
+  left: 72%;
 }
 .title h2 {
   opacity: 0;
@@ -24,10 +24,10 @@
 }
 
 .network {
-  height: 100%;
-  width: 66.666667%;
+  height: 90%;
+  width: 60%;
   position: absolute;
-  left: 47%;
+  left: 55%;
   top: 0;
   margin-left: -33.33333%;
 }
@@ -36,8 +36,8 @@
   position: absolute;
   width: 13%;
   height: auto;
-  right: 5%;
-  bottom: 5%;
+  left: 10%;
+  bottom: 25%;
   opacity: 1;
   transition: opacity 2s ease-in-out;
 }

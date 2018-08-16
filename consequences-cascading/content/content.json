@@ -21,7 +21,9 @@
           "label": "",
           "description": "Soil dries from heat and lack of rain",
           "image": "img/dry_soil.jpg",
-          "angle": 100
+          "angle": 100,
+          "nImageWidth": 0.8,
+          "imageDistance": 0.21
         },{
           "parent": "a2",
           "id": "a3",
@@ -71,14 +73,16 @@
           "label": "",
           "description": "People flee drought-stricken areas to become \"climate refugees\"",
           "angle": 90,
-          "nContentWidth": 0.2
+          "nContentWidth": 1.2
         },{
           "parent": "b3",
           "id": "b4",
           "label": "",
           "description": "Hunger and unemployment fuel political instability, violence and war",
           "image": "img/conflicts.jpg",
-          "angle": 105
+          "angle": 105,
+          "nImageWidth": 0.8,
+          "imageDistance": 0.21
         },{
           "parent": "b3",
           "id": "b5",
@@ -108,8 +112,9 @@
           "label": "",
           "description": "Disease-causing organisms move into new places",
           "angle": 90,
-          "contentAngle": -55,
-          "contentDistance": 0.15
+          "distance": 0.33,
+          "contentAngle": -50,
+          "contentDistance": 0.17
         },{
           "parent": "c2",
           "id": "c3",
@@ -137,7 +142,11 @@
           "label": "",
           "description": "Yellow fever, Chagas's disease, schistosomiasis and other warm-weather diseases could all become more common",
           "image": "img/disease.png",
-          "angle": 165
+          "angle": 185,
+          "nContentWidth": 1.2,
+          "imageAngle": 235,
+          "nImageWidth": 0.8,
+          "imageDistance": 0.25
         }
       ]
     },{
@@ -239,7 +248,8 @@
           "label": "",
           "description": "Millions of people in poorer areas could be displaced",
           "image": "img/displaced.jpg",
-          "angle": 105
+          "angle": 105,
+          "imageAngle": 225
         },{
           "parent": "e3",
           "id": "e5",
