@@ -1,20 +1,22 @@
 .content {
   width: 33.33333vw;
-  top: 33.33333%;
+  top: 25%;
   transform-origin: 50% 50%;
   transform: scale3d(1, 1, 1);
   transition: transform 2s ease-in-out;
 }
 
-.title,
+.title {
+  left: 62%;
+}
 .content {
-  left: 53%;
+  left: 48%;
 }
 
 .map {
   position: relative;
-  width: 42vw;
-  height: 21vw;
+  width: 50vw;
+  height: 25vw;
   background: url(../img/map.svg) 0 0 no-repeat;
   background-size: 100% auto;
 }
@@ -257,7 +259,7 @@
 }
 
 .sleeping .content {
-  transform: scale3d(1.1, 1.1, 1.1);
+  /* transform: scale3d(1.1, 1.1, 1.1); */
 }
 .sleeping .map > .worldmap-resting {
   opacity: 1;
