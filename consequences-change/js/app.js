@@ -74,6 +74,7 @@ var AppChange = (function() {
     var slide = this.slides[this.currentSlide];
     this.globe.next(slide);
     this.slideshow.next(slide);
+    this.progress.show(this.currentSlide);
   };
 
   AppChange.prototype.onReady = function(){
@@ -87,6 +88,9 @@ var AppChange = (function() {
     opt = _.extend({}, this.opt.globe, {"slides": this.slides});
     this.globe = new Globe(opt);
     var globePromise = this.globe.loadEarth();
+
+    // Initialize progress
+    this.progress = new Progress({count: this.slides.length});
 
     // Go to first slide when ready
     $.when(globePromise).done(function(resp){

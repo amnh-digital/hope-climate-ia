@@ -13,6 +13,7 @@ var Slideshow = (function() {
   Slideshow.prototype.init = function(){
     this.$el = $(this.opt.el);
     this.$captions = $(this.opt.captionsEl);
+    this.$credits = $(this.opt.creditsEl);
     this.slides = this.opt.slides.slice(0);
     this.aspectRatio = this.opt.width / this.opt.height;
     this.slideCount = this.slides.length;
@@ -24,19 +25,26 @@ var Slideshow = (function() {
 
   Slideshow.prototype.initCaptions = function(){
     var _this = this;
-    var $el = this.$captions;
-    var $wrapper = $('<div class="captions-wrapper"></div>');
+    var $captionsWrapper = $('<div class="captions-wrapper"></div>');
+    var $creditsWrapper = $('<div />');
     var slides = this.slides;
     _.each(slides, function(slide, i){
       var $caption = $('<div class="caption"></div>');
-      $caption.append('<p class="credit"><a href="'+slide.creditUrl+'">'+slide.credit+'</a></p>');
       $caption.append('<h2>'+slide.caption+'</h2>');
       $caption.append('<p class="text">'+slide.longDescription+'</p>');
-      if (i===0) $caption.addClass("active");
-      $wrapper.append($caption);
+      var $credit = $('<div class="credit"></div>');
+      $credit.html('<a href="'+slide.creditUrl+'">'+slide.credit+'</a>');
+      if (i===0) {
+        $caption.addClass("active");
+        $credit.addClass("active");
+      }
+      $captionsWrapper.append($caption);
+      $creditsWrapper.append($credit);
       _this.slides[i].$caption = $caption;
+      _this.slides[i].$credit = $credit;
     });
-    $el.append($wrapper);
+    this.$captions.append($captionsWrapper);
+    this.$credits.append($creditsWrapper);
   };
 
   Slideshow.prototype.initSlides = function(){
@@ -109,8 +117,9 @@ var Slideshow = (function() {
       var slideOffset = _this.slideOffset * (currentSlide+1);
       $wrapper.css('left', -slideOffset+'px');
 
-      $('.caption, .slide').removeClass('active');
+      $('.caption, .slide, .credit').removeClass('active');
       slide.$caption.addClass('active');
+      slide.$credit.addClass('active');
       _.each(slide.$slides, function($slide) {
         $slide.addClass('active');
       });

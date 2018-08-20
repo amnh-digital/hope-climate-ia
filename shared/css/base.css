@@ -229,7 +229,7 @@ a {
   display: inline-block;
   width: 1vh;
   height: 1vh;
-  margin: 0 2vh;
+  margin: 0 1vh;
   background: var(--gray-light-color);
   border-radius: 50%;
 }
