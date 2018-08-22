@@ -44,6 +44,30 @@ body {
   right: 0;
   left: auto;
 }
+/* uncomment below for guides */
+/* .app:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  top: 33%;
+  height: 42%;
+  border: 0.2vh solid red;
+  z-index: 100;
+}
+.app:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 0.2vh;
+  height: 100%;
+  background: red;
+  left: 50%;
+  top: 0;
+  margin-left: -0.1vh;
+} */
+
 h1 {
   font-size: 3rem;
   letter-spacing: 0.05rem;
@@ -134,7 +158,7 @@ a {
 
 .content {
   box-sizing: border-box;
-  top: 30%;
+  top: 33%;
 }
 
 .graphics {
@@ -180,16 +204,25 @@ a {
 
 .credits {
   position: fixed;
-  left: 5.333vh;
-  bottom: 5vh;
+  left: 0;
+  width: 100%;
+  bottom: 3vh;
+  text-align: center;
   font-size: 1.2vh;
   line-height: 1.8;
   color: var(--gray-light-color);
   transition: opacity 1s ease-in-out;
 }
+.credits p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2vh;
+}
 .credits.right {
   left: auto;
   right: 5.333vh;
+  text-align: left;
+  width: auto;
 }
 .credits dt {
   float: left;

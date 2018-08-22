@@ -2,17 +2,14 @@
   left: 60%;
 }
 .content {
-  height: 32vw;
+  height: 32.2vw;
+  top: 27.1%;
 }
 
 .sleepMode {
+  bottom: 7vh;
   right: 45%;
   transition: opacity 2s ease-in-out;
-}
-
-.credits {
-  right: 3vw;
-  left: auto;
 }
 
 .messages {

@@ -10,8 +10,7 @@
 }
 
 .credits {
-  right: 3vw;
-  left: auto;
+
 }
 
 .content,
@@ -68,7 +67,7 @@
 .key {
   width: 23vw;
   position: relative;
-  margin: 6vw auto 0;
+  margin: 4vw auto 0;
 }
 .key:after {
   content: "";

@@ -23,21 +23,27 @@
   right: 35%;
 }
 
+.network,
+.progress-dots,
+.credits {
+  width: 60%;
+  margin-left: -33.33333%;
+  left: 55%;
+}
+
 .network {
   height: 90%;
-  width: 60%;
   position: absolute;
-  left: 55%;
   top: 0;
-  margin-left: -33.33333%;
 }
+
 
 .fact-boxes {
   position: absolute;
   width: 13%;
   height: auto;
   left: 10%;
-  bottom: 25%;
+  bottom: 40.5%;
   opacity: 1;
   transition: opacity 2s ease-in-out;
 }
@@ -46,7 +52,7 @@
   width: 100%;
   height: auto;
   left: 0;
-  bottom: 0;
+  top: 0;
   opacity: 0;
   transition: opacity 1s ease-in-out;
   color: var(--primary-color);
@@ -98,20 +104,11 @@
 }
 
 .progress-dots {
-  padding-top: 92vh;
+  position: absolute;
+  bottom: 10vh;
 }
 .progress-dots > div {
-  margin-left: 10vw;
-}
-
-.credits {
-  position: fixed;
-  left: 3.5555vh;
-  bottom: 2vh;
-}
-.credits p {
-  color: var(--gray-light-color);
-  font-size: 1vh;
+  /* margin-left: 10vw; */
 }
 
 .images-wrapper {

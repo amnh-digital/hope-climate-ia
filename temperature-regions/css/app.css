@@ -1,6 +1,6 @@
 .content {
   width: 33.33333vw;
-  top: 25%;
+  top: 27%;
   transform-origin: 50% 50%;
   transform: scale3d(1, 1, 1);
   transition: transform 2s ease-in-out;
