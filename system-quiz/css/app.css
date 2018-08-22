@@ -177,19 +177,22 @@
 .arrow {
   content: " ";
   display: block;
-  width: 0;
-  height: 0;
-  border-left: 3vh solid transparent;
-  border-right: 3vh solid transparent;
-  border-top: 3vh solid var(--primary-color);
+  width: 5.4vh;
+  height: 3vh;
+  background: url(../img/arrow_blue.svg) no-repeat;
+  background-size: 100% auto;
+  background-position: center bottom;
   position: fixed;
-  bottom: -0.2%;
+  bottom: -0.1%;
   left: 42.6%;
+  margin-left: 0.225vh;
 }
 .arrow:last-child {
-  border-top: 3vh solid var(--secondary-color);
+  background-image: url(../img/arrow_orange.svg);
   left: auto;
   right: 42.6%;
+  margin-left: auto;
+  margin-right: 0.425vh;
 }
 .quiz-question.answered .arrow {
   display: none;
