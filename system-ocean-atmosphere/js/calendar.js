@@ -2,9 +2,7 @@
 
 var Calendar = (function() {
   function Calendar(options) {
-    var defaults = {
-      year: 2016
-    };
+    var defaults = {};
     this.opt = $.extend({}, defaults, options);
     this.init();
   }
@@ -14,27 +12,30 @@ var Calendar = (function() {
   }
 
   Calendar.prototype.init = function(){
+    this.currentMonthIndex = 0;
     this.$el = $(this.opt.el);
     this.loadUI();
     this.onResize();
   };
 
   Calendar.prototype.loadUI = function(){
-    var year = this.opt.year;
-    $('.calendar-mo').each(function(){
-      var text = $(this).text();
-      $(this).text(text + " " + year)
-    });
+    this.$months = $('.calendar-mo');
   };
 
   Calendar.prototype.onResize = function(){
-    this.calendarHeight = this.$el.height();
+
   };
 
   Calendar.prototype.render = function(yearProgress){
-    var offsetY = yearProgress * this.calendarHeight;
+    var degrees = yearProgress * 360;
+    var monthIndex = parseInt(Math.round(yearProgress * 11));
+    if (monthIndex !== this.currentMonthIndex) {
+      $('.calendar-mo.active').removeClass('active');
+      this.$months.eq(monthIndex).addClass('active');
+      this.currentMonthIndex = monthIndex;
+    }
     this.$el.css({
-      'transform': 'translate3d(0, -'+offsetY+'px, 0)'
+      'transform': 'rotate3d(0,0,1,'+degrees+'deg)'
     });
   };
 
