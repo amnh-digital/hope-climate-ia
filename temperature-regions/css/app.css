@@ -96,30 +96,7 @@
   box-sizing: border-box;
   outline: 0;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.05);
-  border-top-left-radius: 1vw;
-  border-bottom-left-radius: 1vw;
-  border-right: none;
-}
-.helper .corner {
-  transition: opacity 1s ease-in-out;
-  position: absolute;
-  border: 0.1667vw solid var(--primary-dark-color);
-  border-left: none;
-  box-sizing: border-box;
-  width: 2vw;
-  height: 2vw;
-  right: -1vw;
-  z-index: 10;
-}
-.helper .corner.top {
-  border-top: none;
-  border-bottom-right-radius: 0.8vw;
-  top: -2vw;
-}
-.helper .corner.bottom {
-  border-bottom: none;
-  border-top-right-radius: 0.8vw;
-  bottom: -2.01vw;
+  border-radius: 1.2vw;
 }
 .helper .label {
   position: absolute;
@@ -134,7 +111,7 @@
   left: 0.8vw;
 }
 .helper .label.map-latitude {
-  right: 0;
+  right: 0.8vw;
   height: 2vw;
   margin-top: -1vw;
 }
@@ -251,7 +228,6 @@
 .sleeping .map .helper {
   opacity: 1;
   border: 0.1667vw solid var(--secondary-color);
-  border-radius: 1vw;
 }
 .sleeping .map .helper .label,
 .sleeping .map .helper .corner {
