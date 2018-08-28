@@ -96,7 +96,7 @@ var Globe = (function() {
   };
 
   Globe.prototype.loadMarker = function(){
-    var radius = this.opt.radius * 0.05;
+    var radius = this.opt.radius * 0.04;
     var color = this.opt.highlightColor;
 
     // init globe
@@ -153,7 +153,7 @@ var Globe = (function() {
   Globe.prototype.updateEarth = function(slide){
     var earth = this.earth;
     var phi = slide.lat * (Math.PI/180);
-    var lon = 270 - slide.lon;
+    var lon = 280 - slide.lon;
     var theta = lon * (Math.PI/180);
 
     var euler = new THREE.Euler(phi, theta, 0, 'XYZ');

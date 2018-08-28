@@ -18,8 +18,8 @@
       "labelAfter": "2017",
       "caption": "Reservoir dries in South Africa",
       "longDescription": "The Theewaterskloof reservoir in South Africa was filled to capacity in 2014. By 2017, after three years of punishing drought, it had lost 73% of its water. Droughts are becoming more common as the climate changes.",
-      "lon": 19.2066659,
-      "lat": -34.0185443,
+      "lon": 21.2066659,
+      "lat": -37.0185443,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=629#629-drought-shrinks-theewaterskloof-reservoir-in-south-africa"
     },{
@@ -95,7 +95,7 @@
       "labelAfter": "October 2013",
       "caption": "Heavy flooding in Cambodia",
       "longDescription": "Roughly 3,000 square kilometers (1,200 square miles) of rice fields were destroyed by flooding of the Mekong and Tonlé Sap Rivers in 2013, affecting half a million people. Extreme floods are expected to increase as a warming climate raises sea levels and heavy rainfall increases in certain areas.",
-      "lon": 105.327086,
+      "lon": 99.327086,
       "lat": 11.486754,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=504#504-typhoon-nari-flood-cambodia"
@@ -117,8 +117,8 @@
       "labelAfter": "January 2017",
       "caption": "Massive wildfires in Argentina",
       "longDescription": "Wildfires are worsening as the climate warms. During a severe drought in 2017, about 10,000 square kilometers (4,000 square miles) of grassland were destroyed by numerous fires that spread through the dry Pampas region in Argentina. Burned areas are colored red.",
-      "lon": -64.283921,
-      "lat": -36.614757,
+      "lon": -66.283921,
+      "lat": -40.614757,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=612#612-wildfires-scorch-argentinas-pampas-region"
     },{
@@ -128,7 +128,7 @@
       "labelAfter": "2009",
       "caption": "Drought speeds reservoir loss in Iraq",
       "longDescription": "The Qadisyah Reservoir in Iraq, which was already being drained for human use, lost water even faster following a drought in 2007. The Middle East could face increasing water shortages as the climate warms, runoff from snow melt is reduced and droughts become more frequent and severe.",
-      "lon": 42.2301128,
+      "lon": 40.2301128,
       "lat": 34.3088882,
       "credit": "BAE/Alamy",
       "creditUrl": "https://earthobservatory.nasa.gov/IOTD/view.php?id=80613"
@@ -139,8 +139,8 @@
       "labelAfter": "January 2017",
       "caption": "Argentina flooding damages soybean crop",
       "longDescription": "Flooding from unusually heavy rain in 2016 and 2017 destroyed much of Argentina’s soybean crop. So many soybeans were destroyed that global prices rose worldwide in response to the reduced supply. Global warming could increase the severity of both floods and droughts.",
-      "lon": -63.616672,
-      "lat": -38.416097,
+      "lon": -66.283921,
+      "lat": -40.614757,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=613#613-argentina-flooding-impacts-soybean-production"
     },{
@@ -151,7 +151,7 @@
       "caption": "British Virgin Islands stripped of greenery by Hurricane Irma",
       "longDescription": "Once covered in greenery, the British Virgin Islands were left brown and denuded by Hurricane Irma’s record winds in 2017. Hurricanes could become increasingly destructive as the climate warms, making the type of devastation seen after Irma more common.",
       "lon": -65.2991647,
-      "lat": 18.065972,
+      "lat": 15.065972,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change?id=628#628-hurricane-irma-turns-virgin-islands-brown"
     },{
