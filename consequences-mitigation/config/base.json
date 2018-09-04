@@ -1,5 +1,6 @@
 {
-  "angleThreshold": 180,
+  "angleThreshold": 150,
+  "angleInBetween": 60,
   "resetAfterMs": 2000,
   "resetTransitionMs": 2000,
   "delayMs": 1000,

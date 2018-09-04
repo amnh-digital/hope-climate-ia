@@ -85,18 +85,9 @@ var Stories = (function() {
 
   Stories.prototype.onChange = function(index){
     var firstLoad = true;
-
-    // pause previous story
-    if (this.story) {
-      this.story.$el.removeClass('active playing');
-      this.$body.removeClass('playing');
-      if (this.story.video) {
-        // this.story.video.currentTime = 0;
-        // this.story.video.pause();
-        this.story.video.stop();
-      }
-      firstLoad = false;
-    }
+    if (index===undefined && this.story) index = this.story.index;
+    if (this.story) firstLoad = false;
+    if (this.story && this.story.index !== index) this.pausePreviousStory();
 
     var story = this.stories[index];
     this.story = story;
@@ -161,6 +152,19 @@ var Stories = (function() {
     //   this.loading = true;
     // }
   };
+
+  Stories.prototype.pausePreviousStory = function(){
+    // pause previous story
+    if (this.story) {
+      this.story.$el.removeClass('active playing');
+      this.$body.removeClass('playing');
+      if (this.story.video) {
+        // this.story.video.currentTime = 0;
+        // this.story.video.pause();
+        this.story.video.stop();
+      }
+    }
+  }
 
   Stories.prototype.playStory = function(story){
     this.$body.addClass('playing');

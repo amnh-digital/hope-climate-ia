@@ -13,8 +13,9 @@ var Map = (function() {
     this.stories = _.map(this.opt.stories, function(story, i){
       return story.map;
     });
+    this.storyIndex = 0;
     this.loadView();
-    this.onChange(0);
+    this.onChange(this.storyIndex);
   };
 
   Map.prototype.loadView = function(){
@@ -30,20 +31,27 @@ var Map = (function() {
   };
 
   Map.prototype.onChange = function(index){
-    var prevStory = this.story;
+    if (index===undefined) index = this.storyIndex;
     var story = this.stories[index];
     var $body = this.$body;
 
-    if (prevStory) {
-      prevStory.$el.removeClass('active');
-      prevStory.$overlay.removeClass('active');
-      $body.removeClass(prevStory.className);
-    }
+    this.pausePreviousStory();
 
     story.$el.addClass('active');
     story.$overlay.addClass('active');
     $body.addClass(story.className);
     this.story = story;
+    this.storyIndex = index;
+  };
+
+  Map.prototype.pausePreviousStory = function(){
+    var prevStory = this.story;
+    var $body = this.$body;
+    if (prevStory) {
+      prevStory.$el.removeClass('active');
+      prevStory.$overlay.removeClass('active');
+      $body.removeClass(prevStory.className);
+    }
   };
 
   return Map;

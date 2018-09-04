@@ -17,6 +17,7 @@ var AppMitigation = (function() {
     this.storyCount = this.content.stories.length;
     this.currentStoryIndex = 0;
     this.angleThreshold = this.opt.angleThreshold;
+    this.angleInBetween = this.opt.angleInBetween;
     this.angleDelta = 0;
     this.$document = $(document);
 
@@ -91,13 +92,16 @@ var AppMitigation = (function() {
 
     var count = this.storyCount;
     var angleThreshold = this.angleThreshold;
+    var angleInBetween = this.angleInBetween;
     var index = 0;
     var changed = false;
 
     // check to see if we reached the threshold for going to the next story
     var angleDelta = this.angleDelta + delta;
-    var angleProgress = Math.abs(angleDelta) / angleThreshold;
-    var changed = angleProgress >= 1;
+    var angleProgress1 = Math.abs(angleDelta) / angleThreshold;
+    var angleProgress2 = Math.abs(angleDelta) / (angleThreshold+angleInBetween);
+    var inBetween = angleProgress1 >= 1 && angleProgress2 < 1;
+    var changed = angleProgress2 >= 1;
     if (changed && angleDelta < 0) index = this.currentStoryIndex - 1;
     else if (changed) index = this.currentStoryIndex + 1;
     if (index < 0) index = count - 1;
@@ -107,20 +111,28 @@ var AppMitigation = (function() {
     // transition
     this.transition();
 
-    // start the countdown to reset
-    this.resetting = false;
-    this.resetCountingDown = true;
-    this.resetStart = new Date().getTime() + this.opt.resetAfterMs;
-    this.resetEnd = this.resetStart + this.opt.resetTransitionMs;
-    this.resetAngleStart = this.angleDelta;
-
     // first load
     if (this.currentStoryIndex < 0) {
       index = 0;
       changed = true;
     }
 
+    // don't reset if we're in-between videos
+    if (inBetween && !changed) {
+      this.resetting = false;
+      this.resetCountingDown = false;
+
+    // start the countdown to reset
+    } else {
+      this.resetting = false;
+      this.resetCountingDown = true;
+      this.resetStart = new Date().getTime() + this.opt.resetAfterMs;
+      this.resetEnd = this.resetStart + this.opt.resetTransitionMs;
+      this.resetAngleStart = this.angleDelta;
+    }
+
     if (changed) {
+      // console.log('changed')
       // delay controls for a beat
       this.delaying = true;
       this.delayEnd = new Date().getTime() + this.opt.delayMs;
@@ -132,9 +144,20 @@ var AppMitigation = (function() {
       this.$document.trigger("sound.play.sprite", ["tick"]);
       this.angleDelta = 0;
 
-    } else if (wasSleeping) {
-      this.stories.queueCurrentStory();
+    // if was sleeping or was in-between, play current story
+  } else if (wasSleeping || this.inBetween && !inBetween) {
+      // console.log('restart')
+      this.stories.onChange();
+      this.map.onChange();
+
+    // if went in-between, stop last story
+    } else if (inBetween && !this.inBetween) {
+      // console.log('stop')
+      this.stories.pausePreviousStory();
+      this.map.pausePreviousStory();
     }
+
+    this.inBetween = inBetween;
   };
 
   AppMitigation.prototype.render = function() {
@@ -175,7 +198,7 @@ var AppMitigation = (function() {
   AppMitigation.prototype.transition = function(){
     var count = this.storyCount;
     var angleDelta = this.angleDelta;
-    var angleProgress = Math.abs(angleDelta) / this.angleThreshold;
+    var angleProgress = Math.abs(angleDelta) / (this.angleThreshold+this.angleInBetween);
     var easedProgress = UTIL.easeInOutSin(angleProgress);
     var toIndex = this.currentStoryIndex + 1;
     if (angleDelta < 0) toIndex = this.currentStoryIndex - 1;
