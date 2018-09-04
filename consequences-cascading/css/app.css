@@ -117,15 +117,20 @@
 .images {
   transform-origin: 50% 50%;
 }
-.images .image {
-  clip-path: circle(50%);
+.images .image-wrapper {
   position: absolute;
   opacity: 0;
   transition: opacity 2s ease-in-out;
   transition-delay: 1s;
   visibility: hidden;
 }
-.images .image.active {
+.images .image {
+  clip-path: circle(50%);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.images .image-wrapper.active {
   opacity: 1;
   visibility: visible;
 }

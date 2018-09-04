@@ -25,9 +25,14 @@ var Images = (function() {
     _.each(network, function(branch, i){
       _.each(branch.nodes, function(node, j){
         if (node.image) {
-          var $image = $('<img src="'+node.image+'" class="image" />');
-          images[node.id] = {"$el": $image};
-          $container.append($image);
+          var $imageWrapper = $('<div class="image-wrapper"><img src="'+node.image+'" class="image" /><div class="arrow"></div></div>');
+          var $image = $imageWrapper.find(".image");
+          // var $image = $('<img src="'+node.image+'" class="image" />');
+          images[node.id] = {
+            "$el": $imageWrapper,
+            "$image": $image
+          };
+          $container.append($imageWrapper);
         }
       });
     });
@@ -36,7 +41,7 @@ var Images = (function() {
     var loadedCount = 0;
 
     _.each(images, function(image, id){
-      image.$el.on("load", function(){
+      image.$image.on("load", function(){
         images[id].width = $(this).width();
         images[id].height = $(this).height();
         loadedCount++;
@@ -82,7 +87,7 @@ var Images = (function() {
   };
 
   Images.prototype.onImagesReset = function(){
-    $(".images .image").removeClass('active');
+    $(".images .image-wrapper").removeClass('active');
   };
 
   Images.prototype.onImagesResize = function(data){
@@ -92,7 +97,7 @@ var Images = (function() {
       var d = data[id];
       if (d) {
         var scale = d.width / image.width;
-        image.$el.css('transform', 'translate3d('+d.x+'px,'+d.y+'px,0) scale3d('+scale+','+scale+','+scale+')');
+        image.$image.css('transform', 'translate3d('+d.x+'px,'+d.y+'px,0) scale3d('+scale+','+scale+','+scale+')');
       }
     });
   };
