@@ -5,7 +5,8 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothingWindow": 60
+        "smoothingWindow": 60,
+        "deltaThreshold": 0.005
       }
     };
     // override nested defaults
@@ -124,6 +125,7 @@ var Controls = (function() {
 
   Controls.prototype.initGamepad = function(){
     this.smoothingWindow = this.opt.gamepad.smoothingWindow;
+    this.deltaThreshold = this.opt.gamepad.deltaThreshold;
     this.gamepadSmoothing = this.smoothingWindow > 0;
 
     // if (this.gamepadSmoothing) {
@@ -447,6 +449,7 @@ var Controls = (function() {
     var axesConfig = this.axesConfig;
     var gamepadSmoothing = this.gamepadSmoothing;
     var smoothingWindow = this.smoothingWindow;
+    var deltaThreshold = this.deltaThreshold;
 
     $.each(gamepadMappings, function(key, index){
 
@@ -463,7 +466,7 @@ var Controls = (function() {
       state = Math.min(state, 1);
       state = Math.max(state, 0);
 
-      var threshold = 0.001;
+      var threshold = deltaThreshold;
       var prev = prevState[key];
       var delta = Math.abs(prev-state);
 
