@@ -163,6 +163,8 @@ var Stories = (function() {
         // this.story.video.pause();
         this.story.video.stop();
       }
+      this.loading = false;
+      this.playing = false;
     }
   }
 
