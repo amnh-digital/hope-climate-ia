@@ -1,0 +1,142 @@
+.app {
+  background: #222;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.exhibit {
+  width: 100vw;
+  height: 26vw;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -13vw;
+  background: url(../img/rails.png) no-repeat;
+  background-size: 100% auto;
+  background-position: center bottom;
+}
+.floor {
+  background: black;
+  position: absolute;
+  height: 50vh;
+  width: 100%;
+  bottom: -50vh;
+  left: 0;
+}
+
+.wall,
+.deck {
+  width: 75vw;
+  height: 18.75vw;
+  margin-left: 8.6vw;
+  position: relative;
+}
+.deck {
+  height: 2.222222222vw;
+  margin-top: 0.25vw;
+}
+.meta {
+  width: 100%;
+  height: 14.0625vw;
+  background: blue;
+}
+.ia {
+  width: 100%;
+  height: 4.6875vw;
+  background: url(../img/ia.png) no-repeat;
+  background-size: contain;
+}
+.ia a {
+  display: block;
+  width: 11.1111111111%;
+  float: left;
+  height: 4.6875vw;
+  box-sizing: border-box;
+  border: 0.5vw solid transparent;
+  text-align: center;
+}
+.ia a:hover {
+  border: 0.1vw solid var(--secondary-color);
+}
+.ia a span {
+  opacity: 0;
+  display: inline-block;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+.ia a:hover span {
+  opacity: 1;
+  transform: translateY(-1.5vw);
+  white-space: nowrap;
+}
+
+.grid .cols,
+.grid .rows {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+.grid .col {
+  width: 11.1111111111%;
+  height: 18.75vw;
+  border-right: 0.05vw solid rgba(0,0,0,0.4);
+  float: left;
+}
+.grid .row {
+  width: 100%;
+  height: 4.6875vw;
+  border-bottom: 0.05vw solid rgba(0,0,0,0.4);
+}
+
+.deck .dgroup {
+  float: left;
+  width: 33.3333333333%;
+}
+.deck .single,
+.deck .double {
+  display: inline-block;
+  width: 7.6736vw;
+  height: 2.222222222vw;
+  background: no-repeat;
+  background-size: contain;
+  background-position: left center;
+  margin-left: 0.2vw;
+  box-shadow: 0 0.05vw 0.05vw 0.05vw rgba(0,0,0,0.2);
+}
+.deck .double {
+  width: 16.14583vw;
+}
+.deck .d1 { background-image: url(../img/label_decks/consq1.jpg); }
+.deck .d2 { background-image: url(../img/label_decks/consq2.jpg); }
+.deck .d3 { background-image: url(../img/label_decks/ww1.jpg); }
+.deck .d4 { background-image: url(../img/label_decks/ww2.jpg); }
+.deck .d5 { background-image: url(../img/label_decks/hcw1.jpg); }
+.deck .d6 { background-image: url(../img/label_decks/hcw2.jpg); }
+.wall-title {
+  position: absolute;
+  right: 2vw;
+  top: 0;
+  color: #aaa;
+}
+.wall-title h1 {
+  font-size: 1vw;
+  line-height: 1.8;
+  text-transform: uppercase;
+  text-shadow: 0 0.1vw 0.5vw black;
+}
+
+.person {
+  width: 5vw;
+  height: 12vw;
+  background: url(../img/figure.png) no-repeat;
+  background-size: contain;
+  background-position: center bottom;
+  position: absolute;
+  bottom: -1vw;
+  right: 11.5vw;
+  transform: scale3d(-1,1,1);
+}
