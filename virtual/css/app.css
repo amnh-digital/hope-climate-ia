@@ -74,6 +74,7 @@ body {
   box-sizing: border-box;
   border: 0.5vw solid transparent;
   text-align: center;
+  font-size: 16px;
 }
 .ia a:hover {
   border: 0.1vw solid var(--secondary-color);
@@ -126,6 +127,7 @@ body {
   border: 0.1vw solid transparent;
   text-align: center;
   position: relative;
+  font-size: 16px;
 }
 /* mute the colors */
 .deck a:after {

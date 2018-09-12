@@ -310,6 +310,24 @@ a {
   left: 0;
   z-index: 10000;
   border-radius: 0.5vh;
+  vertical-align: middle;
+}
+.ui button {
+  margin-left: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  height: 4vh;
+  line-height: 4vh;
+  text-align: center;
+  margin-top: -1vh;
+  border: none;
+  border-radius: 10%;
+  font-size: 2vh;
+  font-family: sans-serif;
+  background: #3fc1be;
+}
+.ui button:hover {
+  background: white;
 }
 .ui:after {
   content: "";

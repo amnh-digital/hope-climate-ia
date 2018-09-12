@@ -196,6 +196,7 @@ var Controls = (function() {
     var scrollMappings = this.opt.scrollMappings;
     var touchMappings = this.opt.touchMappings;
     var pointerlockMappings = this.opt.pointerlockMappings;
+    var buttonMappings = this.opt.buttonMappings;
 
     if (keyboardMappings) {
       this.loadKeyboardListeners(keyboardMappings);
@@ -215,6 +216,10 @@ var Controls = (function() {
 
     if (touchMappings) {
       this.loadTouchListeners(touchMappings);
+    }
+
+    if (buttonMappings) {
+      this.loadButtonListeners(buttonMappings);
     }
 
     if (gamepadMappings) {
@@ -247,6 +252,26 @@ var Controls = (function() {
     */
 
     return this.deferred.promise();
+  };
+
+  Controls.prototype.loadButtonListeners = function(mappings){
+    var $container = $("#ui");
+    if (!$container.length) {
+      $container = $('<div id="ui" class="ui"></div>');
+      $('body').append($container);
+    }
+    var channel = this.channel;
+
+    _.each(mappings, function(opt, key){
+      var $button = $('<button id="'+opt.el+'">'+opt.text+'</button>');
+      $button.on("mousedown", function(e){
+        channel.post("controls.button.down", key);
+      });
+      $button.on("mouseup", function(e){
+        channel.post("controls.button.up", key);
+      });
+      $container.append($button);
+    });
   };
 
   Controls.prototype.loadGamepad = function(gamepadMappings){
@@ -377,7 +402,7 @@ var Controls = (function() {
     var channel = this.channel;
 
     _.each(mappings, function(opt, key){
-      var $listener = $('<div id="'+opt.el+'" class="ui-touch-region '+key+'"></div>');
+      var $listener = $('<div id="'+opt.el+'" class="ui-touch-region rotate '+key+'"></div>');
       $container.append($listener);
       var listener = $listener[0];
       var region = new ZingTouch.Region(listener);
@@ -391,11 +416,11 @@ var Controls = (function() {
           angle = 360 - (angle - 90);
           if (angle >= 360) angle -= 360;
           $listener.css('transform', "rotate3d(0, 0, 1, "+angle+"deg)")
-          channel.post("controls.rotate", angleDelta);
+          channel.post("controls."+key, angleDelta);
         }
       };
 
-      region.bind(listener, key, onChange);
+      region.bind(listener, "rotate", onChange);
     });
 
     $('body').append($container);

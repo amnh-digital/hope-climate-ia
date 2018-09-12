@@ -15,6 +15,12 @@
     "keyboardMappings": {
       " ": "next",
       "1": "next"
+    },
+    "buttonMappings": {
+      "next": {
+        "el": "button-next",
+        "text": "next"
+      }
     }
   }
 }

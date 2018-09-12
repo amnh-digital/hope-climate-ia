@@ -7,6 +7,32 @@
       "4": "ghgs",
       "5": "all",
       "6": "aerosols"
+    },
+    "buttonMappings": {
+      "orbital": {
+        "el": "button-orbital",
+        "text": "orbital changes"
+      },
+      "solar": {
+        "el": "button-solar",
+        "text": "solar activity"
+      },
+      "volcanic": {
+        "el": "button-solar",
+        "text": "volcanic activity"
+      },
+      "ghgs": {
+        "el": "button-solar",
+        "text": "greenhouse gases"
+      },
+      "aerosols": {
+        "el": "button-solar",
+        "text": "aerosols"
+      },
+      "all": {
+        "el": "button-solar",
+        "text": "all"
+      }
     }
   }
 }

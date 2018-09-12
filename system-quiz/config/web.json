@@ -3,6 +3,16 @@
     "keyboardMappings": {
       "1": "0",
       "2": "1"
+    },
+    "buttonMappings": {
+      "0": {
+        "el": "button-left",
+        "text": "left"
+      },
+      "1": {
+        "el": "button-right",
+        "text": "right"
+      }
     }
   }
 }

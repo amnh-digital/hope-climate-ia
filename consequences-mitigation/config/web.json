@@ -5,6 +5,12 @@
         "name": "rotate.vertical",
         "multiplier": 3.0
       }
+    },
+    "touchMappings": {
+      "rotate.vertical": {
+        "el": "knob",
+        "options": {}
+      }
     }
   }
 }
