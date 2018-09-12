@@ -8,13 +8,21 @@ body {
   width: 100vw;
   height: 75vh;
   overflow: hidden;
+  outline: none;
 }
 
-.exhibit {
+.panzoom {
+  position: absolute;
   width: 100vw;
   height: 26vw;
-  position: absolute;
   bottom: 5vw;
+  left: 0;
+}
+.exhibit {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
   left: 0;
   background: url(../img/rails.png) no-repeat;
   background-size: 100% auto;
@@ -114,9 +122,21 @@ body {
   background-size: contain;
   background-position: left center;
   margin-left: 0.1vw;
-  box-shadow: 0 0.05vw 0.05vw 0.05vw rgba(0,0,0,0.2);
+  /* box-shadow: 0 0.05vw 0.05vw 0.05vw rgba(0,0,0,0.2); */
   border: 0.1vw solid transparent;
   text-align: center;
+  position: relative;
+}
+/* mute the colors */
+.deck a:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 105%;
+  background: rgba(0,0,0,0.6);
 }
 .deck a span {
   opacity: 0;
@@ -125,6 +145,9 @@ body {
 }
 .deck a:hover {
   border: 0.1vw solid var(--secondary-color);
+}
+.deck a:hover:after {
+  display: none;
 }
 .deck a:hover span {
   opacity: 1;
@@ -167,7 +190,7 @@ body {
 .content-area {
   width: auto;
   max-width: 960px;
-  margin: -3vh auto 0;
+  margin: 0 auto;
   padding: 1rem;
   box-sizing: border-box;
   color: white;
