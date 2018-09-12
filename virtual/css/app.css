@@ -198,6 +198,9 @@ body {
 .content-area p {
   line-height: 1.8;
 }
+.content-area strong {
+  color: var(--secondary-color);
+}
 
 @media (orientation: portrait) {
   .app {
