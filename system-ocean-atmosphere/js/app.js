@@ -132,7 +132,7 @@ var AppOceanAtmosphere = (function() {
     var promise = $.Deferred();
 
     // add video element to document
-    var $video = $('<video id="video" webkit-playsinline style="display: none" autoplay loop crossorigin="anonymous"></video>');
+    var $video = $('<video id="video" webkit-playsinline style="display: none" muted autoplay loop crossorigin="anonymous"></video>');
     _.each(this.opt.videos, function(v){
       var rand = "?r=" + parseInt(Math.random() * 100000); // add random string at the end to prevent cache
       $video.append($('<source src="'+v.url+rand+'" type="'+v.type+'">'));
