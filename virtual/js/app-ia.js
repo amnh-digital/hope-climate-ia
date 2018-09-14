@@ -8,8 +8,22 @@ var VirtualAppIA = (function() {
     this.init();
   }
 
+  function getParameterByName(name) {
+    var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+  }
+
   VirtualAppIA.prototype.init = function(){
-    
+    this.$frame = $("#embedded-page");
+    this.loadPage();
+  };
+
+  VirtualAppIA.prototype.loadPage = function(){
+    var value = getParameterByName("p") || "consequences-change";
+    var url = "/"+value+"/index.html";
+
+    this.$frame.attr("src", url);
+    $("."+value).addClass("active");
   };
 
   return VirtualAppIA;

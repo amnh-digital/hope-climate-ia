@@ -1,0 +1,101 @@
+.app {
+  overflow: auto;
+}
+
+.screen,
+.deck {
+  position: relative;
+  width: 160vh;
+  height: 90vh;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background: #111;
+}
+.deck {
+  height: 46.48vh;
+  border-top: 1vh solid #ccc;
+}
+.screen iframe {
+  border: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.panel-image {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: none;
+}
+.panel-image.active {
+  background: no-repeat;
+  background-position: center center;
+  background-size: contain;
+}
+.panel-image.active.double {
+  background-size: auto 100%;
+}
+.panel-image.active.left {
+  background-position: left center;
+}
+.panel-image.active.right {
+  background-position: right center;
+}
+.consequences-change.active {
+  background-image: url(../img/label_decks/consq1.jpg);
+}
+.consequences-mitigation.active {
+  background-image: url(../img/label_decks/consq2.jpg);
+}
+.consequences-cascading.active {
+  background-image: url(../img/label_decks/consq2.jpg);
+}
+.temperature-timescales.active {
+  background-image: url(../img/label_decks/ww1.jpg);
+}
+.temperature-regions.active {
+  background-image: url(../img/label_decks/ww2.jpg);
+}
+.temperature-forcings.active {
+  background-image: url(../img/label_decks/ww2.jpg);
+}
+.system-greenhouse.active {
+  background-image: url(../img/label_decks/hcw1.jpg);
+}
+.system-quiz.active {
+  background-image: url(../img/label_decks/hcw2.jpg);
+}
+.system-ocean-atmosphere.active {
+  background-image: url(../img/label_decks/hcw2.jpg);
+}
+
+.return-link {
+  color: #ccc;
+  font-size: 1vw;
+  padding: 2rem;
+  display: block;
+  position: fixed;
+  left: 0;
+  top: 0;
+  text-decoration: none;
+}
+.return-link:hover {
+  color: white;
+}
+
+
+@media (max-aspect-ratio: 16/9) {
+  .screen,
+  .deck {
+    width: 90vw;
+    height: 50.625vw;
+  }
+  .deck {
+    height: 26.14525vw;
+  }
+}
