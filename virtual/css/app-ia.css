@@ -69,6 +69,8 @@
 }
 .system-quiz.active {
   background-image: url(../img/label_decks/hcw2.jpg);
+  width: 103%;
+  left: -3%;
 }
 .system-ocean-atmosphere.active {
   background-image: url(../img/label_decks/hcw2.jpg);

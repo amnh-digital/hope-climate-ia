@@ -24,6 +24,8 @@ var VirtualAppIA = (function() {
 
     this.$frame.attr("src", url);
     $("."+value).addClass("active");
+
+    $('.app').addClass("page-"+value)
   };
 
   return VirtualAppIA;
