@@ -6,7 +6,7 @@ var Controls = (function() {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
         "smoothingWindow": 60,
-        "deltaThreshold": 0.005
+        "deltaThreshold": [0.005, 0.2]
       }
     };
     // override nested defaults
@@ -496,7 +496,7 @@ var Controls = (function() {
       var delta = Math.abs(prev-state);
 
       // state has changed, execute callback
-      if (delta > threshold) {
+      if (delta > threshold[0] && (delta < threshold[1] || prev <= -1)) {
         // console.log("State change", key, state)
         channel.post("controls.axes.change", {"key": key, "value": state});
         _this.gamepadState[key] = state;
