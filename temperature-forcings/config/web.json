@@ -11,27 +11,33 @@
     "buttonMappings": {
       "orbital": {
         "el": "button-orbital",
-        "text": "orbital changes"
+        "text": "orbital changes",
+        "toggle": true
       },
       "solar": {
         "el": "button-solar",
-        "text": "solar activity"
+        "text": "solar activity",
+        "toggle": true
       },
       "volcanic": {
         "el": "button-solar",
-        "text": "volcanic activity"
+        "text": "volcanic activity",
+        "toggle": true
       },
       "ghgs": {
         "el": "button-solar",
-        "text": "greenhouse gases"
+        "text": "greenhouse gases",
+        "toggle": true
       },
       "aerosols": {
         "el": "button-solar",
-        "text": "aerosols"
+        "text": "aerosols",
+        "toggle": true
       },
       "all": {
         "el": "button-solar",
-        "text": "all"
+        "text": "all",
+        "toggle": true
       }
     }
   }

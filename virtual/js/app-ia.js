@@ -20,7 +20,7 @@ var VirtualAppIA = (function() {
 
   VirtualAppIA.prototype.loadPage = function(){
     var value = getParameterByName("p") || "consequences-change";
-    var url = "/"+value+"/index.html";
+    var url = "/"+value+"/index.html?mode=embedded";
 
     this.$frame.attr("src", url);
     $("."+value).addClass("active");

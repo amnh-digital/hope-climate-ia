@@ -126,3 +126,11 @@
 #key.active {
   opacity: 1;
 }
+
+.ui {
+  width: 27.25vw;
+  padding-bottom: 0;
+}
+.ui button {
+  margin-bottom: 1.5rem;
+}

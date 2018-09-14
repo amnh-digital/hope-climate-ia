@@ -264,12 +264,23 @@ var Controls = (function() {
 
     _.each(mappings, function(opt, key){
       var $button = $('<button id="'+opt.el+'">'+opt.text+'</button>');
+      var isToggle = opt.toggle;
       $button.on("mousedown", function(e){
-        channel.post("controls.button.down", key);
+        var $el = $(this);
+        if (isToggle) {
+          $el.toggleClass("active");
+        }
+        if (!isToggle || $el.hasClass("active")) {
+          channel.post("controls.button.down", key);
+        } else if (isToggle && !$el.hasClass("active")) {
+          channel.post("controls.button.up", key);
+        }
       });
-      $button.on("mouseup", function(e){
-        channel.post("controls.button.up", key);
-      });
+      if (!isToggle) {
+        $button.on("mouseup", function(e){
+          channel.post("controls.button.up", key);
+        });
+      }
       $container.append($button);
     });
   };

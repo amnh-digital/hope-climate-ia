@@ -302,9 +302,9 @@ a {
 
 .ui {
   display: block;
-  padding: 2rem 1rem;
+  padding: 2rem 0.5rem 1rem;
   /* background: #00676d; */
-  background: rgba(0, 103, 109, 0.9);
+  background: rgba(0, 103, 109, 0.5);
   position: fixed;
   bottom: 0;
   left: 0;
@@ -321,12 +321,13 @@ a {
   text-align: center;
   margin-top: -1vh;
   border: none;
-  border-radius: 10%;
+  border-radius: 0.5vh;
   font-size: 2vh;
   font-family: sans-serif;
   background: #3fc1be;
 }
-.ui button:hover {
+.ui button:hover,
+.ui button.active {
   background: white;
 }
 .ui:after {
@@ -354,7 +355,7 @@ a {
 }
 .ui-slider-vertical {
   width: 2vh;
-  height: 20vh;
+  height: 16vh;
 }
 .ui-slider-horizontal {
   margin-top: 9vh;
