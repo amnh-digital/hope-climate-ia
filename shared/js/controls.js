@@ -409,7 +409,11 @@ var Controls = (function() {
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){
-    var $container = $('<div id="ui" class="ui"></div>');
+    var $container = $("#ui");
+    if (!$container.length) {
+      $container = $('<div id="ui" class="ui"></div>');
+      $('body').append($container);
+    }
     var channel = this.channel;
 
     _.each(mappings, function(opt, key){
@@ -433,8 +437,6 @@ var Controls = (function() {
 
       region.bind(listener, "rotate", onChange);
     });
-
-    $('body').append($container);
   };
 
   Controls.prototype.loadScrollListeners = function(mappings) {
@@ -454,7 +456,11 @@ var Controls = (function() {
   };
 
   Controls.prototype.loadUIListeners = function(mappings) {
-    var $container = $('<div id="ui" class="ui"></div>');
+    var $container = $("#ui");
+    if (!$container.length) {
+      $container = $('<div id="ui" class="ui"></div>');
+      $('body').append($container);
+    }
     var channel = this.channel;
 
     _.each(mappings, function(opt, key){
@@ -465,8 +471,6 @@ var Controls = (function() {
       });
       $container.append($slider);
     });
-
-    $('body').append($container);
   };
 
   Controls.prototype.pollGamepad = function(){

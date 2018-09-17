@@ -15,17 +15,25 @@ var VirtualAppIA = (function() {
 
   VirtualAppIA.prototype.init = function(){
     this.$frame = $("#embedded-page");
-    this.loadPage();
+    var value = getParameterByName("p") || "consequences-change";
+    this.loadPage(value);
+    this.loadControls(value);
   };
 
-  VirtualAppIA.prototype.loadPage = function(){
-    var value = getParameterByName("p") || "consequences-change";
-    var url = "../"+value+"/index.html?mode=embedded";
+  VirtualAppIA.prototype.loadControls = function(value){
+    $.getJSON("../"+value+"/config/web.json", function(data){
+      var params = data.controls;
+      delete params.scrollMappings;
+      var controls = new Controls(params);
+      controls.load();
+    });
+  };
 
+  VirtualAppIA.prototype.loadPage = function(value){
+    var url = "../"+value+"/index.html?mode=embedded";
     this.$frame.attr("src", url);
     $("."+value).addClass("active");
-
-    $('.app').addClass("page-"+value)
+    $('.app').addClass("page-"+value);
   };
 
   return VirtualAppIA;

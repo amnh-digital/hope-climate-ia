@@ -90,6 +90,71 @@
   color: white;
 }
 
+.ui {
+  position: absolute;
+  background: none;
+  left: 44%;
+  top: 25%;
+  transform: scale3d(0.75, 0.75, 0.75);
+  transform-origin: 0 0;
+}
+.ui-slider {
+  background: rgba(255, 255, 255, 0.2);
+}
+.ui-slider-horizontal {
+  margin-top: 8vh;
+  margin-left: 8vh;
+}
+.ui button {
+  height: 6vh;
+  width: 6vh;
+  line-height: 6vh;
+  border-radius: 50%;
+}
+
+.page-consequences-change .ui-slider-horizontal {
+  margin-top: 0;
+  margin-left: 6vh;
+}
+.page-consequences-change .ui button {
+  margin-left: 2rem;
+}
+.page-consequences-mitigation .ui {
+  left: 50%;
+  top: 21%;
+  transform: scale3d(0.5, 0.5, 0.5);
+}
+.page-consequences-cascading .ui {
+  left: 61.55%;
+  top: 21%;
+  transform: scale3d(0.5, 0.5, 0.5);
+}
+.page-temperature-regions .ui {
+  left: 42%;
+}
+.page-temperature-forcings .ui {
+  width: 30%;
+  left: 50%;
+}
+.page-temperature-forcings .ui button {
+  text-indent: 200vw;
+  overflow: hidden;
+  margin-right: 7.5vh;
+  margin-bottom: 10vh;
+}
+.page-system-ocean-atmosphere .ui {
+  left: 48%;
+}
+.page-system-ocean-atmosphere .ui-slider-horizontal {
+  transform: rotateZ(24deg);
+}
+.page-system-quiz .ui {
+  left: 42.75%;
+  top: 24%;
+}
+.page-system-quiz #button-right {
+  margin-left: 14vh;
+}
 
 @media (max-aspect-ratio: 16/9) {
   .screen,
