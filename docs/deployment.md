@@ -9,9 +9,9 @@ Currently there is support for deploying one or two interactive screens per comp
 1. Install [Node.js](https://nodejs.org/en/)
 1. Install the [Electron packager](https://github.com/electron-userland/electron-packager):
 
-  ```
-  npm install electron-packager -g
-  ```
+   ```
+   npm install electron-packager -g
+   ```
 
 1. Clone and install this repository:
 
