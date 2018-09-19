@@ -19,3 +19,25 @@ The app uses the [Pointer Lock API](https://developer.mozilla.org/en-US/docs/Web
 Buttons are very simply mapped to keyboard presses, e.g. `1`, `2`, etc.
 
 ## Configuration of controls
+
+Each app has a config file in its directory, e.g.:
+
+```
+./consequences-change/
+   - config/
+      - physical.json
+```
+
+The values in this config file is passed into an instance of the controls javascript library ([./shared/js/controls.js](../shared/js/controls.js)) which listens for the appropriate input events and emits [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API) messages that active apps listen to.
+
+If you need a machine-specific configuration file (e.g. if a particular slider needs to be configured manually per machine), you can manually edit the controls.json file in a specific deployment directory, e.g. [./electron/hope-mac-1/controls.json](../electron/hope-mac-1/controls.json).  This will override the default config in `physical.json` shown above. This is particularly useful if, for example, the slider does not slide all the way to the edge or if the slider direction is reversed.
+
+## Slider utility
+
+There is a very basic slider utility for debugging sliders. You can build this by running:
+
+```
+sudo npm run build:slider
+```
+
+This will create a slider utility app in `./build/mac/slider-utility-darwin-x64/`
