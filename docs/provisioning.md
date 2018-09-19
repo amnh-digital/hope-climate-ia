@@ -4,13 +4,13 @@ Once you have [deployed apps](deployment.md) onto a computer, you may want to co
 
 1. Run [./electron/mac-provisioner.sh](../electron/mac-provisioner.sh) on a Mac machine
 
-  ```
-  cd electron
-  chmod +x mac-provisioner.sh
-  sudo ./mac-provisioner.sh
-  ```
+   ```
+   cd electron
+   chmod +x mac-provisioner.sh
+   sudo ./mac-provisioner.sh
+   ```
 
-  This script will do things like disable updates, bluetooth, and dialog boxes as well as shut down and turn on the computer daily. View the file for details and comment out where necessary.
+   This script will do things like disable updates, bluetooth, and dialog boxes as well as shut down and turn on the computer daily. View the file for details and comment out where necessary.
 
 1. Make the app automatically open on startup. There are two ways of doing this:
 
