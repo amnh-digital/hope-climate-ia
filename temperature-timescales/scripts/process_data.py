@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import argparse
 import json
 from lib import *
 import math
@@ -13,15 +14,25 @@ import sys
 
 # 20the century average temperature in °C
 # https://www.ncdc.noaa.gov/sotc/global/201613
-BASELINE = 13.9
 
-START_YEAR = 1880
-END_YEAR = 2017
-MONTHLY_DATA_FILE = "../data/188001-201803.csv"
-ANNUAL_DATA_FILE = "../data/1880-2018.csv"
-OUTPUT_FILE = "../data/current.json"
+parser = argparse.ArgumentParser()
+parser.add_argument('-monthly', dest="MONTHLY_DATA_FILE", default="../data/188001-201803.csv", help="Monthly temperature anomaly input file")
+parser.add_argument('-annual', dest="ANNUAL_DATA_FILE", default="../data/1880-2018.csv", help="Annual temperature anomaly input file")
+parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
+parser.add_argument('-end', dest="END_YEAR", default=2017, type=int, help="End year")
+parser.add_argument('-grad', dest="GRADIENT", default="#58e0dc,#99cccc,#adada3,#d67052,#eb5229,#ff3300", help="Color gradient")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/current.json", help="Output file")
+args = parser.parse_args()
+
+START_YEAR = args.START_YEAR
+END_YEAR = args.END_YEAR
+MONTHLY_DATA_FILE = args.MONTHLY_DATA_FILE
+ANNUAL_DATA_FILE = args.ANNUAL_DATA_FILE
+OUTPUT_FILE = args.OUTPUT_FILE
+GRADIENT = args.GRADIENT.split(",")
 # GRADIENT = ["#42a6ff", "#89a2b7", "#473747", "#e05050", "#fc0000"]
-GRADIENT = ["#58e0dc", "#99cccc", "#adada3", "#d67052", "#eb5229", "#ff3300"]
+
+BASELINE = 13.9 # https://www.ncdc.noaa.gov/sotc/global/201613
 
 # Convert colors to RGB
 GRADIENT = [hex2rgb(g) for g in GRADIENT]

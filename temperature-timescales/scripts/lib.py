@@ -53,11 +53,13 @@ def parseRows(arr):
             arr[i][key] = parseNumber(item[key])
     return arr
 
-def readCSV(filename):
+def readCSV(filename, skipInitialLines=4):
     rows = []
     if os.path.isfile(filename):
         with open(filename, 'rb') as f:
-            lines = [line for line in f if not line.startswith("#")]
+            lines = list(f)
+            lines = lines[skipInitialLines:]
+            lines = [line for line in lines if not line.startswith("#")]
             reader = csv.DictReader(lines, skipinitialspace=True)
             rows = list(reader)
             rows = parseRows(rows)
