@@ -4,6 +4,7 @@ electron-packager/
 
 oversize-assets/*
 !oversize-assets/README.md
+/controls.json
 
 *.pyc
 node_modules/
