@@ -1,0 +1,26 @@
+{
+  "launchDelay": 1000,
+  "windows": [
+    {
+      "url": "utilities/gamepad.html",
+      "debug": false,
+      "browserWindow": {
+        "kiosk": true,
+        "webPreferences": {
+          "nodeIntegration": false
+        }
+      }
+    }
+  ],
+  "commandLineSwitches": {
+    "incognito":"true",
+    "ignore-gpu-blacklist":"true",
+    "high-dpi-support":"1",
+    "force-device-scale-factor":"1",
+    "overscroll-history-navigation":"0",
+    "start-fullscreen":"true",
+    "disable-pinch":"true",
+    "disable-touch-feedback":"true",
+    "disable-touch-drag-drop":"true"
+  }
+}

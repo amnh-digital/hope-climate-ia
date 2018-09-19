@@ -8,7 +8,8 @@
     "build:mac3": "chmod +x ./electron/build-hope-mac-3.sh && ./electron/build-hope-mac-3.sh",
     "build:mac4": "chmod +x ./electron/build-hope-mac-4.sh && ./electron/build-hope-mac-4.sh",
     "build:mac5": "chmod +x ./electron/build-hope-mac-5.sh && ./electron/build-hope-mac-5.sh",
-    "build:mouselock": "chmod +x ./electron/build-test-mouselock.sh && ./electron/build-test-mouselock.sh"
+    "build:mouselock": "chmod +x ./electron/build-test-mouselock.sh && ./electron/build-test-mouselock.sh",
+    "build:slider": "chmod +x ./electron/build-slider-utility.sh && ./electron/build-slider-utility.sh"
   },
   "devDependencies": {
     "electron": "2.0.4",
