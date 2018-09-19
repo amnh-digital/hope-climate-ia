@@ -1,4 +1,4 @@
-## HoPE Technical Documentation
+# HoPE Technical Documentation
 
 This set of documents focuses primarily on the technical considerations of developing, testing, and deploying these interactive applications onto kiosk-like computers.
 
