@@ -203,6 +203,20 @@ body {
 .content-area strong {
   color: var(--secondary-color);
 }
+.content-area h2 {
+  font-size: 1.6rem;
+  margin: 2rem 0 1.6rem;
+}
+.content-area h3 {
+  font-size: 1.2rem;
+}
+.content-area ul {
+  margin: 2rem 0 2rem -1rem;
+}
+.content-area img {
+  width: 100%;
+  height: auto;
+}
 
 @media (orientation: portrait) {
   .app {
