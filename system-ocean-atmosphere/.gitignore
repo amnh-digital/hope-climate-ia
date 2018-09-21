@@ -1,2 +1,4 @@
 *.mp4
 *.ogv
+output/*
+!output/.keep
