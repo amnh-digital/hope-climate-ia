@@ -62,8 +62,17 @@ This will process the new data and create a new `./data/current.json` file that 
 sudo npm run build:mac3
 ```
 
-See the [deployment document](deployment.md) for more details.
+See the [deployment document](deployment.md) for more details. Also, each interactive has a README in its directory for specific instructions for updating data when applicable.
 
 ## Updating Electron
 
 First, update the Electron version in [./electron/package.json](../electron/package.json). Since one of the dependencies ([robot.js](https://github.com/Robot/robot-js)) requires us to specify the specific Electron version, we must also update the Electron version in each of the shell scripts that build the Electron app, e.g. [./electron/build-hope-mac-1.sh](../electron/build-hope-mac-1.sh).  Once you do that, whenever you run a build command (e.g. `sudo npm run build:mac1`), it will build the Electron app with the specified version.
+
+## Updating colors
+
+Since everything is created without compilers, all the configuration is in static files. Unfortunately this means there are two places you need to update color configuration: one in the [CSS](../shared/css/base.css) and one in the [Javascript](../shared/js/config.js):
+
+```
+./shared/css/base.css
+./shared/js/config.js
+```
