@@ -22,6 +22,8 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-forcings', dest="FORCINGS_FILE", default="../data/Fi_Miller_et_al14_upd.txt", help="Forcings input file")
 parser.add_argument('-net', dest="NET_FORCINGS_FILE", default="../data/Fi_net_Miller_et_al14_upd.txt", help="Net forcings input file")
 parser.add_argument('-observed', dest="OBSERVED_FILE", default="../data/1880-2016.csv", help="Observed input file")
+parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
+parser.add_argument('-end', dest="END_YEAR", default=2012, type=int, help="End year")
 parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/current.json", help="JSON output file")
 
 args = parser.parse_args()
@@ -30,10 +32,10 @@ args = parser.parse_args()
 # https://www.ncdc.noaa.gov/sotc/global/201613
 BASELINE = 13.9
 
-START_YEAR = 1880
-END_YEAR = 2012
+START_YEAR = args.START_YEAR
+END_YEAR = args.END_YEAR
 BASELINE_YEAR_START = 1900
-BASELINE_YEAR_END = 1999
+BASELINE_YEAR_END = 2000
 RANGE = (-1.0, 1.0)
 FORCING_HEADERS = {
     "TropAerInd": "aerosols",
