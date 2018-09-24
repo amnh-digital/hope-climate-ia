@@ -143,6 +143,7 @@ var AppOceanAtmosphere = (function() {
     // wait for video to load, then load earth
     this.video.addEventListener('loadeddata', function() {
       console.log('Video loaded');
+      this.play();
       promise.resolve();
     }, false);
 
