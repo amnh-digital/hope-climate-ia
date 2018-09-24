@@ -76,7 +76,8 @@
   background-image: url(../img/label_decks/hcw2.jpg);
 }
 
-.return-link {
+.return-link,
+.fullscreen-link {
   color: #ccc;
   font-size: 1vw;
   padding: 2rem;
@@ -86,8 +87,27 @@
   top: 0;
   text-decoration: none;
 }
-.return-link:hover {
+.return-link:hover,
+.fullscreen-link:hover {
   color: white;
+}
+.fullscreen-link {
+  left: auto;
+  right: 0;
+}
+.fullscreen-link span {
+  display: inline-block;
+  vertical-align: middle;
+}
+.fullscreen-link svg {
+  display: inline-block;
+  width: 1vw;
+  height: 1vw;
+  margin-left: 0.2vw;
+  vertical-align: middle;
+}
+.fullscreen-link path {
+  fill: #ccc;
 }
 
 .ui {
