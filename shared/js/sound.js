@@ -55,6 +55,10 @@ var Sound = (function() {
 
     $(document).on("sound.play.percent", playPercent);
     $(document).on("sound.play.sprite", playSprite);
+
+    $(document).one("click", function() {
+      Howler.ctx.resume();
+    });
   };
 
   Sound.prototype.playPercent = function(percent){
