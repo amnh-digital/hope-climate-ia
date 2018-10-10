@@ -84,6 +84,7 @@ var Stories = (function() {
   };
 
   Stories.prototype.onChange = function(index){
+    var _this = this;
     var firstLoad = true;
     if (index===undefined && this.story) index = this.story.index;
     if (this.story) firstLoad = false;
@@ -99,7 +100,10 @@ var Stories = (function() {
       this.$transformer.css('transform', 'translate3d('+story.dx+'px,'+story.dy+'px,0)');
     }
 
-    this.queueCurrentStory();
+    var timeout = firstLoad ? 10000 : 0;
+    setTimeout(function(){
+      _this.queueCurrentStory();
+    }, timeout);
   };
 
   Stories.prototype.onResize = function(){

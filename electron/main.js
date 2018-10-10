@@ -57,7 +57,7 @@ function startHeartBeat(intervalMs){
   const filename = path.join(userDataPath, "heartbeat.txt");
   var heartbeatInterval = setInterval(function(){
     var t = new Date().getTime();
-    fs.writeFile(filename, ""+t);
+    fs.writeFile(filename, ""+t, function(){});
   }, intervalMs);
 }
 
