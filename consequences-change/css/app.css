@@ -200,6 +200,10 @@
   font-weight: normal;
   margin-top: 1vh;
 }
+.caption h2 span,
+.caption p span {
+  white-space: nowrap;
+}
 
 .title h2 {
   font-weight: normal;

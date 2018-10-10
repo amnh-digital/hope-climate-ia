@@ -23,10 +23,12 @@
 }
 .plyr__captions {
   font-size: 0.6vh;
-  transform: translateY(-9vh);
+  transform: translateY(0.5vh);
   padding: 1vh;
   display: block;
   z-index: 1;
+  bottom: auto;
+  top: 100%;
 }
 .plyr__caption {
   font-family: Balance, arial, helvetica, sans-serif;

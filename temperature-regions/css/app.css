@@ -68,14 +68,15 @@
   color: var(--cool-color);
 }
 .map-key .bracket svg {
-  height: 3vw;
+  height: 4vw;
   width: 0.676vw;
   display: block;
-  margin-top: 1vw;
+  margin-top: 0.6vw;
+  overflow: visible;
 }
 .map-key .bracket polyline {
   stroke: var(--gray-light-color);
-  stroke-width: 0.3vw;
+  stroke-width: 0.2vw;
   fill: none;
   stroke-miterlimit: 10;
 }

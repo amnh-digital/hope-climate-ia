@@ -12,14 +12,14 @@
         {
           "parent": "root",
           "id": "a1",
-          "label": "heat waves",
-          "description": "Extreme heat waves become longer and more severe",
+          "label": "Heat waves",
+          "description": "Extreme heat waves become longer and more severe.",
           "angle": 100
         },{
           "parent": "a1",
           "id": "a2",
           "label": "",
-          "description": "Soil dries from heat and lack of rain",
+          "description": "Soil dries from heat and lack of rain.",
           "image": "img/dry_soil.jpg",
           "angle": 100,
           "nImageWidth": 0.8,
@@ -28,13 +28,13 @@
           "parent": "a2",
           "id": "a3",
           "label": "",
-          "description": "Dry soil produces fewer crops",
+          "description": "Dry soil produces fewer crops.",
           "angle": 80
         },{
           "parent": "a3",
           "id": "a4",
           "label": "",
-          "description": "Food shortages contribute to food insecurity and famine",
+          "description": "Food shortages contribute to food insecurity and famine.",
           "image": "img/food_shortage.jpg",
           "angle": 75
         },{
@@ -57,8 +57,8 @@
         {
           "parent": "root",
           "id": "b1",
-          "label": "droughts",
-          "description": "Droughts become longer and more frequent",
+          "label": "Droughts",
+          "description": "Droughts become longer and more frequent.",
           "angle": 100
         },{
           "parent": "b1",
@@ -71,14 +71,14 @@
           "parent": "b2",
           "id": "b3",
           "label": "",
-          "description": "People flee drought-stricken areas to become \"climate refugees\"",
+          "description": "People flee drought-stricken areas to become \"climate refugees\".",
           "angle": 90,
           "nContentWidth": 1.2
         },{
           "parent": "b3",
           "id": "b4",
           "label": "",
-          "description": "Hunger and unemployment fuel political instability, violence and war",
+          "description": "Hunger and unemployment fuel political instability, violence and war.",
           "image": "img/conflicts.jpg",
           "angle": 105,
           "nImageWidth": 0.8,
@@ -87,7 +87,7 @@
           "parent": "b3",
           "id": "b5",
           "label": "",
-          "description": "Emigrants pour into neighboring countries",
+          "description": "Emigrants pour into neighboring countries.",
           "angle": 80
         }
       ]
@@ -103,14 +103,14 @@
         {
           "parent": "root",
           "id": "c1",
-          "label": "habitat change",
-          "description": "Insect and microbe ranges expand",
+          "label": "Habitat change",
+          "description": "Insect and microbe ranges expand.",
           "angle": 100
         },{
           "parent": "c1",
           "id": "c2",
           "label": "",
-          "description": "Disease-causing organisms move into new places",
+          "description": "Disease-causing organisms move into new places.",
           "angle": 90,
           "distance": 0.33,
           "contentAngle": -50,
@@ -119,20 +119,20 @@
           "parent": "c2",
           "id": "c3",
           "label": "",
-          "description": "Lyme disease could spread as ticks' ranges expand",
+          "description": "Lyme disease could spread as ticks' ranges expand.",
           "image": "img/lyme.jpg",
           "angle": 10
         },{
           "parent": "c2",
           "id": "c4",
           "label": "",
-          "description": "Mosquitoes could spread malaria and dengue fever to new areas",
+          "description": "Mosquitoes could spread malaria and dengue fever to new areas.",
           "angle": 70
         },{
           "parent": "c2",
           "id": "c5",
           "label": "",
-          "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water",
+          "description": "Waterborne diseases such as cholera could spread as flooding and rain runoff contaminate water.",
           "image": "img/cholera.png",
           "angle": 110,
           "imageAngle": 110
@@ -140,7 +140,7 @@
           "parent": "c2",
           "id": "c6",
           "label": "",
-          "description": "Yellow fever, Chagas's disease, schistosomiasis and other warm-weather diseases could all become more common",
+          "description": "Yellow fever, Chagas's disease, schistosomiasis and other warm-weather diseases could all become more common.",
           "image": "img/disease.png",
           "angle": 185,
           "nContentWidth": 1.2,
@@ -161,14 +161,14 @@
         {
           "parent": "root",
           "id": "d1",
-          "label": "seasons change",
-          "description": "Winters are warmer and spring starts earlier",
+          "label": "Seasons change",
+          "description": "Winters are warmer and spring starts earlier.",
           "angle": 100
         },{
           "parent": "d1",
           "id": "d2",
           "label": "",
-          "description": "Leaves appear earlier",
+          "description": "Leaves appear earlier.",
           "image": "img/leaves.jpg",
           "angle": 95,
           "nImageWidth": 0.7
@@ -176,25 +176,25 @@
           "parent": "d2",
           "id": "d3",
           "label": "",
-          "description": "Leaf-eating insects multiply sooner",
+          "description": "Leaf-eating insects multiply sooner.",
           "angle": 80
         },{
           "parent": "d3",
           "id": "d4",
           "label": "",
-          "description": "Birds must migrate earlier to find insects to eat",
+          "description": "Birds must migrate earlier to find insects to eat.",
           "angle": 95
         },{
           "parent": "d4",
           "id": "d5",
           "label": "",
-          "description": "Plant, insect and bird ranges shrink or move, when possible",
+          "description": "Plant, insect and bird ranges shrink or move, when possible.",
           "angle": 80
         },{
           "parent": "d5",
           "id": "d6",
           "label": "",
-          "description": "Invasive pests such as bark beetles could devastate forests",
+          "description": "Invasive pests such as bark beetles could devastate forests.",
           "image": "img/pests.jpg",
           "angle": 70,
           "nImageWidth": 0.85
@@ -202,7 +202,7 @@
           "parent": "d5",
           "id": "d7",
           "label": "",
-          "description": "Trees could die when ranges shift",
+          "description": "Trees could die when ranges shift.",
           "angle": 100,
           "contentAngle": 100,
           "contentDistance": 0.12
@@ -210,7 +210,7 @@
           "parent": "d5",
           "id": "d8",
           "label": "",
-          "description": "Wildfires become larger and more frequent",
+          "description": "Wildfires become larger and more frequent.",
           "angle": 140
         }
       ]
@@ -226,8 +226,8 @@
         {
           "parent": "root",
           "id": "e1",
-          "label": "sea level rise",
-          "description": "Ice-sheet and glacial melting quickens, and warming oceans expand",
+          "label": "Sea level rise",
+          "description": "Ice-sheet and glacial melting quickens, and warming oceans expand.",
           "angle": 100
         },{
           "parent": "e1",
@@ -239,14 +239,14 @@
           "parent": "e2",
           "id": "e3",
           "label": "",
-          "description": "Many cannot afford protective barriers to rising seas",
+          "description": "Many cannot afford protective barriers to rising seas.",
           "image": "img/coastal.jpg",
           "angle": 80
         },{
           "parent": "e3",
           "id": "e4",
           "label": "",
-          "description": "Millions of people in poorer areas could be displaced",
+          "description": "Millions of people in poorer areas could be displaced.",
           "image": "img/displaced.jpg",
           "angle": 105,
           "imageAngle": 225
@@ -254,7 +254,7 @@
           "parent": "e3",
           "id": "e5",
           "label": "",
-          "description": "Low-lying islands could disappear entirely",
+          "description": "Low-lying islands could disappear entirely.",
           "angle": 80
         }
       ]

@@ -717,7 +717,7 @@ var Graphics = (function() {
     var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
     var showAnnotation = (this.scale <= scaleThreshold);
     if (!showAnnotation) return false;
-    
+
     var current = this.plotCurrentValue;
     var yearPrecise = this.yearPrecise;
     if (!current.annotation || !current.annotation.years) return false;
@@ -898,7 +898,7 @@ var Graphics = (function() {
       images.visible = false;
     }
 
-    var lineWidth = markerW*0.6667;
+    var lineWidth = markerW*0.5;
     var cornerRadius = rectH * 0.1;
     var lineX = rectX - lineWidth/2;
     var lineY = cy + lineWidth/2;

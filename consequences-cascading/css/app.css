@@ -76,7 +76,7 @@
 .fact-box .tab {
   position: absolute;
   background: var(--black-color);
-  bottom: 0;
+  bottom: -0.5vh;
   left: 0;
   width: 42%;
   height: 2.133vh;

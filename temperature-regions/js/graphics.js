@@ -337,7 +337,7 @@ var Graphics = (function() {
     var lineColor = parseInt(this.opt.marker.color);
     // console.log(year, value, color);
 
-    marker.lineStyle(4, lineColor, 0.8);
+    marker.lineStyle(3, lineColor, 0.8);
     marker.moveTo(x, cy).lineTo(x, cy + ch);
 
     var textStyle = _.clone(this.markerTextStyle);
