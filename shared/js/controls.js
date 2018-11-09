@@ -5,7 +5,7 @@ var Controls = (function() {
     var defaults = {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
-        "smoothingWindow": 60,
+        "smoothingWindow": 20,
         "deltaThreshold": [0.005, 0.2]
       }
     };
