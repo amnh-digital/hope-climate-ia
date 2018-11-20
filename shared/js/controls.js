@@ -6,7 +6,7 @@ var Controls = (function() {
       "gamepad": {
         "axes": [], // go to /config/gamepad.html to configure these
         "smoothingWindow": 20,
-        "deltaThreshold": [0.005, 0.2]
+        "deltaThreshold": [0.005, 0.9]
       }
     };
     // override nested defaults
