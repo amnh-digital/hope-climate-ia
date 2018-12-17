@@ -243,7 +243,7 @@ def addParticlesToImage(base, temperature, particles, p):
     cl.enqueue_copy(queue, result, outResult)
 
     result = result.reshape(shape)
-    return result;
+    return result
 
 # Interpolate between two datasets using GPU
 def lerpData(dataA, dataB, mu, offset=0):
