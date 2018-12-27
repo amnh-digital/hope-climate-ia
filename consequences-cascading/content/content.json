@@ -120,7 +120,7 @@
           "id": "c3",
           "label": "",
           "description": "Lyme disease could spread as ticks' ranges expand.",
-          "image": "img/lyme.jpg",
+          "image": "img/lyme.png",
           "angle": 10
         },{
           "parent": "c2",
