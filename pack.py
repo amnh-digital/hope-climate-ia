@@ -6,6 +6,8 @@ import argparse
 from bs4 import BeautifulSoup
 import os
 from pprint import pprint
+import re
+import shutil
 import sys
 
 parser = argparse.ArgumentParser()
@@ -21,14 +23,16 @@ ASSET_URL = args.ASSET_URL.strip()
 ASSET_PREFIX = args.ASSET_PREFIX.strip()
 ASSET_DIRS = args.ASSET_DIRS.strip().split(",")
 OUTPUT_DIR = args.OUTPUT_DIR.strip()
+ASSET_DIR = OUTPUT_DIR + "assets/"
 
 inputDir = os.path.dirname(APP)
+cssAssetPattern = re.compile("url\(\"?\'?([a-zA-Z\/\.]*\/)([a-zA-Z0-9\-\_]+\.[a-z]+)\"?\'?\)")
 assets = []
 
 # Make output directory
-outputDir = os.path.dirname(OUTPUT_DIR)
-if not os.path.exists(outputDir):
-    os.makedirs(outputDir)
+assetDir = os.path.dirname(ASSET_DIR)
+if not os.path.exists(assetDir):
+    os.makedirs(assetDir)
 
 # Parse the html
 soup = None
@@ -37,10 +41,19 @@ with open(APP) as f:
 
 def cssFileToString(filename):
     global assets
+    global cssAssetPattern
+    global inputDir
+
+    fileDir = os.path.dirname(filename)
     cssStr = ""
     with open(filename, 'r') as f:
         cssStr = f.read()
-    # TODO: replace relative urls absolute urls
+    for match in cssAssetPattern.finditer(cssStr):
+        matchDir, matchFile = match.groups()
+        path = os.path.relpath(fileDir + "/" + matchDir + matchFile)
+        assets.append(path)
+        # print("%s + %s = %s" % (matchDir, matchFile, path))
+        # TODO: replace relative urls absolute urls
     return cssStr
 
 def jsFileToString(filename):
@@ -84,8 +97,26 @@ for i, script in enumerate(scripts):
         newTag.string = "\n".join(jsStrs)
         script.replace_with(newTag)
 
+# Write HTML file
 outputStr = soup.prettify('latin-1')
 with open(OUTPUT_DIR + "index.html", "w") as f:
     f.write(outputStr)
+
+# Retrieve assets
+for dir in ASSET_DIRS:
+    files = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
+    assets += files
+assets = list(set(assets))
+
+# Empty asset folder
+for f in os.listdir(assetDir):
+    path = os.path.join(assetDir, f)
+    if os.path.isfile(path):
+        os.unlink(path)
+
+# Write assets
+for asset in assets:
+    dest = ASSET_DIR + ASSET_PREFIX + os.path.basename(asset)
+    shutil.copyfile(asset, dest)
 
 print("Done.")
