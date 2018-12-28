@@ -25,6 +25,15 @@ ASSET_DIRS = args.ASSET_DIRS.strip().split(",")
 OUTPUT_DIR = args.OUTPUT_DIR.strip()
 ASSET_DIR = OUTPUT_DIR + "assets/"
 
+jsVendorCdns = [
+    {"match": ".*shared/js/vendor/jquery\-([0-9\.]+)\.min\.js", "replace": "https://code.jquery.com/jquery-%s.min.js"},
+    {"match": ".*shared/js/vendor/underscore\-([0-9\.]+)\.min\.js", "replace": "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/%s/underscore-min.js"},
+    {"match": ".*shared/js/vendor/pixi\-([0-9\.]+)\.min\.js", "replace": "https://cdnjs.cloudflare.com/ajax/libs/pixi.js/%s/pixi.js"},
+    {"match": ".*shared/js/vendor/three\-([0-9\.]+)\.min\.js", "replace": "https://cdnjs.cloudflare.com/ajax/libs/three.js/%s/three.min.js"}, # TODO: update three js versions in apps
+    {"match": ".*shared/js/vendor/howler\-([0-9\.]+)\.min\.js", "replace": "https://cdnjs.cloudflare.com/ajax/libs/howler/%s/howler.min.js"},
+    {"match": ".*shared/js/vendor/plyr\-([0-9\.]+)\.min\.js", "replace": "https://cdnjs.cloudflare.com/ajax/libs/plyr/%s/plyr.min.js"}
+]
+
 inputDir = os.path.dirname(APP)
 cssAssetPattern = re.compile("url\(\"?\'?([a-zA-Z\/\.]*\/)([a-zA-Z0-9\-\_]+\.[a-z]+)\"?\'?\)")
 assetMap = {}
@@ -66,40 +75,41 @@ def jsFileToString(filename):
         jsStr = f.read()
     return jsStr
 
+def matchCdn(path, cdns):
+    foundMatch = None
+    for cdn in cdns:
+        pattern = cdn["match"]
+        replace = cdn["replace"]
+        matches = re.match(pattern, path)
+        if matches:
+            version = matches.group(1)
+            foundMatch = replace % version
+            break
+    return foundMatch
+
 # Parse stylesheets
-cssStrs = []
 links = soup.find_all("link", rel="stylesheet")
-linkCount = len(links)
 for i, link in enumerate(links):
     path = os.path.relpath(inputDir + "/" + link.get('href')) # gets file path relative to script
     cssStr = cssFileToString(path)
-    cssStrs.append(cssStr)
-    # remove link from tree
-    if i < linkCount-1:
-        link.decompose()
-    # if the last, replace it with the css string
-    else:
-        newTag = soup.new_tag("style")
-        newTag.string = "\n".join(cssStrs)
-        link.replace_with(newTag)
+    newTag = soup.new_tag("style")
+    newTag.string = cssStr
+    link.replace_with(newTag)
 
 # Parse javascript
-jsStrs = []
 scripts = soup.find_all("script", src=True)
-scriptCount = len(scripts)
 for i, script in enumerate(scripts):
     path = os.path.relpath(inputDir + "/" + script.get('src'))
-    # TODO: check for common vendors and link to cdn
-    jsStr = jsFileToString(path)
-    jsStrs.append(jsStr)
-    # remove link from tree
-    if i < scriptCount-1:
-        script.decompose()
-    # if the last, replace it with the js string
-    else:
-        newTag = soup.new_tag("script")
-        newTag.string = "\n".join(jsStrs)
-        script.replace_with(newTag)
+    # check for common vendors and link to cdn
+    cdnMatch = matchCdn(path, jsVendorCdns)
+    jsStr = jsFileToString(path) if not cdnMatch else ""
+    # replace the tag with a new one
+    newTag = soup.new_tag("script")
+    if cdnMatch:
+        newTag["src"] = cdnMatch
+        newTag["crossorigin"] = "anonymous"
+    newTag.string = jsStr
+    script.replace_with(newTag)
 
 # Write HTML file
 outputStr = soup.prettify('latin-1')
