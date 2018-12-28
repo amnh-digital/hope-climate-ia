@@ -27,6 +27,7 @@ ASSET_DIR = OUTPUT_DIR + "assets/"
 
 inputDir = os.path.dirname(APP)
 cssAssetPattern = re.compile("url\(\"?\'?([a-zA-Z\/\.]*\/)([a-zA-Z0-9\-\_]+\.[a-z]+)\"?\'?\)")
+assetMap = {}
 assets = []
 
 # Make output directory
@@ -43,6 +44,7 @@ def cssFileToString(filename):
     global assets
     global cssAssetPattern
     global inputDir
+    global assetMap
 
     fileDir = os.path.dirname(filename)
     cssStr = ""
@@ -53,7 +55,9 @@ def cssFileToString(filename):
         path = os.path.relpath(fileDir + "/" + matchDir + matchFile)
         assets.append(path)
         # print("%s + %s = %s" % (matchDir, matchFile, path))
-        # TODO: replace relative urls absolute urls
+        # Replace relative urls absolute urls
+        assetUrl = assetMap[matchFile] if matchFile in assetMap else ASSET_URL+ASSET_PREFIX+matchFile
+        cssStr = re.sub(r'url\(\"?\'?'+matchDir+matchFile+'\"?\'?\)', "url("+assetUrl+")", cssStr)
     return cssStr
 
 def jsFileToString(filename):
