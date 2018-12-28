@@ -4,6 +4,7 @@
 
 import argparse
 from bs4 import BeautifulSoup
+import glob
 import os
 from pprint import pprint
 import re
@@ -13,8 +14,8 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument('-app', dest="APP", default="temperature-timescales/index.html", help="Path to webpage.")
 parser.add_argument('-aurl', dest="ASSET_URL", default="https://amnh.org/assets/", help="Base url where the assets will be hosted")
-parser.add_argument('-ap', dest="ASSET_PREFIX", default="ww1_", help="Adds a prefix to all asset files")
-parser.add_argument('-ad', dest="ASSET_DIRS", default="temperature-timescales/img/", help="Comma-separated list of directories of assets")
+parser.add_argument('-ap', dest="ASSET_PREFIX", default="", help="Adds a prefix to all asset files")
+parser.add_argument('-ad', dest="ASSET_DIRS", default="temperature-timescales/img/,temperature-timescales/data/*.json,temperature-timescales/config/*.json,temperature-timescales/content/*.json", help="Comma-separated list of directories of assets")
 parser.add_argument('-out', dest="OUTPUT_DIR", default="packages/temperature-timescales/", help="Output directory")
 args = parser.parse_args()
 
@@ -118,7 +119,11 @@ with open(OUTPUT_DIR + "index.html", "w") as f:
 
 # Retrieve assets
 for dir in ASSET_DIRS:
-    files = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
+    files = []
+    if "*" in dir:
+        files = glob.glob(dir)
+    else:
+        files = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
     assets += files
 assets = list(set(assets))
 
