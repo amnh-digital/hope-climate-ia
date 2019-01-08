@@ -1,9 +1,15 @@
 $(function() {
+
+  var CONFIG_BASE_FILE = (typeof CONFIG_BASE_FILE === 'undefined') ? "config/base.json" : CONFIG_BASE_FILE;
+  var CONFIG_WEB_FILE = (typeof CONFIG_WEB_FILE === 'undefined') ? "config/web.json" : CONFIG_WEB_FILE;
+  var CONTENT_FILE = (typeof CONTENT_FILE === 'undefined') ? "content/content.json" : CONTENT_FILE;
+  var DATA_FILE = (typeof DATA_FILE === 'undefined') ? "data/current.json" : DATA_FILE;
+
   $.when(
-    $.getJSON("config/base.json"),
-    $.getJSON("config/web.json"),
-    $.getJSON("content/content.json"),
-    $.getJSON("data/current.json")
+    $.getJSON(CONFIG_BASE_FILE),
+    $.getJSON(CONFIG_WEB_FILE),
+    $.getJSON(CONTENT_FILE),
+    $.getJSON(DATA_FILE)
 
   ).done(function(baseConfig, config, content, data){
     baseConfig = baseConfig[0];
@@ -15,4 +21,6 @@ $(function() {
     console.log('Config loaded.');
     var app = new AppTimescales(config, content, data);
   });
+
+
 });
