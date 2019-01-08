@@ -108,6 +108,7 @@ def matchCdn(path, cdns):
 
 # Parse stylesheets
 links = soup.find_all("link", rel="stylesheet")
+newTags = []
 for i, link in enumerate(links):
     path = os.path.relpath(inputDir + "/" + link.get('href')) # gets file path relative to script
     # check for common vendors and link to cdn
@@ -121,7 +122,14 @@ for i, link in enumerate(links):
         newTag["type"] = "text/css"
         newTag["crossorigin"] = "anonymous"
     newTag.string = cssStr
-    link.replace_with(newTag)
+    # link.replace_with(newTag)
+    link.decompose()
+    newTags.insert(0, newTag)
+
+# Prepend style tags to the body tag
+body = soup.find('body')
+for newTag in newTags:
+    body.insert(0, newTag)
 
 # Parse javascript
 scripts = soup.find_all("script", src=True)
