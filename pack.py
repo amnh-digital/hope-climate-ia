@@ -16,7 +16,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-app', dest="APP", default="temperature-timescales/index.html", help="Path to webpage.")
 parser.add_argument('-aurl', dest="ASSET_URL", default="https://amnh.org/assets/", help="Base url where the assets will be hosted")
 parser.add_argument('-ap', dest="ASSET_PREFIX", default="", help="Adds a prefix to all asset files")
-parser.add_argument('-ad', dest="ASSET_DIRS", default="temperature-timescales/img/,temperature-timescales/data/*.json,temperature-timescales/config/*.json,temperature-timescales/content/*.json", help="Comma-separated list of directories of assets")
+parser.add_argument('-ad', dest="ASSET_DIRS", default="temperature-timescales/img/,temperature-timescales/data/*.json,temperature-timescales/config/*.json,temperature-timescales/content/*.json,shared/audio/key.mp3", help="Comma-separated list of directories of assets")
 parser.add_argument('-am', dest="ASSET_MAP", default="packages/temperature-timescales-assets.csv", help="CSV file with mapping from filename to url or javascript variable")
 parser.add_argument('-out', dest="OUTPUT_DIR", default="packages/temperature-timescales/", help="Output directory")
 args = parser.parse_args()
@@ -154,15 +154,17 @@ for i, script in enumerate(scripts):
     script.replace_with(newTag)
 
 # Write HTML file
-outputStr = soup.prettify('latin-1')
+outputStr = soup.prettify()
 with open(OUTPUT_DIR + "index.html", "w") as f:
-    f.write(outputStr)
+    f.write(outputStr.encode('utf-8'))
 
 # Retrieve assets
 for dir in ASSET_DIRS:
     files = []
     if "*" in dir:
         files = glob.glob(dir)
+    elif os.path.isfile(dir):
+        files = [dir]
     else:
         files = [os.path.join(dir, f) for f in os.listdir(dir) if os.path.isfile(os.path.join(dir, f))]
     assets += files
@@ -176,7 +178,20 @@ for f in os.listdir(assetDir):
 
 # Write assets
 for asset in assets:
-    dest = ASSET_DIR + ASSET_PREFIX + os.path.basename(asset)
+    filename = os.path.basename(asset)
+    dest = ASSET_DIR + ASSET_PREFIX + filename
+    extension = os.path.splitext(filename)[1]
     shutil.copyfile(asset, dest)
+
+    # if json, find-replace in file
+    if extension == ".json":
+        fileStr = ""
+        with open(dest, 'r') as f :
+            fileStr = f.read()
+        for filename in assetMap:
+            pattern = "\"[^\"]*"+filename+"\""
+            fileStr = re.sub(pattern, "\""+assetMap[filename]+"\"", fileStr)
+        with open(dest, 'w') as f:
+            f.write(fileStr)
 
 print("Done.")
