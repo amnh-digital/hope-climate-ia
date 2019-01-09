@@ -1,0 +1,11 @@
+<svg id="Arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 684.34 124.77">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f9a51a;
+      }
+    </style>
+  </defs>
+  <title>instruction_arrow</title>
+  <path class="cls-1" d="M651.83,125a2,2,0,0,1-2-2l.06-118.77H0v-4H651.89a2,2,0,0,1,2,2l-.06,115.92L681.5,90.33l2.84,2.82-31.09,31.26A2,2,0,0,1,651.83,125Zm-15-10.3L619.55,98l2.78-2.88,17.26,16.67Z" transform="translate(0 -0.23)"/>
+</svg>

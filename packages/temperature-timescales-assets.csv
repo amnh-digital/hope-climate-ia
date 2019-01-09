@@ -1,0 +1,8 @@
+filename,var,url
+base.json,CONFIG_BASE_FILE,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/base.json
+content.json,CONTENT_FILE,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/content.json
+current.json,DATA_FILE,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/current.json
+heat_wave.jpg,,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/heat_wave.jpg
+sea_ice.jpg,,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/sea_ice.jpg
+embed.json,CONFIG_FILE,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/embed.json
+key.mp3,,https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/key.mp3

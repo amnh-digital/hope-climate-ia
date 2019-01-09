@@ -1,0 +1,117 @@
+{
+  "graphics": {
+    "el": "#graphics",
+    "minYearsDisplay": 1,
+    "monthYearsDisplay": 3,
+    "monthTransitionStep": 0.04,
+    "targetWidth": 1920,
+    "targetHeight": 1080,
+    "margin": [0.1, 0.05, 0.02, 0.115],
+    "time": 0.5,
+    "scale": 0.5,
+    "highlightMs": 1000,
+    "tenYearTrendYearsDisplay": [5, 100],
+    "sleepTransitionMs": 2000,
+    "minFontSize": 16,
+    "annotationsUI": {
+      "color": "$0xprimary",
+      "highlightColor": "$0xhighlight",
+      "scaleThreshold": 1.0,
+      "rangeColor": "$0xprimaryDarker"
+    },
+    "plot": {
+      "bgColor": "$0xprimaryDarkest",
+      "textStyle": {
+        "fill": "$#white",
+        "fontFamily": "Balance"
+      }
+    },
+    "marker": {
+      "color": "$0xsecondary",
+      "fill": "$0xprimaryDarkest",
+      "lineFill": "$0xprimary",
+      "textFillAlt": "$#primary",
+      "textFillAltDark": "$#primaryDark",
+      "dotRadius": 0.01,
+      "widthStep": 0.005,
+      "textStyle": {
+        "fill": "$#white",
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
+      }
+    },
+    "xAxis": {
+      "height": 0.0667,
+      "tickColor": "$0xprimaryDark",
+      "textStyle": {
+        "fill": "$#primaryDark",
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
+      },
+      "subtextStyle": {
+        "fill": "$#primaryDark",
+        "fontSize": 0.024,
+        "fontFamily": "Balance"
+      }
+    },
+    "yAxis": {
+      "lineColor": "$0xblack",
+      "width": 0.0667,
+      "labelCount": 6,
+      "step": 0.1,
+      "minBounds": [-0.2, 0.2],
+      "lineWidth": 2,
+      "lineWidthBold": 4,
+      "textStyle": {
+        "fill": "$#primaryDark",
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
+      },
+      "subtextStyle": {
+        "fill": "$#grayLight",
+        "fontSize": 0.03,
+        "fontFamily": "Balance"
+      }
+    },
+    "trend": {
+      "color": "$0xhighlight"
+    }
+  },
+  "sound": {
+    "enable": 1,
+    "audio": ["https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/key.mp3"],
+    "volume": 0.4,
+    "limitLastPlayedMs": 10,
+    "sprites": {
+      "C0":[25200,2E3],
+      "D0":[37800,2E3],
+      "D#0":[31500,2E3],
+      "F0":[56700,2E3],
+      "G0":[69300,2E3],
+      "G#0":[63E3,2E3],
+      "A#0":[0,2E3],
+      "C1":[27300,2E3],
+      "D1":[39900,2E3],
+      "D#1":[33600,2E3],
+      "F1":[58800,2E3],
+      "G1":[71400,2E3],
+      "G#1":[65100,2E3],
+      "A#1":[2100,2E3],
+      "C2":[29400,2E3],
+      "D2":[42E3,2E3],
+      "D#2":[35700,2E3],
+      "F2":[60900,2E3],
+      "G2":[73500,2E3],
+      "G#2":[67200,2E3],
+      "A#2":[4200,2E3]
+    }
+  },
+  "sleep": {
+    "enable": 1,
+    "checkInterval": 10,
+    "sleepAfter": 60
+  },
+  "messages": {
+    "el": "#messages"
+  }
+}

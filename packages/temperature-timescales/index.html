@@ -1,0 +1,3128 @@
+<!DOCTYPE doctype html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="ie=edge" http-equiv="x-ua-compatible"/>
+  <title>
+   What can we say about global temperature at different timescales?
+  </title>
+  <meta content="" name="description"/>
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+ </head>
+ <body>
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css">
+  </link>
+  <style>
+   @font-face {
+  font-family: Balance;
+  src: url(https://amnh.org/assets/BalanceOffcPro.ttf);
+}
+
+/* define global colors */
+:root {
+  --primary-color: #058599;
+  --primary-dark-color: #216d79;
+  --primary-darker-color: #1b565f;
+  --primary-darkest-color: #0f363c;
+  --secondary-color: #c98f20;
+  --highlight-color: #e2bb3d;
+  --white-color: #d9dfe8;
+  --gray-light-color: #5b5959;
+  --gray-color: #231f20;
+  --black-color: #000000;
+  --warm-color: #eb5229;
+  --cool-color: #99cccc;
+}
+
+body {
+  font-size: 1.77777777778vh;
+  font-family: Balance, arial, helvetica, sans-serif;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  color: var(--white-color);
+  background-color: var(--black-color);
+}
+.app.left,
+.app.right {
+  width: 50vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.app.right {
+  right: 0;
+  left: auto;
+}
+/* uncomment below for guides */
+/* .app:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  top: 33%;
+  height: 42%;
+  border: 0.2vh solid red;
+  z-index: 100;
+}
+.app:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 0.2vh;
+  height: 100%;
+  background: red;
+  left: 50%;
+  top: 0;
+  margin-left: -0.1vh;
+} */
+
+h1 {
+  font-size: 3rem;
+  letter-spacing: 0.05rem;
+}
+h2 {
+  font-size: 2.6667rem;
+}
+p {
+  font-size: 1.2rem;
+}
+a {
+  color: var(--white-color);
+}
+
+.view {
+  width: 100vw;
+  height: 56.25vw;  /* 1920 x 1080 ratio */
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -28.125vw;
+  /* background-color: var(--black-color); */
+}
+.app.left .view,
+.app.right .view {
+  width: 50vw;
+  margin-top: -14.0625vw;
+}
+
+.title,
+.content {
+  position: absolute;
+  width: 60%;
+  left: 50%;
+  margin-left: -30%;
+}
+
+.title {
+  text-align: left;
+  z-index: 200;
+  top: 10%;
+  width: 40%;
+  position: relative;
+  height: 3.2vh;
+  opacity: 1;
+}
+.title:before,
+.title:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 1.7777778vh;
+  height: 2.8444vh;
+  background: var(--primary-color);
+  top: 0;
+  left: -3.55555555556vh;
+}
+.title:after {
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-style: solid;
+  border-width: 0 0 0.7vh 0.7vh;
+  border-color: transparent transparent var(--black-color) transparent;
+  left: -2.47777775556vh;
+  top: 2.1444vh;
+
+}
+.title h1 {
+  line-height: 1.2;
+  font-size: 3.2vh;
+  letter-spacing: 0.177vh;
+  margin-top: 1vh;
+  margin-bottom: 0;
+}
+.title h2 {
+  font-size: 2.37vh;
+  letter-spacing: 0.09vh;
+  font-weight: normal;
+  margin-top: 1.333vh;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: var(--primary-color);
+}
+.app.sleeping .title {
+  animation: goToSleep 10s ease-in-out;
+}
+
+.content {
+  box-sizing: border-box;
+  top: 33%;
+}
+
+.graphics {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.sleepMode {
+  position: absolute;
+  width: 35.5555555556vh;
+  height: 6.49772579596vh;
+  background: url(https://amnh.org/assets/instruction_arrow.svg) no-repeat;
+  background-size: 100% auto;
+  right: 50%;
+  bottom: 5vh;
+  box-sizing: border-box;
+  text-shadow: 2px 2px #000000;
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
+}
+.sleepMode h3 {
+  font-size: 1.777vh;
+  margin: -3vh 0 2.4vh 0;
+  letter-spacing: 0.1066vh;
+  color: var(--secondary-color);
+}
+.sleepMode p {
+  font-size: 1.7778vh;
+}
+.sleepMode.active,
+.app.sleeping .sleepMode {
+  /* display: block; */
+  opacity: 1;
+  /* animation: point 5s linear infinite; */
+}
+/* .sleepMode.active p,
+#app.sleeping .sleepMode p {
+  animation: blink 3s infinite;
+} */
+
+.credits {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  bottom: 3vh;
+  text-align: center;
+  font-size: 1.2vh;
+  line-height: 1.8;
+  color: var(--gray-light-color);
+  transition: opacity 1s ease-in-out;
+}
+.credits p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2vh;
+}
+.credits.right {
+  left: auto;
+  right: 5.333vh;
+  text-align: left;
+  width: auto;
+}
+.credits dt {
+  float: left;
+  text-align: right;
+  display: block;
+  width: 16.88888vh;
+}
+.credits dd {
+  display: block;
+  margin-left: 17.77778vh;
+}
+.credits:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.sleeping .credits {
+  opacity: 0;
+}
+.hanging {
+  text-indent: -7.25vh;
+}
+.credits.hanging {
+  left: 12.5vh;
+}
+.credits.hanging.right {
+  left: auto;
+}
+
+.progress-dots {
+  width: 100vw;
+  height: 1vh;
+  text-align: center;
+  transition: opacity 2s ease-in-out;
+}
+.progress-dots .dot {
+  display: inline-block;
+  width: 1vh;
+  height: 1vh;
+  margin: 0 1vh;
+  background: var(--gray-light-color);
+  border-radius: 50%;
+}
+.progress-dots .dot.active {
+  background: var(--white-color);
+}
+.sleeping .progress-dots {
+  opacity: 0;
+}
+
+.sleeper {
+  position: absolute;
+  width: 200vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+.globe-sleeper {
+  top: 50vh;
+}
+.particle-sleeper {
+  width: 100vw;
+  left: 50vw;
+}
+.sleeper.active {
+  opacity: 1;
+}
+.sleeper.right {
+  left: -100vw;
+}
+.particle-sleeper.right {
+  left: -50vw;
+}
+
+@keyframes point {
+  from,
+  to {
+    transform: translate3d(0, -0.8888vh, 0);
+  }
+  50% {
+    transform: translate3d(0, 0.8888vh, 0);
+  }
+}
+
+@keyframes goToSleep {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Minimum aspect ratio (for very wide screens) */
+@media (min-aspect-ratio: 1920/1080) {
+  .view {
+    width: 177.777777778vh;
+    height: 100vh;
+    top: 0;
+    left: 50%;
+    margin-top: 0;
+    margin-left: -88.888888889vh;
+  }
+
+}
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+  </style>
+  <style>
+   .sleepMode {
+  display: none;
+}
+.credits {
+  text-align: right;
+  max-width: 50vw;
+  left: auto;
+  right: 0;
+}
+
+.ui {
+  display: block;
+  padding: 2rem 0.5rem 1rem;
+  /* background: #00676d; */
+  background: rgba(0, 103, 109, 0.5);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  border-radius: 0.5vh;
+  vertical-align: middle;
+}
+.ui button {
+  margin-left: 1rem;
+  display: inline-block;
+  cursor: pointer;
+  height: 4vh;
+  line-height: 4vh;
+  text-align: center;
+  margin-top: -1vh;
+  border: none;
+  border-radius: 0.5vh;
+  font-size: 2vh;
+  font-family: sans-serif;
+  background: #3fc1be;
+}
+.ui button:hover,
+.ui button.active {
+  background: white;
+}
+.ui:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.ui-slider {
+  display: block;
+  width: 30vh;
+  height: 2vh;
+  position: relative;
+  margin-left: 5vh;
+  background: rgba(0, 0, 0, 0.2);
+  float: left;
+}
+.ui-slider-handle {
+  position: absolute;
+  background: #3fc1be;
+  border-radius: 0.5vh;
+  height: 5vh;
+  width: 2.5vh;
+  top: -1.5vh;
+  margin-left: -1.25vh;
+}
+.ui-slider-vertical {
+  width: 2vh;
+  height: 16vh;
+}
+.ui-slider-horizontal {
+  margin-top: 9vh;
+}
+.ui-slider-vertical .ui-slider-handle {
+  height: 2.5vh;
+  width: 5vh;
+  top: auto;
+  left: -1.5vh;
+  margin-bottom: -1.25vh;
+  margin-left: auto;
+}
+
+.ui-touch-region {
+  display: block;
+  width: 12vh;
+  height: 12vh;
+  background: #3fc1be;
+  position: relative;
+  margin: 2vh;
+}
+.ui-touch-region.rotate {
+  border-radius: 6vh;
+  cursor: move;
+}
+.ui-touch-region.rotate:before {
+  content: " ";
+  position: absolute;
+  width: 0.5vh;
+  height: 5vh;
+  top: 0;
+  left: 50%;
+  margin-left: -0.25vh;
+  background: rgba(0, 0, 0, 0.333);
+}
+  </style>
+  <style>
+   body {
+  font-size: 18px;
+}
+
+.app,
+.view,
+.content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.content {
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
+}
+
+.credits {
+  display: none;
+}
+
+.ui {
+  position: absolute;
+  left: auto;
+  right: 0;
+  width: 23%;
+  height: 18%;
+  padding: 0;
+}
+.ui-slider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  float: none;
+}
+.ui-slider-vertical {
+  width: 16px;
+  height: 84%;
+  top: 8%;
+}
+.ui-slider-handle {
+  border-radius: 4px;
+}
+.ui-slider-vertical .ui-slider-handle {
+  height: 16px;
+  width: 32px;
+  left: -8px;
+  margin-bottom: -8px;
+  cursor: ns-resize;
+}
+.ui-slider-horizontal {
+  height: 16px;
+  width: 67%;
+  top: 50%;
+  left: auto;
+  right: 5%;
+  margin: -8px 0 0;
+}
+.ui-slider-horizontal .ui-slider-handle {
+  height: 32px;
+  width: 16px;
+  top: -8px;
+  margin-left: -16px;
+  cursor: ew-resize;
+}
+  </style>
+  <style>
+   .title {
+  left: 62%;
+}
+.content {
+  width: 50%;
+  margin-left: -27%;
+  top: 27.5%;
+}
+
+.sleepMode {
+  right: 45%;
+}
+
+.graphics {
+  position: relative;
+  height: 29.4vw;
+}
+
+.messages {
+  position: absolute;
+  width: 12vw;
+  right: -11vw;
+  top: 6.5vh;
+  height: 50vh;
+}
+.messages,
+.message-status {
+  letter-spacing: 0.05rem;
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
+  -webkit-transform: translateZ(0);
+}
+.sleeping .messages,
+.sleeping .message-status {
+  opacity: 0;
+}
+.message-status > div {
+  width: 80%;
+  margin-left: 18%;
+}
+.message-status h2 {
+  font-size: 1vw;
+  margin: 0.5vw 0 0.667vw;
+  color: var(--gray-light-color);
+  line-height: 1.5;
+}
+.message-status h2 strong {
+  color: var(--highlight-color);
+}
+.message-status .bracket {
+  display: block;
+  width: 97%;
+  height: auto;
+  margin-top: 1vh;
+}
+.message-status .bracket polygon {
+  fill: var(--gray-light-color);
+}
+
+.message {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.message.active {
+  opacity: 1;
+}
+.message p {
+  margin: 0;
+  line-height: 1.8;
+  font-size: 0.8vw;
+}
+
+.sidebar {
+  opacity: 0;
+  height: 5vw;
+  display: none;
+}
+.sidebar.active {
+  opacity: 1;
+}
+.sidebar h3 {
+  letter-spacing: 0.1vh;
+  font-size: 1.3vh;
+}
+.sidebar p {
+  font-size: 1vh;
+  line-height: 1.8;
+  font-weight: normal;
+  letter-spacing: 0.1vh;
+}
+.sidebar > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+.sidebar > div:nth-child(1) {
+  animation: fadeInOut 40s 0s infinite linear;
+}
+
+.sidebar > div:nth-child(2) {
+  animation: fadeInOut 40s 20s infinite linear;
+}
+
+
+@keyframes fadeInOut {
+ 0% {
+   opacity: 0;
+ }
+ 4% {
+   opacity: 1;
+ }
+ 46% {
+   opacity: 1;
+ }
+ 50% {
+   opacity: 0;
+ }
+ 100% {
+   opacity: 0;
+ }
+}
+  </style>
+  <style>
+   .content {
+  width: 75%;
+  height: 80%;
+  left: 3%;
+  top: 3%;
+  margin: 0;
+}
+
+.graphics {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.message-status {
+  position: absolute;
+  width: 79.2%;
+  height: 14%;
+  bottom: -14%;
+  left: 18.2%;
+}
+.message-status h2 {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+.message-status > div {
+  width: auto;
+  margin: 0;
+}
+
+.messages {
+  width: 25%;
+  right: -23%;
+  top: 10%;
+  height: 50%;
+}
+.message p {
+  font-size: 1rem;
+}
+  </style>
+  <div class="app" id="app">
+   <div class="view" id="view">
+    <!-- <div class="title">
+          <h1>Rising Global Temperature</h1>
+          <h2>Earth has warmed rapidly over recent decades—<br />and temperature continues to climb</h2>
+        </div> -->
+    <div class="content">
+     <div class="graphics" id="graphics">
+     </div>
+     <div class="message-status">
+      <div>
+       <svg class="bracket" viewbox="0 0 1433 30.5" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="1433 0 1431 0 1431 10.9 304.3 10.9 291.8 23.5 279.2 10.9 2 10.9 2 0 0 0 0 13.4 0 13.4 0 15.9 277.2 15.9 291.8 30.5 306.4 15.9 1433 15.9 1433 13.4 1433 13.4 1433 0">
+        </polygon>
+       </svg>
+       <h2 aria-live="polite">
+        You are viewing
+        <strong id="yearString">
+        </strong>
+        <br/>
+        of global temperature records.
+       </h2>
+      </div>
+     </div>
+     <div aria-live="polite" class="messages" id="messages">
+     </div>
+    </div>
+   </div>
+  </div>
+  <script crossorigin="anonymous" src="https://code.jquery.com/jquery-3.2.1.min.js">
+  </script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">
+  </script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/4.8.1/pixi.js">
+  </script>
+  <script crossorigin="anonymous" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.7/howler.min.js">
+  </script>
+  <script>
+   var CONFIG_BASE_FILE = "https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/base.json";
+var CONTENT_FILE = "https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/content.json";
+var DATA_FILE = "https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/current.json";
+var CONFIG_FILE = "https://s3.amazonaws.com/brianfoo-amnh/web/temperature-timescales/embed.json";
+/*! jQuery UI - v1.12.1 - 2018-03-02
+* http://jqueryui.com
+* Includes: widget.js, keycode.js, widgets/mouse.js, widgets/slider.js
+* Copyright jQuery Foundation and other contributors; Licensed MIT */
+
+(function(t){"function"==typeof define&&define.amd?define(["jquery"],t):t(jQuery)})(function(t){t.ui=t.ui||{},t.ui.version="1.12.1";var e=0,i=Array.prototype.slice;t.cleanData=function(e){return function(i){var s,n,o;for(o=0;null!=(n=i[o]);o++)try{s=t._data(n,"events"),s&&s.remove&&t(n).triggerHandler("remove")}catch(a){}e(i)}}(t.cleanData),t.widget=function(e,i,s){var n,o,a,r={},l=e.split(".")[0];e=e.split(".")[1];var h=l+"-"+e;return s||(s=i,i=t.Widget),t.isArray(s)&&(s=t.extend.apply(null,[{}].concat(s))),t.expr[":"][h.toLowerCase()]=function(e){return!!t.data(e,h)},t[l]=t[l]||{},n=t[l][e],o=t[l][e]=function(t,e){return this._createWidget?(arguments.length&&this._createWidget(t,e),void 0):new o(t,e)},t.extend(o,n,{version:s.version,_proto:t.extend({},s),_childConstructors:[]}),a=new i,a.options=t.widget.extend({},a.options),t.each(s,function(e,s){return t.isFunction(s)?(r[e]=function(){function t(){return i.prototype[e].apply(this,arguments)}function n(t){return i.prototype[e].apply(this,t)}return function(){var e,i=this._super,o=this._superApply;return this._super=t,this._superApply=n,e=s.apply(this,arguments),this._super=i,this._superApply=o,e}}(),void 0):(r[e]=s,void 0)}),o.prototype=t.widget.extend(a,{widgetEventPrefix:n?a.widgetEventPrefix||e:e},r,{constructor:o,namespace:l,widgetName:e,widgetFullName:h}),n?(t.each(n._childConstructors,function(e,i){var s=i.prototype;t.widget(s.namespace+"."+s.widgetName,o,i._proto)}),delete n._childConstructors):i._childConstructors.push(o),t.widget.bridge(e,o),o},t.widget.extend=function(e){for(var s,n,o=i.call(arguments,1),a=0,r=o.length;r>a;a++)for(s in o[a])n=o[a][s],o[a].hasOwnProperty(s)&&void 0!==n&&(e[s]=t.isPlainObject(n)?t.isPlainObject(e[s])?t.widget.extend({},e[s],n):t.widget.extend({},n):n);return e},t.widget.bridge=function(e,s){var n=s.prototype.widgetFullName||e;t.fn[e]=function(o){var a="string"==typeof o,r=i.call(arguments,1),l=this;return a?this.length||"instance"!==o?this.each(function(){var i,s=t.data(this,n);return"instance"===o?(l=s,!1):s?t.isFunction(s[o])&&"_"!==o.charAt(0)?(i=s[o].apply(s,r),i!==s&&void 0!==i?(l=i&&i.jquery?l.pushStack(i.get()):i,!1):void 0):t.error("no such method '"+o+"' for "+e+" widget instance"):t.error("cannot call methods on "+e+" prior to initialization; "+"attempted to call method '"+o+"'")}):l=void 0:(r.length&&(o=t.widget.extend.apply(null,[o].concat(r))),this.each(function(){var e=t.data(this,n);e?(e.option(o||{}),e._init&&e._init()):t.data(this,n,new s(o,this))})),l}},t.Widget=function(){},t.Widget._childConstructors=[],t.Widget.prototype={widgetName:"widget",widgetEventPrefix:"",defaultElement:"<div>",options:{classes:{},disabled:!1,create:null},_createWidget:function(i,s){s=t(s||this.defaultElement||this)[0],this.element=t(s),this.uuid=e++,this.eventNamespace="."+this.widgetName+this.uuid,this.bindings=t(),this.hoverable=t(),this.focusable=t(),this.classesElementLookup={},s!==this&&(t.data(s,this.widgetFullName,this),this._on(!0,this.element,{remove:function(t){t.target===s&&this.destroy()}}),this.document=t(s.style?s.ownerDocument:s.document||s),this.window=t(this.document[0].defaultView||this.document[0].parentWindow)),this.options=t.widget.extend({},this.options,this._getCreateOptions(),i),this._create(),this.options.disabled&&this._setOptionDisabled(this.options.disabled),this._trigger("create",null,this._getCreateEventData()),this._init()},_getCreateOptions:function(){return{}},_getCreateEventData:t.noop,_create:t.noop,_init:t.noop,destroy:function(){var e=this;this._destroy(),t.each(this.classesElementLookup,function(t,i){e._removeClass(i,t)}),this.element.off(this.eventNamespace).removeData(this.widgetFullName),this.widget().off(this.eventNamespace).removeAttr("aria-disabled"),this.bindings.off(this.eventNamespace)},_destroy:t.noop,widget:function(){return this.element},option:function(e,i){var s,n,o,a=e;if(0===arguments.length)return t.widget.extend({},this.options);if("string"==typeof e)if(a={},s=e.split("."),e=s.shift(),s.length){for(n=a[e]=t.widget.extend({},this.options[e]),o=0;s.length-1>o;o++)n[s[o]]=n[s[o]]||{},n=n[s[o]];if(e=s.pop(),1===arguments.length)return void 0===n[e]?null:n[e];n[e]=i}else{if(1===arguments.length)return void 0===this.options[e]?null:this.options[e];a[e]=i}return this._setOptions(a),this},_setOptions:function(t){var e;for(e in t)this._setOption(e,t[e]);return this},_setOption:function(t,e){return"classes"===t&&this._setOptionClasses(e),this.options[t]=e,"disabled"===t&&this._setOptionDisabled(e),this},_setOptionClasses:function(e){var i,s,n;for(i in e)n=this.classesElementLookup[i],e[i]!==this.options.classes[i]&&n&&n.length&&(s=t(n.get()),this._removeClass(n,i),s.addClass(this._classes({element:s,keys:i,classes:e,add:!0})))},_setOptionDisabled:function(t){this._toggleClass(this.widget(),this.widgetFullName+"-disabled",null,!!t),t&&(this._removeClass(this.hoverable,null,"ui-state-hover"),this._removeClass(this.focusable,null,"ui-state-focus"))},enable:function(){return this._setOptions({disabled:!1})},disable:function(){return this._setOptions({disabled:!0})},_classes:function(e){function i(i,o){var a,r;for(r=0;i.length>r;r++)a=n.classesElementLookup[i[r]]||t(),a=e.add?t(t.unique(a.get().concat(e.element.get()))):t(a.not(e.element).get()),n.classesElementLookup[i[r]]=a,s.push(i[r]),o&&e.classes[i[r]]&&s.push(e.classes[i[r]])}var s=[],n=this;return e=t.extend({element:this.element,classes:this.options.classes||{}},e),this._on(e.element,{remove:"_untrackClassesElement"}),e.keys&&i(e.keys.match(/\S+/g)||[],!0),e.extra&&i(e.extra.match(/\S+/g)||[]),s.join(" ")},_untrackClassesElement:function(e){var i=this;t.each(i.classesElementLookup,function(s,n){-1!==t.inArray(e.target,n)&&(i.classesElementLookup[s]=t(n.not(e.target).get()))})},_removeClass:function(t,e,i){return this._toggleClass(t,e,i,!1)},_addClass:function(t,e,i){return this._toggleClass(t,e,i,!0)},_toggleClass:function(t,e,i,s){s="boolean"==typeof s?s:i;var n="string"==typeof t||null===t,o={extra:n?e:i,keys:n?t:e,element:n?this.element:t,add:s};return o.element.toggleClass(this._classes(o),s),this},_on:function(e,i,s){var n,o=this;"boolean"!=typeof e&&(s=i,i=e,e=!1),s?(i=n=t(i),this.bindings=this.bindings.add(i)):(s=i,i=this.element,n=this.widget()),t.each(s,function(s,a){function r(){return e||o.options.disabled!==!0&&!t(this).hasClass("ui-state-disabled")?("string"==typeof a?o[a]:a).apply(o,arguments):void 0}"string"!=typeof a&&(r.guid=a.guid=a.guid||r.guid||t.guid++);var l=s.match(/^([\w:-]*)\s*(.*)$/),h=l[1]+o.eventNamespace,c=l[2];c?n.on(h,c,r):i.on(h,r)})},_off:function(e,i){i=(i||"").split(" ").join(this.eventNamespace+" ")+this.eventNamespace,e.off(i).off(i),this.bindings=t(this.bindings.not(e).get()),this.focusable=t(this.focusable.not(e).get()),this.hoverable=t(this.hoverable.not(e).get())},_delay:function(t,e){function i(){return("string"==typeof t?s[t]:t).apply(s,arguments)}var s=this;return setTimeout(i,e||0)},_hoverable:function(e){this.hoverable=this.hoverable.add(e),this._on(e,{mouseenter:function(e){this._addClass(t(e.currentTarget),null,"ui-state-hover")},mouseleave:function(e){this._removeClass(t(e.currentTarget),null,"ui-state-hover")}})},_focusable:function(e){this.focusable=this.focusable.add(e),this._on(e,{focusin:function(e){this._addClass(t(e.currentTarget),null,"ui-state-focus")},focusout:function(e){this._removeClass(t(e.currentTarget),null,"ui-state-focus")}})},_trigger:function(e,i,s){var n,o,a=this.options[e];if(s=s||{},i=t.Event(i),i.type=(e===this.widgetEventPrefix?e:this.widgetEventPrefix+e).toLowerCase(),i.target=this.element[0],o=i.originalEvent)for(n in o)n in i||(i[n]=o[n]);return this.element.trigger(i,s),!(t.isFunction(a)&&a.apply(this.element[0],[i].concat(s))===!1||i.isDefaultPrevented())}},t.each({show:"fadeIn",hide:"fadeOut"},function(e,i){t.Widget.prototype["_"+e]=function(s,n,o){"string"==typeof n&&(n={effect:n});var a,r=n?n===!0||"number"==typeof n?i:n.effect||i:e;n=n||{},"number"==typeof n&&(n={duration:n}),a=!t.isEmptyObject(n),n.complete=o,n.delay&&s.delay(n.delay),a&&t.effects&&t.effects.effect[r]?s[e](n):r!==e&&s[r]?s[r](n.duration,n.easing,o):s.queue(function(i){t(this)[e](),o&&o.call(s[0]),i()})}}),t.widget,t.ui.keyCode={BACKSPACE:8,COMMA:188,DELETE:46,DOWN:40,END:35,ENTER:13,ESCAPE:27,HOME:36,LEFT:37,PAGE_DOWN:34,PAGE_UP:33,PERIOD:190,RIGHT:39,SPACE:32,TAB:9,UP:38},t.ui.ie=!!/msie [\w.]+/.exec(navigator.userAgent.toLowerCase());var s=!1;t(document).on("mouseup",function(){s=!1}),t.widget("ui.mouse",{version:"1.12.1",options:{cancel:"input, textarea, button, select, option",distance:1,delay:0},_mouseInit:function(){var e=this;this.element.on("mousedown."+this.widgetName,function(t){return e._mouseDown(t)}).on("click."+this.widgetName,function(i){return!0===t.data(i.target,e.widgetName+".preventClickEvent")?(t.removeData(i.target,e.widgetName+".preventClickEvent"),i.stopImmediatePropagation(),!1):void 0}),this.started=!1},_mouseDestroy:function(){this.element.off("."+this.widgetName),this._mouseMoveDelegate&&this.document.off("mousemove."+this.widgetName,this._mouseMoveDelegate).off("mouseup."+this.widgetName,this._mouseUpDelegate)},_mouseDown:function(e){if(!s){this._mouseMoved=!1,this._mouseStarted&&this._mouseUp(e),this._mouseDownEvent=e;var i=this,n=1===e.which,o="string"==typeof this.options.cancel&&e.target.nodeName?t(e.target).closest(this.options.cancel).length:!1;return n&&!o&&this._mouseCapture(e)?(this.mouseDelayMet=!this.options.delay,this.mouseDelayMet||(this._mouseDelayTimer=setTimeout(function(){i.mouseDelayMet=!0},this.options.delay)),this._mouseDistanceMet(e)&&this._mouseDelayMet(e)&&(this._mouseStarted=this._mouseStart(e)!==!1,!this._mouseStarted)?(e.preventDefault(),!0):(!0===t.data(e.target,this.widgetName+".preventClickEvent")&&t.removeData(e.target,this.widgetName+".preventClickEvent"),this._mouseMoveDelegate=function(t){return i._mouseMove(t)},this._mouseUpDelegate=function(t){return i._mouseUp(t)},this.document.on("mousemove."+this.widgetName,this._mouseMoveDelegate).on("mouseup."+this.widgetName,this._mouseUpDelegate),e.preventDefault(),s=!0,!0)):!0}},_mouseMove:function(e){if(this._mouseMoved){if(t.ui.ie&&(!document.documentMode||9>document.documentMode)&&!e.button)return this._mouseUp(e);if(!e.which)if(e.originalEvent.altKey||e.originalEvent.ctrlKey||e.originalEvent.metaKey||e.originalEvent.shiftKey)this.ignoreMissingWhich=!0;else if(!this.ignoreMissingWhich)return this._mouseUp(e)}return(e.which||e.button)&&(this._mouseMoved=!0),this._mouseStarted?(this._mouseDrag(e),e.preventDefault()):(this._mouseDistanceMet(e)&&this._mouseDelayMet(e)&&(this._mouseStarted=this._mouseStart(this._mouseDownEvent,e)!==!1,this._mouseStarted?this._mouseDrag(e):this._mouseUp(e)),!this._mouseStarted)},_mouseUp:function(e){this.document.off("mousemove."+this.widgetName,this._mouseMoveDelegate).off("mouseup."+this.widgetName,this._mouseUpDelegate),this._mouseStarted&&(this._mouseStarted=!1,e.target===this._mouseDownEvent.target&&t.data(e.target,this.widgetName+".preventClickEvent",!0),this._mouseStop(e)),this._mouseDelayTimer&&(clearTimeout(this._mouseDelayTimer),delete this._mouseDelayTimer),this.ignoreMissingWhich=!1,s=!1,e.preventDefault()},_mouseDistanceMet:function(t){return Math.max(Math.abs(this._mouseDownEvent.pageX-t.pageX),Math.abs(this._mouseDownEvent.pageY-t.pageY))>=this.options.distance},_mouseDelayMet:function(){return this.mouseDelayMet},_mouseStart:function(){},_mouseDrag:function(){},_mouseStop:function(){},_mouseCapture:function(){return!0}}),t.widget("ui.slider",t.ui.mouse,{version:"1.12.1",widgetEventPrefix:"slide",options:{animate:!1,classes:{"ui-slider":"ui-corner-all","ui-slider-handle":"ui-corner-all","ui-slider-range":"ui-corner-all ui-widget-header"},distance:0,max:100,min:0,orientation:"horizontal",range:!1,step:1,value:0,values:null,change:null,slide:null,start:null,stop:null},numPages:5,_create:function(){this._keySliding=!1,this._mouseSliding=!1,this._animateOff=!0,this._handleIndex=null,this._detectOrientation(),this._mouseInit(),this._calculateNewMax(),this._addClass("ui-slider ui-slider-"+this.orientation,"ui-widget ui-widget-content"),this._refresh(),this._animateOff=!1},_refresh:function(){this._createRange(),this._createHandles(),this._setupEvents(),this._refreshValue()},_createHandles:function(){var e,i,s=this.options,n=this.element.find(".ui-slider-handle"),o="<span tabindex='0'></span>",a=[];for(i=s.values&&s.values.length||1,n.length>i&&(n.slice(i).remove(),n=n.slice(0,i)),e=n.length;i>e;e++)a.push(o);this.handles=n.add(t(a.join("")).appendTo(this.element)),this._addClass(this.handles,"ui-slider-handle","ui-state-default"),this.handle=this.handles.eq(0),this.handles.each(function(e){t(this).data("ui-slider-handle-index",e).attr("tabIndex",0)})},_createRange:function(){var e=this.options;e.range?(e.range===!0&&(e.values?e.values.length&&2!==e.values.length?e.values=[e.values[0],e.values[0]]:t.isArray(e.values)&&(e.values=e.values.slice(0)):e.values=[this._valueMin(),this._valueMin()]),this.range&&this.range.length?(this._removeClass(this.range,"ui-slider-range-min ui-slider-range-max"),this.range.css({left:"",bottom:""})):(this.range=t("<div>").appendTo(this.element),this._addClass(this.range,"ui-slider-range")),("min"===e.range||"max"===e.range)&&this._addClass(this.range,"ui-slider-range-"+e.range)):(this.range&&this.range.remove(),this.range=null)},_setupEvents:function(){this._off(this.handles),this._on(this.handles,this._handleEvents),this._hoverable(this.handles),this._focusable(this.handles)},_destroy:function(){this.handles.remove(),this.range&&this.range.remove(),this._mouseDestroy()},_mouseCapture:function(e){var i,s,n,o,a,r,l,h,c=this,u=this.options;return u.disabled?!1:(this.elementSize={width:this.element.outerWidth(),height:this.element.outerHeight()},this.elementOffset=this.element.offset(),i={x:e.pageX,y:e.pageY},s=this._normValueFromMouse(i),n=this._valueMax()-this._valueMin()+1,this.handles.each(function(e){var i=Math.abs(s-c.values(e));(n>i||n===i&&(e===c._lastChangedValue||c.values(e)===u.min))&&(n=i,o=t(this),a=e)}),r=this._start(e,a),r===!1?!1:(this._mouseSliding=!0,this._handleIndex=a,this._addClass(o,null,"ui-state-active"),o.trigger("focus"),l=o.offset(),h=!t(e.target).parents().addBack().is(".ui-slider-handle"),this._clickOffset=h?{left:0,top:0}:{left:e.pageX-l.left-o.width()/2,top:e.pageY-l.top-o.height()/2-(parseInt(o.css("borderTopWidth"),10)||0)-(parseInt(o.css("borderBottomWidth"),10)||0)+(parseInt(o.css("marginTop"),10)||0)},this.handles.hasClass("ui-state-hover")||this._slide(e,a,s),this._animateOff=!0,!0))},_mouseStart:function(){return!0},_mouseDrag:function(t){var e={x:t.pageX,y:t.pageY},i=this._normValueFromMouse(e);return this._slide(t,this._handleIndex,i),!1},_mouseStop:function(t){return this._removeClass(this.handles,null,"ui-state-active"),this._mouseSliding=!1,this._stop(t,this._handleIndex),this._change(t,this._handleIndex),this._handleIndex=null,this._clickOffset=null,this._animateOff=!1,!1},_detectOrientation:function(){this.orientation="vertical"===this.options.orientation?"vertical":"horizontal"},_normValueFromMouse:function(t){var e,i,s,n,o;return"horizontal"===this.orientation?(e=this.elementSize.width,i=t.x-this.elementOffset.left-(this._clickOffset?this._clickOffset.left:0)):(e=this.elementSize.height,i=t.y-this.elementOffset.top-(this._clickOffset?this._clickOffset.top:0)),s=i/e,s>1&&(s=1),0>s&&(s=0),"vertical"===this.orientation&&(s=1-s),n=this._valueMax()-this._valueMin(),o=this._valueMin()+s*n,this._trimAlignValue(o)},_uiHash:function(t,e,i){var s={handle:this.handles[t],handleIndex:t,value:void 0!==e?e:this.value()};return this._hasMultipleValues()&&(s.value=void 0!==e?e:this.values(t),s.values=i||this.values()),s},_hasMultipleValues:function(){return this.options.values&&this.options.values.length},_start:function(t,e){return this._trigger("start",t,this._uiHash(e))},_slide:function(t,e,i){var s,n,o=this.value(),a=this.values();this._hasMultipleValues()&&(n=this.values(e?0:1),o=this.values(e),2===this.options.values.length&&this.options.range===!0&&(i=0===e?Math.min(n,i):Math.max(n,i)),a[e]=i),i!==o&&(s=this._trigger("slide",t,this._uiHash(e,i,a)),s!==!1&&(this._hasMultipleValues()?this.values(e,i):this.value(i)))},_stop:function(t,e){this._trigger("stop",t,this._uiHash(e))},_change:function(t,e){this._keySliding||this._mouseSliding||(this._lastChangedValue=e,this._trigger("change",t,this._uiHash(e)))},value:function(t){return arguments.length?(this.options.value=this._trimAlignValue(t),this._refreshValue(),this._change(null,0),void 0):this._value()},values:function(e,i){var s,n,o;if(arguments.length>1)return this.options.values[e]=this._trimAlignValue(i),this._refreshValue(),this._change(null,e),void 0;if(!arguments.length)return this._values();if(!t.isArray(arguments[0]))return this._hasMultipleValues()?this._values(e):this.value();for(s=this.options.values,n=arguments[0],o=0;s.length>o;o+=1)s[o]=this._trimAlignValue(n[o]),this._change(null,o);this._refreshValue()},_setOption:function(e,i){var s,n=0;switch("range"===e&&this.options.range===!0&&("min"===i?(this.options.value=this._values(0),this.options.values=null):"max"===i&&(this.options.value=this._values(this.options.values.length-1),this.options.values=null)),t.isArray(this.options.values)&&(n=this.options.values.length),this._super(e,i),e){case"orientation":this._detectOrientation(),this._removeClass("ui-slider-horizontal ui-slider-vertical")._addClass("ui-slider-"+this.orientation),this._refreshValue(),this.options.range&&this._refreshRange(i),this.handles.css("horizontal"===i?"bottom":"left","");break;case"value":this._animateOff=!0,this._refreshValue(),this._change(null,0),this._animateOff=!1;break;case"values":for(this._animateOff=!0,this._refreshValue(),s=n-1;s>=0;s--)this._change(null,s);this._animateOff=!1;break;case"step":case"min":case"max":this._animateOff=!0,this._calculateNewMax(),this._refreshValue(),this._animateOff=!1;break;case"range":this._animateOff=!0,this._refresh(),this._animateOff=!1}},_setOptionDisabled:function(t){this._super(t),this._toggleClass(null,"ui-state-disabled",!!t)},_value:function(){var t=this.options.value;return t=this._trimAlignValue(t)},_values:function(t){var e,i,s;if(arguments.length)return e=this.options.values[t],e=this._trimAlignValue(e);if(this._hasMultipleValues()){for(i=this.options.values.slice(),s=0;i.length>s;s+=1)i[s]=this._trimAlignValue(i[s]);return i}return[]},_trimAlignValue:function(t){if(this._valueMin()>=t)return this._valueMin();if(t>=this._valueMax())return this._valueMax();var e=this.options.step>0?this.options.step:1,i=(t-this._valueMin())%e,s=t-i;return 2*Math.abs(i)>=e&&(s+=i>0?e:-e),parseFloat(s.toFixed(5))},_calculateNewMax:function(){var t=this.options.max,e=this._valueMin(),i=this.options.step,s=Math.round((t-e)/i)*i;t=s+e,t>this.options.max&&(t-=i),this.max=parseFloat(t.toFixed(this._precision()))},_precision:function(){var t=this._precisionOf(this.options.step);return null!==this.options.min&&(t=Math.max(t,this._precisionOf(this.options.min))),t},_precisionOf:function(t){var e=""+t,i=e.indexOf(".");return-1===i?0:e.length-i-1},_valueMin:function(){return this.options.min},_valueMax:function(){return this.max},_refreshRange:function(t){"vertical"===t&&this.range.css({width:"",left:""}),"horizontal"===t&&this.range.css({height:"",bottom:""})},_refreshValue:function(){var e,i,s,n,o,a=this.options.range,r=this.options,l=this,h=this._animateOff?!1:r.animate,c={};this._hasMultipleValues()?this.handles.each(function(s){i=100*((l.values(s)-l._valueMin())/(l._valueMax()-l._valueMin())),c["horizontal"===l.orientation?"left":"bottom"]=i+"%",t(this).stop(1,1)[h?"animate":"css"](c,r.animate),l.options.range===!0&&("horizontal"===l.orientation?(0===s&&l.range.stop(1,1)[h?"animate":"css"]({left:i+"%"},r.animate),1===s&&l.range[h?"animate":"css"]({width:i-e+"%"},{queue:!1,duration:r.animate})):(0===s&&l.range.stop(1,1)[h?"animate":"css"]({bottom:i+"%"},r.animate),1===s&&l.range[h?"animate":"css"]({height:i-e+"%"},{queue:!1,duration:r.animate}))),e=i}):(s=this.value(),n=this._valueMin(),o=this._valueMax(),i=o!==n?100*((s-n)/(o-n)):0,c["horizontal"===this.orientation?"left":"bottom"]=i+"%",this.handle.stop(1,1)[h?"animate":"css"](c,r.animate),"min"===a&&"horizontal"===this.orientation&&this.range.stop(1,1)[h?"animate":"css"]({width:i+"%"},r.animate),"max"===a&&"horizontal"===this.orientation&&this.range.stop(1,1)[h?"animate":"css"]({width:100-i+"%"},r.animate),"min"===a&&"vertical"===this.orientation&&this.range.stop(1,1)[h?"animate":"css"]({height:i+"%"},r.animate),"max"===a&&"vertical"===this.orientation&&this.range.stop(1,1)[h?"animate":"css"]({height:100-i+"%"},r.animate))},_handleEvents:{keydown:function(e){var i,s,n,o,a=t(e.target).data("ui-slider-handle-index");switch(e.keyCode){case t.ui.keyCode.HOME:case t.ui.keyCode.END:case t.ui.keyCode.PAGE_UP:case t.ui.keyCode.PAGE_DOWN:case t.ui.keyCode.UP:case t.ui.keyCode.RIGHT:case t.ui.keyCode.DOWN:case t.ui.keyCode.LEFT:if(e.preventDefault(),!this._keySliding&&(this._keySliding=!0,this._addClass(t(e.target),null,"ui-state-active"),i=this._start(e,a),i===!1))return}switch(o=this.options.step,s=n=this._hasMultipleValues()?this.values(a):this.value(),e.keyCode){case t.ui.keyCode.HOME:n=this._valueMin();break;case t.ui.keyCode.END:n=this._valueMax();break;case t.ui.keyCode.PAGE_UP:n=this._trimAlignValue(s+(this._valueMax()-this._valueMin())/this.numPages);break;case t.ui.keyCode.PAGE_DOWN:n=this._trimAlignValue(s-(this._valueMax()-this._valueMin())/this.numPages);break;case t.ui.keyCode.UP:case t.ui.keyCode.RIGHT:if(s===this._valueMax())return;n=this._trimAlignValue(s+o);break;case t.ui.keyCode.DOWN:case t.ui.keyCode.LEFT:if(s===this._valueMin())return;n=this._trimAlignValue(s-o)}this._slide(e,a,n)},keyup:function(e){var i=t(e.target).data("ui-slider-handle-index");this._keySliding&&(this._keySliding=!1,this._stop(e,i),this._change(e,i),this._removeClass(t(e.target),null,"ui-state-active"))}}})});
+  </script>
+  <script>
+   var CONFIG = {
+  "colors": {
+    "primary": "058599",
+    "primaryDark": "216d79",
+    "primaryDarker": "1b565f",
+    "primaryDarkest": "0f363c",
+    "secondary": "c98f20",
+    "highlight": "e2bb3d",
+    "white": "d9dfe8",
+    "gray": "231f20",
+    "grayLight": "5b5959",
+    "black": "000000",
+    "warm": "eb5229",
+    "cool": "99cccc"
+  }
+};
+
+function updateColorsRecursive(obj, colors) {
+  for (var k in obj) {
+    if (typeof obj[k] == "object" && obj[k] !== null) {
+      updateColorsRecursive(obj[k], colors);
+    } else {
+      var value = obj[k];
+      if (typeof value === "string" && value.startsWith("$")) {
+        var offset = 2;
+        var prepend = "#";
+        if (value.startsWith("$0x")) {
+          offset = 3;
+          prepend = "0x";
+        }
+        var key = value.substring(offset);
+        var color = colors[key];
+        if (color !== undefined) {
+          obj[k] = prepend + color;
+        }
+      }
+    }
+  }
+}
+
+function updateColorsFromConfig(params, colors){
+  colors = colors || CONFIG.colors;
+  updateColorsRecursive(params, colors);
+}
+  </script>
+  <script>
+   'use strict';
+
+var Channel = (function() {
+  function Channel(name, options) {
+    var defaults = {
+      "role": "subscriber" // or publisher
+    };
+
+    this.opt = _.extend({}, defaults, options);
+    this.init(name);
+  }
+
+  Channel.prototype.init = function(channelName){
+    channelName = channelName || 'default';
+    this.channel = new BroadcastChannel(channelName);
+    this.role = this.opt.role;
+    this.callbacks = {};
+  };
+
+  Channel.prototype.addCallback = function(topic, callback){
+    this.callbacks[topic] = callback;
+  };
+
+  Channel.prototype.listen = function(){
+    if (this.role !== "subscriber") return false;
+
+    var channel = this.channel;
+    var callbacks = this.callbacks;
+
+    channel.onmessage = function (e) {
+      var resp = e.data;
+      var topic = resp.topic;
+      var data = resp.data;
+
+      if (callbacks[topic] !== undefined) callbacks[topic](data);
+    };
+  };
+
+  Channel.prototype.post = function(topic, data){
+    if (this.role !== "publisher") return false;
+
+    this.channel.postMessage({
+      "topic": topic,
+      "data": data
+    });
+  };
+
+  Channel.prototype.close = function(){
+    this.channel.close();
+  };
+
+  return Channel;
+
+})();
+  </script>
+  <script>
+   'use strict';
+
+var Controls = (function() {
+  function Controls(options) {
+    var defaults = {
+      "gamepad": {
+        "axes": [], // go to /config/gamepad.html to configure these
+        "smoothingWindow": 60,
+        "deltaThreshold": [0.005, 0.9]
+      }
+    };
+    // override nested defaults
+    _.each(defaults, function(value, key){
+      var optionsValue = options[key];
+      if (optionsValue !== undefined) {
+        options[key] = _.extend({}, value, optionsValue);
+      }
+    });
+    this.opt = _.extend({}, defaults, options);
+    this.init();
+  }
+
+  function add(a, b) {
+    return a + b;
+  }
+
+  function filterOutliers(someArray) {
+
+    // Copy the values, rather than operating on references to existing values
+    var values = someArray.concat();
+    var vlen = values.length;
+
+    // Then sort
+    values.sort( function(a, b) {
+      return a - b;
+    });
+
+    /* Then find a generous IQR. This is generous because if (values.length / 4)
+     * is not an int, then really you should average the two elements on either
+     * side to find q1.
+     */
+    var q1 = values[Math.floor((vlen / 4))];
+    // Likewise for q3.
+    var q3 = values[Math.ceil((vlen * (3 / 4)))];
+    var iqr = q3 - q1;
+
+    // Then find min and max values
+    var margin = 1.5;
+    var maxValue = q3 + iqr*margin;
+    var minValue = q1 - iqr*margin;
+
+    // Then filter anything beyond or beneath these values.
+    var filteredValues = values.filter(function(x) {
+      return (x <= maxValue) && (x >= minValue);
+    });
+
+    // Then return
+    return filteredValues;
+  }
+
+  function getSmoothedValue(value, dataWindow, windowSize) {
+    dataWindow.push(value);
+    var dataWindowLen = dataWindow.length;
+
+    // only smooth if we have enough data points
+    if (dataWindowLen >= windowSize) {
+      // slice to windown size
+      if (dataWindowLen > windowSize) dataWindow = dataWindow.slice(1);
+      // remove outliers
+      var filteredDataWindow = filterOutliers(dataWindow);
+      // calculate mean
+      value = mean(filteredDataWindow);
+
+    // don't return value until we have enough data
+    } else {
+      value = 0;
+    }
+
+    return {
+      value: value,
+      dataWindow: dataWindow
+    }
+  }
+
+  function getUIContainer(opt){
+    var $container = $("#ui");
+    if (!$container.length) {
+      $container = $('<div id="ui" class="ui"></div>');
+      var parentEl = opt.el || 'body';
+      $(parentEl).append($container);
+    }
+    return $container;
+  }
+
+  function mean(values) {
+    var len = values.length;
+    if (len <= 0) return 0;
+    var sum = values.reduce(add, 0);
+    return sum/len;
+  }
+
+  function weightedMean(values, weights) {
+
+    var result = _.map(values, function(value, i){
+      var weight = weights[i];
+      var sum = value * weight;
+      return [sum, weight];
+    });
+
+    result = _.reduce(result, function(p, c){
+      return [p[0] + c[0], p[1] + c[1]];
+    }, [0, 0]);
+
+    return result[0] / result[1];
+  }
+
+  function linspace(a, b, n) {
+    if(n<2) { return n===1? [a] : []; }
+    var i, ret = Array(n);
+    n--;
+    for(i=n;i>=0;i--) { ret[i] = (i*b+(n-i)*a)/n; }
+    return ret;
+  }
+
+  function norm(value, a, b){
+    return (1.0 * value - a) / (b - a);
+  }
+
+  Controls.prototype.init = function(){
+    this.$window = $(window);
+    this.$document = $(document);
+
+    this.channel = new Channel(this.opt.channel, {"role": "publisher"});
+  };
+
+  Controls.prototype.initGamepad = function(){
+    this.smoothingWindow = this.opt.gamepad.smoothingWindow;
+    this.deltaThreshold = this.opt.gamepad.deltaThreshold;
+    this.gamepadSmoothing = this.smoothingWindow > 0;
+
+    // if (this.gamepadSmoothing) {
+    //   var weights = _.map(linspace(-1, 0, this.opt.gamepad.smoothingWindow), function(v){ return Math.exp(v); });
+    //   var sum = _.reduce(weights, function(memo, v){ return memo + v; }, 0);
+    //   weights = _.map(weights, function(v){ return v / sum; })
+    //   this.gamepadWeights = weights;
+    //   // console.log(weights)
+    // }
+
+    // parse axes
+    this.axesConfig = _.map(this.opt.gamepad.axes, function(a){
+      return {
+        "min": parseFloat(a.min),
+        "max": parseFloat(a.max),
+        "window": []
+      }
+    });
+    if (!this.axesConfig.length) {
+      this.axesConfig = _.times(8, function(i){
+        return {
+          "min": -1,
+          "max": 1,
+          "window": []
+        }
+      });
+    }
+  };
+
+  Controls.prototype.getGamepadIndex = function(){
+    var gamepads = navigator.getGamepads();
+    if (!gamepads || !gamepads.length) return false;
+
+    var gamepadIndex = false;
+    var count = 5;
+    var foundGamepads = [];
+
+    for(var i=0; i<count; i++) {
+      if (gamepads[i]) {
+        foundGamepads.unshift({index: i, gamepad: gamepads[i]});
+      }
+    }
+
+    if (foundGamepads.length) {
+      foundGamepads = _.sortBy(foundGamepads, function(g){
+        var gp = g.gamepad;
+        var axes = 0;
+        if (gp.axes && gp.axes.length) {
+          _.each(gp.axes, function(a){
+            if (a !== 0) axes += 1;
+          });
+        }
+        return -axes;
+      });
+      gamepadIndex = foundGamepads[0].index;
+    }
+
+    return gamepadIndex;
+  };
+
+  Controls.prototype.load = function(){
+    this.deferred = $.Deferred();
+
+    var _this = this;
+    var keyboardMappings = this.opt.keyboardMappings;
+    var gamepadMappings = this.opt.gamepadMappings;
+    var uiMappings = this.opt.uiMappings;
+    var scrollMappings = this.opt.scrollMappings;
+    var touchMappings = this.opt.touchMappings;
+    var pointerlockMappings = this.opt.pointerlockMappings;
+    var buttonMappings = this.opt.buttonMappings;
+
+    if (keyboardMappings) {
+      this.loadKeyboardListeners(keyboardMappings);
+    }
+
+    if (uiMappings) {
+      this.loadUIListeners(uiMappings);
+    }
+
+    if (scrollMappings) {
+      this.loadScrollListeners(scrollMappings);
+    }
+
+    if (pointerlockMappings) {
+      this.loadPointerlockListeners(pointerlockMappings);
+    }
+
+    if (touchMappings) {
+      this.loadTouchListeners(touchMappings);
+    }
+
+    if (buttonMappings) {
+      this.loadButtonListeners(buttonMappings);
+    }
+
+    if (gamepadMappings) {
+      this.initGamepad();
+      this.loadGamepad(gamepadMappings);
+
+    // don't need to wait for anything if we're not using gamepad controllers
+    } else {
+      setTimeout(function(){
+        console.log("Controls loaded.");
+        _this.deferred.resolve();
+      }, 10);
+    }
+
+    /*
+    document.addEventListener("keydown", function(e){
+      var now = new Date();
+      var charStr = String.fromCharCode(e.which);
+      switch(charStr) {
+        case "b":
+        case "B":
+          console.log("event: blur", now);
+          break;
+        case "f":
+        case "F":
+          console.log("event: focus", now);
+          break
+      }
+    });
+    */
+
+    return this.deferred.promise();
+  };
+
+  Controls.prototype.loadButtonListeners = function(mappings){
+    var $container = getUIContainer(this.opt);
+    var channel = this.channel;
+
+    _.each(mappings, function(opt, key){
+      var $button = $('<button id="'+opt.el+'">'+opt.text+'</button>');
+      var isToggle = opt.toggle;
+      $button.on("mousedown", function(e){
+        var $el = $(this);
+        if (isToggle) {
+          $el.toggleClass("active");
+        }
+        if (!isToggle || $el.hasClass("active")) {
+          channel.post("controls.button.down", key);
+        } else if (isToggle && !$el.hasClass("active")) {
+          channel.post("controls.button.up", key);
+        }
+      });
+      if (!isToggle) {
+        $button.on("mouseup", function(e){
+          channel.post("controls.button.up", key);
+        });
+      }
+      $container.append($button);
+    });
+  };
+
+  Controls.prototype.loadGamepad = function(gamepadMappings){
+    var _this = this;
+    var gamepadIndex = this.getGamepadIndex();
+
+    if (gamepadIndex !== false) {
+      console.log("Gamepad found");
+      this.gamepadIndex = gamepadIndex;
+      var gamepadState = {};
+      _.each(_.keys(gamepadMappings), function(key){
+        gamepadState[key] = -1;
+      });
+
+      this.gamepadState = gamepadState;
+      this.gamepadMappings = gamepadMappings;
+      this.deferred.resolve();
+      this.pollGamepad();
+
+    // no gamepad found, keep listening...
+    } else {
+      requestAnimationFrame(function(){ _this.loadGamepad(gamepadMappings); });
+    }
+
+  };
+
+  Controls.prototype.loadKeyboardListeners = function(mappings){
+    var keys = _.keys(mappings);
+    var channel = this.channel;
+    var state = _.mapObject(mappings, function(val, key) { return false; });
+
+    var onKeyDown = function(e){
+      var key = String.fromCharCode(e.which);
+      if (_.indexOf(keys, key) >= 0 && !state[key]) {
+        state[key] = true;
+        channel.post("controls.button.down", mappings[key]);
+      }
+    };
+    var onKeyUp = function(e){
+      var key = String.fromCharCode(e.which);
+      if (_.indexOf(keys, key) >= 0) {
+        state[key] = false;
+        channel.post("controls.button.up", mappings[key]);
+      }
+    };
+
+    var $window = this.$window;
+    $window.keypress(onKeyDown);
+    $window.keyup(onKeyUp);
+  };
+
+  Controls.prototype.loadPointerlockListeners = function(mappings){
+    var channel = this.channel;
+    var maxDelta = 100;
+
+    function updatePosition(e){
+      _.each(mappings, function(props, orientation){
+        var delta = e.movementY;
+        if (orientation==="horizontal") delta = event.movementX;
+        delta = Math.min(maxDelta, delta);
+        delta = Math.max(-maxDelta, delta);
+        if (Math.abs(delta) > 0) {
+          delta *= props.multiplier;
+          channel.post("controls."+props.name, delta);
+        }
+      });
+    };
+    document.addEventListener("mousemove", updatePosition, false);
+
+    var locked = false;
+    var shouldLock = this.opt.lock;
+
+    // check for pointerlock option
+    if (!shouldLock) return false;
+
+    // check for auto-lock option
+    var autolock = this.opt.autolock;
+    var autolockInitialMs = 15000;
+    var autolockIntervalMs = 5000;
+
+    // attempt to lock pointer
+    var el = $(this.opt.el)[0];
+
+    // Listen for pointer lock
+    document.addEventListener('pointerlockchange', function(){
+      locked = true;
+      if (document.pointerLockElement === el) {
+        console.log('The pointer lock status is now locked');
+
+        // document.addEventListener("mousemove", updatePosition, false);
+      } else {
+        console.log('The pointer lock status is now unlocked');
+        locked = false;
+        if (autolock) {
+          setTimeout(function(){
+            if (!locked) {
+              console.log('Auto-requesting pointer lock after unlock...');
+              el.requestPointerLock();
+            }
+          }, autolockIntervalMs);
+        }
+      }
+    }, false);
+
+
+    if (autolock) {
+      setTimeout(function(){
+        if (!locked) {
+          console.log('Auto-requesting pointer lock...');
+          el.requestPointerLock();
+        }
+      }, autolockInitialMs);
+    }
+
+    // initiate lock on click
+    el.onclick = function() {
+      if (!locked) {
+        console.log('Requesting pointer lock via click...');
+        el.requestPointerLock();
+      } else {
+        console.log('Heard click, but already locked');
+      }
+    };
+  };
+
+  Controls.prototype.loadTouchListeners = function(mappings){
+    var $container = getUIContainer(this.opt);
+    var channel = this.channel;
+
+    _.each(mappings, function(opt, key){
+      var $listener = $('<div id="'+opt.el+'" class="ui-touch-region rotate '+key+'"></div>');
+      $container.append($listener);
+      var listener = $listener[0];
+      var region = new ZingTouch.Region(listener);
+
+      var onChange = function(e){
+        var d = e.detail;
+        if (d.distanceFromLast) {
+          var angle = d.angle;
+          var angleDelta = d.distanceFromLast;
+          // 90 degrees = starting position = straight up
+          angle = 360 - (angle - 90);
+          if (angle >= 360) angle -= 360;
+          $listener.css('transform', "rotate3d(0, 0, 1, "+angle+"deg)")
+          channel.post("controls."+key, angleDelta);
+        }
+      };
+
+      region.bind(listener, "rotate", onChange);
+    });
+  };
+
+  Controls.prototype.loadScrollListeners = function(mappings) {
+    var channel = this.channel;
+
+    this.$window.on('mousewheel', function(event) {
+      // console.log(event.deltaX, event.deltaY, event.deltaFactor);
+      _.each(mappings, function(props, orientation){
+        var delta = event.deltaY;
+        if (orientation==="horizontal") delta = event.deltaX;
+        if (Math.abs(delta) > 0) {
+          delta *= props.multiplier;
+          channel.post("controls."+props.name, -delta);
+        }
+      });
+    });
+  };
+
+  Controls.prototype.loadUIListeners = function(mappings) {
+    var $container = getUIContainer(this.opt);
+    var channel = this.channel;
+
+    _.each(mappings, function(opt, key){
+      var $slider = $('<div id="'+opt.el+'"></div>');
+      $slider.slider(opt.options);
+      $slider.on("slide", function(e, ui){
+        channel.post("controls.axes.change", {"key": key, "value": ui.value});
+      });
+      $container.append($slider);
+    });
+  };
+
+  Controls.prototype.pollGamepad = function(){
+    var _this = this;
+
+    var gamepad = navigator.getGamepads()[this.gamepadIndex];
+    if (!gamepad) {
+      this.loadGamepad(this.gamepadMappings);
+      return false;
+    }
+
+    var prevState = this.gamepadState;
+    var axes = gamepad.axes;
+    var gamepadMappings = this.gamepadMappings;
+    var channel = this.channel;
+    var axesConfig = this.axesConfig;
+    var gamepadSmoothing = this.gamepadSmoothing;
+    var smoothingWindow = this.smoothingWindow;
+    var deltaThreshold = this.deltaThreshold;
+
+    $.each(gamepadMappings, function(key, index){
+
+      var value = axes[index];
+
+      if (gamepadSmoothing) {
+        var smoothed = getSmoothedValue(value, axesConfig[index].window, smoothingWindow);
+        axesConfig[index].window = smoothed.dataWindow.slice(0);
+        state = smoothed.value;
+      }
+
+      // value = +value.toFixed(2);
+      var state = norm(value, axesConfig[index].min, axesConfig[index].max); // convert from [-1,1] to [0,1]
+      state = Math.min(state, 1);
+      state = Math.max(state, 0);
+
+      var threshold = deltaThreshold;
+      var prev = prevState[key];
+      var delta = Math.abs(prev-state);
+
+      // state has changed, execute callback
+      if (delta > threshold[0] && (delta < threshold[1] || prev <= -1)) {
+        // console.log("State change", key, state)
+        channel.post("controls.axes.change", {"key": key, "value": state});
+        _this.gamepadState[key] = state;
+      }
+    });
+
+    requestAnimationFrame(function(){ _this.pollGamepad(); });
+  };
+
+  return Controls;
+
+})();
+  </script>
+  <script>
+   // Utility functions
+(function() {
+  window.UTIL = {};
+
+  UTIL.ceilToNearest = function(value, nearest) {
+    return Math.ceil(value / nearest) * nearest;
+  };
+
+  UTIL.clamp = function(value, min, max) {
+    value = Math.min(value, max);
+    value = Math.max(value, min);
+    return value;
+  };
+
+  UTIL.distance = function(x0, y0, x1, y1) {
+    return Math.hypot(x1-x0, y1-y0);
+  };
+
+  UTIL.easeInOutCubic = function (t) {
+    return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1;
+  };
+
+  // higher amount = more bounce
+  UTIL.easeInElastic = function (t, amount) {
+    amount = amount || 0.04;
+    return (amount - amount / t) * Math.sin(25 * t) + 1;
+  };
+
+  UTIL.easeInOutElastic = function (t) {
+    return (t -= .5) < 0 ? (.01 + .01 / t) * Math.sin(50 * t) : (.02 - .01 / t) * Math.sin(50 * t) + 1;
+  };
+
+  UTIL.easeInOutSin = function (t) {
+    return (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
+  };
+
+  UTIL.easeOutQuad = function (t) {
+    return t*(2-t);
+  };
+
+  UTIL.floorToNearest = function(value, nearest) {
+    return Math.floor(value / nearest) * nearest;
+  };
+
+  UTIL.getQueryVariable = function(variable) {
+    var query = window.location.search.substring(1);
+    var vars = query.split('&');
+    for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (decodeURIComponent(pair[0]) == variable) {
+        return decodeURIComponent(pair[1]);
+      }
+    }
+    return false;
+  };
+
+  // Calculates line segment intersection
+  UTIL.lineIntersect = function(A, B, E, F) {
+    var ip, a1, a2, b1, b2, c1, c2;
+    // calculate
+    a1 = B.y-A.y; a2 = F.y-E.y;
+    b1 = A.x-B.x; b2 = E.x-F.x;
+    c1 = B.x*A.y - A.x*B.y; c2 = F.x*E.y - E.x*F.y;
+    // det
+    var det=a1*b2 - a2*b1;
+    // if lines are parallel
+    if (det == 0) { return false; }
+    // find point of intersection
+    var xip = (b1*c2 - b2*c1)/det;
+    var yip = (a2*c1 - a1*c2)/det;
+    // now check if that point is actually on both line
+    // segments using distance
+    if (Math.pow(xip - B.x, 2) + Math.pow(yip - B.y, 2) >
+        Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2))
+    { return false; }
+    if (Math.pow(xip - A.x, 2) + Math.pow(yip - A.y, 2) >
+        Math.pow(A.x - B.x, 2) + Math.pow(A.y - B.y, 2))
+    { return false; }
+    if (Math.pow(xip - F.x, 2) + Math.pow(yip - F.y, 2) >
+        Math.pow(E.x - F.x, 2) + Math.pow(E.y - F.y, 2))
+    { return false; }
+    if (Math.pow(xip - E.x, 2) + Math.pow(yip - E.y, 2) >
+        Math.pow(E.x - F.x, 2) + Math.pow(E.y - F.y, 2))
+    { return false; }
+    // else it's on both segments, return it
+    return [xip, yip];
+  };
+
+  UTIL.lerp = function(a, b, percent) {
+    return (1.0*b - a) * percent + a;
+  };
+
+  UTIL.lerpColor = function (a, b, amount) {
+    var ah = a,
+      ar = ah >> 16, ag = ah >> 8 & 0xff, ab = ah & 0xff,
+      bh = b,
+      br = bh >> 16, bg = bh >> 8 & 0xff, bb = bh & 0xff,
+      rr = ar + amount * (br - ar),
+      rg = ag + amount * (bg - ag),
+      rb = ab + amount * (bb - ab);
+
+    return ((1 << 24) + (rr << 16) + (rg << 8) + rb | 0);
+  };
+
+  UTIL.lerpLine = function(x0, y0, x1, y1, mu) {
+    var nx = x0 + (x1 - x0) * mu;
+    var ny = y0 + (y1 - y0) * mu;
+    return [nx, ny];
+  };
+
+  UTIL.lerpList = function(l1, l2, amount) {
+    var ll = [];
+    for (var i=0; i<l1.length; i++) {
+      ll.push(UTIL.lerp(l1[i], l2[i], amount));
+    }
+    return ll;
+  };
+
+  UTIL.lim = function(num, min, max) {
+    if (num < min) return min;
+    if (num > max) return max;
+    return num;
+  };
+
+  UTIL.norm = function(value, a, b){
+    var denom = (b - a);
+    if (denom > 0 || denom < 0) {
+      return (1.0 * value - a) / denom;
+    } else {
+      return 0;
+    }
+  };
+
+  UTIL.radians = function(angle) {
+    return angle * (Math.PI / 180);
+  };
+
+  UTIL.pad = function(num, size) {
+    var s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
+  };
+
+  UTIL.parseQuery = function() {
+    var qstr = window.location.search.substring(1);
+    var query = {};
+    var a = (qstr[0] === '?' ? qstr.substr(1) : qstr).split('&');
+    for (var i = 0; i < a.length; i++) {
+      var b = a[i].split('=');
+      query[decodeURIComponent(b[0])] = decodeURIComponent(b[1] || '');
+    }
+    return query;
+  };
+
+  UTIL.random = function(low, high) {
+    return UTIL.lerp(low, high, Math.random());
+  };
+
+  UTIL.round = function(value, precision) {
+    return +value.toFixed(precision);
+  };
+
+  UTIL.roundToNearest = function(value, nearest) {
+    return Math.round(value / nearest) * nearest;
+  };
+
+  UTIL.secondsToString = function(seconds){
+    if (!seconds || seconds <= 0) return "0:00";
+    var d = new Date(null);
+    d.setSeconds(seconds);
+    var start = 11;
+    var len = 8;
+    if (seconds < 600) {
+      start = 15;
+      len = 4;
+    } else if (seconds < 3600) {
+      start = 14;
+      len = 5;
+    }
+    return d.toISOString().substr(start, len);
+  };
+
+  // East = 0 degrees
+  UTIL.translatePoint = function(p, degrees, distance) {
+    var radians = degrees * (Math.PI / 180);
+    var x2 = p[0] + distance * Math.cos(radians);
+    var y2 = p[1] + distance * Math.sin(radians);
+    return [x2, y2];
+  };
+
+  UTIL.within = function(num, min, max) {
+    if (num < min) return false;
+    if (num > max) return false;
+    return true;
+  };
+
+})();
+  </script>
+  <script>
+   'use strict';
+
+var Sound = (function() {
+  function Sound(options) {
+    var defaults = {
+      "enable": 1,
+      "volume": 0.4,
+      "limitLastPlayedMs": 10,
+      "limitSameLastPlayedMs": 10
+    };
+    this.opt = _.extend({}, defaults, options);
+    this.init();
+  }
+
+  Sound.prototype.init = function(){
+    this.enabled = this.opt.enable;
+    this.limitLastPlayedMs = this.opt.limitLastPlayedMs;
+    this.limitSameLastPlayedMs = this.opt.limitSameLastPlayedMs;
+    this.lastPlayed = new Date();
+  };
+
+  Sound.prototype.load = function(){
+    if (!this.enabled) return false;
+
+    var deferred = $.Deferred();
+    var _this = this;
+
+    var sprites = this.opt.sprites;
+    this.sound = new Howl({
+      src: this.opt.audio,
+      sprite: sprites,
+      volume: this.opt.volume
+    });
+    this.notes = _.keys(sprites);
+    this.notesLastPlayed = _.mapObject(sprites, function(val, key){ return 0; });
+
+    this.sound.once('load', function(){
+      console.log("Sound loaded.");
+      _this.loadListeners();
+      deferred.resolve();
+    });
+
+    return deferred.promise();
+  };
+
+  Sound.prototype.loadListeners = function(){
+    var _this = this;
+    var playPercent = function(e, value){
+      _this.playPercent(value);
+    };
+
+    var playSprite = function(e, value){
+      _this.playSprite(value);
+    };
+
+    $(document).on("sound.play.percent", playPercent);
+    $(document).on("sound.play.sprite", playSprite);
+
+    $(document).one("click", function() {
+      Howler.ctx.resume();
+    });
+  };
+
+  Sound.prototype.playPercent = function(percent){
+    if (percent < 0 || percent > 1) return false;
+
+    // limit many sounds played at once
+    var now = new Date();
+    var lastPlayed = this.lastPlayed;
+    if (now - lastPlayed < this.limitLastPlayedMs) return false;
+
+    var len = this.notes.length;
+    var i = Math.floor((len - 1) * percent);
+    var sprite = this.notes[i];
+
+    // limit same sound played again
+    lastPlayed = this.notesLastPlayed[sprite];
+    if (now - lastPlayed < this.limitSameLastPlayedMs) return false;
+
+    this.sound.play(sprite);
+    this.lastPlayed = now;
+    this.notesLastPlayed[sprite] = now;
+  };
+
+  Sound.prototype.playSprite = function(value){
+    this.sound.play(value);
+  };
+
+  return Sound;
+
+})();
+  </script>
+  <script>
+   'use strict';
+
+var Graphics = (function() {
+  function Graphics(options) {
+    var defaults = {};
+    this.opt = $.extend({}, defaults, options);
+    this.init();
+  }
+
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function addLabelBuffers(g, labelBufferCount) {
+    for (var i=0; i<labelBufferCount; i++) {
+      var label = new PIXI.Text("");
+      g.addChild(label);
+    }
+  }
+
+  function dataToPercent(dx, dy, domain, range){
+    var px = UTIL.norm(dx, domain[0], domain[1]);
+    var py = UTIL.norm(dy, range[0], range[1]);
+    return [px, py];
+  }
+
+  function dataToPoint(dx, dy, domain, range, bounds){
+    var p = dataToPercent(dx, dy, domain, range);
+    return percentToPoint(p[0], p[1], bounds);
+  }
+
+  function percentToPoint(px, py, bounds){
+    var bx = bounds[0];
+    var by = bounds[1];
+    var bw = bounds[2];
+    var bh = bounds[3];
+
+    var x = px * bw + bx;
+    var y = by + bh - (py * bh);
+
+    return [x, y];
+  };
+
+  Graphics.prototype.init = function(){
+    this.$el = $(this.opt.el);
+
+    this.domain = this.opt.domain;
+    this.range = this.opt.range;
+    this.minYearsDisplay = this.opt.minYearsDisplay;
+    this.monthYearsDisplay = this.opt.monthYearsDisplay;
+    this.monthTransitionStep = this.opt.monthTransitionStep;
+    this.tenYearTrend = this.opt.tenYearTrend;
+    this.yAxisLabelCount = this.opt.yAxis.labelCount;
+    this.yAxisStep = this.opt.yAxis.step;
+    this.yAxisMinBounds = this.opt.yAxis.minBounds;
+    this.tenYearTrendYearsDisplay = this.opt.tenYearTrendYearsDisplay;
+    this.sleepTransitionMs = this.opt.sleepTransitionMs;
+    this.bgColor = parseInt(this.opt.plot.bgColor);
+    this.axesLineColor = parseInt(this.opt.yAxis.lineColor);
+    this.axesTickColor = parseInt(this.opt.xAxis.tickColor);
+
+    this.parseData();
+
+    this.yearCount = this.annualData.length;
+    this.time = this.opt.time;
+    this.scale = this.opt.scale;
+
+    this.plotDomain = []; // the current visible domain, e.g. [1900, 1950]
+    this.plotDomainPrecise = []; // like above but precise to the decimal, e.g. [1899.5, 1950.25]
+    this.plotRange = []; // the current visible range in Celsius departure from average, e.g. [-1, 1.5]
+    this.dataCurrentPercent = 0; // number between 0 and 1 indicating where the marker is relative to the entire dataset
+    this.plotCurrentIndex = 0; // current active index of dataset
+    this.plotCurrentValue = {}; // current active value
+    this.plotData = [];
+
+    this.isMonthView = false; // are we viewing months?
+    this.monthTransitionValue = 0; // 1=month view, 0=year view
+
+    this.refreshDimensions();
+    this.initView();
+    this.initTime();
+    this.onScaleChange(this.scale);
+  };
+
+  Graphics.prototype.initTime = function(){
+    var time = this.time;
+    var domain = this.domain;
+
+    var i = Math.round((domain[1]-domain[0]) * time);
+
+    this.dataCurrentPercent = time;
+    this.plotCurrentIndex = i;
+    this.plotCurrentValue = this.annualData[i];
+  };
+
+  Graphics.prototype.initView = function(){
+    var _this = this;
+    this.app = new PIXI.Application(this.width, this.height, {backgroundColor : 0x000000, antialias: true});
+    var bg = new PIXI.Graphics();
+    var axes = new PIXI.Graphics();
+    var plot = new PIXI.Graphics();
+    // var trend = new PIXI.Graphics();
+    var annotations = new PIXI.Graphics();
+    var images = new PIXI.Container();
+    var marker = new PIXI.Graphics();
+    var flag = new PIXI.Graphics();
+
+    this.app.stage.addChild(bg, axes, plot, annotations, flag, marker, images);
+
+    // add images as sprites
+    _.each(this.annualData, function(d, i){
+      if (d.annotation && d.annotation.image) {
+        var sprite = PIXI.Sprite.fromImage(d.annotation.image);
+        sprite.visible = false;
+        images.addChild(sprite);
+        _this.annualData[i].annotation.sprite = sprite;
+        _this.annualData[i].annotation.imageRatio = d.annotation.imageW / d.annotation.imageH;
+      }
+    });
+
+    // add label buffers to axes
+    // increase this if you are getting "Cannot set property 'text' of undefined" error
+    addLabelBuffers(axes, 24);
+    addLabelBuffers(plot, 30);
+    addLabelBuffers(flag, 5);
+    addLabelBuffers(annotations, this.opt.annotations.length);
+
+    // add resting filter
+    this.restingFilter = false;
+    var $shader = $("#resting-fragment-shader");
+    if ($shader.length) {
+      var fragSrc = $shader.text();
+      var restingFilter = new PIXI.Filter(null, fragSrc);
+      restingFilter.uniforms.progress = 0;
+      plot.filters = [restingFilter];
+      this.restingFilter = restingFilter;
+    }
+
+    this.bg = bg;
+    this.axes = axes;
+    this.plot = plot;
+    // this.trend = trend;
+    this.annotations = annotations;
+    this.marker = marker;
+    this.flag = flag;
+    this.images = images;
+
+    this.images.visible = false;
+
+    // for what to show during "sleep mode"
+    this.sleepers = [bg, axes, annotations, flag, images];
+    this.dreamers = [plot, marker];
+
+    this.$el.append(this.app.view);
+  };
+
+  Graphics.prototype.onResize = function(){
+    this.refreshDimensions();
+    this.app.renderer.resize(this.width, this.height);
+    this.onScaleChange(this.scale);
+
+    this.renderBg();
+    this.renderAxes();
+    this.renderPlot();
+    // this.renderTrend();
+    this.renderMarker();
+    this.renderAnnotations();
+  };
+
+  Graphics.prototype.onScaleChange = function(scale){
+    // console.log("scale", scale);
+    this.scale = scale;
+
+    var _this = this;
+
+    var time = this.time;
+    var dataCurrentPercent = this.dataCurrentPercent;
+    var minDomainCount = this.minYearsDisplay;
+    var maxDomainCount = this.yearCount;
+    var domainCount = UTIL.lerp(minDomainCount, maxDomainCount, scale);
+
+    var domainCountP = domainCount / maxDomainCount;
+    var domainStartP = dataCurrentPercent - (domainCountP * time);
+    var domainEndP = dataCurrentPercent + (domainCountP * (1-time));
+
+    // adjust edges
+    var autoScrolled = false;
+    if (domainStartP < 0) {
+      domainEndP -= domainStartP;
+      domainStartP = 0;
+      autoScrolled = true;
+    }
+    if (domainEndP > 1) {
+      domainStartP -= (domainEndP-1)
+      domainEndP = 1;
+      autoScrolled = true;
+    }
+
+    // determine new domain
+    var domain = this.domain;
+    var d0 = domain[0];
+    var d1 = domain[1];
+    var domainStart = UTIL.lerp(d0, d1, domainStartP);
+    var domainEnd = UTIL.lerp(d0, d1, domainEndP);
+    var newDomainPrecise = [domainStart, domainEnd];
+    var newDomain = [Math.ceil(domainStart), Math.floor(domainEnd)];
+
+    this.plotDomain = newDomain;
+    this.plotDomainPrecise = newDomainPrecise;
+
+    // check if we are viewing months
+    var monthYearsDisplay = this.monthYearsDisplay;
+    var delta = newDomainPrecise[1]-newDomainPrecise[0];
+    var isMonthView = (delta <= monthYearsDisplay);
+    this.isMonthView = isMonthView;
+    var monthTransitionValue = this.monthTransitionValue;
+    if (monthTransitionValue <= 0.0 && isMonthView) {
+      monthTransitionValue = 0.001;
+    } else if (monthTransitionValue >= 1.0 && !isMonthView) {
+      monthTransitionValue = 0.999;
+    }
+    // if user zooms out quickly, don't show transition
+    if (delta > monthYearsDisplay*2) {
+      monthTransitionValue = 0;
+    }
+    var monthTransitioned = (this.monthTransitionValue !== monthTransitionValue) && (monthTransitionValue>=1 || monthTransitionValue<=0);
+    this.monthTransitionValue = monthTransitionValue;
+    var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
+
+    var values = [];
+    var plotData = [];
+    var data = this.annualData;
+    var yStart = Math.floor(domainStart);
+    var yEnd = Math.ceil(domainEnd);
+    var mStart = domainStart - 1.0/12.0;
+    var mEnd = domainEnd + 1.0/12.0;
+    _.each(data, function(d, i){
+      if (d.year >= yStart && d.year <= yEnd) {
+        if (isMonthView || monthTransitioning) {
+          _.each(d.monthlyData, function(md, j){
+            if (md.year >= mStart && md.year <= mEnd) {
+              plotData.push(data[i].monthlyData[j]);
+              values.push(md.value);
+            }
+          });
+        } else {
+          plotData.push(data[i]);
+          values.push(d.value);
+        }
+      }
+    });
+
+    var yAxisStep = this.yAxisStep;
+    var yAxisMinBounds = this.yAxisMinBounds;
+    var minRange = UTIL.floorToNearest(_.min(values)-0.05, yAxisStep);
+    var maxRange = UTIL.ceilToNearest(_.max(values)+0.05, yAxisStep);
+    minRange = Math.min(yAxisMinBounds[0], minRange);
+    maxRange = Math.max(maxRange, yAxisMinBounds[1]);
+    var absMax = Math.max(Math.abs(minRange), maxRange);
+    if (absMax > maxRange) maxRange = absMax;
+    if (-absMax < minRange) minRange = -absMax;
+    this.plotRange = [UTIL.round(minRange, 1), UTIL.round(maxRange, 1)];
+
+    var domain = [newDomainPrecise[0], newDomainPrecise[1]+1];
+    if (isMonthView || monthTransitioning) domain = [newDomainPrecise[0], newDomainPrecise[1]+1.0/12.0];
+    var range = this.plotRange;
+    var pd = this.plotDimensions;
+    _.each(plotData, function(d, i){
+      var p = dataToPoint(d.year, d.value, domain, range, pd);
+      plotData[i].x = p[0];
+      plotData[i].y = p[1];
+    });
+    this.plotData = plotData;
+
+    if (autoScrolled || monthTransitioning || monthTransitioned) this.onTimeChange(this.time, false);
+    this.renderBg();
+    this.renderAxes();
+    // this.renderTrend();
+    this.renderMarker();
+    this.renderPlot();
+    this.renderAnnotations();
+  };
+
+  Graphics.prototype.onTimeChange = function(time, withSound){
+    var prevTime = this.time;
+    this.time = time;
+
+    var domain = this.domain;
+    var range = this.range;
+    var domainPrecise = this.plotDomainPrecise;
+    var yearPrecise = UTIL.lerp(domainPrecise[0], domainPrecise[1], time);
+    var prevIndex = this.plotCurrentIndex;
+    var plotData = this.plotData;
+    var plotDataLen = plotData.length;
+
+    this.dataCurrentPercent = UTIL.norm(yearPrecise, domain[0], domain[1]);
+    var plotCurrentIndex = Math.round(this.time*(plotDataLen-1));
+    this.plotCurrentIndex = plotCurrentIndex;
+    this.plotCurrentValue = plotData[plotCurrentIndex];
+    this.yearPrecise = yearPrecise;
+
+    // add transition for index and play sound
+    if ((prevIndex < plotCurrentIndex || time > prevTime && prevTime <= 0) && withSound !== false) {
+      plotData[plotCurrentIndex].highlighting = true;
+      plotData[plotCurrentIndex].highlightStart = new Date();
+      plotData[plotCurrentIndex].highlightValue = 0;
+      var mu = UTIL.norm(plotData[plotCurrentIndex].value, range[0], range[1]);
+      $(document).trigger("sound.play.percent", [mu]);
+    }
+
+    this.transitioning = true;
+    this.transition();
+    this.renderBg();
+    this.renderMarker();
+    this.renderAnnotations();
+    // this.renderTrend();
+  };
+
+  Graphics.prototype.parseData = function(){
+    var annotations = _.map(this.opt.annotations, function(a){
+      return [""+a.year, a];
+    });
+    var annotationIndex = _.object(annotations);
+    var annotationRanges = _.filter(this.opt.annotations, function(a){ return a.years; });
+
+    this.annotationRanges = annotationRanges;
+
+    // initialize data
+    var d0 = this.domain[0];
+    this.annualData = _.map(this.opt.annualData, function(d,i){
+      // retrieve month data
+      var monthlyData = _.map(d[2], function(dd, j){
+        return {
+          year: d0 + i + j/12.0,
+          month: j,
+          value: dd[0],
+          valueF: dd[0] * 1.8,
+          color: dd[1],
+          yearValue: d[0],
+          yearColor: d[1],
+          index: j,
+          x: 0,
+          y: 0,
+          highlighting: false,
+          highlightStart: 0,
+          highlightValue: 0
+        };
+      });
+      // retrieve annotation
+      var annotation = false;
+      var year = d0 + i;
+      if (_.has(annotationIndex, "" + year)) {
+        annotation = annotationIndex["" + year];
+      } else {
+        var foundAnnotationRange = _.filter(annotationRanges, function(a){ return year >= a.years[0] && year <= a.years[1]; });
+        if (foundAnnotationRange.length > 0) annotation = foundAnnotationRange[0];
+      }
+      return {
+        year: year,
+        month: -1,
+        value: d[0],
+        valueF: d[0] * 1.8,
+        color: d[1],
+        index: i,
+        x: 0,
+        y: 0,
+        highlighting: false,
+        highlightStart: 0,
+        highlightValue: 0,
+        monthlyData: monthlyData,
+        annotation: annotation
+      };
+    });
+  };
+
+  Graphics.prototype.refreshDimensions = function(){
+    var w = this.$el.width();
+    var h = this.$el.height();
+    var minFontSize = this.opt.minFontSize;
+
+    this.width = w;
+    this.height = h;
+
+    var m = this.opt.margin.slice(0);
+    m = [m[0]*h, m[1]*w, m[2]*h, m[3]*w];
+
+    // make calculations for x and y axes
+    var xAxisH = this.opt.xAxis.height * h;
+    var yAxisW = this.opt.yAxis.width * w;
+    var yAxisH = h - m[0] - m[2] - xAxisH;
+    var yAxisX = m[3];
+    var yAxisY = m[0];
+    var xAxisX = yAxisX + yAxisW;
+    var xAxisY = yAxisY + yAxisH;
+    var xAxisW = w - m[1] - m[3] - yAxisW;
+    this.xAxisDimensions = [xAxisX, xAxisY, xAxisW, xAxisH];
+    this.yAxisDimensions = [yAxisX, yAxisY, yAxisW, yAxisH];
+
+    var xAxisTextStyle = _.extend({}, this.opt.xAxis.textStyle);
+    var xAxisSubtextStyle = _.extend({}, this.opt.xAxis.subtextStyle);
+    var yAxisTextStyle = _.extend({}, this.opt.yAxis.textStyle);
+    var yAxisSubtextStyle = _.extend({}, this.opt.yAxis.subtextStyle);
+    xAxisTextStyle.fontSize *= h;
+    xAxisSubtextStyle.fontSize *= h;
+    yAxisSubtextStyle.fontSize *= h;
+    yAxisTextStyle.fontSize *= h;
+    xAxisTextStyle.fontSize = Math.max(minFontSize, xAxisTextStyle.fontSize);
+    xAxisSubtextStyle.fontSize = Math.max(minFontSize, xAxisSubtextStyle.fontSize);
+    yAxisSubtextStyle.fontSize = Math.max(minFontSize, yAxisSubtextStyle.fontSize);
+    yAxisTextStyle.fontSize = Math.max(minFontSize, yAxisTextStyle.fontSize);
+    this.xAxisTextStyle = xAxisTextStyle;
+    this.xAxisSubtextStyle = xAxisSubtextStyle;
+    this.yAxisSubtextStyle = yAxisSubtextStyle;
+    this.yAxisTextStyle = yAxisTextStyle;
+    this.baselineTextStyle = _.extend({}, yAxisTextStyle, {fill: "#ffffff"})
+
+    // make calculations for plot
+    var plotX = yAxisX + yAxisW;
+    var plotY = yAxisY;
+    var plotW = xAxisW;
+    var plotH = yAxisH;
+    this.plotDimensions = [plotX, plotY, plotW, plotH];
+
+    // marker
+    var markerTextStyle = _.extend({}, this.opt.marker.textStyle);
+    markerTextStyle.fontSize *= h;
+    markerTextStyle.fontSize = Math.max(minFontSize, markerTextStyle.fontSize);
+    this.markerTextStyle = markerTextStyle;
+    this.markerDotRadius = this.opt.marker.dotRadius * h;
+    this.markerWidthStep = this.opt.marker.widthStep * plotW;
+  };
+
+  Graphics.prototype.render = function(){
+    this.transition();
+  };
+
+  Graphics.prototype.renderAnnotations = function(){
+    var _this = this;
+    var domain = this.plotDomain;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var plotData = this.plotData;
+    var annotations = this.annotations;
+    var pd = this.plotDimensions;
+    var current = this.plotCurrentValue;
+    var isMonthView = this.isMonthView;
+    var color = parseInt(this.opt.annotationsUI.color);
+    var highlightColor = parseInt(this.opt.annotationsUI.highlightColor);
+    var labelCount = annotations.children.length;
+    var labelIndex = 0;
+
+    annotations.clear();
+
+    if (isMonthView) {
+      // hide the labels
+      for (var i=labelIndex; i<labelCount; i++) {
+        annotations.children[i].text="";
+      }
+      return false;
+    }
+
+    var cw = pd[2];
+    var ch = pd[3];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+
+    var mx0 = pd[0];
+    var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
+    var y0 = p0[1];
+    var leftBoundX = mx0+dataW/2;
+    var rightBoundX = mx0+cw-dataW/2;
+    var marginY = ch * 0.1 / plotData.length;
+    var markerRadius = dataW * 0.4;
+    var limit = 10;
+    if (plotData.length <= limit) {
+      markerRadius = cw / limit * 0.4;
+    }
+    var fontSize = markerRadius * 1.5;
+    var p;
+    var textStyle = {
+      "fill": "#151616",
+      "fontSize": fontSize,
+      "fontWeight": "bold"
+    };
+    var now = new Date();
+
+    _.each(plotData, function(d, i){
+      if (!d.annotation || d.annotation.years) return;
+
+      var x = d.x;
+      var y = d.y;
+      var value = d.value;
+      if (x < leftBoundX || x > rightBoundX) return;
+
+      // bounce when we are highlighting bar
+      if (d.highlighting) {
+        var delta = 0.25;
+        if (value < 0) delta *= -1;
+        value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
+        if (!isNaN(value)) {
+          var p = dataToPoint(d.year, value, domainp, range, pd);
+          y = p[1];
+        }
+      }
+
+      var aMarkerY = y - marginY - markerRadius;
+      if (d.y > y0) {
+        aMarkerY = y + marginY + markerRadius;
+      }
+      var aMarkerX = x + dataW / 2;
+
+      var aColor = color;
+      if (current.index === d.index) aColor = highlightColor;
+      annotations.beginFill(aColor);
+      annotations.drawCircle(aMarkerX, aMarkerY, markerRadius);
+      annotations.endFill();
+      var label = annotations.children[labelIndex];
+      label.text = "i";
+      label.style = textStyle;
+      label.x = aMarkerX;
+      label.y = aMarkerY;
+      label.anchor.set(0.5, 0.5);
+      labelIndex += 1;
+    });
+
+    // hide the remainder of the labels
+    for (var i=labelIndex; i<labelCount; i++) {
+      annotations.children[i].text="";
+    }
+  };
+
+  Graphics.prototype.renderAxes = function(){
+    var _this = this;
+    var domain = this.plotDomain;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var pd = this.plotDimensions;
+    var xAxisBounds = this.xAxisDimensions;
+    var yAxisBounds = this.yAxisDimensions;
+    var xAxisTextStyle = this.xAxisTextStyle;
+    var xAxisSubtextStyle = this.xAxisSubtextStyle;
+    var yAxisTextStyle = this.yAxisTextStyle;
+    var yAxisSubtextStyle = this.yAxisSubtextStyle;
+    var baselineTextStyle = this.baselineTextStyle;
+    var axes = this.axes;
+    var labelCount = axes.children.length;
+    var lineWidth = this.opt.yAxis.lineWidth;
+    var lineWidthBold = this.opt.yAxis.lineWidthBold;
+    var axesLineColor = this.axesLineColor;
+    var axesTickColor = this.axesTickColor;
+
+    axes.clear();
+
+    // determine labels and ticks for y axis
+    var delta = range[1] - range[0];
+    var yAxisStep = this.yAxisStep;
+    var count = parseInt(Math.round(delta / yAxisStep));
+    var halfRange = [UTIL.round(UTIL.floorToNearest(this.plotRange[0]/2, yAxisStep), 1), UTIL.round(UTIL.ceilToNearest(this.plotRange[1]/2, yAxisStep), 1)];
+
+    var i = 0;
+    var labelIndex = 0;
+    var value = range[1];
+    var xLabel = yAxisBounds[0] + yAxisBounds[2] * 0;
+    var lineX0 = xAxisBounds[0];
+    var lineX1 = xAxisBounds[0] + xAxisBounds[2];
+
+    // draw y axis
+
+    while(i <= count) {
+
+      var label;
+      var p = dataToPoint(0, value, domain, range, yAxisBounds);
+      var y = p[1];
+      var dc = UTIL.round(value, 1);
+      var df = UTIL.round(value * 1.8, 1);
+
+      var showLabel = (i === 0 || i === count || dc === halfRange[0] || dc === halfRange[1]);
+
+      if (dc===0) {
+        label = axes.children[labelIndex];
+        label.text = "1901–2000 average";
+        label.style = baselineTextStyle;
+        label.x = 0;
+        label.y = y;
+        label.anchor.set(0.0, 0.5);
+        labelIndex += 1;
+
+        // y axis label
+        // label = axes.children[labelIndex];
+        // label.text = "Change from 20th century average temperature";
+        // label.style = _.extend({}, yAxisTextStyle, {
+        //   fontSize: yAxisTextStyle.fontSize * 0.9,
+        //   letterSpacing: yAxisTextStyle.fontSize * 0.1
+        // });
+        // label.x = xLabel * 0.1;
+        // label.y = y;
+        // label.anchor.set(0.5, 0);
+        // label.rotation = UTIL.radians(-90);
+        // labelIndex += 1;
+
+      } else if (showLabel) {
+        label = axes.children[labelIndex];
+        if (dc > 0) {
+          dc = "+" + dc;
+          df = "+" + df;
+        }
+        label.text = dc + "°C";
+        label.style = yAxisTextStyle;
+        label.x = xLabel * 0.9;
+        label.y = y;
+        label.anchor.set(1.0, 0.5);
+        labelIndex += 1;
+
+        label = axes.children[labelIndex];
+        label.text = df + " °F";
+        label.style = yAxisSubtextStyle;
+        label.x = xLabel;
+        label.y = y;
+        label.anchor.set(0.0, 0.5);
+        labelIndex += 1;
+      }
+
+      if (dc===0) axes.lineStyle(lineWidthBold, 0xffffff);
+      else axes.lineStyle(lineWidth, axesLineColor);
+      axes.moveTo(lineX0, y).lineTo(lineX1, y);
+
+      value -= yAxisStep;
+      i += 1;
+    }
+
+    // draw x axis
+    var isMonthView = this.isMonthView;
+    var monthTransitionValue = this.monthTransitionValue;
+    var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
+    var plotData = this.plotData;
+    var cw = xAxisBounds[2];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+    if (isMonthView || monthTransitioning) {
+      dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
+    }
+    var labelY = xAxisBounds[1] + xAxisBounds[3] - xAxisTextStyle.fontSize;
+    var lineY0 = xAxisBounds[1];
+    var lineY1 = labelY - xAxisTextStyle.fontSize * 0.5;
+    var boundLeft = xAxisBounds[0];
+    var boundRight = xAxisBounds[0] + xAxisBounds[2];
+
+    count = domain[1] - domain[0];
+    var countp = domainp[1] - domainp[0];
+
+    var showEvery = 1;
+    var tickEvery = 1;
+
+    if (isMonthView || monthTransitioning) {
+      showEvery = 6; // in months
+      tickEvery = 2;
+
+      if (countp < 1.1) {
+        showEvery = 1;
+        tickEvery = 1;
+
+      } else if (countp < 2.1) {
+        showEvery = 3;
+        tickEvery = 1;
+      }
+
+    } else if (count > 80) {
+      showEvery = 20;
+      tickEvery = 5;
+
+    } else if (count > 30) {
+      showEvery = 10;
+      tickEvery = 5;
+
+    } else if (count > 10) {
+      showEvery = 5;
+    }
+
+    _.each(plotData, function(d, i){
+      var x = d.x + dataW * 0.5;
+      var textStyle = xAxisTextStyle;
+      if (x >= boundLeft && x <= boundRight) {
+
+        axes.lineStyle(2, axesTickColor, 1);
+        var text = d.year;
+        var value = parseInt(Math.round(d.year));
+        if (d.month >= 0) {
+          value = d.month;
+          text = parseInt(Math.floor(d.year));
+          if (value > 0) {
+            textStyle = xAxisSubtextStyle;
+            text = MONTHS[d.month];
+          }
+        }
+        var showLabel = (value % showEvery === 0) || (count >= 130 && value==domain[1]);
+        var showTick = (value % tickEvery === 0);
+        if (showLabel && labelIndex < labelCount) {
+          axes.lineStyle(3, axesTickColor, 1);
+          var label = axes.children[labelIndex];
+          label.text = text;
+          label.style = textStyle;
+          label.x = x;
+          label.y = labelY;
+          label.anchor.set(0.5, 0);
+          labelIndex += 1;
+        }
+        if (showTick) {
+          axes.moveTo(x, lineY0).lineTo(x, lineY1);
+        }
+
+      }
+    });
+
+    // hide the remainder of labels
+    for (var i=labelIndex; i<labelCount; i++) {
+      axes.children[i].text="";
+    }
+  };
+
+  Graphics.prototype.renderBg = function(){
+    var _this = this;
+    var pd = this.plotDimensions;
+    var bg = this.bg;
+
+    // draw bg
+    bg.clear();
+    bg.beginFill(this.bgColor);
+    bg.drawRect(pd[0], pd[1], pd[2], pd[3]);
+    bg.endFill();
+
+    var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
+    var showAnnotation = (this.scale <= scaleThreshold);
+    if (!showAnnotation) return false;
+
+    var current = this.plotCurrentValue;
+    var yearPrecise = this.yearPrecise;
+    if (!current.annotation || !current.annotation.years) return false;
+
+    var yrange = current.annotation.years;
+    var y0 = yrange[0];
+    var y1 = yrange[1];
+    if (!UTIL.within(yearPrecise, y0, y1)) return false;
+
+    // Display annotation range
+    var domainp = this.plotDomainPrecise;
+    var color = parseInt(this.opt.annotationsUI.rangeColor);
+    if (y0 < domainp[0]) y0 = domainp[0];
+    if (y1 > domainp[1]) y1 = domainp[1];
+    var w = (y1 - y0) / (domainp[1] - domainp[0]) * pd[2];
+    var x = UTIL.norm(y0, domainp[0], domainp[1]) * pd[2] + pd[0];
+    bg.beginFill(color);
+    bg.drawRect(x, pd[1], w, pd[3]);
+    bg.endFill();
+  };
+
+  Graphics.prototype.renderMarker = function(){
+    // draw plot marker
+    var prev = this.prev;
+    var current = this.plotCurrentValue;
+    var pd = this.plotDimensions;
+    var marker = this.marker;
+    var flag = this.flag;
+    var yLabel = flag.children[0];
+    var cLabel = flag.children[1];
+    var fLabel = flag.children[2];
+    var aLabel = flag.children[3];
+    var lLabel = flag.children[4];
+    var markerColor = parseInt(this.opt.marker.color);
+    var markerFill = parseInt(this.opt.marker.fill);
+    var widthStep = this.markerWidthStep;
+    var time = this.time;
+    var markerW = 6;
+    var transitionMs = this.opt.marker.transitionMs;
+    var scaleThreshold = this.opt.annotationsUI.scaleThreshold;
+    var lineFill = this.opt.marker.lineFill;
+    var textFillAlt = this.opt.marker.textFillAlt;
+    var textFillAltDark = this.opt.marker.textFillAltDark;
+
+    var showAnnotation = (this.scale <= scaleThreshold && current.annotation);
+    var showAnnotationImage = showAnnotation && current.annotation.sprite;
+
+    flag.clear();
+    marker.clear();
+
+    var cx = pd[0];
+    var cy = 0;
+    var cw = pd[2];
+    var ch = pd[3]
+    var x = pd[0] + cw * time;
+    var marginX = cw * 0.02;
+    var marginY = cw * 0.008;
+
+    var rectSmall = 0.23;
+    var rectBig = 0.33;
+    var rectW = cw * rectSmall;
+    if (showAnnotation) rectW = cw * rectBig;
+    var rectThreshold = cw * ((rectBig + rectSmall)/2);
+
+    if (!this.markerRectW) this.markerRectW = rectW;
+    if (this.markerRectW !== rectW) {
+      var direction = rectW - this.markerRectW;
+      direction /= Math.abs(direction);
+      var rectWNew = this.markerRectW + (direction * widthStep);
+      if (direction > 0 && rectWNew > rectW || direction < 0 && rectWNew < rectW) rectWNew = rectW;
+
+      // delay the display of annotation
+      if (direction > 0 && this.markerRectW < rectThreshold) {
+        showAnnotation = false;
+        showAnnotationImage = false;
+      }
+
+      this.markerTransitioning = true;
+      this.markerRectW = rectWNew;
+      rectW = rectWNew;
+    } else {
+      this.markerTransitioning = false;
+    }
+
+    var rectX = x + markerW/2;
+    if (time > 0.5) {
+      rectX = x - rectW - markerW/2;
+      marginX *= 1.5;
+    }
+
+    // label bg
+    var labelW = rectW - marginX * 2;
+    var labelX = rectX + marginX;
+    // var labelH = ch * 0.1;
+    // marker.beginFill(0x777070, 0.2);
+    // marker.drawRect(x, cy, labelW, labelH);
+    // marker.endFill();
+
+    marker.lineStyle(markerW, markerColor);
+    marker.moveTo(x, cy).lineTo(x, cy + ch + pd[1]);
+
+    var textStyle = this.markerTextStyle;
+    var dc = UTIL.round(current.value, 1);
+    var df = UTIL.round(current.valueF, 1);
+    if (dc >= 0) {
+      dc = "+" + dc;
+      df = "+" + df;
+    }
+
+    var yearText = current.year;
+    if (current.month >= 0) {
+      yearText = MONTHS[current.month] + " " + parseInt(current.year);
+    }
+
+    var annotation = "";
+    if (showAnnotation) annotation = current.annotation.text;
+
+    // set text
+    yLabel.text = yearText;
+    cLabel.text = dc + "°C";
+    fLabel.text = df + "°F";
+    aLabel.text = annotation;
+    var than = dc >= 0 ? "warmer": "cooler";
+    lLabel.text = than + " than average"
+
+    // set style
+    yLabel.style = textStyle;
+    textStyle = _.clone(textStyle);
+    textStyle.fontSize *= 0.9;
+    cLabel.style = textStyle;
+    textStyle = _.clone(textStyle);
+    textStyle.fill = textFillAltDark;
+    fLabel.style = textStyle;
+    textStyle.wordWrap = true;
+    textStyle.wordWrapWidth = labelW;
+    textStyle.fontSize *= 0.8;
+    textStyle.fill = textFillAlt;
+    aLabel.style = _.extend({}, textStyle, {lineHeight: textStyle.fontSize * 1.5});
+    textStyle = _.clone(textStyle);
+    textStyle.fontSize *= 0.9;
+    textStyle.fill = textFillAltDark;
+    lLabel.style = textStyle;
+
+    // set x position
+    yLabel.x = labelX;
+    cLabel.x = labelX;
+    fLabel.x = labelX + yLabel.width + marginX * 1.3;
+    aLabel.x = labelX;
+    lLabel.x = labelX;
+
+    // set y position
+    yLabel.y = cy + marginY * 1.5;
+    cLabel.y = yLabel.y + yLabel.height + marginY * 2;
+    fLabel.y = cLabel.y;
+    lLabel.y = cLabel.y + cLabel.height + marginY;
+    aLabel.y = lLabel.y + lLabel.height + marginY * 2;
+
+    // draw rectangles
+    var rectH = marginY * 5 + yLabel.height + cLabel.height + lLabel.height;
+    if (showAnnotation) rectH += marginY * 4 + aLabel.height;
+    var imageW, imageH;
+    var images = this.images;
+    if (showAnnotationImage) {
+      images.visible = true;
+      for (var i=0; i<images.children.length; i++) {
+        images.children[i].visible = false;
+      }
+      imageW = labelW;
+      imageH = imageW / current.annotation.imageRatio;
+      rectH += marginY + imageH;
+      var sprite = current.annotation.sprite;
+      sprite.width = imageW;
+      sprite.height = imageH;
+      sprite.visible = true;
+      sprite.x = labelX;
+      sprite.y = aLabel.y + aLabel.height + marginY;
+    } else {
+      images.visible = false;
+    }
+
+    var lineWidth = markerW*0.5;
+    var cornerRadius = rectH * 0.1;
+    var lineX = rectX - lineWidth/2;
+    var lineY = cy + lineWidth/2;
+    if (time > 0.5) lineX = rectX + lineWidth/2;
+    flag.lineStyle(lineWidth, lineFill);
+    flag.beginFill(markerFill);
+    flag.moveTo(lineX, lineY).lineTo(lineX+rectW, lineY);
+    if (time > 0.5) {
+      flag.lineTo(lineX+rectW, lineY+rectH).lineTo(lineX+cornerRadius, lineY+rectH).lineTo(lineX, lineY+rectH-cornerRadius);
+    } else {
+      flag.lineTo(lineX+rectW, lineY+rectH-cornerRadius).lineTo(lineX+rectW-cornerRadius, lineY+rectH).lineTo(lineX, lineY+rectH);
+    }
+    flag.lineTo(lineX, lineY);
+    // flag.drawRect(lineX, lineY, rectW, rectH);
+    flag.endFill();
+
+    // flag.beginFill(0x000000, 0.25);
+    // flag.drawRect(rectX, cy + marginY + yLabel.height + marginY, rectW, cLabel.height + marginY * 3 + lLabel.height);
+    // flag.endFill();
+
+    // flag.lineStyle(1, 0x000000, 0.5);
+    // flag.moveTo(labelX + labelW * 0.5, cLabel.y);
+    // flag.lineTo(labelX + labelW * 0.5, cLabel.y+cLabel.height);
+
+    this.prev = current;
+  };
+
+  Graphics.prototype.renderPlot = function(){
+    var _this = this;
+    var plotData = this.plotData;
+    var domain = this.plotDomain;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var pd = this.plotDimensions;
+    var plot = this.plot;
+    var isMonthView = this.isMonthView;
+    var labelCount = plot.children.length;
+    var lineWidthBold = this.opt.yAxis.lineWidthBold;
+
+    var monthTransitionValue = this.monthTransitionValue;
+    var monthTransitioning = (monthTransitionValue > 0 && monthTransitionValue < 1);
+
+    var cw = pd[2];
+    var ch = pd[3];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+    if (monthTransitioning || isMonthView) {
+      dataW = cw / (domainp[1]-domainp[0]+1.0/12.0) / 12.0;
+    }
+
+    var roundToNearest = 0.5;
+    var dataMargin = Math.max(dataW * 0.05, roundToNearest);
+    dataMargin = UTIL.ceilToNearest(dataMargin, roundToNearest);
+    var mx0 = pd[0];
+    var p0 = dataToPoint(domain[0], 0, domainp, range, pd); // baseline
+    var y0 = p0[1];
+    var leftBoundX = mx0-dataW;
+    var rightBoundX = mx0+cw;
+
+    plot.clear();
+
+    var textStyle = _.extend(this.opt.plot.textStyle, {fontSize: dataW * 0.25});
+    var labelIndex = 0;
+    _.each(plotData, function(d, i){
+      var value = d.value;
+      var x = d.x;
+      var y = d.y;
+      var color = d.color;
+      var p;
+      if (x < leftBoundX || x > rightBoundX) return;
+
+      if (monthTransitioning && d.month >= 0) {
+        var yearValue = d.yearValue;
+        value = UTIL.lerp(yearValue, value, monthTransitionValue);
+        p = dataToPoint(d.year, value, domainp, range, pd);
+        y = p[1];
+        color = UTIL.lerpColor(d.yearColor, color, monthTransitionValue);
+      }
+
+      // bounce when we are highlighting bar
+      if (d.highlighting) {
+        var delta = 0.25;
+        if (value < 0) delta *= -1;
+        value = UTIL.lerp(value+delta, value, UTIL.easeInElastic(d.highlightValue, 0.01));
+        if (!isNaN(value)) {
+          p = dataToPoint(d.year, value, domainp, range, pd);
+          y = p[1];
+        }
+      }
+      var w = dataW - dataMargin * 2;
+      var showLabel = true;
+      // clip the sides off the edges
+      if (x < mx0) {
+        w -= (mx0 - x);
+        x = mx0;
+        showLabel = false;
+      }
+      if (x > (mx0 + cw - dataW)) {
+        w -= (x - (mx0 + cw - dataW));
+        showLabel = false;
+      }
+      plot.beginFill(color);
+
+      var ry = y;
+      var rh = y0 - y - lineWidthBold/2;
+      if (y > y0) {
+        ry = y0 + lineWidthBold/2;
+        rh = y - ry;
+      }
+
+      if (rh > 0) {
+        plot.drawRect(x+dataMargin, ry, w, rh);
+        if (d.highlighting && d.highlightValue > 0 && d.highlightValue < 0.25) {
+          var highlightValue = 1.0 - d.highlightValue * 4;
+          plot.beginFill(0xFFFFFF, highlightValue*0.1);
+          plot.drawRect(x+dataMargin, ry, w, rh);
+        }
+      }
+
+      if (showLabel && (monthTransitioning || isMonthView) && d.month >= 0 && labelIndex < labelCount) {
+        var label = plot.children[labelIndex];
+        label.text = MONTHS[d.month];
+        label.style = textStyle;
+        label.x = x + dataW * 0.5;
+        label.alpha = monthTransitionValue;
+        if (y > y0) {
+          label.y = y + dataMargin;
+          label.anchor.set(0.5, 0);
+        } else {
+          label.y = ry - dataMargin;
+          label.anchor.set(0.5, 1);
+        }
+        labelIndex += 1;
+      }
+    });
+
+    // hide the remainder of labels
+    if (labelIndex < labelCount) {
+      for (var i=labelIndex; i<labelCount; i++) {
+        plot.children[i].text="";
+      }
+    }
+  };
+
+  Graphics.prototype.renderTrend = function(){
+    var domain = this.plotDomain;
+    var count = domain[1]-domain[0];
+    var tenYearTrendYearsDisplay = this.tenYearTrendYearsDisplay;
+    var trend = this.trend;
+
+    trend.clear();
+
+    if (count < tenYearTrendYearsDisplay[0] || count > tenYearTrendYearsDisplay[1]) return false;
+
+    var current = this.plotCurrentValue;
+    var pd = this.plotDimensions;
+    var domainp = this.plotDomainPrecise;
+    var range = this.plotRange;
+    var cw = pd[2];
+    var ch = pd[3];
+    var dataW = cw / (domainp[1]-domainp[0]+1);
+    var plotData = this.plotData;
+    var trendData = this.tenYearTrend;
+    var annotationRanges = this.annotationRanges;
+    var lineColor = parseInt(this.opt.trend.color);
+
+    var findAnnotationRange = function(year, annotations){
+      var found = _.find(annotations, function(a){ return year >= a.years[0] && year <= a.years[1]; });
+      return found;
+    };
+
+    var first = true;
+    _.each(plotData, function(d, i){
+      var x = d.x + dataW * 0.5;
+      var value = trendData[d.index];
+      var p = dataToPoint(d.year, value, domainp, range, pd);
+      var y = p[1];
+      if (first) {
+        trend.moveTo(x, y);
+        first = false;
+      } else {
+        var annRange = findAnnotationRange(d.year, annotationRanges);
+        if (annRange) {
+          // highlight trend if we are currently on this annotation range
+          if (current.year >= annRange.years[0] && current.year <= annRange.years[1]) {
+            trend.lineStyle(4, lineColor, 0.8);
+
+          // otherwise, just show it faintly
+          } else {
+            trend.lineStyle(2, 0xffffff, 0.4);
+          }
+
+        // don't show trend where there is no annotation range
+        } else {
+          trend.lineStyle(1, 0xffffff, 0);
+        }
+        trend.lineTo(x, y);
+      }
+    });
+  };
+
+  Graphics.prototype.sleepEnd = function(){
+    if (this.sleeping) {
+      this.sleepTransitionStart = new Date();
+      this.sleepTransitioning = true;
+      this.sleeping = false;
+    }
+  };
+
+  Graphics.prototype.sleepStart = function(){
+    this.sleepTransitionStart = new Date();
+    this.sleepTransitioning = true;
+    this.sleeping = true;
+  };
+
+  Graphics.prototype.sleepTransition = function(){
+    var now = new Date();
+    var transitionMs = this.sleepTransitionMs;
+    var delta = now - this.sleepTransitionStart;
+    var progress = delta / transitionMs;
+
+    if (progress >= 1) {
+      progress = 1.0;
+      this.sleepTransitioning = false;
+    }
+
+    var alpha = 1.0 - progress;
+    if (!this.sleeping) alpha = progress;
+
+    if (this.restingFilter) {
+      this.restingFilter.uniforms.progress = 1.0 - alpha;
+    }
+
+
+    _.each(this.sleepers, function(g){
+      g.alpha = alpha;
+    });
+  };
+
+  Graphics.prototype.transition = function(){
+    this.monthTransitioning = (this.monthTransitionValue > 0 && this.monthTransitionValue < 1);
+
+    if (!this.transitioning && !this.monthTransitioning && !this.markerTransitioning && !this.sleepTransitioning) return false;
+
+    // bar highlight transition
+    if (this.transitioning) {
+      var _this = this;
+      var range = this.plotRange;
+      var highlightMs = this.opt.highlightMs;
+      var transitioning = false;
+      var now = new Date();
+      var plotData = this.plotData;
+      _.each(plotData, function(d, i){
+        if (d.highlighting && d.highlightStart) {
+          var diff = now - d.highlightStart;
+          if (diff >= highlightMs) {
+            diff = highlightMs;
+            plotData[i].highlighting = false;
+          } else {
+            transitioning = true;
+          }
+          var progress = diff / highlightMs;
+          progress = Math.max(progress, 0);
+          progress = Math.min(progress, 1);
+          plotData[i].highlightValue = progress;
+        }
+      });
+      this.transitioning = transitioning;
+    }
+
+    // month transition
+    if (this.monthTransitioning) {
+      var step = this.monthTransitionStep;
+      var value = this.monthTransitionValue;
+      if (this.isMonthView) value += step;
+      else value -= step;
+      value = UTIL.clamp(value, 0, 1);
+      this.monthTransitionValue = value;
+      if (value <= 0) {
+        this.onScaleChange(this.scale);
+      }
+    }
+
+    // sleep transition
+    if (this.sleepTransitioning) {
+      this.sleepTransition();
+    }
+
+    if (this.transitioning || this.monthTransitioning) {
+      this.renderPlot();
+      this.renderAnnotations();
+    }
+
+    if (this.markerTransitioning) {
+      this.renderMarker();
+    }
+  };
+
+  return Graphics;
+
+})();
+  </script>
+  <script>
+   'use strict';
+
+var Messages = (function() {
+  function Messages(options) {
+    var defaults = {};
+    this.opt = $.extend({}, defaults, options);
+    this.init();
+  }
+
+  Messages.prototype.init = function(){
+    this.$el = $(this.opt.el);
+    this.messages = this.opt.messages;
+    this.domain = this.opt.domain;
+    this.maxDomainCount = this.domain[1] - this.domain[0] + 1;
+    this.minYearsDisplay = this.opt.minYearsDisplay;
+
+    this.domainCount = -1;
+    this.scale = -1;
+    this.currentMessageIndex = -1;
+
+    this.loadView();
+    this.onScaleChange(this.opt.scale);
+  };
+
+  Messages.prototype.loadView = function(){
+    var _this = this;
+    var $container = $('<div>');
+
+    _.each(this.messages, function(message, i){
+      var $message = $('<div class="message"><p>'+message.text+'</p></div>');
+      $container.append($message);
+      _this.messages[i].$el = $message;
+      _this.messages[i].index = i;
+    });
+
+    this.$el.prepend($container);
+    this.$year = $("#yearString");
+    this.$messages = $('.message');
+  };
+
+  Messages.prototype.onScaleChange = function(scale){
+    if (scale != this.scale) {
+      this.scale = scale;
+      var minDomainCount = this.minYearsDisplay;
+      var maxDomainCount = this.maxDomainCount;
+      var domainCount = UTIL.lerp(minDomainCount, maxDomainCount, scale);
+      if (domainCount != this.domainCount) {
+        this.domainCount = domainCount;
+        this.render();
+      }
+    }
+  };
+
+  Messages.prototype.render = function(){
+    var years = this.domainCount;
+    var message = _.find(this.messages, function(m){
+      return years < m.years;
+    });
+    if (!message) {
+      message = this.messages[this.messages.length-1];
+    }
+    var messageChanged = (message.index !== this.currentMessageIndex);
+
+    years = Math.round(years);
+    var yearString = "year";
+    if (years > 1) yearString += "s";
+
+    this.$year.text(years+" "+yearString);
+
+    if (messageChanged) {
+      this.$messages.removeClass('active');
+      message.$el.addClass('active');
+    }
+
+  };
+
+  return Messages;
+
+})();
+  </script>
+  <script>
+   'use strict';
+
+var AppTimescales = (function() {
+
+  function AppTimescales(config, content, data) {
+    var defaults = {};
+    this.opt = _.extend({}, defaults, config);
+    this.content = content;
+    this.data = data;
+
+    this.init();
+  }
+
+  AppTimescales.prototype.init = function(){
+    var _this = this;
+
+    this.loadControls();
+    var soundPromise = this.loadSounds();
+    this.$sidebar = $(".sidebar");
+
+    $.when.apply($, [soundPromise]).then(function(){
+      _this.onReady();
+    });
+
+  };
+
+  AppTimescales.prototype.loadControls = function(){
+    var _this = this;
+
+    var controls = new Controls(this.opt.controls);
+
+    return controls.load();
+  };
+
+  AppTimescales.prototype.loadListeners = function(){
+    var _this = this;
+    var $document = $(document);
+    var $window = $(window);
+
+    var onAxisChange = function(resp) {
+      var key = resp.key;
+      var value = resp.value;
+      switch(key) {
+        case "horizontal":
+          _this.onTimeChange(value);
+          break;
+        case "vertical":
+          _this.onScaleChange(1.0-value);
+          break;
+        default:
+          break;
+      }
+    }
+    var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
+    channel.addCallback("controls.axes.change", onAxisChange);
+    channel.listen();
+
+    if (this.sleep) {
+      var onSleepStart = function(e, value) {
+        _this.$sidebar.removeClass("active");
+        _this.graphics.sleepStart();
+      };
+      var onSleepEnd = function(e, value) {
+        _this.$sidebar.addClass("active");
+        _this.graphics.sleepEnd();
+      };
+      $document.on("sleep.start", onSleepStart);
+      $document.on("sleep.end", onSleepEnd);
+    }
+
+    var onResize = function(){ _this.onResize(); }
+    $window.on('resize', onResize);
+  };
+
+  AppTimescales.prototype.loadSounds = function(){
+    var _this = this;
+
+    var sound = new Sound(this.opt.sound);
+
+    return sound.load();
+  };
+
+  AppTimescales.prototype.onReady = function(){
+    var d = this.data;
+
+    var opt = _.extend({}, this.opt.graphics, this.content, this.data);
+
+    // Initialize viz
+    this.graphics = new Graphics(opt);
+
+    // Init sleep mode utilitys
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
+
+    // Init messages
+    opt = _.extend({}, this.opt.messages, this.content, {domain: this.data.domain, scale: this.opt.graphics.scale, minYearsDisplay: this.opt.graphics.minYearsDisplay});
+    this.messages = new Messages(opt);
+
+    this.loadListeners();
+    this.render();
+  };
+
+  AppTimescales.prototype.onResize = function(){
+    this.graphics.onResize();
+  };
+
+  AppTimescales.prototype.onScaleChange = function(value) {
+    var scale = UTIL.easeInOutSin(value);
+    this.graphics.onScaleChange(scale);
+    this.messages.onScaleChange(scale);
+    this.sleep && this.sleep.wakeUp();
+  };
+
+  AppTimescales.prototype.onTimeChange = function(value) {
+    this.graphics.onTimeChange(value);
+    this.sleep && this.sleep.wakeUp();
+  };
+
+  AppTimescales.prototype.render = function(){
+    var _this = this;
+
+    this.graphics.render();
+
+    requestAnimationFrame(function(){ _this.render(); });
+  };
+
+  return AppTimescales;
+
+})();
+  </script>
+  <script>
+   var CONFIG_BASE_FILE = (typeof CONFIG_BASE_FILE === 'undefined') ? "config/base.json" : CONFIG_BASE_FILE;
+var CONFIG_FILE = (typeof CONFIG_FILE === 'undefined') ? "config/embed.json" : CONFIG_FILE;
+var CONTENT_FILE = (typeof CONTENT_FILE === 'undefined') ? "content/content.json" : CONTENT_FILE;
+var DATA_FILE = (typeof DATA_FILE === 'undefined') ? "data/current.json" : DATA_FILE;
+
+$(function() {
+  $.when(
+    $.getJSON(CONFIG_BASE_FILE),
+    $.getJSON(CONFIG_FILE),
+    $.getJSON(CONTENT_FILE),
+    $.getJSON(DATA_FILE)
+
+  ).done(function(baseConfig, config, content, data){
+    baseConfig = baseConfig[0];
+    updateColorsFromConfig(baseConfig);
+    config = _.extend({}, baseConfig, config[0]);
+    content = content[0];
+    data = data[0];
+
+    console.log('Config loaded.');
+    var app = new AppTimescales(config, content, data);
+  });
+
+
+});
+  </script>
+ </body>
+</html>
