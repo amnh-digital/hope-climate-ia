@@ -18,10 +18,10 @@
 
     <div id="app" class="app">
       <div id="view" class="view">
-        <div class="title">
+        <!-- <div class="title">
           <h1>Rising Global Temperature</h1>
           <h2>Earth has warmed rapidly over recent decades—<br />and temperature continues to climb</h2>
-        </div>
+        </div> -->
         <div class="content">
           <div id="graphics" class="graphics"></div>
           <div class="message-status">
@@ -57,21 +57,6 @@
       </div>
     </div>
 
-    <script type="x-shader/x-fragment" id="resting-fragment-shader">
-    varying vec2 vTextureCoord;
-    uniform sampler2D uSampler;
-
-    uniform float progress;
-
-    void main() {
-      float threshold = 0.2;
-      vec4 color = texture2D(uSampler, vTextureCoord.xy);
-      vec4 targetColor = vec4(5.0/255.0, 133.0/255.0, 153.0/255.0, 1.0);
-      if (color.r < threshold && color.g < threshold && color.b < threshold) targetColor = color;
-      gl_FragColor = mix(color, targetColor, progress);
-    }
-    </script>
-
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/pixi-4.8.1.min.js"></script>
@@ -83,7 +68,6 @@
     <script src="../shared/js/controls.js"></script>
     <script src="../shared/js/util.js"></script>
     <script src="../shared/js/sound.js"></script>
-    <script src="../shared/js/sleep.js"></script>
 
     <script src="js/graphics.js"></script>
     <script src="js/messages.js"></script>

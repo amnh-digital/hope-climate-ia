@@ -55,16 +55,18 @@ var AppTimescales = (function() {
     channel.addCallback("controls.axes.change", onAxisChange);
     channel.listen();
 
-    var onSleepStart = function(e, value) {
-      _this.$sidebar.removeClass("active");
-      _this.graphics.sleepStart();
-    };
-    var onSleepEnd = function(e, value) {
-      _this.$sidebar.addClass("active");
-      _this.graphics.sleepEnd();
-    };
-    $document.on("sleep.start", onSleepStart);
-    $document.on("sleep.end", onSleepEnd);
+    if (this.sleep) {
+      var onSleepStart = function(e, value) {
+        _this.$sidebar.removeClass("active");
+        _this.graphics.sleepStart();
+      };
+      var onSleepEnd = function(e, value) {
+        _this.$sidebar.addClass("active");
+        _this.graphics.sleepEnd();
+      };
+      $document.on("sleep.start", onSleepStart);
+      $document.on("sleep.end", onSleepEnd);
+    }
 
     var onResize = function(){ _this.onResize(); }
     $window.on('resize', onResize);
@@ -87,8 +89,11 @@ var AppTimescales = (function() {
     this.graphics = new Graphics(opt);
 
     // Init sleep mode utilitys
-    opt = _.extend({}, this.opt.sleep);
-    this.sleep = new Sleep(opt);
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
 
     // Init messages
     opt = _.extend({}, this.opt.messages, this.content, {domain: this.data.domain, scale: this.opt.graphics.scale, minYearsDisplay: this.opt.graphics.minYearsDisplay});
@@ -106,12 +111,12 @@ var AppTimescales = (function() {
     var scale = UTIL.easeInOutSin(value);
     this.graphics.onScaleChange(scale);
     this.messages.onScaleChange(scale);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   AppTimescales.prototype.onTimeChange = function(value) {
     this.graphics.onTimeChange(value);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   AppTimescales.prototype.render = function(){

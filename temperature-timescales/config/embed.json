@@ -1,5 +1,6 @@
 {
   "controls": {
+    "el": "#app",
     "uiMappings": {
       "vertical": {
         "label": "Change scale",
@@ -23,5 +24,8 @@
         }
       }
     }
+  },
+  "sleep": {
+    "enable": 0
   }
 }

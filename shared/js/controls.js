@@ -82,6 +82,16 @@ var Controls = (function() {
     }
   }
 
+  function getUIContainer(opt){
+    var $container = $("#ui");
+    if (!$container.length) {
+      $container = $('<div id="ui" class="ui"></div>');
+      var parentEl = opt.el || 'body';
+      $(parentEl).append($container);
+    }
+    return $container;
+  }
+
   function mean(values) {
     var len = values.length;
     if (len <= 0) return 0;
@@ -255,11 +265,7 @@ var Controls = (function() {
   };
 
   Controls.prototype.loadButtonListeners = function(mappings){
-    var $container = $("#ui");
-    if (!$container.length) {
-      $container = $('<div id="ui" class="ui"></div>');
-      $('body').append($container);
-    }
+    var $container = getUIContainer(this.opt);
     var channel = this.channel;
 
     _.each(mappings, function(opt, key){
@@ -409,11 +415,7 @@ var Controls = (function() {
   };
 
   Controls.prototype.loadTouchListeners = function(mappings){
-    var $container = $("#ui");
-    if (!$container.length) {
-      $container = $('<div id="ui" class="ui"></div>');
-      $('body').append($container);
-    }
+    var $container = getUIContainer(this.opt);
     var channel = this.channel;
 
     _.each(mappings, function(opt, key){
@@ -456,11 +458,7 @@ var Controls = (function() {
   };
 
   Controls.prototype.loadUIListeners = function(mappings) {
-    var $container = $("#ui");
-    if (!$container.length) {
-      $container = $('<div id="ui" class="ui"></div>');
-      $('body').append($container);
-    }
+    var $container = getUIContainer(this.opt);
     var channel = this.channel;
 
     _.each(mappings, function(opt, key){

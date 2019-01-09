@@ -1,0 +1,70 @@
+body {
+  font-size: 18px;
+}
+
+.app,
+.view,
+.content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.content {
+  width: 90%;
+  height: 90%;
+  left: 5%;
+  top: 5%;
+}
+
+.credits {
+  display: none;
+}
+
+.ui {
+  position: absolute;
+  left: auto;
+  right: 0;
+  width: 23%;
+  height: 18%;
+  padding: 0;
+}
+.ui-slider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  float: none;
+}
+.ui-slider-vertical {
+  width: 16px;
+  height: 84%;
+  top: 8%;
+}
+.ui-slider-handle {
+  border-radius: 4px;
+}
+.ui-slider-vertical .ui-slider-handle {
+  height: 16px;
+  width: 32px;
+  left: -8px;
+  margin-bottom: -8px;
+  cursor: ns-resize;
+}
+.ui-slider-horizontal {
+  height: 16px;
+  width: 67%;
+  top: 50%;
+  left: auto;
+  right: 5%;
+  margin: -8px 0 0;
+}
+.ui-slider-horizontal .ui-slider-handle {
+  height: 32px;
+  width: 16px;
+  top: -8px;
+  margin-left: -16px;
+  cursor: ew-resize;
+}
