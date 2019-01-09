@@ -12,6 +12,7 @@
     "highlightMs": 1000,
     "tenYearTrendYearsDisplay": [5, 100],
     "sleepTransitionMs": 2000,
+    "minFontSize": 16,
     "annotationsUI": {
       "color": "$0xprimary",
       "highlightColor": "$0xhighlight",

@@ -374,6 +374,7 @@ var Graphics = (function() {
   Graphics.prototype.refreshDimensions = function(){
     var w = this.$el.width();
     var h = this.$el.height();
+    var minFontSize = this.opt.minFontSize;
 
     this.width = w;
     this.height = h;
@@ -401,6 +402,10 @@ var Graphics = (function() {
     xAxisSubtextStyle.fontSize *= h;
     yAxisSubtextStyle.fontSize *= h;
     yAxisTextStyle.fontSize *= h;
+    xAxisTextStyle.fontSize = Math.max(minFontSize, xAxisTextStyle.fontSize);
+    xAxisSubtextStyle.fontSize = Math.max(minFontSize, xAxisSubtextStyle.fontSize);
+    yAxisSubtextStyle.fontSize = Math.max(minFontSize, yAxisSubtextStyle.fontSize);
+    yAxisTextStyle.fontSize = Math.max(minFontSize, yAxisTextStyle.fontSize);
     this.xAxisTextStyle = xAxisTextStyle;
     this.xAxisSubtextStyle = xAxisSubtextStyle;
     this.yAxisSubtextStyle = yAxisSubtextStyle;
@@ -417,6 +422,7 @@ var Graphics = (function() {
     // marker
     var markerTextStyle = _.extend({}, this.opt.marker.textStyle);
     markerTextStyle.fontSize *= h;
+    markerTextStyle.fontSize = Math.max(minFontSize, markerTextStyle.fontSize);
     this.markerTextStyle = markerTextStyle;
     this.markerDotRadius = this.opt.marker.dotRadius * h;
     this.markerWidthStep = this.opt.marker.widthStep * plotW;
