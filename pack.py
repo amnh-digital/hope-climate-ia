@@ -13,7 +13,7 @@ import shutil
 import sys
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-app', dest="APP", default="temperature-timescales/index.html", help="Path to webpage.")
+parser.add_argument('-app', dest="APP", default="temperature-timescales/embed.html", help="Path to webpage.")
 parser.add_argument('-aurl', dest="ASSET_URL", default="https://amnh.org/assets/", help="Base url where the assets will be hosted")
 parser.add_argument('-ap', dest="ASSET_PREFIX", default="", help="Adds a prefix to all asset files")
 parser.add_argument('-ad', dest="ASSET_DIRS", default="temperature-timescales/img/,temperature-timescales/data/*.json,temperature-timescales/config/*.json,temperature-timescales/content/*.json,shared/audio/key.mp3", help="Comma-separated list of directories of assets")
