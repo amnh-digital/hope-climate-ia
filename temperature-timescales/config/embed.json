@@ -1,6 +1,6 @@
 {
   "controls": {
-    "el": "#app",
+    "el": "#graphics",
     "uiMappings": {
       "vertical": {
         "label": "Change scale",

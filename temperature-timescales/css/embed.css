@@ -1,5 +1,5 @@
 .content {
-  width: 75%;
+  width: 93%;
   height: 80%;
   left: 3%;
   top: 3%;
@@ -15,7 +15,8 @@
   margin: 0;
 }
 
-.message-status {
+.message-status,
+.messages {
   position: absolute;
   width: 79.2%;
   height: 14%;
@@ -23,7 +24,7 @@
   left: 18.2%;
 }
 .message-status h2 {
-  font-size: 1rem;
+  font-size: 2vmin;
   margin: 1rem 0;
 }
 .message-status > div {
@@ -32,11 +33,72 @@
 }
 
 .messages {
-  width: 25%;
-  right: -23%;
-  top: 10%;
-  height: 50%;
+  width: 45%;
+  top: auto;
+  left: auto;
+  right: 5%;
+  bottom: -20%;
 }
 .message p {
-  font-size: 1rem;
+  font-size: 2vmin;
+}
+
+.ui {
+  width: 77%;
+  height: 95%;
+  left: 18%;
+  right: auto;
+  bottom: auto;
+  top: 0;
+  background: none;
+}
+.ui-slider-horizontal {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: auto;
+  margin: 0;
+}
+.ui-slider-horizontal .ui-slider-handle {
+  height: 100%;
+  width: 24px;
+  top: 0;
+  margin-left: -12px;
+  background: transparent;
+  outline: none;
+}
+.ui-slider-vertical {
+  width: 16px;
+  height: 40%;
+  top: auto;
+  bottom: 7%;
+  left: auto;
+  right: -7%;
+  margin: 0;
+  background: var(--primary-darker-color);
+}
+.ui-slider-vertical:before,
+.ui-slider-vertical:after {
+  display: block;
+  position: absolute;
+  color: white;
+  background: var(--primary-darkest-color);
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  left: 50%;
+  margin-left: -14px;
+  padding: 0;
+  font-size: 2rem;
+}
+.ui-slider-vertical:before {
+  content: "+";
+  top: -38px;
+}
+.ui-slider-vertical:after {
+  content: "-";
+  bottom: -38px;
 }
