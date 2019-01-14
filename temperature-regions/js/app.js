@@ -74,8 +74,11 @@ var AppRegions = (function() {
     this.messages = new Messages(opt);
 
     // Init sleep mode utilitys
-    opt = _.extend({}, this.opt.sleep);
-    this.sleep = new Sleep(opt);
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
 
     this.loadListeners();
   };
@@ -88,14 +91,14 @@ var AppRegions = (function() {
   AppRegions.prototype.onTimeChange = function(value) {
     this.graphics.onTimeChange(value);
     this.map.onTimeChange(value);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   AppRegions.prototype.onZoneChange = function(value) {
     this.graphics.onZoneChange(value);
     this.map.onZoneChange(value);
     this.messages.onZoneChange(value);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   return AppRegions;
