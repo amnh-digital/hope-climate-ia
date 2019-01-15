@@ -1,0 +1,103 @@
+.content {
+  height: 100%;
+  top: -5%;
+  left: 5%;
+}
+.graphics {
+  left: 9%;
+  width: 96%;
+}
+.message {
+  width: 15vw;
+  height: 10.6vw;
+}
+.message.large {
+  width: 15vw;
+  height: 15vw;
+  margin-left: -10vw;
+}
+.message h3 {
+  font-size: 2vh;
+}
+.message p {
+  font-size: 1.8vh;
+}
+.message img {
+  left: 14vw;
+}
+
+.key {
+  padding: 0;
+  position: absolute;
+  bottom: -1%;
+  left: 28%;
+  font-size: 1.8vh;
+  opacity: 1;
+}
+
+
+.ui {
+  width: 14%;
+  z-index: 100;
+  left: 0;
+  top: 10%;
+}
+.ui button {
+  display: block;
+  width: 100%;
+  padding: 1rem 0;
+  box-sizing: border-box;
+  opacity: 0.5;
+  transition: opacity 0.5;
+  cursor: pointer;
+  border-width: 1px;
+  font-size: 2vh;
+}
+.ui button:hover {
+  opacity: 0.75;
+}
+.ui button.active {
+  opacity: 1;
+  border-width: 3px;
+}
+
+#message-ghgs {
+  margin-top: 5%;
+}
+
+
+#button-orbital {
+  background: #00243e;
+  color: #5ec0ed;
+  border-color: #5ec0ed;
+}
+#button-solar {
+  background: #320000;
+  color: #fd8224;
+  border-color: #fd8224;
+}
+#button-orbital {
+  background: #00243e;
+  color: #5ec0ed;
+  border-color: #5ec0ed;
+}
+#button-volcanic {
+  background: #2d0018;
+  color: #ed1c24;
+  border-color: #ed1c24;
+}
+#button-aerosols {
+  background: #37142c;
+  color: #d29ac5;
+  border-color: #d29ac5;
+}
+#button-ghgs {
+  background: #1f3528;
+  color: #5fac55;
+  border-color: #5fac55;
+}
+#button-all {
+  background: #2d3900;
+  color: #cab61f;
+  border-color: #cab61f;
+}

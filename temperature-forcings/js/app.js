@@ -52,10 +52,12 @@ var AppForcings = (function() {
     };
     $window.on('resize', resize);
 
-    var sleepStart = function(e, value) { _this.graphics.sleepStart(); };
-    var sleepEnd = function(e, value) { _this.graphics.sleepEnd(); };
-    $document.on("sleep.start", sleepStart);
-    $document.on("sleep.end", sleepEnd);
+    if (this.sleep) {
+      var sleepStart = function(e, value) { _this.graphics.sleepStart(); };
+      var sleepEnd = function(e, value) { _this.graphics.sleepEnd(); };
+      $document.on("sleep.start", sleepStart);
+      $document.on("sleep.end", sleepEnd);
+    }
   };
 
   AppForcings.prototype.loadSounds = function(){
@@ -75,8 +77,11 @@ var AppForcings = (function() {
     this.graphics = new Graphics(opt);
 
     // Init sleep mode utilitys
-    opt = _.extend({}, this.opt.sleep);
-    this.sleep = new Sleep(opt);
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
 
     // Init messages
     opt = _.extend({}, this.opt.messages, this.content);
@@ -94,14 +99,14 @@ var AppForcings = (function() {
     // console.log("Button down " + value);
     this.graphics.forcingOn(value);
     this.messages.forcingOn(value);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   AppForcings.prototype.onButtonUp = function(value) {
     // console.log("Button up " + value);
     this.graphics.forcingOff(value);
     this.messages.forcingOff(value);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   AppForcings.prototype.render = function(){

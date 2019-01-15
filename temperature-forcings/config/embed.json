@@ -1,0 +1,39 @@
+{
+  "controls": {
+    "buttonMappings": {
+      "orbital": {
+        "el": "button-orbital",
+        "text": "orbital changes",
+        "toggle": true
+      },
+      "solar": {
+        "el": "button-solar",
+        "text": "solar activity",
+        "toggle": true
+      },
+      "volcanic": {
+        "el": "button-volcanic",
+        "text": "volcanic activity",
+        "toggle": true
+      },
+      "ghgs": {
+        "el": "button-ghgs",
+        "text": "greenhouse gases",
+        "toggle": true
+      },
+      "aerosols": {
+        "el": "button-aerosols",
+        "text": "aerosol pollution",
+        "toggle": true
+      },
+      "all": {
+        "el": "button-all",
+        "text": "all factors combined",
+        "toggle": true
+      }
+    }
+  },
+  "sleep": {
+    "enable": 0
+  }
+}

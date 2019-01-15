@@ -171,7 +171,7 @@ var Graphics = (function() {
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
     addLabelBuffers(observed, 1);
-    addLabelBuffers(axes, 20);
+    addLabelBuffers(axes, 21);
 
     this.axes = axes;
     this.cords = cords;
@@ -386,15 +386,23 @@ var Graphics = (function() {
       var color = textColor;
 
       if (value === 0) {
-        var text = "1901–2000 average";
+        var text = "1901–2000";
+        var text2 = "average";
         var label = axes.children[labelIndex];
-        labelIndex += 1;
+        var label2 = axes.children[labelIndex+1];
+        labelIndex += 2;
         var style = _.extend({}, yAxisTextStyle, {fill: color});
         label.text = text;
         label.style = style;
-        label.anchor.set(1.0, 0.5);
+        label.anchor.set(1.0, 1.0);
         label.x = xLabel;
         label.y = y;
+
+        label2.text = text2;
+        label2.style = style;
+        label2.anchor.set(1.0, 0.0);
+        label2.x = xLabel;
+        label2.y = y;
 
       } else if (value === range[1] || value === range[0]) {
         if (value === range[1]) color = hotColor;
