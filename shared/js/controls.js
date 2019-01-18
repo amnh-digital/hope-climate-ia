@@ -270,6 +270,7 @@ var Controls = (function() {
 
     _.each(mappings, function(opt, key){
       var $button = $('<button id="'+opt.el+'">'+opt.text+'</button>');
+      if (opt.alt) $button.attr("alt", opt.alt);
       var isToggle = opt.toggle;
       $button.on("mousedown", function(e){
         var $el = $(this);

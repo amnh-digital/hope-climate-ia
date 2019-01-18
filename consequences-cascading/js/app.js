@@ -15,7 +15,7 @@ var AppCascading = (function() {
     var _this = this;
 
     var controlPromise = this.loadControls();
-    var soundPromise = this.loadSounds();
+    // var soundPromise = this.loadSounds();
     var imagesPromise = this.loadImages();
 
     $.when.apply($, [imagesPromise]).then(function(){
@@ -52,8 +52,15 @@ var AppCascading = (function() {
       // console.log(value)
       _this.onRotate(value);
     }, throttleMs);
+
+    var onButtonUp = function(value){
+      if (value==="next") _this.rotate(25);
+      else _this.rotate(-25);
+    };
+
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
     channel.addCallback("controls.rotate.horizontal", onRotate);
+    channel.addCallback("controls.button.up", onButtonUp);
     channel.listen();
 
     var onFactboxHide = function(e, value){ _this.factbox.hide(); };
@@ -68,10 +75,12 @@ var AppCascading = (function() {
     var onProgressShow = function(e, index) { _this.progress.show(index); }
     $document.on("progress.show", onProgressShow);
 
-    var onSleepStart = function(e, value) { _this.onSleepStart(); }
-    var onSleepEnd = function(e, value) { _this.onSleepEnd(); }
-    $document.on("sleep.start", onSleepStart);
-    $document.on("sleep.end", onSleepEnd);
+    if (this.sleep) {
+      var onSleepStart = function(e, value) { _this.onSleepStart(); }
+      var onSleepEnd = function(e, value) { _this.onSleepEnd(); }
+      $document.on("sleep.start", onSleepStart);
+      $document.on("sleep.end", onSleepEnd);
+    }
 
     var onResize = function(){ _this.onResize(); }
     $window.on('resize', onResize);
@@ -104,8 +113,11 @@ var AppCascading = (function() {
     this.progress = new Progress({count: this.content.network.length});
 
     // Init sleep mode utilitys
-    opt = _.extend({}, this.opt.sleep);
-    this.sleep = new Sleep(opt);
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
 
     this.render();
   };
@@ -114,7 +126,7 @@ var AppCascading = (function() {
   };
 
   AppCascading.prototype.onRotate = function(delta){
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
     this.network.onRotate(delta);
   };
 
@@ -133,6 +145,23 @@ var AppCascading = (function() {
 
     requestAnimationFrame(function(){ _this.render(); });
   };
+
+  AppCascading.prototype.rotate = function(amount) {
+    var _this = this;
+    var current = 0;
+    var delta = 1;
+    if (amount < 0) {
+      delta = -1;
+    }
+
+    var interval = setInterval(function(){
+      current += 1;
+      _this.onRotate(delta);
+      if (current > Math.abs(amount)) clearInterval(interval);
+    }, 10);
+  };
+
+
 
   return AppCascading;
 

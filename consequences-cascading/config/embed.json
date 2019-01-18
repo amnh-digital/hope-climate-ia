@@ -1,0 +1,20 @@
+{
+  "controls": {
+    "el": "#view",
+    "buttonMappings": {
+      "prev": {
+        "el": "button-prev",
+        "text": "⇦",
+        "alt": "previous"
+      },
+      "next": {
+        "el": "button-next",
+        "text": "⇨",
+        "alt": "next"
+      }
+    }
+  },
+  "sleep": {
+    "enable": 0
+  }
+}

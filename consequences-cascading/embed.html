@@ -9,18 +9,20 @@
 
     <link rel="stylesheet" href="../shared/css/vendor/normalize-8.0.1.min.css">
     <link rel="stylesheet" href="../shared/css/base.css">
-    <link rel="stylesheet" href="../shared/css/kiosk.css">
+    <link rel="stylesheet" href="../shared/css/web.css">
+    <link rel="stylesheet" href="../shared/css/embed.css">
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/embed.css">
   </head>
-  <body style="cursor: none">
+  <body>
 
     <div id="app" class="app">
       <div id="view" class="view">
 
-        <div class="title">
+        <!-- <div class="title">
           <h1>How Will Our Lives Change?</h1>
           <h2>Global warming could lead to...</h2>
-        </div>
+        </div> -->
 
         <div class="content">
           <div id="network" class="network"></div>
@@ -28,40 +30,24 @@
         </div>
 
         <div id="fact-boxes" class="fact-boxes"></div>
-
-        <div class="sleepMode">
-          <h3>Turn the dial below</h3>
-          <p>for examples</p>
-        </div>
       </div>
     </div>
 
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
-    <!-- <script src="../shared/js/vendor/howler-2.0.7.min.js"></script> -->
     <script src="../shared/js/vendor/pixi-4.8.1.min.js"></script>
 
     <script src="../shared/js/config.js"></script>
     <script src="../shared/js/channel.js"></script>
     <script src="../shared/js/controls.js"></script>
-    <!-- <script src="../shared/js/sound.js"></script> -->
     <script src="../shared/js/util.js"></script>
-    <script src="../shared/js/sleep.js"></script>
     <script src="../shared/js/progress.js"></script>
 
     <script src="js/app.js"></script>
     <script src="js/network.js"></script>
     <script src="js/factbox.js"></script>
     <script src="js/images.js"></script>
-    <script src="js/init-physical.js"></script>
+    <script src="js/init-embed.js"></script>
 
-    <!-- <script src="../sleepers/js/sleeper.js"></script>
-    <script src="../sleepers/js/graph_sleeper.js"></script>
-    <script>
-    var sleeper = new GraphSleeper({
-      "position": "right",
-      "dataFile": "../sleepers/data/slr.json"
-    });
-    </script> -->
   </body>
 </html>
