@@ -11,11 +11,18 @@ var AppOceanAtmosphere = (function() {
     this.init();
   }
 
+  // convert 0-180 to -90-90
+  function normLat(deg){
+    // wrap around
+    deg = deg % 180;
+    if (deg > 90) return (deg - 90);
+    else return deg;
+  }
+
   // convert 0-360 to -180-180
   function normLon(deg){
     // wrap around
-    if (deg > 360) deg = (deg-360);
-    if (deg < 0) deg = 360 + deg;
+    deg = deg % 360;
     if (deg > 180) return (deg - 360);
     else return deg;
   }
@@ -118,10 +125,31 @@ var AppOceanAtmosphere = (function() {
     var onAnnotationPositionUpdate = function(e, el, x, y){ _this.onAnnotationPositionUpdate(el, x, y); };
     $document.on("annotation.position.update", onAnnotationPositionUpdate);
 
-    var onSleepStart = function(e, value) { _this.onSleepStart(); };
-    var onSleepEnd = function(e, value) { _this.onSleepEnd(); };
-    $document.on("sleep.start", onSleepStart);
-    $document.on("sleep.end", onSleepEnd);
+    if (this.sleep) {
+      var onSleepStart = function(e, value) { _this.onSleepStart(); };
+      var onSleepEnd = function(e, value) { _this.onSleepEnd(); };
+      $document.on("sleep.start", onSleepStart);
+      $document.on("sleep.end", onSleepEnd);
+    }
+
+    if (this.opt.controls.orbit) {
+      var angleLeft = 0;
+      var angleUp = 0;
+      var onOrbitRotateLeft = function(e, value){
+        var angle = value * 180 / Math.PI;
+        angleLeft += angle;
+        _this.onRotateOrbit(angleLeft, angleUp);
+        // console.log("left: "+angleLeft+", up: "+angleUp);
+      };
+      var onOrbitRotateUp = function(e, value){
+        var angle = value * 180 / Math.PI;
+        angleUp += angle;
+        _this.onRotateOrbit(angleLeft, angleUp);
+        // console.log("left: "+angleLeft+", up: "+angleUp);
+      };
+      $document.on("controls.orbit.rotate.left", onOrbitRotateLeft);
+      $document.on("controls.orbit.rotate.up", onOrbitRotateUp);
+    }
 
     var onResize = function(){ _this.onResize(); };
     $window.on('resize', onResize);
@@ -163,6 +191,8 @@ var AppOceanAtmosphere = (function() {
     var content = this.content;
     var video = this.video;
 
+    if (this.opt.controls.orbit) globeOpt = _.extend({}, globeOpt, {orbit: this.opt.controls.orbit});
+
     _.each(globesOpt, function(opt){
       var annotations = _.filter(content.annotations, function(a){
         return a.globeEls.indexOf(opt.el) >= 0;
@@ -180,7 +210,11 @@ var AppOceanAtmosphere = (function() {
     this.contentObj = new Content(_.extend({}, this.content));
 
     // Init sleep mode utilitys
-    this.sleep = new Sleep(_.extend({}, this.opt.sleep));
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      var opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
 
     this.loadListeners();
     this.loadControls();
@@ -197,7 +231,7 @@ var AppOceanAtmosphere = (function() {
   };
 
   AppOceanAtmosphere.prototype.onRotate = function(axis, value){
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
 
     var _this = this;
     if (axis === "vertical")  this.rotateY = value;
@@ -211,6 +245,54 @@ var AppOceanAtmosphere = (function() {
 
     var latRange = globeOpt.rotateY;
     var lat = UTIL.lerp(90, -90, this.rotateY);
+
+    // console.log("lon", lon, "lat", lat);
+
+    _.each(this.globes, function(globe, i){
+      globe.obj.onRotate(axis, value);
+    });
+
+    this.renderAnnotations(lon, lat);
+  };
+
+  AppOceanAtmosphere.prototype.onRotateOrbit = function(angleLeft, angleUp){
+    // var lon = normLon(angleLeft+180);
+    // var lat = normLat(angleUp);
+    //
+    // console.log("lon", lon, "lat", lat);
+    //
+    // this.renderAnnotations(lon, lat);
+  };
+
+  AppOceanAtmosphere.prototype.onSleepEnd = function(){
+    _.each(this.globes, function(globe){
+      globe.obj.sleepEnd();
+    });
+  };
+
+  AppOceanAtmosphere.prototype.onSleepStart = function(){
+    _.each(this.globes, function(globe){
+      globe.obj.sleepStart();
+    });
+  };
+
+  AppOceanAtmosphere.prototype.render = function(){
+    var _this = this;
+
+    var globeTest = this.globes[0];
+    var yearProgress = globeTest.obj.getProgress();
+
+    _.each(this.globes, function(globe){
+      globe.obj.render();
+    });
+
+    this.calendar.render(yearProgress);
+
+    requestAnimationFrame(function(){ _this.render(); });
+  };
+
+  AppOceanAtmosphere.prototype.renderAnnotations = function(lon, lat) {
+    var _this = this;
 
     var annotations = _.filter(this.content.annotations, function(a){
       return lon >= a.lonFrom && lon <= a.lonTo && lat >= a.latFrom && lat <= a.latTo;
@@ -253,37 +335,8 @@ var AppOceanAtmosphere = (function() {
         globes[i].currentAnnotation = globeAnnotation;
         globe.obj.updateAnnotation(globeAnnotation);
       }
-
-      globe.obj.onRotate(axis, value);
     });
-  };
-
-  AppOceanAtmosphere.prototype.onSleepEnd = function(){
-    _.each(this.globes, function(globe){
-      globe.obj.sleepEnd();
-    });
-  };
-
-  AppOceanAtmosphere.prototype.onSleepStart = function(){
-    _.each(this.globes, function(globe){
-      globe.obj.sleepStart();
-    });
-  };
-
-  AppOceanAtmosphere.prototype.render = function(){
-    var _this = this;
-
-    var globeTest = this.globes[0];
-    var yearProgress = globeTest.obj.getProgress();
-
-    _.each(this.globes, function(globe){
-      globe.obj.render();
-    });
-
-    this.calendar.render(yearProgress);
-
-    requestAnimationFrame(function(){ _this.render(); });
-  };
+  }
 
   return AppOceanAtmosphere;
 

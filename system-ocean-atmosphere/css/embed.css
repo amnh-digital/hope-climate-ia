@@ -1,0 +1,39 @@
+.content {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  margin: 0;
+}
+
+.globes-wrapper {
+  height: 80vh;
+  margin-top: 10vh;
+}
+.key {
+  width: 30vw;
+  position: absolute;
+  margin: 0;
+  left: 50%;
+  bottom: 5%;
+  margin-left: -15vw;
+}
+.calendar-key {
+  width: 6vw;
+  height: 6vw;
+}
+.calendar-mo {
+  line-height: 6vw;
+  font-size: 2vh;
+}
+.calendar-year {
+  font-size: 2vh;
+  bottom: -2vw;
+}
+.color-key {
+  width: 24vw;
+  margin-top: 2vh;
+}
+.color-key .label {
+  font-size: 1vw;
+}

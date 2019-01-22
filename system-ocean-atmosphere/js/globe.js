@@ -126,7 +126,11 @@ var Globe = (function() {
     this.origin = new THREE.Vector3(0,0,0);
 
     // init controls
-    // this.controls = new THREE.OrbitControls(this.camera, $("#globes")[0]);
+    this.controls = false;
+    if (this.opt.orbit) {
+      this.controls = new THREE.OrbitControls(this.camera, $(this.opt.orbit)[0]);
+    }
+
   };
 
   Globe.prototype.ended = function(){
@@ -307,7 +311,7 @@ var Globe = (function() {
     }
 
     this.renderer.render(this.scene, this.camera);
-    // this.controls.update();
+    this.controls && this.controls.update();
   };
 
   Globe.prototype.renderAnnotation = function(){

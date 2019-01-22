@@ -1,0 +1,8 @@
+{
+  "controls": {
+    "orbit": "#content"
+  },
+  "sleep": {
+    "enable": 0
+  }
+}

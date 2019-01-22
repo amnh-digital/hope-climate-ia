@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>How does heat move through the ocean and atmosphere?</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="../shared/css/vendor/normalize-8.0.1.min.css">
+    <link rel="stylesheet" href="../shared/css/base.css">
+    <link rel="stylesheet" href="../shared/css/web.css">
+    <link rel="stylesheet" href="../shared/css/embed.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/embed.css">
+  </head>
+  <body>
+
+    <div id="app" class="app">
+      <div id="view" class="view">
+        <!-- <div class="title">
+          <h1>Ocean and Air Currents</h1>
+          <h2>How does heat move around the planet?</h2>
+        </div> -->
+
+        <div class="content">
+
+          <div class="globes-wrapper">
+
+            <div id="globes" class="globes">
+              <div id="ocean-currents" class="globe"></div>
+              <div id="atmosphere-wind" class="globe"></div>
+            </div>
+
+            <div id="content" class="content-container"></div>
+
+          </div>
+
+          <div class="key">
+            <div class="calendar-key">
+              <div id="calendar" class="calendar">
+                <div class="calendar-mo active">Jan</div>
+                <div class="calendar-mo">Feb</div>
+                <div class="calendar-mo">Mar</div>
+                <div class="calendar-mo">Apr</div>
+                <div class="calendar-mo">May</div>
+                <div class="calendar-mo">Jun</div>
+                <div class="calendar-mo">Jul</div>
+                <div class="calendar-mo">Aug</div>
+                <div class="calendar-mo">Sep</div>
+                <div class="calendar-mo">Oct</div>
+                <div class="calendar-mo">Nov</div>
+                <div class="calendar-mo">Dec</div>
+                <div class="calendar-year">2016</div>
+                <div id="orbit" class="orbit"><div class="planet"></div></div>
+              </div>
+            </div>
+            <div class="color-key">
+              <div class="label">Cooler</div>
+              <div class="canvas-wrapper">
+                <canvas id="color-key-canvas" class="color-key-canvas"></canvas>
+              </div>
+              <div class="label">Warmer</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- shader for highlighting areas on the globe -->
+    <script id="vertex_shader" type="x-shader/x-vertex">
+      varying vec2 vUv;
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    </script>
+    <script id="fragment_shader" type="x-shader/x-fragment">
+      uniform vec3 color;
+      uniform sampler2D texture;
+      varying vec2 vUv;
+      void main() {
+        vec4 tColor = texture2D( texture, vUv );
+        gl_FragColor = vec4(0.0, 0.0, 0.0, tColor.r);
+      }
+    </script>
+
+
+    <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
+    <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
+    <script src="../shared/js/vendor/three-99.min.js"></script>
+    <script src="../shared/js/vendor/three/threeGeoJSON.js"></script>
+    <script src="../shared/js/vendor/three/OrbitControls.js"></script>
+    <!-- <script src="../shared/js/vendor/pixi-4.8.1.min.js"></script> -->
+
+    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/channel.js"></script>
+    <script src="../shared/js/controls.js"></script>
+    <script src="../shared/js/util.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/content.js"></script>
+    <script src="js/globe.js"></script>
+    <script src="js/colorKey.js"></script>
+    <script src="js/init-embed.js"></script>
+
+  </body>
+</html>
