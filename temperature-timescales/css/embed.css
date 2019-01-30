@@ -102,3 +102,13 @@
   content: "-";
   bottom: -38px;
 }
+
+/* narrow screens */
+@media (max-aspect-ratio: 1/1) {
+  .messages {
+    right: auto;
+    left: 18%;
+    bottom: -50%;
+    width: 80%;
+  }
+}

@@ -1,6 +1,7 @@
 build/
 *.bak
 electron-packager/
+package-lock.json
 
 oversize-assets/*
 !oversize-assets/README.md
