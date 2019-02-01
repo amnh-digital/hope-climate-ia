@@ -68,6 +68,23 @@
   background: transparent;
   outline: none;
 }
+.ui-slider-horizontal .ui-slider-handle:before {
+  content: "⬌";
+  display: block;
+  width: 2vw;
+  height: 2vw;
+  font-size: 2vw;
+  line-height: 2vw;
+  border-radius: 50%;
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  margin-top: -1vw;
+  margin-left: -1vw;
+  background: #edca57;
+  color: #000;
+  text-align: center;
+}
 .ui-slider-vertical {
   width: 16px;
   height: 40%;
