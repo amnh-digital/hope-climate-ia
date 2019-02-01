@@ -85,6 +85,8 @@ var AppTimescales = (function() {
 
     var opt = _.extend({}, this.opt.graphics, this.content, this.data);
 
+    if (this.opt.embed) opt.embed = 1;
+
     // Initialize viz
     this.graphics = new Graphics(opt);
 

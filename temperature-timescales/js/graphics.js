@@ -410,7 +410,7 @@ var Graphics = (function() {
     this.xAxisSubtextStyle = xAxisSubtextStyle;
     this.yAxisSubtextStyle = yAxisSubtextStyle;
     this.yAxisTextStyle = yAxisTextStyle;
-    this.baselineTextStyle = _.extend({}, yAxisTextStyle, {fill: "#ffffff"})
+    this.baselineTextStyle = _.extend({}, yAxisTextStyle, {fill: "#ffffff"});
 
     // make calculations for plot
     var plotX = yAxisX + yAxisW;
@@ -545,6 +545,7 @@ var Graphics = (function() {
     var lineWidthBold = this.opt.yAxis.lineWidthBold;
     var axesLineColor = this.axesLineColor;
     var axesTickColor = this.axesTickColor;
+    var embed = this.opt.embed;
 
     axes.clear();
 
@@ -574,13 +575,32 @@ var Graphics = (function() {
       var showLabel = (i === 0 || i === count || dc === halfRange[0] || dc === halfRange[1]);
 
       if (dc===0) {
-        label = axes.children[labelIndex];
-        label.text = "1901–2000 average";
-        label.style = baselineTextStyle;
-        label.x = 0;
-        label.y = y;
-        label.anchor.set(0.0, 0.5);
-        labelIndex += 1;
+        if (embed) {
+          label = axes.children[labelIndex];
+          label.text = "1901–2000";
+          label.style = baselineTextStyle;
+          label.x = lineX0 * 0.9;
+          label.y = y;
+          label.anchor.set(1.0, 1.0);
+          labelIndex += 1;
+
+          label = axes.children[labelIndex];
+          label.text = "average";
+          label.style = baselineTextStyle;
+          label.x = lineX0 * 0.9;
+          label.y = y;
+          label.anchor.set(1.0, 0.0);
+          labelIndex += 1;
+
+        } else {
+          label = axes.children[labelIndex];
+          label.text = "1901–2000 average";
+          label.style = baselineTextStyle;
+          label.x = 0;
+          label.y = y;
+          label.anchor.set(0.0, 0.5);
+          labelIndex += 1;
+        }
 
         // y axis label
         // label = axes.children[labelIndex];
