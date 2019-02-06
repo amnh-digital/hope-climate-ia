@@ -51,7 +51,16 @@ The above script uses reference files with the correct baseline generated from t
 python scripts/process_data.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end 2018
 ```
 
-This will process the new data through 2018 and create a new `./data/current.json` file that the app will read. Lastly, you generate new images by running:
+This will process the new data through 2018 and create a new `./data/current.json` file that the app will read.
+
+You'll need to install a couple other dependencies for generating the maps:
+
+```
+brew install pycairo
+pip install gizeh
+```
+
+Lastly, you generate new images by running:
 
 ```
 python scripts/process_images.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end 2018

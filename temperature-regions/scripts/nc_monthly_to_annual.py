@@ -75,13 +75,14 @@ for i, days in enumerate(times):
 # Only take the full years
 yearData = np.array([d for d in yearData if len(d)==12])
 yearCount = len(yearData)
-years = [bd.year + i for i in range(yearCount)]
+if yearCount < len(years):
+    years = years[:yearCount]
 print(yearData.shape)
 # years, months, lats, lons = yearData.shape
 
-# Aggregate each year by month, ignore "--"
+# Aggregate each year by month, ignore fill values
 print "Aggregating data..."
-# yearData = np.where(yearData == "--", np.nan, yearData)
+yearData = np.where(yearData > 9999, np.nan, yearData)
 aggData = np.nanmean(yearData, axis=1)
 pprint(aggData.shape)
 
@@ -118,7 +119,7 @@ tempV = dsout.createVariable("tempanomaly","f4",("time","lat","lon",),zlib=True,
 latV[:] = lats
 lonV[:] = lons
 timeV[:] = np.array([int(year) for year in years])
-tempV[:] = aggData[:]
+tempV[:] = np.nan_to_num(aggData)
 
 # for yi, year in enumerate(years):
 #     for y, lat in enumerate(lats):
