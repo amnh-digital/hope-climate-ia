@@ -9,7 +9,6 @@ oversize-assets/*
 
 *.pyc
 node_modules/
-*.nc
 *.gz
 *.zip
 

@@ -17,11 +17,11 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../data/ne_110m_land/ne_110m_land", help="Temperature input file")
+parser.add_argument('-in', dest="INPUT_FILE", default="data/ne_110m_land/ne_110m_land", help="Temperature input file")
 parser.add_argument('-width', dest="WIDTH", default=1024, type=int, help="Width of SVG")
 parser.add_argument('-land', dest="LAND_COLOR", default="#ffffff", help="Land color")
 parser.add_argument('-water', dest="WATER_COLOR", default="#000000", help="Water color")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../data/ne_110m_land.svg", help="Output file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="data/ne_110m_land.svg", help="Output file")
 args = parser.parse_args()
 
 # config

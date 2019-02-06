@@ -10,7 +10,7 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../content/content.json", help="JSON input file")
+parser.add_argument('-in', dest="INPUT_FILE", default="content/content.json", help="JSON input file")
 args = parser.parse_args()
 
 # config

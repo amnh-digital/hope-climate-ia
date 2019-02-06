@@ -16,10 +16,10 @@ import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc", help="Temperature input file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc", help="Temperature input file")
 parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
 parser.add_argument('-end', dest="END_YEAR", default=2017, type=int, help="End year")
-parser.add_argument('-out', dest="OUTPUT_DIR", default="../img/frames/", help="Output directory")
+parser.add_argument('-out', dest="OUTPUT_DIR", default="img/frames/", help="Output directory")
 parser.add_argument('-width', dest="TARGET_WIDTH", default=1024, type=int, help="Target width")
 parser.add_argument('-format', dest="IMAGE_FORMAT", default="png", help="Image format")
 parser.add_argument('-grad', dest="GRADIENT", default="#00ffed,#65c6c2,#000000,#dd6952,#ff2600", help="Color gradient")

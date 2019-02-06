@@ -12,14 +12,14 @@ import datetime
 import json
 import math
 from netCDF4 import Dataset
-import numpy
+import numpy as np
 from pprint import pprint
 import sys
 
 # input
 parser = argparse.ArgumentParser()
-parser.add_argument('-in', dest="INPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5.nc", help="Temperature input file")
-parser.add_argument('-out', dest="OUTPUT_FILE", default="../../oversize-assets/gistemp1200_ERSSTv5_annual.nc", help="Output file")
+parser.add_argument('-in', dest="INPUT_FILE", default="../oversize-assets/gistemp1200_ERSSTv5.nc", help="Temperature input file")
+parser.add_argument('-out', dest="OUTPUT_FILE", default="../oversize-assets/gistemp1200_ERSSTv5_annual.nc", help="Output file")
 args = parser.parse_args()
 
 # config
@@ -50,6 +50,10 @@ tempData = ds.variables['tempanomaly'][:] # short: surface temperature anomaly (
 baseDate = "1800-01-01"
 bd = datetime.datetime.strptime(baseDate, "%Y-%m-%d")
 
+# tempData = np.array(tempData)
+# print(tempData.shape)
+# sys.exit()
+
 print "Grouping data by year..."
 years = []
 yearData = []
@@ -68,30 +72,43 @@ for i, days in enumerate(times):
     sys.stdout.write("%s%%" % round(1.0*(i+1)/t*100,1))
     sys.stdout.flush()
 
-aggData = []
-print "\Aggregating data..."
-for yi, yd in enumerate(yearData):
-    yvalues = []
-    for y, lat in enumerate(lats):
-        for x, lon in enumerate(lons):
-            values = []
-            for d in yd:
-                value = d[y][x]
-                if value != "--":
-                    values.append(value)
-            value = mean(values)
-            yvalues.append(value)
-    aggData.append(yvalues)
-    sys.stdout.write('\r')
-    sys.stdout.write("%s%%" % round(1.0*(yi+1)/len(yearData)*100,1))
-    sys.stdout.flush()
-ds.close()
+# Only take the full years
+yearData = np.array([d for d in yearData if len(d)==12])
+yearCount = len(yearData)
+years = [bd.year + i for i in range(yearCount)]
+print(yearData.shape)
+# years, months, lats, lons = yearData.shape
+
+# Aggregate each year by month, ignore "--"
+print "Aggregating data..."
+# yearData = np.where(yearData == "--", np.nan, yearData)
+aggData = np.nanmean(yearData, axis=1)
+pprint(aggData.shape)
+
+# aggData = []
+# print "\Aggregating data..."
+# for yi, yd in enumerate(yearData):
+#     yvalues = []
+#     for y, lat in enumerate(lats):
+#         for x, lon in enumerate(lons):
+#             values = []
+#             for d in yd:
+#                 value = d[y][x]
+#                 if value != "--":
+#                     values.append(value)
+#             value = mean(values)
+#             yvalues.append(value)
+#     aggData.append(yvalues)
+#     sys.stdout.write('\r')
+#     sys.stdout.write("%s%%" % round(1.0*(yi+1)/len(yearData)*100,1))
+#     sys.stdout.flush()
+# ds.close()
 
 print "\rPreparing output file"
 dsout = Dataset(OUTPUT_FILE, "w", format="NETCDF4")
 latD = dsout.createDimension("lat", h)
 lonD = dsout.createDimension("lon", w)
-timeD = dsout.createDimension("time", len(years))
+timeD = dsout.createDimension("time", len(yearData))
 
 latV = dsout.createVariable("lat","f4",("lat",))
 lonV = dsout.createVariable("lon","f4",("lon",))
@@ -100,15 +117,16 @@ tempV = dsout.createVariable("tempanomaly","f4",("time","lat","lon",),zlib=True,
 
 latV[:] = lats
 lonV[:] = lons
-timeV[:] = numpy.array([int(year) for year in years])
+timeV[:] = np.array([int(year) for year in years])
+tempV[:] = aggData[:]
 
-for yi, year in enumerate(years):
-    for y, lat in enumerate(lats):
-        for x, lon in enumerate(lons):
-            index = y * w + x
-            value = aggData[yi][index]
-            # print "%s, %s, %s, %s" % (yi, y, x, value)
-            tempV[yi, y, x] = value
+# for yi, year in enumerate(years):
+#     for y, lat in enumerate(lats):
+#         for x, lon in enumerate(lons):
+#             index = y * w + x
+#             value = aggData[yi][index]
+#             # print "%s, %s, %s, %s" % (yi, y, x, value)
+#             tempV[yi, y, x] = value
 
 dsout.close()
 
