@@ -4,7 +4,7 @@
     {"text": "Short-term records can reflect natural variations in the climate system. What happens if you look at more years?", "years": 20},
     {"text": "Climate trends become clear over 20 or more years of data. More time will show an even more distinct trend.", "years": 50},
     {"text": "The rise in global temperature becomes very pronounced over several decades. What can you see in 100 years or more of data?", "years": 100},
-    {"text": "The world has warmed rapidly over the last century. The pace of warming has also increased—16 of the 17 hottest years on record have occurred since 2001.", "years": 200}
+    {"text": "The world has warmed rapidly over the last century. The pace of warming has also increased—18 of the 19 hottest years on record have occurred since 2001.", "years": 200}
   ],
   "annotations": [
     {"years": [1911, 1944], "text": "Warming over the first part of the century, from both human CO₂ emissions and natural factors"},
@@ -22,6 +22,7 @@
     {"year": 2014, "text": "Rainfall in the Middle East along the Mediterranean is lowest on record, exacerbating persistent drought."},
     {"year": 2015, "text": "Second hottest year on record"},
     {"year": 2016, "text": "Hottest year on record"},
-    {"year": 2017, "text": "Third hottest year on record"}
+    {"year": 2017, "text": "Third hottest year on record"},
+    {"year": 2018, "text": "Fourth hottest year on record"}
   ]
 }
