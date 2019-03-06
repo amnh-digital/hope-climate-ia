@@ -12,6 +12,7 @@ There are currently 8 interactive apps available to use. Kiosk versions require 
    - [web version](https://amnh-digital.github.io/hope-climate-ia/consequences-change/)
    - [web version with label deck](https://amnh-digital.github.io/hope-climate-ia/virtual/ia.html?p=consequences-change)
    - [kiosk version](https://amnh-digital.github.io/hope-climate-ia/consequences-change/physical.html)
+   - [embed version](https://amnh-digital.github.io/hope-climate-ia/consequences-change/embed.html)
 2. [Climate change in New York City](consequences-mitigation/)
    - [web version](https://amnh-digital.github.io/hope-climate-ia/consequences-mitigation/)
    - [web version with label deck](https://amnh-digital.github.io/hope-climate-ia/virtual/ia.html?p=consequences-mitigation)

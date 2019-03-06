@@ -45,7 +45,7 @@ var AppChange = (function() {
       _this.onSlide(resp.value);
     };
     var onButtonUp = function(value) {
-      _this.onButtonUp();
+      _this.onButtonUp(value);
     };
 
     var channel = new Channel(this.opt.controls.channel, {"role": "subscriber"});
@@ -59,16 +59,20 @@ var AppChange = (function() {
 
   };
 
-  AppChange.prototype.onButtonUp = function(){
+  AppChange.prototype.onButtonUp = function(value){
     if (this.transitioning) return false;
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
 
     this.transitioning = true;
     this.transitionStart = new Date();
 
-    this.currentSlide += 1;
+    if (value==="prev") this.currentSlide -= 1;
+    else this.currentSlide += 1;
+
     if (this.currentSlide >= this.slideCount) {
       this.currentSlide = 0;
+    } else if (this.currentSlide < 0) {
+      this.currentSlide = this.slideCount-1;
     }
 
     var slide = this.slides[this.currentSlide];
@@ -98,8 +102,11 @@ var AppChange = (function() {
     });
 
     // Init sleep mode utilitys
-    opt = _.extend({}, this.opt.sleep);
-    this.sleep = new Sleep(opt);
+    this.sleep = false;
+    if (this.opt.sleep.enable) {
+      opt = _.extend({}, this.opt.sleep);
+      this.sleep = new Sleep(opt);
+    }
 
     this.render();
   };
@@ -111,7 +118,7 @@ var AppChange = (function() {
 
   AppChange.prototype.onSlide = function(value) {
     this.slideshow.onSlide(value);
-    this.sleep.wakeUp();
+    this.sleep && this.sleep.wakeUp();
   };
 
   AppChange.prototype.render = function() {

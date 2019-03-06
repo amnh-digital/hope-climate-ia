@@ -21,6 +21,7 @@ var Slideshow = (function() {
 
     this.initSlides();
     this.initCaptions();
+    this.onSlide(0.5);
   };
 
   Slideshow.prototype.initCaptions = function(){

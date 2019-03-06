@@ -1,0 +1,31 @@
+{
+  "controls": {
+    "uiMappings": {
+      "horizontal": {
+        "label": "Change time",
+        "el": "slider-horizontal",
+        "options": {
+          "min": 0,
+          "max": 1,
+          "step": 0.001,
+          "value": 0.5
+        }
+      }
+    },
+    "buttonMappings": {
+      "prev": {
+        "el": "button-prev",
+        "text": "⇦",
+        "alt": "previous"
+      },
+      "next": {
+        "el": "button-next",
+        "text": "⇨",
+        "alt": "next"
+      }
+    }
+  },
+  "sleep": {
+    "enable": 0
+  }
+}
