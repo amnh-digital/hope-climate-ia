@@ -1,6 +1,8 @@
 'use strict';
 
 var Graphics = (function() {
+  var isAccessibleText = false;
+
   function Graphics(options) {
     var defaults = {};
     this.opt = $.extend({}, defaults, options);
@@ -9,9 +11,9 @@ var Graphics = (function() {
 
   var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  function addLabelBuffers(g, labelBufferCount) {
+  function addLabelBuffers(view, g, labelBufferCount) {
     for (var i=0; i<labelBufferCount; i++) {
-      var label = new PIXI.Text("");
+      var label = isAccessibleText ? new AccessibleText(view, "") : new PIXI.Text("");
       g.addChild(label);
     }
   }
@@ -57,6 +59,8 @@ var Graphics = (function() {
     this.axesLineColor = parseInt(this.opt.yAxis.lineColor);
     this.axesTickColor = parseInt(this.opt.xAxis.tickColor);
 
+    isAccessibleText = this.opt.accessibleText;
+
     this.parseData();
 
     this.yearCount = this.annualData.length;
@@ -78,6 +82,16 @@ var Graphics = (function() {
     this.initView();
     this.initTime();
     this.onScaleChange(this.scale);
+
+    if (isAccessibleText) {
+      var _this = this;
+      setTimeout(function(){
+        _this.renderAxes();
+        _this.renderMarker();
+        _this.renderAnnotations();
+      }, 100);
+    }
+
   };
 
   Graphics.prototype.initTime = function(){
@@ -116,12 +130,14 @@ var Graphics = (function() {
       }
     });
 
+    this.$el.append(this.app.view);
+
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
-    addLabelBuffers(axes, 24);
-    addLabelBuffers(plot, 30);
-    addLabelBuffers(flag, 5);
-    addLabelBuffers(annotations, this.opt.annotations.length);
+    addLabelBuffers(this.app.view, axes, 24);
+    addLabelBuffers(this.app.view, plot, 30);
+    addLabelBuffers(this.app.view, flag, 5);
+    addLabelBuffers(this.app.view, annotations, this.opt.annotations.length);
 
     // add resting filter
     this.restingFilter = false;
@@ -149,7 +165,7 @@ var Graphics = (function() {
     this.sleepers = [bg, axes, annotations, flag, images];
     this.dreamers = [plot, marker];
 
-    this.$el.append(this.app.view);
+
   };
 
   Graphics.prototype.onResize = function(){
