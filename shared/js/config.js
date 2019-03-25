@@ -14,31 +14,3 @@ var CONFIG = {
     "cool": "99cccc"
   }
 };
-
-function updateColorsRecursive(obj, colors) {
-  for (var k in obj) {
-    if (typeof obj[k] == "object" && obj[k] !== null) {
-      updateColorsRecursive(obj[k], colors);
-    } else {
-      var value = obj[k];
-      if (typeof value === "string" && value.startsWith("$")) {
-        var offset = 2;
-        var prepend = "#";
-        if (value.startsWith("$0x")) {
-          offset = 3;
-          prepend = "0x";
-        }
-        var key = value.substring(offset);
-        var color = colors[key];
-        if (color !== undefined) {
-          obj[k] = prepend + color;
-        }
-      }
-    }
-  }
-}
-
-function updateColorsFromConfig(params, colors){
-  colors = colors || CONFIG.colors;
-  updateColorsRecursive(params, colors);
-}

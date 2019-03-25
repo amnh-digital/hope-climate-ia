@@ -26,6 +26,7 @@
 .message-status h2 {
   font-size: 2vmin;
   margin: 1rem 0;
+  color: white;
 }
 .message-status > div {
   width: auto;
