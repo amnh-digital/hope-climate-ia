@@ -18,6 +18,14 @@ class AccessibleText extends PIXI.Text {
     return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
   }
 
+  get height() {
+    return this.el.offsetHeight;
+  }
+
+  get width() {
+    return this.el.offsetWidth;
+  }
+
   initContainer(view){
     var parentNode = view.parentNode;
     var wrapperClassname = "pixi-text-wrapper";
@@ -52,24 +60,6 @@ class AccessibleText extends PIXI.Text {
     this.el = textEl;
 
     // console.log(textCanvas.offsetWidth, textCanvas.offsetHeight)
-  }
-
-  updatePosition(){
-    var x = this.x;
-    var y = this.y;
-    var anchorX = this.anchor.x;
-    var anchorY = this.anchor.y;
-    if (anchorX > 0) {
-      // console.log(x, this.el.offsetWidth)
-      x -= this.width * anchorX;
-    }
-    if (anchorY > 0) {
-      // console.log(y, this.el.offsetHeight)
-      y -= this.height * anchorY;
-    }
-    this.el.style.transform = "translate3d("+x+"px, "+y+"px, 0)";
-    if (anchorX===0.5) this.el.style.textAlign = "center";
-    if (anchorX>=1.0) this.el.style.textAlign = "right";
   }
 
   updateStyleAttributes() {
@@ -119,18 +109,31 @@ class AccessibleText extends PIXI.Text {
     // don't do anything if nothing has changed
     if (!this.dirty && respectDirty) return;
 
-    if (styleChanged) this.updateStyleAttributes();
-    this.updatePosition();
+    // must be done in this order to calculate properties properly
     this.el.innerHTML = this.text;
+    if (styleChanged) this.updateStyleAttributes();
+    this.updateTransform();
+
     this.dirty = false;
   }
 
-  get height() {
-    return this.el.offsetHeight;
-  }
+  updateTransform(){
+    var x = this.x;
+    var y = this.y;
+    var anchorX = this.anchor.x;
+    var anchorY = this.anchor.y;
 
-  get width() {
-    return this.el.offsetWidth;
+    if (anchorX > 0) {
+      // console.log(x, this.el.offsetWidth)
+      x -= this.width * anchorX;
+    }
+    if (anchorY > 0) {
+      // console.log(y, this.el.offsetHeight)
+      y -= this.height * anchorY;
+    }
+    this.el.style.transform = "translate3d("+x+"px, "+y+"px, 0)";
+    if (anchorX===0.5) this.el.style.textAlign = "center";
+    if (anchorX>=1.0) this.el.style.textAlign = "right";
   }
 
 }
