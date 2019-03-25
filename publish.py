@@ -17,7 +17,7 @@ parser.add_argument('-app', dest="APP", default="temperature-timescales", help="
 parser.add_argument('-appf', dest="APP_FILE", default="%s/embed.html", help="Path to webpage.")
 parser.add_argument('-aurl', dest="ASSET_URL", default="/bundles/ncslethostedinteractive/hope/", help="Base url where the assets will be hosted")
 parser.add_argument('-assets', dest="ASSET_DIRS", default="img/*.jpg,data/*.json,content/*.json", help="Comma-separated list of assets or directories of assets relative to app")
-parser.add_argument('-oassets', dest="OTHER_ASSETS", default="shared/audio/key.mp3", help="Comma-separated list of assets or directories of assets")
+parser.add_argument('-oassets', dest="OTHER_ASSETS", default="shared/audio/key.mp3,shared/font/*.ttf", help="Comma-separated list of assets or directories of assets")
 parser.add_argument('-view', dest="VIEW_PATH", default="views/Hope/%s.html.twig", help="View path relative to output directory")
 parser.add_argument('-pdir', dest="PUBLIC_DIR", default="public/hope/", help="Public path relative to output directory")
 parser.add_argument('-out', dest="OUTPUT_DIR", default="/Users/brianfoo/apps/hope-climate-ia-web/", help="Output directory")
