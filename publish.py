@@ -96,12 +96,16 @@ for fn in allFilenames:
     shutil.copyfile(fromFile, toFile)
 
     # replace asset urls in config files
-    if fn in configFiles:
+    jsonFiles = [fn for fn in allFilenames if fn.endswith(".json")]
+    if fn in jsonFiles:
         fileStr = ""
         with open(toFile, 'r') as f:
             fileStr = f.read()
-        for assetPath in otherAssets:
-            pattern = "\"[^\"]*[\.\/]*"+assetPath+"\""
+        for assetPath in otherFilenames:
+            matchPath = assetPath
+            if assetPath.startswith(a.APP + "/"):
+                matchPath = matchPath[len(a.APP + "/"):]
+            pattern = "\"[^\"]*[\.\/]*"+matchPath+"\""
             fileStr = re.sub(pattern, "\""+(a.ASSET_URL+assetPath)+"\"", fileStr)
         with open(toFile, 'w') as f:
             f.write(fileStr)
