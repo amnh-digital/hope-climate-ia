@@ -71,7 +71,7 @@ allFilenames = cssFilenames + jsFilenames + otherFilenames + configFiles
 
 # insert javascript var into body
 newTag = soup.new_tag("script")
-jsStr = "var ASSET_URL = '%s';" % a.ASSET_URL
+jsStr = "var ASSET_URL = '%s';" % (a.ASSET_URL + a.APP + "/")
 newTag.string = jsStr
 body = soup.find('body')
 body.insert(0, newTag)
