@@ -61,11 +61,17 @@ function startHeartBeat(intervalMs){
   }, intervalMs);
 }
 
-function createWindow (browserWindowSetting, index) {
-  var appUrl = browserWindowSetting.url || 'file://' + __dirname + '/index.html';
-  if (!/:\/\//.test(appUrl)){
-    appUrl = 'file://' + __dirname + '/' + appUrl;
+function getValidUrl(url, defaultValue) {
+  var validUrl = url || defaultValue || false;
+  if (validUrl && !/:\/\//.test(validUrl)){
+    validUrl = 'file://' + __dirname + '/' + validUrl;
   }
+  return validUrl;
+}
+
+function createWindow (browserWindowSetting, index) {
+  var appUrl = getValidUrl(browserWindowSetting.url, 'file://' + __dirname + '/index.html');
+  var gamepadDebugUrl = getValidUrl(browserWindowSetting.gamepadDebugUrl);
   var isDebug = browserWindowSetting.debug;
   var isPrimary = (index===0);
   var isPageLoaded = false;
@@ -129,6 +135,16 @@ function createWindow (browserWindowSetting, index) {
     }else{
       webContents.closeDevTools();
     }
+  });
+
+  globalShortcut.register('CommandOrControl+G', () => {
+    if (gamepadDebugUrl) {
+      reload(mainWindow, gamepadDebugUrl, 'Gamepad debug pressed');
+    }
+  });
+
+  globalShortcut.register('CommandOrControl+R', () => {
+    reload(mainWindow, appUrl, 'Manual reload pressed');
   });
 
   webContents.on('did-fail-load',   function(e){ reload(mainWindow, appUrl, 'contents did-fail-load',e); });

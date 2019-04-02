@@ -249,8 +249,8 @@ var Controls = (function() {
       var charStr = String.fromCharCode(e.which);
       var shifted = e.shiftKey;
       switch(charStr) {
-        case "d":
-        case "D":
+        case "g":
+        case "G":
           if (shifted && gamepadMappings) window.location.href = '../utilities/gamepad.html';
           break;
       }
