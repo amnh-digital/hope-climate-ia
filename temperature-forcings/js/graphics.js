@@ -1,15 +1,17 @@
 'use strict';
 
 var Graphics = (function() {
+  var isAccessibleText = false;
+
   function Graphics(options) {
     var defaults = {};
     this.opt = $.extend({}, defaults, options);
     this.init();
   }
 
-  function addLabelBuffers(g, labelBufferCount) {
+  function addLabelBuffers(view, g, labelBufferCount) {
     for (var i=0; i<labelBufferCount; i++) {
-      var label = new PIXI.Text("");
+      var label = isAccessibleText ? new AccessibleText(view, "") : new PIXI.Text("");
       g.addChild(label);
     }
   }
@@ -70,6 +72,8 @@ var Graphics = (function() {
     this.cordConfig = this.opt.cord;
     this.sleepTransitionMs = this.opt.sleepTransitionMs;
 
+    isAccessibleText = this.opt.accessibleText;
+
     this.plotBGColor = parseInt(this.opt.plotBGColor);
     this.plotLineColor = parseInt(this.opt.plotLineColor);
     this.plotTickColor = parseInt(this.opt.plotTickColor);
@@ -93,6 +97,14 @@ var Graphics = (function() {
     this.refreshDimensions();
     this.initCords();
     this.initView();
+
+    if (isAccessibleText) {
+      var _this = this;
+      setTimeout(function(){
+        _this.renderAxes();
+        _this.renderObserved();
+      }, 100);
+    }
   };
 
   Graphics.prototype.initCords = function(){
@@ -168,10 +180,12 @@ var Graphics = (function() {
 
     this.app.stage.addChild(axes, observed, cords, plot, combined);
 
+    this.$el.append(this.app.view);
+
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
-    addLabelBuffers(observed, 1);
-    addLabelBuffers(axes, 21);
+    addLabelBuffers(this.app.view, observed, 1);
+    addLabelBuffers(this.app.view, axes, 21);
 
     this.axes = axes;
     this.cords = cords;
@@ -181,8 +195,6 @@ var Graphics = (function() {
 
     this.sleepers = [axes, cords, plot, observed.children[0]];
     this.dreamers = [combined];
-
-    this.$el.append(this.app.view);
 
     this.renderAxes();
     this.renderObserved();

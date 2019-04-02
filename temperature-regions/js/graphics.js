@@ -1,15 +1,17 @@
 'use strict';
 
 var Graphics = (function() {
+  var isAccessibleText = false;
+
   function Graphics(options) {
     var defaults = {};
     this.opt = $.extend({}, defaults, options);
     this.init();
   }
 
-  function addLabelBuffers(g, labelBufferCount) {
+  function addLabelBuffers(view, g, labelBufferCount) {
     for (var i=0; i<labelBufferCount; i++) {
-      var label = new PIXI.Text("");
+      var label = isAccessibleText ? new AccessibleText(view, "") : new PIXI.Text("");
       g.addChild(label);
     }
   }
@@ -50,6 +52,8 @@ var Graphics = (function() {
   Graphics.prototype.init = function(){
     this.$el = $(this.opt.el);
 
+    isAccessibleText = this.opt.accessibleText;
+
     this.domain = this.opt.domain;
     this.range = this.opt.range;
     this.zoneData = this.opt.zoneData;
@@ -62,6 +66,14 @@ var Graphics = (function() {
     this.initView();
     this.renderAxes();
     this.onZoneChange(this.zone);
+
+    if (isAccessibleText) {
+      var _this = this;
+      setTimeout(function(){
+        _this.renderAxes();
+        _this.renderMarker();
+      }, 100);
+    }
   };
 
   Graphics.prototype.initView = function(){
@@ -72,16 +84,16 @@ var Graphics = (function() {
 
     this.app.stage.addChild(axes, plot, marker);
 
+    this.$el.append(this.app.view);
+
     // add label buffers to axes
     // increase this if you are getting "Cannot set property 'text' of undefined" error
-    addLabelBuffers(axes, 20);
-    addLabelBuffers(marker, 3);
+    addLabelBuffers(this.app.view, axes, 20);
+    addLabelBuffers(this.app.view, marker, 3);
 
     this.axes = axes;
     this.plot = plot;
     this.marker = marker;
-
-    this.$el.append(this.app.view);
   };
 
   Graphics.prototype.onResize = function(){

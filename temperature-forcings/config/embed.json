@@ -33,6 +33,8 @@
       }
     }
   },
+  "accessibleText": 1,
+  "embed": 1,
   "sleep": {
     "enable": 0
   }

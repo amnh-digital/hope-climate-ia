@@ -45,6 +45,7 @@
 .map-key .description {
   font-size: 1.2vw;
   margin-right: 0;
+  color: var(--gray-lightest-color);
 }
 
 .helper .label {
@@ -83,4 +84,11 @@
   margin: 0;
   background: var(--primary-darker-color);
   border-radius: 4px;
+}
+
+.graph-title h3 span,
+.map-latitude,
+.helper .label,
+.city {
+  color: #EED896;
 }

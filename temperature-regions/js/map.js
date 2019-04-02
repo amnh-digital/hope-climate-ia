@@ -19,6 +19,10 @@ var Map = (function() {
     this.$latitudeUpper = $(this.opt.latUpperEl);
     this.$latitudeLower = $(this.opt.latLowerEl);
 
+    if (ASSET_URL !== undefined) {
+      this.opt.dir = ASSET_URL + this.opt.dir;
+    }
+
     var zoneCount = this.opt.zoneData.length;
     this.zoneCount = zoneCount;
     this.degreesPerZone = Math.round(180 / zoneCount);

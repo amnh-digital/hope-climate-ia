@@ -17,12 +17,12 @@
   </head>
   <body>
 
-    <div id="app" class="app">
+    <div id="app" class="app" role="main">
       <div id="view" class="view">
-        <!-- <div class="title">
+        <div class="visually-hidden">
           <h1>Mapping Change</h1>
           <h2>Where is climate change most dramatic?</h2>
-        </div> -->
+        </div>
         <div class="content">
           <div id="map" class="map">
             <img class="worldmap-resting" src="img/map_resting.svg" />
@@ -66,11 +66,12 @@
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/pixi-4.8.1.min.js"></script>
+    <script src="../shared/js/vendor/pixi.accessible.text.js"></script>
     <script src="../shared/js/vendor/jquery.ui.slider-1.12.1.min.js"></script>
     <script src="../shared/js/vendor/jquery.ui.touch-punch-0.2.3.min.js"></script>
     <script src="../shared/js/vendor/broadcast-channel.js"></script>
 
-    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/config-embed.js"></script>
     <script src="../shared/js/channel.js"></script>
     <script src="../shared/js/controls.js"></script>
     <script src="../shared/js/util.js"></script>

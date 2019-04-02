@@ -9,7 +9,9 @@
 }
 .message {
   width: 15vw;
-  height: 10.6vw;
+  height: auto;
+  border: 2px solid;
+  box-sizing: border-box;
 }
 .message.large {
   width: 15vw;
@@ -20,10 +22,10 @@
   font-size: 2vh;
 }
 .message p {
-  font-size: 1.8vh;
+  font-size: 1.8vmin;
 }
 .message img {
-  left: 14vw;
+  left: 15vw;
 }
 
 .key {
@@ -33,6 +35,7 @@
   left: 28%;
   font-size: 1.8vh;
   opacity: 1;
+  color: var(--gray-lightest-color);
 }
 
 
@@ -61,43 +64,64 @@
   border-width: 3px;
 }
 
+.message svg, .message polygon {
+  display: none;
+}
+
 #message-ghgs {
   margin-top: 5%;
 }
 
 
-#button-orbital {
+#button-orbital,
+#message-orbital {
   background: #00243e;
   color: #5ec0ed;
   border-color: #5ec0ed;
 }
-#button-solar {
+#button-solar,
+#message-solar {
   background: #320000;
   color: #fd8224;
   border-color: #fd8224;
 }
-#button-orbital {
+#button-orbital,
+#message-orbital {
   background: #00243e;
   color: #5ec0ed;
   border-color: #5ec0ed;
 }
-#button-volcanic {
+#button-volcanic,
+#message-volcanic {
   background: #2d0018;
   color: #ed1c24;
   border-color: #ed1c24;
 }
-#button-aerosols {
+#button-aerosols,
+#message-aerosols {
   background: #37142c;
   color: #d29ac5;
   border-color: #d29ac5;
 }
-#button-ghgs {
+#button-ghgs,
+#message-ghgs {
   background: #1f3528;
   color: #5fac55;
   border-color: #5fac55;
 }
-#button-all {
+#button-all,
+#message-all {
   background: #2d3900;
   color: #cab61f;
   border-color: #cab61f;
+}
+
+#message-orbital p,
+#message-solar p,
+#message-orbital p,
+#message-volcanic p,
+#message-aerosols p,
+#message-ghgs p,
+#message-all p {
+  color: white;
 }

@@ -16,12 +16,12 @@
   </head>
   <body>
 
-    <div id="app" class="app">
+    <div id="app" class="app" role="main">
       <div id="view" class="view">
-        <!-- <div class="title">
+        <div class="visually-hidden">
           <h1>What’s Causing Climate Change?</h1>
           <h2>Greenhouse gases—released mainly by the burning of fossil fuels—are warming the planet</h2>
-        </div> -->
+        </div>
         <div class="content">
           <div id="graphics" class="graphics"></div>
           <div id="messages" class="messages"></div>
@@ -41,10 +41,11 @@
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>
     <script src="../shared/js/vendor/underscore-1.8.3.min.js"></script>
     <script src="../shared/js/vendor/pixi-4.8.1.min.js"></script>
+    <script src="../shared/js/vendor/pixi.accessible.text.js"></script>
     <script src="../shared/js/vendor/howler-2.0.7.min.js"></script>
     <script src="../shared/js/vendor/broadcast-channel.js"></script>
 
-    <script src="../shared/js/config.js"></script>
+    <script src="../shared/js/config-embed.js"></script>
     <script src="../shared/js/channel.js"></script>
     <script src="../shared/js/controls.js"></script>
     <script src="../shared/js/util.js"></script>
@@ -54,13 +55,5 @@
     <script src="js/messages.js"></script>
     <script src="js/app.js"></script>
     <script src="js/init-embed.js"></script>
-
-    <!-- <script src="../sleepers/js/sleeper.js"></script>
-    <script src="../sleepers/js/particle_sleeper.js"></script>
-    <script>
-    var sleeper = new ParticleSleeper({
-      "position": "right"
-    });
-    </script> -->
   </body>
 </html>

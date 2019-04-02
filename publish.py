@@ -2,6 +2,10 @@
 
 # This is a script that will attempt to package one of the web apps into a single html file plus a folder of non-text assets.
 
+# python3 publish.py
+# python3 publish.py -app temperature-regions -assets "img/**/*.png,img/*.svg,data/*.json,content/*.json" -oassets "shared/font/*.ttf"
+# python3 publish.py -app temperature-forcings -assets "img/*.png,img/*.jpg,img/*.svg,data/*.json,content/*.json" -oassets "shared/audio/orchestral_harp.mp3,shared/font/*.ttf"
+
 import argparse
 from bs4 import BeautifulSoup
 import csv
@@ -49,13 +53,24 @@ for i, script in enumerate(scripts):
     script['src'] = newPath
     jsFilenames.append(path)
 
+# Retrieve images
+images = soup.find_all("img", src=True)
+imageFilenames = []
+for i, img in enumerate(images):
+    path = os.path.relpath(inputDir + "/" + img.get('src'))
+    newPath = a.ASSET_URL + path
+    img['src'] = newPath
+    imageFilenames.append(path)
+
 # Retrieve assets from arguments
 otherAssets = [a.APP + "/" + p for p in a.ASSET_DIRS.strip().split(",")]
 otherAssets += a.OTHER_ASSETS.strip().split(",")
 otherFilenames = []
 for path in otherAssets:
     pathFiles = []
-    if "*" in path:
+    if "**" in path:
+        pathFiles = glob.glob(path, recursive=True)
+    elif "*" in path:
         pathFiles = glob.glob(path)
     elif os.path.isfile(path):
         pathFiles = [path]
@@ -67,7 +82,7 @@ for path in otherAssets:
 configFiles = [inputDir + "/config/base.json", inputDir + "/config/embed.json"]
 
 # these are all our assets we need to copy over
-allFilenames = cssFilenames + jsFilenames + otherFilenames + configFiles
+allFilenames = list(set(cssFilenames + jsFilenames + imageFilenames + otherFilenames + configFiles))
 
 # insert javascript var into body
 newTag = soup.new_tag("script")
