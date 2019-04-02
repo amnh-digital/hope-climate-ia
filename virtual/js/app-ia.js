@@ -34,7 +34,12 @@ var VirtualAppIA = (function() {
     this.$frame.attr("src", url);
     $("."+value).addClass("active");
     $('.app').addClass("page-"+value);
-    $(".fullscreen-link").attr("href", "../"+value+"/");
+    if (value.startsWith("temperature")) {
+      $(".fullscreen-link").attr("href", "../"+value+"/embed.html");
+    } else {
+      $(".fullscreen-link").attr("href", "../"+value+"/");
+    }
+
   };
 
   return VirtualAppIA;
