@@ -244,6 +244,18 @@ var Controls = (function() {
       }, 10);
     }
 
+    document.addEventListener("keydown", function(e){
+      var now = new Date();
+      var charStr = String.fromCharCode(e.which);
+      var shifted = e.shiftKey;
+      switch(charStr) {
+        case "d":
+        case "D":
+          if (shifted && gamepadMappings) window.location.href = '../utilities/gamepad.html';
+          break;
+      }
+    });
+
     /*
     document.addEventListener("keydown", function(e){
       var now = new Date();
