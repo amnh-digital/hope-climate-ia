@@ -3,6 +3,7 @@
   "windows": [
     {
       "url": "temperature-timescales/physical.html",
+      "gamepadDebugUrl": "utilities/gamepad.html",
       "debug": false,
       "browserWindow": {
         "kiosk": true,

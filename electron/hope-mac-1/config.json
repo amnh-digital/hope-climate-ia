@@ -3,6 +3,7 @@
   "windows": [
     {
       "url": "consequences-change/physical.html",
+      "gamepadDebugUrl": "utilities/gamepad.html",
       "debug": false,
       "browserWindow": {
         "kiosk": true,

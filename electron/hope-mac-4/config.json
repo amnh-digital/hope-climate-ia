@@ -3,6 +3,7 @@
   "windows": [
     {
       "url": "composites/temperature-regions-forcings.html",
+      "gamepadDebugUrl": "utilities/gamepad.html",
       "debug": false,
       "bounds": {
         "x": 0,
