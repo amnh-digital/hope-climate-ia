@@ -34,7 +34,9 @@ If you need a machine-specific configuration file (e.g. if a particular slider n
 
 ## Slider utility
 
-There is a very basic slider utility for debugging sliders. You can build this by running:
+All electron apps that use sliders (gamepad API) come with a very basic slider utility for debugging sliders. You can access this by pressing `cmd-or-ctrl+g`.  You can then return to the app using `cmd-or-ctrl+r`.
+
+Alternatively you can build a stand-alone slider utility app like this:
 
 ```
 sudo npm run build:slider

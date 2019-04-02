@@ -10,7 +10,7 @@ sed -i .bak 's/APP_NAME/test-mouselock/g' package.json # replace app name in pac
 
 # install dependencies
 npm install
-npm rebuild --runtime=electron --target=1.8.7 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
+npm rebuild --runtime=electron --target=3.1.8 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
 cd ../..
 electron-packager electron/test-mouselock test-mouselock --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
