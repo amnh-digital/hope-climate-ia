@@ -5,7 +5,8 @@ var GamepadUtility = (function() {
   function GamepadUtility(config) {
     var defaults = {
       listEl: "#slider-list",
-      maxGamepads: 4
+      maxGamepads: 4,
+      maxAxes: 2
     };
     this.opt = _.extend({}, defaults, config);
     this.init();
@@ -31,6 +32,8 @@ var GamepadUtility = (function() {
 
     var $axesList = $('<ol></ol>');
     var axesCount = data.axes.length;
+    var maxAxes = this.opt.maxAxes;
+    axesCount = Math.min(axesCount, maxAxes);
 
     var axes = [];
     for (var j=0; j<axesCount; j++) {
@@ -160,7 +163,10 @@ var GamepadUtility = (function() {
 
     var axes = gp.axes;
     var axesData = gamepadData.axes;
-    for (var j=0; j<axes.length; j++) {
+    var axesCount = axes.length;
+    var maxAxes = this.opt.maxAxes;
+    axesCount = Math.min(axesCount, maxAxes);
+    for (var j=0; j<axesCount; j++) {
       var axis = axes[j];
       var value = axesData[j];
       if (recording && recordAxis===j) {
