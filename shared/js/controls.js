@@ -99,6 +99,11 @@ var Controls = (function() {
     return sum/len;
   }
 
+  function randomString(prefix, len){
+    len = len || 16;
+    return prefix + Math.random().toString(36).substr(2, len);
+  }
+
   function weightedMean(values, weights) {
 
     var result = _.map(values, function(value, i){
@@ -279,21 +284,43 @@ var Controls = (function() {
   Controls.prototype.loadButtonListeners = function(mappings){
     var $container = getUIContainer(this.opt);
     var channel = this.channel;
+    var className = randomString("button-");
 
     _.each(mappings, function(opt, key){
-      var $button = $('<button id="'+opt.el+'">'+opt.text+'</button>');
+      var $button = $('<button id="'+opt.el+'" class="'+className+'" data-key="'+key+'">'+opt.text+'</button>');
       if (opt.alt) $button.attr("alt", opt.alt);
       var isToggle = opt.toggle;
+      var isExclusive = opt.exclusive;
       $button.on("mousedown", function(e){
         var $el = $(this);
-        if (isToggle) {
-          $el.toggleClass("active");
+
+        // this is exclusive and toggle; we have to loop through all buttons
+        if (isExclusive && isToggle) {
+          $('.'+className).each(function(){
+            var $el2 = $(this);
+            // this is the selected button; toggle it
+            if ($el2.is($el)) {
+              $el.toggleClass("active");
+              if ($el.hasClass("active")) channel.post("controls.button.down", key);
+              else channel.post("controls.button.up", key);
+
+            // this is not the selected button and is active; remove it
+            } else if ($el2.hasClass("active")) {
+              $el2.removeClass("active");
+              channel.post("controls.button.up", $el2.attr("data-key"));
+            }
+          });
+
+        } else {
+          if (isToggle) $el.toggleClass("active");
+          if (!isToggle || $el.hasClass("active")) {
+            channel.post("controls.button.down", key);
+          } else if (isToggle && !$el.hasClass("active")) {
+            channel.post("controls.button.up", key);
+          }
         }
-        if (!isToggle || $el.hasClass("active")) {
-          channel.post("controls.button.down", key);
-        } else if (isToggle && !$el.hasClass("active")) {
-          channel.post("controls.button.up", key);
-        }
+
+
       });
       if (!isToggle) {
         $button.on("mouseup", function(e){

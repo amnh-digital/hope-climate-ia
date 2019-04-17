@@ -12,20 +12,30 @@
   height: auto;
   border: 2px solid;
   box-sizing: border-box;
+  position: fixed;
+  top: 5% !important;
+  left: 28% !important;
 }
 .message.large {
-  width: 15vw;
-  height: 15vw;
-  margin-left: -10vw;
+  width: 22vw;
+  height: auto
 }
 .message h3 {
   font-size: 2vh;
 }
 .message p {
-  font-size: 1.8vmin;
+  font-size: 1.6vmin;
 }
 .message img {
   left: 15vw;
+  max-height: 15vw;
+}
+.message.large img {
+  left: 22vw;
+}
+
+.messages {
+  z-index: 100;
 }
 
 .key {
@@ -41,7 +51,7 @@
 
 .ui {
   width: 14%;
-  z-index: 100;
+  z-index: 1000;
   left: 0;
   top: 10%;
 }
@@ -68,9 +78,28 @@
   display: none;
 }
 
-#message-ghgs {
-  margin-top: 5%;
+/* #message-orbital {
+  margin-left: 10%;
 }
+#message-solar {
+  margin-top: -11%;
+}
+#message-volcanic {
+  margin-left: 10%;
+  margin-top: -35%;
+}
+#message-aerosols {
+  margin-top: -35%;
+  margin-left: -10%;
+}
+#message-ghgs {
+  margin-top: 2%;
+  margin-left: -10%;
+}
+#message-all {
+  margin-left: -40%;
+  margin-top: 1%;
+} */
 
 
 #button-orbital,

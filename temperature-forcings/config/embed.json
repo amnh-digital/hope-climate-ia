@@ -4,32 +4,38 @@
       "orbital": {
         "el": "button-orbital",
         "text": "orbital changes",
-        "toggle": true
+        "toggle": true,
+        "exclusive": true
       },
       "solar": {
         "el": "button-solar",
         "text": "solar activity",
-        "toggle": true
+        "toggle": true,
+        "exclusive": true
       },
       "volcanic": {
         "el": "button-volcanic",
         "text": "volcanic activity",
-        "toggle": true
+        "toggle": true,
+        "exclusive": true
       },
       "ghgs": {
         "el": "button-ghgs",
         "text": "greenhouse gases",
-        "toggle": true
+        "toggle": true,
+        "exclusive": true
       },
       "aerosols": {
         "el": "button-aerosols",
         "text": "aerosol pollution",
-        "toggle": true
+        "toggle": true,
+        "exclusive": true
       },
       "all": {
         "el": "button-all",
         "text": "all factors combined",
-        "toggle": true
+        "toggle": true,
+        "exclusive": true
       }
     }
   },
