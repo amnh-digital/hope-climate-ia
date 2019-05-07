@@ -92,3 +92,57 @@
 .city {
   color: #EED896;
 }
+
+/* (very tall screens) */
+@media only screen and (max-aspect-ratio: 7/9) {
+  .map {
+    left: 50%;
+    margin-top: -50vw;
+    position: relative;
+    width: 85vw;
+    height: 42.5vw;
+    margin-left: -41vw;
+  }
+  .map-key {
+    padding-top: 54vw;
+  }
+  .map-key .description {
+    font-size: 0.6rem;
+    line-height: 2.5vw;
+    margin-top: 0.2rem;
+  }
+  .map-key .hh {
+    font-size: 0.8rem;
+  }
+  .graph-messages,
+  .graphics,
+  .ui-slider-horizontal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+  }
+  .graph-messages {
+    width: 80vw;
+    height: 9vh;
+    margin-left: -40vw;
+    margin-top: -40vh;
+  }
+  .message h3 {
+    font-size: 1rem;
+  }
+  .message p {
+    font-size: 0.8rem;
+  }
+  .graphics {
+    width: 90vw;
+    height: 45vw;
+    margin-left: -45vw;
+    margin-top: 17vh;
+  }
+  .ui-slider-horizontal {
+    width: 80vw;
+    height: 16px;
+    margin-top: 12vh;
+    margin-left: -40vw;
+  }
+}

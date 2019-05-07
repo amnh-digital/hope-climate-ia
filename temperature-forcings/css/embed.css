@@ -225,7 +225,7 @@
 }
 
 /* (very wide screens) */
-@media (min-aspect-ratio: 5/3) {
+@media only screen and (min-aspect-ratio: 5/3) {
   .graphics {
     height: 40vw;
     margin-top: -20vw;
@@ -233,7 +233,7 @@
 }
 
 /* (very tall screens) */
-@media (max-aspect-ratio: 7/9) {
+@media only screen and (max-aspect-ratio: 7/9) {
   .graphics {
     height: 60vw;
     margin-top: -45vw;
