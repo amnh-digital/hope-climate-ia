@@ -285,6 +285,9 @@
 /* (very tall screens) */
 @media only screen and (max-aspect-ratio: 7/9) {
   .graphics {
+    width: 100vw;
+    left: 0;
+    margin-left: 0;
     height: 60vw;
     margin-top: -45vw;
   }
@@ -301,11 +304,12 @@
     width: 0.676vh;
   }
   .messages {
+    width: 90%;
     bottom: auto;
     top: 50%;
     left: 50%;
     margin-top: 110px;
-    margin-left: -30%;
+    margin-left: -45%;
     height: auto;
   }
   .message, .message.large {
@@ -314,19 +318,22 @@
   .message .text {
     margin-left: 0.5rem;
   }
+  .message h3 {
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+  }
   .message p {
-    font-size: 0.7rem;
+    font-size: 1rem;
+  }
+  .ui button {
+      width: calc(50% - 15px);
+      font-size: 1rem;
+      height: 40px;
+      line-height: 40px;
   }
 }
 
 @media only screen and (max-width: 500px) {
-  .ui button {
-    width: calc(33.33333333% - 10px);
-    font-size: 0.7rem;
-    height: 30px;
-    line-height: 30px;
-    margin: 5px 0 0 5px;
-  }
   .message img {
     display: none;
   }
