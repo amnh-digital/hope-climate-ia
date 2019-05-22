@@ -224,13 +224,63 @@
   color: white;
 }
 
-/* (very wide screens) */
+/* (very wide screens: make scrollable) */
 @media only screen and (min-aspect-ratio: 5/3) {
+  .app {
+    overflow-y: auto;
+  }
+  .ui {
+    position: relative;
+    height: 10vw;
+  }
+  .ui button {
+    height: 60px;
+    line-height: 60px;
+    font-size: 1.4rem;
+  }
   .graphics {
+    position: relative;
+    width: 90vw;
     height: 40vw;
-    margin-top: -20vw;
+    margin: 0 auto;
+    left: auto;
+    top: auto;
+    height: 40vw;
+  }
+  .messages, .key {
+    position: relative;
+    bottom: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 1rem auto;
+    height: auto;
+  }
+  .messages {
+    margin-top: 0;
+  }
+  .message {
+    /* margin-left: 3vw; */
+    height: auto;
+    position: relative;
+    display: none;
+    margin-bottom: 2rem;
+  }
+  .message.active {
+    display: block;
+  }
+  .message h3 {
+    font-size: 1.3rem;
+  }
+  .message p {
+    font-size: 1rem;
+  }
+  .key {
+    margin: 1rem auto 1rem 20vw;
+    font-size: 1rem;
   }
 }
+
 
 /* (very tall screens) */
 @media only screen and (max-aspect-ratio: 7/9) {

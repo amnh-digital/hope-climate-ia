@@ -1,5 +1,7 @@
 {
   "controls": {
+    "el": "#content",
+    "prepend": true,
     "buttonMappings": {
       "orbital": {
         "el": "button-orbital",

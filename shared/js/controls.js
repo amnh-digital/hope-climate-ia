@@ -84,10 +84,12 @@ var Controls = (function() {
 
   function getUIContainer(opt){
     var $container = $("#ui");
+    var prepend = opt.prepend !== undefined;
     if (!$container.length) {
       $container = $('<div id="ui" class="ui"></div>');
       var parentEl = opt.el || 'body';
-      $(parentEl).append($container);
+      if (prepend) $(parentEl).prepend($container);
+      else $(parentEl).append($container);
     }
     return $container;
   }
