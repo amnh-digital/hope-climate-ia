@@ -22,7 +22,7 @@
   position: absolute;
   bottom: 10px;
   top: auto;
-  height: 110px;
+  height: auto;
 }
 .messages {
   width: 60%;
@@ -51,6 +51,15 @@
   vertical-align: top;
   top: 0 !important;
   left: 0 !important;
+}
+.message {
+  /* margin-left: 3vw; */
+  height: auto;
+  position: relative;
+  display: none;
+}
+.message.active {
+  display: block;
 }
 .message h3 {
   font-size: 2vh;
@@ -225,27 +234,29 @@
 }
 
 /* (very wide screens: make scrollable) */
-@media only screen and (min-aspect-ratio: 5/3) {
+@media only screen and (min-aspect-ratio: 5/3),
+only screen and (max-aspect-ratio: 7/9),
+only screen and (max-width: 500px) {
   .app {
     overflow-y: auto;
   }
   .ui {
     position: relative;
-    height: 10vw;
+    height: auto;
   }
   .ui button {
     height: 60px;
     line-height: 60px;
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
   .graphics {
     position: relative;
-    width: 90vw;
-    height: 40vw;
+    width: 100vw;
+    /* min-height: 60vw; */
+    height: 60vw;
     margin: 0 auto;
     left: auto;
     top: auto;
-    height: 40vw;
   }
   .messages, .key {
     position: relative;
@@ -254,20 +265,12 @@
     left: auto;
     right: auto;
     margin: 1rem auto;
-    height: auto;
   }
   .messages {
-    margin-top: 0;
+    margin-top: 1rem;
   }
   .message {
-    /* margin-left: 3vw; */
-    height: auto;
-    position: relative;
-    display: none;
     margin-bottom: 2rem;
-  }
-  .message.active {
-    display: block;
   }
   .message h3 {
     font-size: 1.3rem;
@@ -285,15 +288,14 @@
 /* (very tall screens) */
 @media only screen and (max-aspect-ratio: 7/9) {
   .graphics {
-    width: 100vw;
     left: 0;
     margin-left: 0;
-    height: 60vw;
-    margin-top: -45vw;
+    margin-top: 1rem;
   }
   .key {
-    width: 50%;
+    width: 80%;
     font-size: 1rem;
+    margin: 1rem auto;
   }
   .key .line {
     width: 5vh;
@@ -305,11 +307,11 @@
   }
   .messages {
     width: 90%;
-    bottom: auto;
+    /* bottom: auto;
     top: 50%;
     left: 50%;
     margin-top: 110px;
-    margin-left: -45%;
+    margin-left: -45%; */
     height: auto;
   }
   .message, .message.large {
@@ -319,21 +321,31 @@
     margin-left: 0.5rem;
   }
   .message h3 {
-    font-size: 1.4rem;
+    font-size: 1rem;
     margin-bottom: 0.5rem;
   }
   .message p {
-    font-size: 1rem;
+    font-size: 0.7rem;
   }
   .ui button {
-      width: calc(50% - 15px);
-      font-size: 1rem;
-      height: 40px;
-      line-height: 40px;
+    width: calc(50% - 15px);
+    font-size: 1rem;
+    height: 40px;
+    line-height: 40px;
   }
 }
 
 @media only screen and (max-width: 500px) {
+  .messages {
+    width: 90%;
+    height: auto;
+  }
+  .ui button,
+  .key {
+    font-size: 0.7rem;
+  }
+}
+@media only screen and (max-width: 300px) {
   .message img {
     display: none;
   }
