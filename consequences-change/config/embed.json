@@ -1,9 +1,11 @@
 {
   "controls": {
+    "el": "#slideshow",
     "uiMappings": {
       "horizontal": {
         "label": "Change time",
         "el": "slider-horizontal",
+        "addStateToBody": true,
         "options": {
           "min": 0,
           "max": 1,
@@ -16,15 +18,19 @@
       "prev": {
         "el": "button-prev",
         "text": "⇦",
-        "alt": "previous"
+        "alt": "previous",
+        "addStateToBody": true
       },
       "next": {
         "el": "button-next",
         "text": "⇨",
-        "alt": "next"
+        "alt": "next",
+        "addStateToBody": true
       }
     }
   },
+  "accessibleText": 1,
+  "embed": 1,
   "sleep": {
     "enable": 0
   }

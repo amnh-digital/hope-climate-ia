@@ -287,6 +287,8 @@ var Controls = (function() {
     var $container = getUIContainer(this.opt);
     var channel = this.channel;
     var className = randomString("button-");
+    var $body = $('body');
+    var buttonTimeout = false;
 
     _.each(mappings, function(opt, key){
       var $button = $('<button id="'+opt.el+'" class="'+className+'" data-key="'+key+'">'+opt.text+'</button>');
@@ -320,6 +322,14 @@ var Controls = (function() {
           } else if (isToggle && !$el.hasClass("active")) {
             channel.post("controls.button.up", key);
           }
+        }
+
+        if (opt.addStateToBody) {
+          $body.addClass('button-clicked');
+          if (buttonTimeout) clearTimeout(buttonTimeout);
+          buttonTimeout = setTimeout(function(){
+            $body.removeClass('button-clicked');
+          }, 1000);
         }
 
 
@@ -502,6 +512,7 @@ var Controls = (function() {
   Controls.prototype.loadUIListeners = function(mappings) {
     var $container = getUIContainer(this.opt);
     var channel = this.channel;
+    var $body = $('body');
 
     _.each(mappings, function(opt, key){
       var $slider = $('<div id="'+opt.el+'"></div>');
@@ -509,6 +520,14 @@ var Controls = (function() {
       $slider.on("slide", function(e, ui){
         channel.post("controls.axes.change", {"key": key, "value": ui.value});
       });
+      if (opt.addStateToBody) {
+        $slider.on("slidestart", function(e, ui){
+          $body.addClass('sliding');
+        });
+        $slider.on("slidestop", function(e, ui){
+          $body.removeClass('sliding');
+        });
+      }
       $container.append($slider);
     });
   };

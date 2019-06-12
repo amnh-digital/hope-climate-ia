@@ -8,11 +8,138 @@
 }
 
 .slideshow {
-
+  margin: 1rem auto;
+  width: 136.266666667vh;
+  height: 70vh;
 }
 .progress-dots {
-
+  margin: 0;
+  height: auto;
+  position: relative;
 }
 .content-wrapper {
+  /* text-align: center; */
+  width: 136.266666667vh;
+  margin: 1rem auto 0;
+  position: relative;
+}
+.content-wrapper::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.globe,
+.captions {
+  position: relative;
+  top: auto;
+  left: auto;
+  bottom: auto;
+  right: auto;
+  margin: 0;
+}
+.captions {
+  width: 80%;
+  float: left;
+}
+.caption {
+  position: relative;
+  display: none;
+}
+.caption.active {
+  display: block;
+}
+.caption h2 {
+  font-size: 1.2rem;
+}
+.caption p {
+  font-size: 1rem;
+}
+.globe {
+  float: right;
+}
+.credits {
+  position: absolute;
+  top: -40px;
+  right: auto;
+  display: block;
+  width: 360px;
+  left: 0;
+  height: auto;
+  margin: 0;
+  font-size: 0.8rem;
+  text-align: left;
+}
+.slide .label {
+  font-size: 1.2rem;
+}
 
+
+.ui {
+  width: 91.367915044%;
+  height: 100%;
+  left: 0;
+  right: auto;
+  bottom: auto;
+  top: 0;
+  background: none;
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out;
+}
+.button-clicked .ui {
+  opacity: 0;
+}
+.ui-slider {
+  background: none;
+}
+.ui-slider-horizontal {
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: auto;
+  margin: 0;
+}
+.ui-slider-horizontal .ui-slider-handle {
+  height: 100%;
+  width: 24px;
+  top: 0;
+  margin-left: -12px;
+  background: transparent;
+  outline: none;
+}
+.ui-slider-horizontal .ui-slider-handle:before {
+  content: "⬌";
+  display: block;
+  width: 2vw;
+  height: 2vw;
+  font-size: 2vw;
+  line-height: 2vw;
+  border-radius: 50%;
+  position: absolute;
+  top: 53%;
+  left: 50%;
+  margin-top: -1vw;
+  margin-left: -1vw;
+  background: #edca57;
+  color: #000;
+  text-align: center;
+}
+
+.ui button {
+  display: block;
+  margin: 0;
+  position: absolute;
+  height: 100px;
+  line-height: 100px;
+  top: 50%;
+  margin-top: -50px;
+  left: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+.ui #button-next {
+  left: auto;
+  right: 0;
+}
+.sliding .ui button {
+  opacity: 0;
 }
