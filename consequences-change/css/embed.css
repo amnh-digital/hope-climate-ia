@@ -174,7 +174,8 @@ body {
 
 /* Tall screens */
 @media only screen and (max-aspect-ratio: 7/5),
-only screen and (max-height: 400px) {
+only screen and (max-height: 400px),
+only screen and (max-width: 1000px) {
   .slideshow {
     margin: 1rem auto;
     width: 96vw;
