@@ -1,9 +1,12 @@
 body {
   background: var(--black-color);
+  overflow: hidden;
+  overflow-y: auto;
 }
 .app {
   height: auto;
   position: relative;
+  overflow: hidden;
   overflow-y: auto;
 }
 .view {
@@ -32,6 +35,10 @@ body {
   margin: 0;
   height: auto;
   position: relative;
+}
+.progress-dots .dot {
+  width: 12px;
+  height: 12px;
 }
 .content-wrapper {
   /* text-align: center; */

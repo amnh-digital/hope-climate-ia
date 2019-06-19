@@ -18,10 +18,11 @@ var Slideshow = (function() {
     this.aspectRatio = this.opt.width / this.opt.height;
     this.slideCount = this.slides.length;
     this.currentSlide = 0;
+    this.slidePosition = 0.5;
 
     this.initSlides();
     this.initCaptions();
-    this.onSlide(0.5);
+    this.onSlide(this.slidePosition);
   };
 
   Slideshow.prototype.initCaptions = function(){
@@ -152,9 +153,11 @@ var Slideshow = (function() {
 
     this.slideW = slideW;
     this.slideOffset = slideOffset;
+    this.onSlide(this.slidePosition);
   };
 
   Slideshow.prototype.onSlide = function(value){
+    this.slidePosition = value;
     var offset = this.slideW * value;
     $('.marker').css('transform', 'translate3d('+offset+'px, 0, 0)');
     $(".image.after").width(((1-value)*100)+"%");
