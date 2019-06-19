@@ -5,6 +5,8 @@
 # python3 publish.py
 # python3 publish.py -app temperature-regions -assets "img/**/*.png,img/*.svg,data/*.json,content/*.json" -oassets "shared/font/*.ttf"
 # python3 publish.py -app temperature-forcings -assets "img/*.png,img/*.jpg,img/*.svg,data/*.json,content/*.json" -oassets "shared/audio/orchestral_harp.mp3,shared/font/*.ttf"
+# python3 publish.py -app consequences-change -assets "img/*.png,img/*.jpg,data/*.geojson,content/*.json" -oassets "shared/font/*.ttf"
+
 
 import argparse
 from bs4 import BeautifulSoup
