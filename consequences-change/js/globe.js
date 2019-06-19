@@ -77,8 +77,8 @@ var Globe = (function() {
 
     // load image texture
     var loader = new THREE.TextureLoader();
-    var ASSET_URL = ASSET_URL || '';
-    loader.load(ASSET_URL+'img/world_map_blank_without_borders.png', function (texture) {
+    var assetUrl = typeof ASSET_URL !== 'undefined' ? ASSET_URL : '';
+    loader.load(assetUrl+'img/world_map_blank_without_borders.png', function (texture) {
       // init globe
       var geo = new THREE.SphereGeometry(radius, 64, 64);
       var mat = new THREE.MeshBasicMaterial({map: texture, overdraw: true});
