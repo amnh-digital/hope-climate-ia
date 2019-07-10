@@ -21,7 +21,7 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument('-app', dest="APP", default="temperature-timescales", help="Name of app")
 parser.add_argument('-appf', dest="APP_FILE", default="%s/embed.html", help="Path to webpage.")
-parser.add_argument('-aurl', dest="ASSET_URL", default="/bundles/ncslethostedinteractive/hope/", help="Base url where the assets will be hosted")
+parser.add_argument('-aurl', dest="ASSET_URL", default="{{ asset_path }}", help="Base url where the assets will be hosted")
 parser.add_argument('-assets', dest="ASSET_DIRS", default="img/*.jpg,data/*.json,content/*.json", help="Comma-separated list of assets or directories of assets relative to app")
 parser.add_argument('-oassets', dest="OTHER_ASSETS", default="shared/audio/key.mp3,shared/font/*.ttf", help="Comma-separated list of assets or directories of assets")
 parser.add_argument('-view', dest="VIEW_PATH", default="views/Hope/%s.html.twig", help="View path relative to output directory")
