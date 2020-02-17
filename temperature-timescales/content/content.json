@@ -20,9 +20,10 @@
     {"year": 2012, "text": "Lowest summer Arctic sea ice extent in the satellite record.", "image": "img/sea_ice.jpg", "imageW": 400, "imageH": 225},
     {"year": 2013, "text": "Japan, Korea and eastern China experience one of the hottest summers in the regional record."},
     {"year": 2014, "text": "Rainfall in the Middle East along the Mediterranean is lowest on record, exacerbating persistent drought."},
-    {"year": 2015, "text": "Second hottest year on record"},
+    {"year": 2015, "text": "Third hottest year on record"},
     {"year": 2016, "text": "Hottest year on record"},
-    {"year": 2017, "text": "Third hottest year on record"},
-    {"year": 2018, "text": "Fourth hottest year on record"}
+    {"year": 2017, "text": "Fourth hottest year on record"},
+    {"year": 2018, "text": "Fifth hottest year on record"},
+    {"year": 2019, "text": "Second hottest year on record"}
   ]
 }
