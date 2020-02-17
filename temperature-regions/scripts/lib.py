@@ -18,7 +18,7 @@ def getColor(grad, amount, toInt=False, stops=False):
     rgb = (0,0,0)
 
     if amount > 1:
-        print "Warning: gradient amount is %s" % amount
+        print("Warning: gradient amount is %s" % amount)
 
     if remainder > 0:
         rgb = lerpColor(grad[i], grad[i+1], remainder)

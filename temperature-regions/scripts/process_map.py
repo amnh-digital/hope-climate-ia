@@ -70,7 +70,7 @@ for i, feature in enumerate(geojson["features"]):
         polygon.append(polygon[0])
         polygons.append(polygon)
 
-print "%s polygons found" % len(polygons)
+print("%s polygons found" % len(polygons))
 
 dwg = svgwrite.Drawing(OUTPUT_FILE, size=(WIDTH, HEIGHT), profile='full')
 dwg.add(dwg.rect(id="bg", insert=(0,0), size=(WIDTH, HEIGHT), fill=WATER_COLOR))
@@ -82,4 +82,4 @@ dwg.add(dwgLand)
 
 # Save
 dwg.save()
-print "Saved %s" % OUTPUT_FILE
+print("Saved %s" % OUTPUT_FILE)

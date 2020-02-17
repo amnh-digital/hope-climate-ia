@@ -51,7 +51,7 @@ times = ds.variables['time'][:] # int: year
 tempData = ds.variables['tempanomaly'][:] # float: surface temperature anomaly (C), e.g. tempData[time][lat][lon]
 
 if 1.0*len(lats)/ZONES % 1 > 0:
-    print "Warning: zones not a divisor of %s" % len(lats)
+    print("Warning: zones not a divisor of %s" % len(lats))
 
 # retrieve data from each zone
 data = []
@@ -75,7 +75,7 @@ for zone in range(ZONES):
             # add data
             zoneData.append(value)
     data.append(list(zoneData))
-    print "Zone %s complete" % (zone+1)
+    print("Zone %s complete" % (zone+1))
 data = list(reversed(data))
 ds.close()
 
@@ -100,4 +100,4 @@ jsonData = {
 # Write to file
 with open(args.OUTPUT_FILE, 'w') as f:
     json.dump(jsonData, f)
-    print "Wrote %s zones to %s" % (len(data), args.OUTPUT_FILE)
+    print("Wrote %s zones to %s" % (len(data), args.OUTPUT_FILE))

@@ -107,4 +107,4 @@ jsonData = {
 # Write to file
 with open(OUTPUT_FILE, 'w') as f:
     json.dump(jsonData, f)
-    print "Wrote %s years to %s" % (len(annualData), OUTPUT_FILE)
+    print("Wrote %s years to %s" % (len(annualData), OUTPUT_FILE))

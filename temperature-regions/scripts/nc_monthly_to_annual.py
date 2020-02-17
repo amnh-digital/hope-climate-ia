@@ -44,7 +44,7 @@ times = ds.variables['time'][:] # int: days since 1/1/1800
 w = len(lons)
 h = len(lats)
 t = len(times)
-print "Time: %s x Lon: %s x Lat: %s" % (t, w, h)
+print("Time: %s x Lon: %s x Lat: %s" % (t, w, h))
 
 tempData = ds.variables['tempanomaly'][:] # short: surface temperature anomaly (K), e.g. tempData[time][lat][lon]
 baseDate = "1800-01-01"
@@ -54,7 +54,7 @@ bd = datetime.datetime.strptime(baseDate, "%Y-%m-%d")
 # print(tempData.shape)
 # sys.exit()
 
-print "Grouping data by year..."
+print("Grouping data by year...")
 years = []
 yearData = []
 for i, days in enumerate(times):
@@ -81,7 +81,7 @@ print(yearData.shape)
 # years, months, lats, lons = yearData.shape
 
 # Aggregate each year by month, ignore fill values
-print "Aggregating data..."
+print("Aggregating data...")
 yearData = np.where(yearData > 9999, np.nan, yearData)
 aggData = np.nanmean(yearData, axis=1)
 pprint(aggData.shape)
@@ -105,7 +105,7 @@ pprint(aggData.shape)
 #     sys.stdout.flush()
 # ds.close()
 
-print "\rPreparing output file"
+print("\rPreparing output file")
 dsout = Dataset(OUTPUT_FILE, "w", format="NETCDF4")
 latD = dsout.createDimension("lat", h)
 lonD = dsout.createDimension("lon", w)
@@ -131,4 +131,4 @@ tempV[:] = np.nan_to_num(aggData)
 
 dsout.close()
 
-print "\rDone."
+print("\rDone.")

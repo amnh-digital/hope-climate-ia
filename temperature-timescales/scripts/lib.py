@@ -56,7 +56,7 @@ def parseRows(arr):
 def readCSV(filename, skipInitialLines=4):
     rows = []
     if os.path.isfile(filename):
-        with open(filename, 'rb') as f:
+        with open(filename, 'r') as f:
             lines = list(f)
             lines = lines[skipInitialLines:]
             lines = [line for line in lines if not line.startswith("#")]
@@ -108,7 +108,7 @@ def savitzkyGolay(y, window_size, order=3, deriv=0, rate=1):
     try:
         window_size = np.abs(np.int(window_size))
         order = np.abs(np.int(order))
-    except ValueError, msg:
+    except ValueError:
         raise ValueError("window_size and order have to be of type int")
     if window_size % 2 != 1 or window_size < 1:
         raise TypeError("window_size size must be a positive odd number")

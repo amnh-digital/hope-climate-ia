@@ -15,7 +15,7 @@
 If you don't have it already, you'll need to install [NetCDF](http://geog.uoregon.edu/bartlein/courses/geog490/install_netCDF.html) and [netcdf4-python](http://unidata.github.io/netcdf4-python/) for processing netCDF version 4 files.
 
 ```
-brew install netcdf
+brew install netcdf    (if Mac, otherwise download .exe from URL)
 pip install netCDF4
 ```
 
@@ -56,7 +56,7 @@ This will process the new data through 2018 and create a new `./data/current.jso
 You'll need to install a couple other dependencies for generating the maps:
 
 ```
-brew install pycairo
+brew install pycairo    (if Mac, otherwise download binary from: https://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo)
 pip install gizeh
 ```
 

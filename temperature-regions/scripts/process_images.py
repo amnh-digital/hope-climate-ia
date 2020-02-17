@@ -39,7 +39,7 @@ STOPS = [float(s) for s in args.STOPS.split(",")]
 
 MIN_VALUE = -3.5
 MAX_VALUE = 3.5
-TARGET_HEIGHT = TARGET_WIDTH / 2
+TARGET_HEIGHT = int(TARGET_WIDTH / 2)
 LATLON_OFFSET = 0.8
 RADIUS_RANGE = [1.0, 1.8]
 ALPHA_RANGE = [0.0, 1.0]
@@ -59,7 +59,7 @@ times = ds.variables['time'][:] # int: year
 w = len(lons)
 h = len(lats)
 t = len(times)
-print "Time: %s x Lon: %s x Lat: %s" % (t, w, h)
+print("Time: %s x Lon: %s x Lat: %s" % (t, w, h))
 
 # Convert lat/lon to pixels using Robinson projection
 coordinates = []
@@ -143,7 +143,7 @@ def dataToImg(filename, data):
     # print(filename)
     surface.write_to_png(filename)
 
-print "Generating images..."
+print("Generating images...")
 years = []
 yearData = []
 index = 1
@@ -162,4 +162,4 @@ for i, year in enumerate(times):
     sys.stdout.flush()
 
 ds.close()
-print "\rDone."
+print("\rDone.")

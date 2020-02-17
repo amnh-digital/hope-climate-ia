@@ -26,7 +26,7 @@ START_YEAR = args.START_YEAR
 REF_YEARS = [int(y) for y in args.REF_YEARS.split(",")]
 OUTPUT_FILE = args.OUTPUT_FILE
 
-print "Reading data..."
+print("Reading data...")
 baseData = Dataset(INPUT_FILE, 'r')
 
 refDatas = []
@@ -43,11 +43,11 @@ refLats = len(refDatas[0].variables['lat']) # float: latitude between -90 and 90
 refLons = len(refDatas[0].variables['lon']) # float: longitude between -180 and 180
 
 if baseLats != refLats or baseLons != refLons:
-    print "Spatial resolution mismatch"
+    print("Spatial resolution mismatch")
     sys.exit(1)
 
 # initialize a diff matrix
-print "Finding differences..."
+print("Finding differences...")
 diffTemp = np.zeros((baseLats, baseLons), dtype=float)
 missingCount = 0
 for lat in range(baseLats):
@@ -72,9 +72,9 @@ for lat in range(baseLats):
             diffTemp[lat][lon] = False
             missingCount += 1
 
-print "Missing %s values" % missingCount
+print("Missing %s values" % missingCount)
 
-print "Writing results to output file..."
+print("Writing results to output file...")
 dsout = Dataset(OUTPUT_FILE, "w", format="NETCDF4")
 latD = dsout.createDimension("lat", baseLats)
 lonD = dsout.createDimension("lon", baseLons)
@@ -104,4 +104,4 @@ for t in range(len(baseTimes)):
     sys.stdout.flush()
 dsout.close()
 
-print "Done."
+print("Done.")
