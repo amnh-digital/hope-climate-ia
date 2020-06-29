@@ -19,7 +19,7 @@ var Map = (function() {
     this.$latitudeUpper = $(this.opt.latUpperEl);
     this.$latitudeLower = $(this.opt.latLowerEl);
 
-    if (ASSET_URL !== undefined) {
+    if (typeof ASSET_URL !== "undefined") {
       this.opt.dir = ASSET_URL + this.opt.dir;
     }
 
