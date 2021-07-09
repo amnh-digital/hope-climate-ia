@@ -55,7 +55,7 @@ The final command will load a simple server on your machine that can be accessed
 
 ### 3.c. Updating apps with new annual data
 
-Every year around the beginning of February, NASA and NOAA releases new annual data from the previous year. That is when we update the apps that rely on new data.
+Every year around the beginning of February, NASA and NOAA release new annual data from the previous year. That is when we update the apps that rely on new data.
 
 The two apps that need to be updated are:
 
@@ -88,7 +88,7 @@ And for "Mapping Change" ([./temperature-regions/](https://github.com/amnh-digit
 sudo npm run build:mac4
 ```
 
-These will create commands will create two executable apps in the `.build/` directory, e.g. `./build/mac/hope-mac-3-darwin-x64/hope-mac-3.app` and `./build/mac/hope-mac-4-darwin-x64/hope-mac-4.app`
+These commands will create two executable apps in the `.build/` directory, e.g. `./build/mac/hope-mac-3-darwin-x64/hope-mac-3.app` and `./build/mac/hope-mac-4-darwin-x64/hope-mac-4.app`
 
 Once you build these on your machine:
 
