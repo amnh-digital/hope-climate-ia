@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+# python -monthly "data/188001-201912.csv" -annual "data/1880-2019.csv" -end 2019
+
 import argparse
 import json
 from lib import *
@@ -19,6 +21,7 @@ import sys
 parser = argparse.ArgumentParser()
 parser.add_argument('-monthly', dest="MONTHLY_DATA_FILE", default="data/188001-201803.csv", help="Monthly temperature anomaly input file")
 parser.add_argument('-annual', dest="ANNUAL_DATA_FILE", default="data/1880-2018.csv", help="Annual temperature anomaly input file")
+parser.add_argument('-content', dest="CONTENT_FILE", default="content/content.json", help="JSON Annotations file")
 parser.add_argument('-start', dest="START_YEAR", default=1880, type=int, help="Start year")
 parser.add_argument('-end', dest="END_YEAR", default=2018, type=int, help="End year")
 parser.add_argument('-grad', dest="GRADIENT", default="#58e0dc,#99cccc,#adada3,#d67052,#eb5229,#ff3300", help="Color gradient")
@@ -93,11 +96,11 @@ monthlyData = [(round(d["Value"],3), d["Color"]) for d in monthlyData]
 # add monthly data to annual data and minimize
 for i,d in enumerate(annualData):
     annualData[i]["monthlyData"] = monthlyData[i*12:i*12+12]
-annualData = [(round(d["Value"],3), d["Color"], d["monthlyData"]) for d in annualData]
+annualDataSmall = [(round(d["Value"],3), d["Color"], d["monthlyData"]) for d in annualData]
 
 # format data
 jsonData = {
-    "annualData": annualData,
+    "annualData": annualDataSmall,
     # "fiveYearTrend": fiveYearTrend.tolist(),
     "tenYearTrend": tenYearTrend.tolist(),
     "domain": dataDomain,
@@ -108,3 +111,23 @@ jsonData = {
 with open(OUTPUT_FILE, 'w') as f:
     json.dump(jsonData, f)
     print("Wrote %s years to %s" % (len(annualData), OUTPUT_FILE))
+
+# Process annotations
+content = readJSON(args.CONTENT_FILE)
+hottestAnnotations = [
+    "Hottest year on record",
+    "Second hottest year on record",
+    "Third hottest year on record",
+    "Fourth hottest year on record",
+    "Fifth hottest year on record"
+]
+annotations = [a for a in content["annotations"] if a["text"] not in hottestAnnotations]
+annualData = sorted(annualData, key=lambda d: -d["Value"])
+for i, text in enumerate(hottestAnnotations):
+    d = annualData[i]
+    annotations.append({
+        "year": d["Year"],
+        "text": text
+    })
+content["annotations"] = annotations
+writeJSON(args.CONTENT_FILE, content)

@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime, timedelta
+import json
 import math
 import numpy as np
 import os
@@ -104,6 +105,13 @@ def norm(value, a, b):
     n = max(n, 0)
     return n
 
+def readJSON(filename):
+    data = {}
+    if os.path.isfile(filename):
+        with open(filename, encoding="utf8") as f:
+            data = json.load(f)
+    return data
+
 def savitzkyGolay(y, window_size, order=3, deriv=0, rate=1):
     try:
         window_size = np.abs(np.int(window_size))
@@ -126,3 +134,12 @@ def savitzkyGolay(y, window_size, order=3, deriv=0, rate=1):
     lastvals = y[-1] + np.abs(y[-half_window-1:-1][::-1] - y[-1])
     y = np.concatenate((firstvals, y, lastvals))
     return np.convolve( m[::-1], y, mode='valid')
+
+def writeJSON(filename, data, verbose=True, pretty=True):
+    with open(filename, 'w') as f:
+        if pretty:
+            json.dump(data, f, indent=4)
+        else:
+            json.dump(data, f)
+        if verbose:
+            print("Wrote data to %s" % filename)
