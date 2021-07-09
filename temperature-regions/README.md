@@ -19,9 +19,10 @@ brew install netcdf    (if Mac, otherwise download .exe from URL)
 pip install netCDF4
 ```
 
-Download and unpack the latest "Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing" data from [NASA GISS](https://data.giss.nasa.gov/gistemp/) (you can also just do this manually)
+Download and unpack the latest "Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing" data from [NASA GISS](https://data.giss.nasa.gov/gistemp/) (you can also just do this manually). We are putting them into the `oversize-assets/` folder which is not tracked by Git so we don't make this repository too big.
 
 ```
+cd temperature-regions
 wget -O ../oversize-assets/gistemp1200_ERSSTv5.nc.gz "https://data.giss.nasa.gov/pub/gistemp/gistemp1200_ERSSTv5.nc.gz"
 gunzip ../oversize-assets/gistemp1200_ERSSTv5.nc.gz
 rm ../oversize-assets/gistemp1200_ERSSTv5.nc.gz
@@ -45,7 +46,7 @@ Since the baseline is 1951-1980 mean by default, we need to change the baseline 
 python scripts/process_baseline.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual.nc -out ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc
 ```
 
-The above script uses reference files with the correct baseline generated from the [GISS Maps interface](https://data.giss.nasa.gov/gistemp/maps/)) to create new data with the correct baseline. Now, we can process the data for use in the interface:
+The above script uses reference files with the correct baseline generated from the [GISS Maps interface](https://data.giss.nasa.gov/gistemp/maps/)) to create new data with the correct baseline. Now, we can process the data for use in the interface (replace **2018** with whatever the latest year you are processing):
 
 ```
 python scripts/process_data.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end 2018
@@ -56,11 +57,11 @@ This will process the new data through 2018 and create a new `./data/current.jso
 You'll need to install a couple other dependencies for generating the maps:
 
 ```
-brew install pycairo    (if Mac, otherwise download binary from: https://www.lfd.uci.edu/~gohlke/pythonlibs/#pycairo)
+brew install pycairo
 pip install gizeh
 ```
 
-Lastly, you generate new images by running:
+Lastly, you generate new images by running (again, replace **2018** with whatever the latest year you are processing):
 
 ```
 python scripts/process_images.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end 2018
