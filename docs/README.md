@@ -7,3 +7,4 @@ This set of documents focuses primarily on the technical considerations of devel
 1. [Physical controls](controls.md) - considerations for using physical sliders, knobs, and buttons for interacting with apps
 1. [Gotchas](gotchas.md)
 1. [Updating apps](development.md) - how to make changes
+1. [Updating apps in the hall](hope.md) - how to make changes to the apps in the hall

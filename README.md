@@ -2,7 +2,10 @@
 
 Hall of Planet Earth - Climate Wall interactives: [use them online](https://amnh-digital.github.io/hope-climate-ia/virtual/)
 
+[Project documentation here](https://beefoo.github.io/climate-wall-docs/)
 [Technical documentation here](docs/README.md)
+
+
 
 ## Interactives
 
