@@ -10,8 +10,10 @@ $(function() {
   ).done(function(baseConfig, config, content, data){
     baseConfig = baseConfig[0];
     updateColorsFromConfig(baseConfig);
+    updateVarsInConfig(baseConfig, '{{ asset_path }}', ASSET_URL);
     config = _.extend({}, baseConfig, config[0]);
     content = content[0];
+    updateVarsInConfig(content, '{{ asset_path }}', ASSET_URL);
     data = data[0];
 
     console.log('Config loaded.');

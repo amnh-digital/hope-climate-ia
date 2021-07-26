@@ -123,6 +123,6 @@ for fn in allFilenames:
             if assetPath.startswith(a.APP + "/"):
                 matchPath = matchPath[len(a.APP + "/"):]
             pattern = "\"[^\"]*[\.\/]*"+matchPath+"\""
-            fileStr = re.sub(pattern, "\""+(a.ASSET_URL+assetPath)+"\"", fileStr)
+            fileStr = re.sub(pattern, "\""+a.ASSET_URL+assetPath+"\"", fileStr)
         with open(toFile, 'w') as f:
             f.write(fileStr)
