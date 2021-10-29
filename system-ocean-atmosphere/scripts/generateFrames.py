@@ -64,7 +64,8 @@ DURATION = args.DURATION
 FPS = args.FPS
 DEBUG = args.DEBUG
 TEMPERATURE_UNIT = args.TEMPERATURE_UNIT
-
+print(f"Start Date {DATE_START}")
+print(f"End Date {DATE_END}")
 # Make sure output dirs exist
 outDir = os.path.dirname(OUTPUT_FILE)
 if not os.path.exists(outDir):
@@ -128,6 +129,7 @@ date = dateStart
 filenames = []
 dates = []
 while date <= dateEnd:
+    print(INPUT_FILE % date.strftime("%Y%m%d"))
     filename = INPUT_FILE % date.strftime("%Y%m%d")
     if os.path.isfile(filename):
         filenames.append(filename)
@@ -141,22 +143,22 @@ if DEBUG:
     if DEBUG == 1:
         filenames = filenames[:2]
 
-print "Reading %s files asyncronously..." % len(filenames)
+print("Reading %s files asyncronously..." % len(filenames))
 fparams = [{"filename": f, "unit": TEMPERATURE_UNIT} for f in filenames]
 pool = ThreadPool()
 data = pool.map(readCSVData, fparams)
 pool.close()
 pool.join()
-print "Done reading files"
+print("Done reading files")
 
 lons = len(data[0])
 lats = len(data[0][0])
 total = lons * lats
-print "Lons (%s) x Lats (%s) = %s" % (lons, lats, total)
+print("Lons (%s) x Lats (%s) = %s" % (lons, lats, total))
 
 dateCount = len(dates)
 frames = DURATION * FPS
-print "%s frames with duration %s" % (frames, DURATION)
+print("%s frames with duration %s" % (frames, DURATION))
 
 # Initialize particle starting positions
 particleProperties = [
@@ -187,12 +189,12 @@ for frame in range(frames):
     if DEBUG and frame >= debugFrames or DEBUG == 1:
         break
 
-print "Making %s image files asyncronously..." % frames
+print("Making %s image files asyncronously..." % frames)
 pool = ThreadPool()
 data = pool.map(frameToImage, frameParams)
 pool.close()
 pool.join()
-print "Done."
+print("Done")
 
 # print "Making %s image files syncronously..." % frames
 # for p in frameParams:

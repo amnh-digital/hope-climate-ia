@@ -94,7 +94,7 @@ def parseNumber(string):
         num = float(string)
     except ValueError:
         num = 0.0
-        print "Value error: %s" % string
+        print("Value error: %s" % string)
     # if num <= -9999 or num >= 9999:
     #     print "Value unknown: %s" % string
     #     num = 0.0
@@ -113,7 +113,7 @@ def wrap(value, a, b):
 
 def frameToImage(p):
     # Determine the two vector fields to interpolate from
-    print "%s: processing data..." % p["fileOut"]
+    print("%s: processing data..." % p["fileOut"])
     dataCount = len(p["dates"])
     dataProgress = p["progress"] * (dataCount - 1)
     dataIndexA0 = int(math.floor(dataProgress))
@@ -140,12 +140,12 @@ def frameToImage(p):
     # print "%s: calculating particles..." % p["fileOut"]
     particles = getParticleData(lerpedData, p)
 
-    print "%s: drawing particles..." % p["fileOut"]
+    print("%s: drawing particles..." % p["fileOut"])
     updatedPx = addParticlesToImage(baseImage, tempImage, particles, p)
     im = Image.fromarray(updatedPx, mode="RGB")
 
     im.save(p["fileOut"])
-    print "%s: finished." % p["fileOut"]
+    print("%s: finished." % p["fileOut"])
 
 def addParticlesToImage(base, temperature, particles, p):
     basePx = np.array(base)
@@ -221,7 +221,7 @@ def addParticlesToImage(base, temperature, particles, p):
     if GPUs and len(GPUs) > 0:
         ctx = cl.Context(devices=GPUs)
     else:
-        print "Warning: using CPU"
+        print("Warning: using CPU")
         ctx = cl.Context(CPU)
 
     # Create queue for each kernel execution
@@ -249,7 +249,7 @@ def addParticlesToImage(base, temperature, particles, p):
 def lerpData(dataA, dataB, mu, offset=0):
     dataLen = len(dataA)
     if dataLen != len(dataB):
-        print "Warning: data length mismatch"
+        print("Warning: data length mismatch")
     shape = (len(dataA[0]), len(dataA[0][0]), 3)
     h, w, dim = shape
     result = np.empty(h * w * dim, dtype=np.float32)
@@ -365,7 +365,7 @@ def lerpData(dataA, dataB, mu, offset=0):
     if GPUs and len(GPUs) > 0:
         ctx = cl.Context(devices=GPUs)
     else:
-        print "Warning: using CPU"
+        print("Warning: using CPU")
         ctx = cl.Context(CPU)
 
     # Create queue for each kernel execution
@@ -425,7 +425,7 @@ def lerpImage(imA, imB, mu):
     if GPUs and len(GPUs) > 0:
         ctx = cl.Context(devices=GPUs)
     else:
-        print "Warning: using CPU"
+        print("Warning: using CPU")
         ctx = cl.Context(CPU)
 
     # Create queue for each kernel execution
@@ -761,7 +761,7 @@ def getParticleData(data, p):
         # print "Using GPU"
         ctx = cl.Context(devices=GPUs)
     else:
-        print "Warning: using CPU"
+        print("Warning: using CPU")
         ctx = cl.Context(CPU)
 
     # Create queue for each kernel execution
@@ -855,7 +855,7 @@ def getTemperatureImage(data, p):
         # print "Using GPU"
         ctx = cl.Context(devices=GPUs)
     else:
-        print "Warning: using CPU"
+        print("Warning: using CPU")
         ctx = cl.Context(CPU)
 
     # Create queue for each kernel execution
@@ -883,9 +883,9 @@ def getTemperatureImage(data, p):
 def readCSVData(p):
     filename = p["filename"]
     unit = p["unit"]
-    print "Reading %s" % filename
+    print("Reading %s" % filename)
     data = []
-    with gzip.open(filename, 'rb') as f:
+    with gzip.open(filename, 'rt') as f:
         rows = list(f)
         rowCount = len(rows)
         data = [None for d in range(rowCount)]
@@ -901,17 +901,17 @@ def readCSVData(p):
                 triple[2] = parseNumber(triple[2]) # v vector
                 row[j] = tuple(triple)
             data[i] = row
-    print "Done reading %s" % filename
+    print("Done reading %s" % filename)
     return data
 
 def readSSTCSVData(filename):
-    print "Reading %s" % filename
+    print("Reading %s" % filename)
     data = []
     with gzip.open(filename, 'rb') as f:
         lines = list(f)
         rows = [0 for i in range(len(lines))]
         for i, line in enumerate(lines):
-            row = [float(value) for value in line.split(",")]
+            row = [float(value) for value in line.split(b",")]
             rows[i] = row
         data = rows
     return data
