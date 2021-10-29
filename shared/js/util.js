@@ -220,7 +220,28 @@ function updateColorsRecursive(obj, colors) {
   }
 }
 
+function updateVarsRecursive(obj, findString, replaceString) {
+  for (var k in obj) {
+    if (typeof obj[k] == "object" && obj[k] !== null) {
+      updateVarsRecursive(obj[k], findString, replaceString);
+    } else if (obj[k] instanceof Array){
+      for (var i=0; i<obj[k].length; i++) {
+        obj[k][i] = updateVarsRecursive(obj[k][i], findString, replaceString);
+      }
+    } else {
+      var value = obj[k];
+      if (typeof value === "string" && value.indexOf(findString) >= 0) {
+        obj[k] = value.replace(findString, replaceString);
+      }
+    }
+  }
+}
+
 function updateColorsFromConfig(params, colors){
   colors = colors || CONFIG.colors;
   updateColorsRecursive(params, colors);
+}
+
+function updateVarsInConfig(params, findString, replaceString){
+  updateVarsRecursive(params, findString, replaceString);
 }
