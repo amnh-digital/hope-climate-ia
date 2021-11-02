@@ -38,7 +38,8 @@ parser.add_argument('-end', dest="DATE_END", default="2016-12-31", help="End dat
 parser.add_argument('-hour', dest="HOUR", default="00", help="Can be: 00, 06, 12, 18")
 parser.add_argument('-level', dest="LEVEL", type=float, default=100000.0, help="bar level")
 parser.add_argument('-out', dest="OUTPUT_DIR", default="../../oversize-assets/atmosphere_100000", help="Output dir")
-parser.add_argument('-url', dest="URL", default="https://nomads.ncdc.noaa.gov/data/gfsanl/", help="URL")
+#parser.add_argument('-url', dest="URL", default="https://nomads.ncdc.noaa.gov/data/gfsanl/", help="URL")
+parser.add_argument('-url', dest="URL", default="https://www.ncei.noaa.gov/data/global-forecast-system/access/historical/analysis/", help="URL")
 args = parser.parse_args()
 
 startDate = datetime.strptime(args.DATE_START, "%Y-%m-%d")
@@ -69,18 +70,18 @@ while date < endDate:
         # Download if file does not exist
         if not os.path.isfile(filename):
             url = URL + date.strftime("%Y%m") + "/" + dateString + "/" + basefilename + ".grb2"
-            print "Downloading %s" % url
+            print("Downloading %s" % url)
             command = ['curl', '-o', filename, url]
             finished = subprocess.check_call(command)
         else:
-            print "Already downloaded %s" % filename
+            print("Already downloaded %s" % filename)
 
         # if the filesize is small, it probably didn't download properly
         filesize = os.path.getsize(filename)
         if filesize > 1000000:
 
             if not os.path.isfile(jsonFilename):
-                print "Converting grib to json"
+                print("Converting grib to json")
                 # command = ['./grib2json/bin/grib2json', '-d', '-n', '-o', jsonFilename, filename]
                 command = ['grib2json', '-d', '-n', '-o', jsonFilename, filename]
                 finished = subprocess.check_call(command)
@@ -89,7 +90,7 @@ while date < endDate:
                 command = ['python', 'gribjsonToCsv.py', '-in', jsonFilename, '-out', csvFilename, '-level', str(LEVEL)]
                 finished = subprocess.check_call(command)
 
-            print "Compressing CSV file..."
+            print("Compressing CSV file...")
             with open(csvFilename, 'rb') as f_in, gzip.open(gzFilename, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
 
@@ -99,7 +100,7 @@ while date < endDate:
             os.remove(csvFilename)
 
         else:
-            print "Error in downloading %s" % filename
+            print("Error in downloading %s" % filename)
 
     # increment one day at a time
     date += timedelta(days=1)

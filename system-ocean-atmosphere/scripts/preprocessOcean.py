@@ -44,12 +44,16 @@ params = {}
 # Read temperature data
 filenames = [INPUT_TEMPERATURE_FILE % str(month+1).zfill(2) for month in range(12)]
 
-print "Reading %s files asyncronously..." % len(filenames)
+c = len(filenames)
+print(f"Reading {c} files asyncronously...")
 pool = ThreadPool()
 tData = pool.map(readSSTCSVData, filenames)
 pool.close()
 pool.join()
-print "%s Temperature measurements found with %s degrees (lng) by %s degrees (lat)" % (len(tData), len(tData[0][0]), len(tData[0]))
+cc = len(tData)
+lng = len(tData[0][0])
+lat = len(tData[0])        
+print(f"{cc} Temperature measurements found with {lng} degrees (lng) by {lat} degrees (lat)")
 
 # read the data
 ds = Dataset(INPUT_FILE, 'r')
@@ -63,7 +67,7 @@ timeCount = len(uData) # this should be 72, i.e. ~5 day interval
 lats = len(uData[0][depth]) # this should be 481
 lons = len(uData[0][depth][0]) # this should be 1201;
 total = lats * lons
-print "%s UV measurements found with %s degrees (lng) by %s degrees (lat)" % (timeCount, lons, lats)
+print(f"{timeCount} UV measurements found with {lons} degrees (lng) by {lats} degrees (lat)")
 
 def combineData(tData, uData, vData, uvLonRange, uvLatRange, mu):
     depth = 0
@@ -93,10 +97,10 @@ def combineData(tData, uData, vData, uvLonRange, uvLatRange, mu):
     vData = vData.reshape(-1)
 
     w = int(uvw * (360.0/(uvlon1-uvlon0)))
-    h = w / 2
+    h = int(w / 2)
     dim = 3
     shape = (h, w, dim)
-    result = np.empty(h * w * dim, dtype=np.float32)
+    result = np.empty(int(h) * w * dim, dtype=np.float32)
 
     # the kernel function
     src = """
@@ -225,7 +229,7 @@ def combineData(tData, uData, vData, uvLonRange, uvLatRange, mu):
     if GPUs and len(GPUs) > 0:
         ctx = cl.Context(devices=GPUs)
     else:
-        print "Warning: using CPU"
+        print ("Warning: using CPU")
         ctx = cl.Context(CPU)
 
     # Create queue for each kernel execution
@@ -254,15 +258,15 @@ def combineData(tData, uData, vData, uvLonRange, uvLatRange, mu):
 def processData(p):
     gzFilename = p["fileOut"] + ".gz"
     if os.path.isfile(gzFilename):
-        print "%s: skipped." % p["fileOut"]
+        print(f"{p['fileOut']}: skipped.")
         return
 
     # Determine the two vector fields to interpolate from
-    print "%s: processing data..." % p["fileOut"]
+    print("%s: processing data..." % p["fileOut"])
     data = combineData(p["tData"], p["uData"], p["vData"], tuple(p["lonRange"]), tuple(p["latRange"]), p["progress"])
 
     # Write to csv
-    print "%s: writing data to csv..." % p["fileOut"]
+    print("%s: writing data to csv..." % p["fileOut"])
     rows = [None for d in range(len(data))]
     for i, row in enumerate(data):
         cols = [None for d in range(len(row))]
@@ -271,20 +275,20 @@ def processData(p):
             cols[j] = value
         rows[i] = cols
 
-    with open(p["fileOut"], 'wb') as f:
+    with open(p["fileOut"], 'w') as f:
         w = csv.writer(f, delimiter=',')
         w.writerows(rows)
 
-    print "%s: compressing csv file..." % p["fileOut"]
+    print("%s: compressing csv file..." % p["fileOut"])
     with open(p["fileOut"], 'rb') as f_in, gzip.open(gzFilename, 'wb') as f_out:
         shutil.copyfileobj(f_in, f_out)
     os.remove(p["fileOut"])
 
-    print "%s: Done." % p["fileOut"]
+    print("%s: Done." % p["fileOut"])
 
 params = []
 delta = (dateEnd-dateStart).days
-print "Delta = %s days" % delta
+print("Delta = %s days" % delta)
 d = dateStart
 i = 0
 while d <= dateEnd:
@@ -300,12 +304,12 @@ while d <= dateEnd:
     d += datetime.timedelta(days=1)
     i += 1
 
-print "Processing %s files asyncronously..." % delta
+print("Processing %s files asyncronously..." % delta)
 pool = ThreadPool()
 data = pool.map(processData, params)
 pool.close()
 pool.join()
-print "Done."
+print("Done.")
 
 # print "Processing %s files syncronously..." % delta
 # for p in params:

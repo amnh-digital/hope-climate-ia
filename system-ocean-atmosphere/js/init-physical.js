@@ -26,7 +26,6 @@ $(function() {
         config.globe.videos[i].url = "https://s3.amazonaws.com/brianfoo-amnh/" + v.url;
       });
     }
-
     console.log('Config loaded.');
     var app = new AppOceanAtmosphere(config, content, data);
   });
