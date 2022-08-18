@@ -725,6 +725,9 @@ var Graphics = (function() {
           }
         }
         var showLabel = (value % showEvery === 0) || (count >= 130 && value==domain[1]);
+        if (showLabel && (showEvery == 20) && value == 2021) {
+            showLabel = false;  //don't show 2021 on top of 2020
+        }
         var showTick = (value % tickEvery === 0);
         if (showLabel && labelIndex < labelCount) {
           axes.lineStyle(3, axesTickColor, 1);

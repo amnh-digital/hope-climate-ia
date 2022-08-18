@@ -39,7 +39,8 @@ parser.add_argument('-hour', dest="HOUR", default="00", help="Can be: 00, 06, 12
 parser.add_argument('-level', dest="LEVEL", type=float, default=100000.0, help="bar level")
 parser.add_argument('-out', dest="OUTPUT_DIR", default="../../oversize-assets/atmosphere_100000", help="Output dir")
 #parser.add_argument('-url', dest="URL", default="https://nomads.ncdc.noaa.gov/data/gfsanl/", help="URL")
-parser.add_argument('-url', dest="URL", default="https://www.ncei.noaa.gov/data/global-forecast-system/access/historical/analysis/", help="URL")
+#parser.add_argument('-url', dest="URL", default="https://www.ncei.noaa.gov/data/global-forecast-system/access/historical/analysis/", help="URL")
+parser.add_argument('-url', dest="URL", default="https://www.ncei.noaa.gov/data/global-forecast-system/access/grid-004-0.5-degree/analysis/", help="URL")
 args = parser.parse_args()
 
 startDate = datetime.strptime(args.DATE_START, "%Y-%m-%d")
@@ -54,7 +55,7 @@ if not os.path.exists(args.OUTPUT_DIR):
 date = startDate
 while date < endDate:
     dateString = date.strftime("%Y%m%d")
-    basefilename = "gfsanl_4_%s_%s00_000" % (dateString, HOUR)
+    basefilename = "gfs_4_%s_%s00_000" % (dateString, HOUR)
     filename = args.OUTPUT_DIR + '/' + basefilename + ".grb2"
     leveldir = args.OUTPUT_DIR + "/" + str(int(LEVEL))
     if not os.path.exists(leveldir):
