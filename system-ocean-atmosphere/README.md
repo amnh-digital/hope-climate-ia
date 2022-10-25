@@ -4,8 +4,8 @@
 
 ### Ocean data
 
-- [OSCAR third degree resolution ocean surface currents](https://podaac.jpl.nasa.gov/dataset/OSCAR_L4_OC_third-deg) (Compressed NetCDF files)
-- Source: [NASA JPL PODACC](https://podaac.jpl.nasa.gov/dataset/OSCAR_L4_OC_third-deg)
+- [OSCAR third degree resolution ocean surface currents](https://podaac-tools.jpl.nasa.gov/drive/files/allData/oscar/preview/L4/oscar_third_deg) (Compressed NetCDF files)
+- Source: [NASA JPL PODACC](https://podaac-tools.jpl.nasa.gov/drive/files/allData/oscar/preview/L4/oscar_third_deg)
 - Temporal coverage: 1992 - present
 - Temporal resolution: 5 days (120 hours)
 - Geographic coverage: 66° to -66° lat
@@ -13,7 +13,7 @@
 
 This is combined with sea surface temperature:
 
-- [Sea surface temperature (AQUA/MODIS)](https://neo.sci.gsfc.nasa.gov/view.php?datasetId=MYD28M) (CSV files)
+- [Sea surface temperature (AQUA/MODIS)](https://neo.gsfc.nasa.gov/archive/csv/MYD28M/) (CSV files)
 - Source: [NASA Earth Observations, GSFC](https://neo.sci.gsfc.nasa.gov/)
 - Temporal coverage: 2002 - present
 - Temporal resolution: 8 days or 1 month
