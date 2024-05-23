@@ -18,10 +18,10 @@
       "labelAfter": "June 7, 2023",
       "caption": "Worsening wildfires",
       "longDescription": "These maps show North American wildfires detected by satellite on a single day, 20 years apart. Each red dot represents a fire.<br><br><i>Climate connection</i>: Increasing heat and drought are worsening wildfires. Globally, the annual area burned by forest fires has doubled in the past two decades. And 8 of the 10 largest wildfires on record have occurred in the past decade.",
-      "lon": -100.7774347,
-      "lat": 40.1434110,
+      "lon": -101.24089,
+      "lat": 39.8785537,
       "credit": "NASA FIRMS",
-      "creditUrl": "https://firms.modaps.eosdis.nasa.gov/map/#d:2003-06-07;l:fires_all,countries,earth;@-74.0,2.8,3.6z"
+      "creditUrl": "https://firms.modaps.eosdis.nasa.gov/map/#d:today;l:fires_all,countries,earth;@-74.0,24.4,3.6z"      
     },{
       "before": "img/2-before-Pakistan-2022-08-04.jpg",
       "after": "img/2-after-Pakistan-2022-08-28.jpg",
@@ -29,10 +29,10 @@
       "labelAfter": "August 28, 2022",
       "caption": "Flooding in Pakistan",
       "longDescription": "In 2022, Pakistan experienced the worst flooding in its history, with some regions receiving in August more than 7-times the average monsoon rains. These satellite images use enhanced color to highlight differences.<br><br><i>Climate connection</i>: As Earth warms, more ocean water evaporates, leading to heavier precipitation in some regions. Normal monsoons can turn into extreme weather events.",
-      "lon": 70.8311795,
-      "lat": 30.0441647,
+      "lon": 68.20156,
+      "lat": 27.55760,
       "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131#804-severe-monsoon-rains-cause-catastrophic-flooding-in-pakistan"
+      "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=804#804-severe-monsoon-rains-cause-catastrophic-flooding-in-pakistan"      
     },{
       "before": "img/3-before-chadflooding_oli_2021-9.jpg",
       "after": "img/3-after-chadflooding_oli_2022-10.jpg",
@@ -40,10 +40,10 @@
       "labelAfter": "October 2022",
       "caption": "Flooding in Chad",
       "longDescription": "In 2022, Chad experienced its heaviest rains in over three decades. Water overflowed the Logone River and swamped N’Djamena, the country’s capital.<br><br><i>Climate connection</i>: As Earth warms, precipitation patterns are destabilized. Generally, wet areas are becoming wetter and dry areas drier.",
-      "lon": 15.0196953,
-      "lat": 12.1164008,
+      "lon": 15.0497,
+      "lat": 12.1232,
       "credit": "NASA",
-      "creditUrl": "https://earthobservatory.nasa.gov/images/150521/flooding-in-ndjamena"
+      "creditUrl": "https://earthobservatory.nasa.gov/images/150521/flooding-in-ndjamena"      
     },{
       "before": "img/4-before-socalsnow_oli2_2023041_lrg.jpg",
       "after": "img/4-after-socalsnow_oli2_2023057_lrg.jpg",
@@ -51,10 +51,10 @@
       "labelAfter": "February 26, 2023",
       "caption": "Unusual snowstorm in California",
       "longDescription": "A powerful storm blanketed parts of southern California that rarely get snow, and dumped up to 8 feet (2 meters) in the mountains north of Los Angeles.<br><br><i>Climate connection</i>: Sea levels are rising globally, and in many places, land is also sinking. Coastal communities around the world are already confronting the effects of climate change.",
-      "lon": -118.9063371,
-      "lat": 34.8118705,
+      "lon": -118.0633,
+      "lat": 34.227,
       "credit": "NASA",
-      "creditUrl": "https://earthobservatory.nasa.gov/images/151034/snow-in-southern-california"
+      "creditUrl": "https://earthobservatory.nasa.gov/images/151034/snow-in-southern-california"      
     },{
       "before": "img/5-before-britain-coastal-erosion.jpg",
       "after": "img/5-after-britain-coastal-erosion.jpg",
@@ -62,8 +62,8 @@
       "labelAfter": "2022",
       "caption": "Coastal erosion in Britain",
       "longDescription": "In the past 20 years, erosion on the east coast of Britain has accelerated. Several houses in this town recently collapsed, as coastal cliffs crumbled.<br><br><i>Climate connection</i>: Sea levels are rising globally, and in many places, land is also sinking. Coastal communities around the world are already confronting the effects of climate change.",
-      "lon": 52.3465,
-      "lat": 1.6835,
+      "lon": 1.6835,
+      "lat": 52.3465,
       "credit": "Mike Page",
       "creditUrl": "www.mike-page.co.uk"
     },{
@@ -84,10 +84,10 @@
       "labelAfter": "August 2022",
       "caption": "Deforestation in Bolivia",
       "longDescription": "Since 2001, Bolivia has lost over 7 million hectares of tree coverage, more than 10% of its total. Much has been cleared for cattle farming—and soya production to feed the cattle.<br><br><i>Climate connection</i>: Global demand for beef is leading to loss of tropical forests and contributing to global warming.",
-      "lon": -62.617049,
-      "lat": -16.905206,
+      "lon": -64.612956,
+      "lat": -13.2667,
       "credit": "NASA",
-      "creditUrl": "https://research.wri.org/gfr/top-ten-lists#the-top-10-countries-for-total-tree-cover-loss-from-2001-to-2021"
+      "creditUrl": "https://earthobservatory.nasa.gov/images/150257/patterns-of-forest-change-in-bolivia"    
     },{
       "before": "img/8-before-lakeabert_2002.jpg",
       "after": "img/8-after-lakeabert_2022.jpg",
@@ -95,10 +95,10 @@
       "labelAfter": "October 2022",
       "caption": "Oregon lake dries up",
       "longDescription": "Oregon’s only salt lake is drying up, killing brine shrimp and depriving migratory birds of important waystation for food and rest. The main causes are a prolonged drought and the damming of a river that feeds the lake.<br><br><i>Climate connection</i>: As heat and drought cause lakes and rivers dry up, there will be more competition for water.",
-      "lon": -120.232618,
-      "lat": 42.627921, 
+      "lon": -120.238,
+      "lat": 42.628,
       "credit": "NASA",
-      "creditUrl": "https://earthobservatory.nasa.gov/images/150891/shrinking-lake-abert"
+      "creditUrl": "https://earthobservatory.nasa.gov/images/150891/shrinking-lake-abert"      
     },{
       "before": "img/9-before-Lake-in-China.jpg",
       "after": "img/9-after-Lake-in-China.jpg",
@@ -106,10 +106,10 @@
       "labelAfter": "August 2022",
       "caption": "Heatwave dries up lake in China",
       "longDescription": "An extended heatwave and drought brought Poyang Lake, China's largest freshwater lake, to its lowest water levels in decades. These satellite images use enhanced color to highlight differences.<br><br><i>Climate connection</i>: As the atmosphere warms, more moisture evaporates from bodies of water and the soil, causing prolonged droughts.",
-      "lon": 116.311026,
-      "lat": 29.072950,
+      "lon": 116.325,
+      "lat": 29.057,
       "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=807#807-parched-poyang-lake-china"
+      "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=807#807-parched-poyang-lake-china"      
     },{
       "before": "img/10-before-ice-1979.jpg",
       "after": "img/10-after-ice-2022.jpg",
@@ -117,21 +117,21 @@
       "labelAfter": "September 2022",
       "caption": "Shrinking ice cap",
       "longDescription": "Arctic sea ice grows and ebbs with the seasons. But its minimum extent, reached every September, has been shrinking fast—by over 12% per decade. By the 2030s, summer in the Arctic could be ice-free.<br><br><i>Climate connection</i>: As ice melts, less sunlight is reflected back into space, speeding up global warming in a feedback loop",
-      "lon": -67.357624,
-      "lat": 79.770105,
-      "credit": "NASA",
-      "creditUrl": "https://science.nasa.gov/climate-change/"
+      "lon": 92.8,
+      "lat": 84.4,
+      "credit": "NASA SVS",
+      "creditUrl": "https://climate.nasa.gov/vital-signs/arctic-sea-ice/?intent=111"      
     },{
       "before": "img/11-before-glacier-retreat-1984.jpg",
       "after": "img/11-after-glacier-retreat-2019.jpg",
       "labelBefore": "September 1984",
       "labelAfter": "September 2019",
       "caption": "Glacier retreat in Alaska",
-      "longDescription": "Satellite images taken 35 years apart show thinning and retreating of ice at Glacier National Park in Alaska. At current rates, scientists predict active glaciers in the park will disappear by 2030.<br><br><i>Climate connection</i>: Melting ice is a main contributor of sea level rise over the past several decades. The other main contributor is thermal expansion—ocean water expands as it warms.",
-      "lon": -137.8843037,
-      "lat": 59.0429358,
+      "longDescription": "Satellite images taken 35 years apart show thinning and retreating of ice at Glacier Bay National Park in Alaska. At current rates, scientists predict active glaciers in the park will disappear by 2030.<br><br><i>Climate connection</i>: Melting ice is a main contributor of sea level rise over the past several decades. The other main contributor is thermal expansion—ocean water expands as it warms.",
+      "lon": -136.68,
+      "lat": 58.698,
       "credit": "NASA",
-      "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131#777-grand-plateau-glacier-retreats"
+      "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=777#777-grand-plateau-glacier-retreats"      
     },{
       "before": "img/12-before-iceshelf-collapse.jpg",
       "after": "img/12-after-iceshelf-collapse.jpg",
@@ -139,21 +139,21 @@
       "labelAfter": "March 2022",
       "caption": "Ice shelf collapse in East Antarctica",
       "longDescription": "Two pieces of an ice sheet (Nascent C-37 and Nascent C-38 in the image), totalling 560 sq km, disintegrated in the span of a month—unusually rapid for iceberg calving in East Antarctica.<br><br><i>Climate connection</i>: When an ice shelf disintegrates, it adds water to the ocean, contributing to sea-level rise. It also has a destabilizing effect on the glaciers behind it.",
-      "lon": 105.3480520,
-      "lat": -66.2899037,
+      "lon": 103.25,
+      "lat": -65.966,
       "credit": "NASA",
-      "creditUrl": "https://earthobservatory.nasa.gov/images/149640/ice-shelf-collapse-in-east-antarctica"
+      "creditUrl": "https://earthobservatory.nasa.gov/images/149640/ice-shelf-collapse-in-east-antarctica"      
     },{
-      "before": "img/virgin_islands_before.jpg",
-      "after": "img/virgin_islands_after.jpg",
+      "before": "img/13-before-warming-ocean-200007.jpg",
+      "after": "img/13-after-warming-ocean-202307.jpg",
       "labelBefore": "July 2000",
       "labelAfter": "July 2023",
       "caption": "Warming ocean",
-      "longDescription": "July 2023 was the warmest month on record. Ocean waters off the coast of Florida hit 101°F (38°C), a global record for sea surface temperature.<br><br><font color=\"red\">Dark red</font> is 9°F (5°C) warmer than the 1985-93 average<br><font color=\"blue\">Dark blue</font> is 9°F (5°C) cooler than the 1985-93 average<br><br><i>Climate connection</i>: Warmer water adds power to hurricanes and threatens coral reefs and the animals who live there.",
-      "lon": -65.2991647,
-      "lat": 15.065972,
+      "longDescription": "July 2023 was the warmest month on record. Ocean waters off the coast of Florida hit 101°F (38°C), a global record for sea surface temperature.<br><br><font color=\"red\">Dark red</font> is 9°F (5°C) warmer than average<br><font color=\"blue\">Dark blue</font> is 9°F (5°C) cooler than average<br><br><i>Climate connection</i>: Warmer water adds power to hurricanes and threatens coral reefs and the animals who live there.",
+      "lon": -81.5,
+      "lat": 27.8,
       "credit": "NOAA",
-      "creditUrl": "https://www.nnvl.noaa.gov/view/#SURF"
+      "creditUrl": "https://www.nnvl.noaa.gov/view/globaldata.html#SSTA"      
     },{
       "before": "img/14_samoa_coral_2014.jpg",
       "after": "img/14_samoa_coral_2015.jpg",
