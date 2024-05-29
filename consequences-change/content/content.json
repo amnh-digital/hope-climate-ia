@@ -65,7 +65,7 @@
       "lon": 1.6835,
       "lat": 52.3465,
       "credit": "Mike Page",
-      "creditUrl": "www.mike-page.co.uk"
+      "creditUrl": "https://www.mike-page.co.uk"
     },{
       "before": "img/6-before-Jakarta.jpg",
       "after": "img/6-after-Jakarta.jpg",
@@ -127,7 +127,7 @@
       "labelBefore": "September 1984",
       "labelAfter": "September 2019",
       "caption": "Glacier retreat in Alaska",
-      "longDescription": "Satellite images taken 35 years apart show thinning and retreating of ice at Glacier Bay National Park in Alaska. At current rates, scientists predict active glaciers in the park will disappear by 2030.<br><br><i>Climate connection</i>: Melting ice is a main contributor of sea level rise over the past several decades. The other main contributor is thermal expansion—ocean water expands as it warms.",
+      "longDescription": "Satellite images taken 35 years apart show thinning and retreating of ice at Glacier National Park in Alaska. At current rates, scientists predict active glaciers in the park will disappear by 2030.<br><br><i>Climate connection</i>: Melting ice is a main contributor of sea level rise over the past several decades. The other main contributor is thermal expansion—ocean water expands as it warms.",
       "lon": -136.68,
       "lat": 58.698,
       "credit": "NASA",
