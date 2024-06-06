@@ -34,8 +34,8 @@
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=804#804-severe-monsoon-rains-cause-catastrophic-flooding-in-pakistan"      
     },{
-      "before": "img/3-before-chadflooding_oli_2021-9.jpg",
-      "after": "img/3-after-chadflooding_oli_2022-10.jpg",
+      "before": "img/3-before-chadflooding__annotation.jpg",
+      "after": "img/3-after-chadflooding_annotation.jpg",
       "labelBefore": "September 2021",
       "labelAfter": "October 2022",
       "caption": "Flooding in Chad",
@@ -45,8 +45,8 @@
       "credit": "NASA",
       "creditUrl": "https://earthobservatory.nasa.gov/images/150521/flooding-in-ndjamena"      
     },{
-      "before": "img/4-before-socalsnow_oli2_2023041_lrg.jpg",
-      "after": "img/4-after-socalsnow_oli2_2023057_lrg.jpg",
+      "before": "img/4-before-socalsnow_annotation.jpg",
+      "after": "img/4-after-socalsnow_annotation.jpg",
       "labelBefore": "February 10, 2023",
       "labelAfter": "February 26, 2023",
       "caption": "Unusual snowstorm in California",
@@ -59,12 +59,12 @@
       "before": "img/5-before-britain-coastal-erosion.jpg",
       "after": "img/5-after-britain-coastal-erosion.jpg",
       "labelBefore": "1998",
-      "labelAfter": "2022",
+      "labelAfter": "2018",
       "caption": "Coastal erosion in Britain",
       "longDescription": "In the past 20 years, erosion on the east coast of Britain has accelerated. Several houses in this town recently collapsed, as coastal cliffs crumbled.<br><br><i>Climate connection</i>: Sea levels are rising globally, and in many places, land is also sinking. Coastal communities around the world are already confronting the effects of climate change.",
       "lon": 1.6835,
       "lat": 52.3465,
-      "credit": "Mike Page",
+      "credit": "Mike Page Aerial Photography",
       "creditUrl": "https://www.mike-page.co.uk"
     },{
       "before": "img/6-before-Jakarta.jpg",
@@ -78,8 +78,8 @@
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=767#767-jakarta-paving-worsens-flooding"      
     },{
-      "before": "img/7-before-boliviaradial_1986.jpg",
-      "after": "img/7-after-boliviaradial_2022.jpg",
+      "before": "img/7-before-boliviaradial_annotation.jpg",
+      "after": "img/7-after-boliviaradial_annotation.jpg",
       "labelBefore": "July 1986",
       "labelAfter": "August 2022",
       "caption": "Deforestation in Bolivia",
@@ -89,8 +89,8 @@
       "credit": "NASA",
       "creditUrl": "https://earthobservatory.nasa.gov/images/150257/patterns-of-forest-change-in-bolivia"    
     },{
-      "before": "img/8-before-lakeabert_2002.jpg",
-      "after": "img/8-after-lakeabert_2022.jpg",
+      "before": "img/8-before-lakeabert_annotation.jpg",
+      "after": "img/8-after-lakeabert_annotation.jpg",
       "labelBefore": "October 2002",
       "labelAfter": "October 2022",
       "caption": "Oregon lake dries up",
@@ -122,19 +122,19 @@
       "credit": "NASA SVS",
       "creditUrl": "https://climate.nasa.gov/vital-signs/arctic-sea-ice/?intent=111"      
     },{
-      "before": "img/11-before-glacier-retreat-1984.jpg",
-      "after": "img/11-after-glacier-retreat-2019.jpg",
+      "before": "img/11-before-glacier-retreat_annotation.jpg",
+      "after": "img/11-after-glacier-retreat_annotation.jpg",
       "labelBefore": "September 1984",
       "labelAfter": "September 2019",
       "caption": "Glacier retreat in Alaska",
-      "longDescription": "Satellite images taken 35 years apart show thinning and retreating of ice at Glacier National Park in Alaska. At current rates, scientists predict active glaciers in the park will disappear by 2030.<br><br><i>Climate connection</i>: Melting ice is a main contributor of sea level rise over the past several decades. The other main contributor is thermal expansion—ocean water expands as it warms.",
+      "longDescription": "Satellite images taken 35 years apart show thinning and retreating of ice at Glacier Bay National Park in Alaska. At current rates, scientists predict active glaciers in the park will disappear by 2030.<br><br><i>Climate connection</i>: Melting ice is a main contributor of sea level rise over the past several decades. The other main contributor is thermal expansion—ocean water expands as it warms.",
       "lon": -136.68,
       "lat": 58.698,
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=777#777-grand-plateau-glacier-retreats"      
     },{
-      "before": "img/12-before-iceshelf-collapse.jpg",
-      "after": "img/12-after-iceshelf-collapse.jpg",
+      "before": "img/12-before-iceshelf-collapse_annotation.jpg",
+      "after": "img/12-after-iceshelf-collapse_annotation.jpg",
       "labelBefore": "January 2022",
       "labelAfter": "March 2022",
       "caption": "Ice shelf collapse in East Antarctica",
