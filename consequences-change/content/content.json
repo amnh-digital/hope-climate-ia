@@ -67,8 +67,8 @@
       "credit": "Mike Page Aerial Photography",
       "creditUrl": "https://www.mike-page.co.uk"
     },{
-      "before": "img/6-before-Jakarta.jpg",
-      "after": "img/6-after-Jakarta.jpg",
+      "before": "img/6-before-Jakarta_annotated.jpg",
+      "after": "img/6-after-Jakarta_annotated.jpg",
       "labelBefore": "1990",
       "labelAfter": "2019",
       "caption": "Pavement accelerates sinking of Jakarta",
@@ -133,8 +133,8 @@
       "credit": "NASA",
       "creditUrl": "https://climate.nasa.gov/images-of-change/?intent=131&id=777#777-grand-plateau-glacier-retreats"      
     },{
-      "before": "img/12-before-iceshelf-collapse_annotation.jpg",
-      "after": "img/12-after-iceshelf-collapse_annotation.jpg",
+      "before": "img/12-before-iceshelf-collapse_annotated.jpg",
+      "after": "img/12-after-iceshelf-collapse_annotated.jpg",
       "labelBefore": "January 2022",
       "labelAfter": "March 2022",
       "caption": "Ice shelf collapse in East Antarctica",
