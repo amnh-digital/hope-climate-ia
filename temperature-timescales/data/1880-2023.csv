@@ -2,7 +2,7 @@ Global Land and Ocean Average Temperature Anomalies
 Units: Degrees Celsius
 Base Period: 1901-2000
 Missing: -999
-Year,Anomaly
+Year,Value
 1880,-0.18
 1881,-0.09
 1882,-0.16

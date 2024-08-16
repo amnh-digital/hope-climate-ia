@@ -2,7 +2,7 @@ Global Land and Ocean December Average Temperature Anomalies
 Units: Degrees Celsius
 Base Period: 1901-2000
 Missing: -999
-Date,Anomaly
+Year,Value
 188001,-0.31
 188002,-0.39
 188003,-0.16
