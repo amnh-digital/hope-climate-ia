@@ -17,91 +17,50 @@
             "years": 100
         },
         {
-            "text": "The world has warmed rapidly over the last century. The pace of warming has also increased\u201418 of the 19 hottest years on record have occurred since 2001.",
+            "text": "The world has warmed rapidly over the last century. The pace of warming has also increased—the past decade is the warmest on record.",
             "years": 200
         }
     ],
     "annotations": [
         {
-            "years": [
-                1911,
-                1944
-            ],
-            "text": "Warming over the first part of the century, from both human CO\u2082 emissions and natural factors"
-        },
-        {
-            "years": [
-                1945,
-                1975
-            ],
-            "text": "Temperature briefly levels off mid-century, possibly due to cooling from aerosol pollution."
-        },
-        {
-            "year": 1976,
-            "text": "Warming starts to accelerate in the late 1970s, driven by human CO\u2082 emissions."
-        },
-        {
-            "year": 1979,
-            "text": "Rate of warming increases to 0.3\u00b0C (0.5\u00b0F) per decade."
-        },
-        {
-            "year": 1990,
-            "text": "Sea level rise starts to accelerate, eventually doubling the rate of rise since 1901."
-        },
-        {
-            "year": 1998,
-            "text": "Strong El Ni\u00f1o event boosts warming from greenhouse gases, breaking 118 years of heat records."
-        },
-        {
-            "year": 2003,
-            "text": "Historic heat wave in Europe kills about 70,000 people."
-        },
-        {
-            "year": 2005,
-            "text": "Global average temperature breaks the record high set in 1998."
-        },
-        {
-            "year": 2010,
-            "text": "Russian heat wave kills roughly 25% of the country\u2019s crops, contributing to a worldwide jump in grain prices."
-        },
-        {
-            "year": 2011,
-            "text": "High temperatures and the failure of spring rains contribute to severe drought in East Africa."
-        },
-        {
-            "year": 2012,
-            "text": "Lowest summer Arctic sea ice extent in the satellite record.",
-            "image": "img/sea_ice.jpg",
-            "imageW": 400,
-            "imageH": 225
-        },
-        {
-            "year": 2013,
-            "text": "Japan, Korea and eastern China experience one of the hottest summers in the regional record."
-        },
-        {
             "year": 2014,
-            "text": "Rainfall in the Middle East along the Mediterranean is lowest on record, exacerbating persistent drought."
-        },
-        {
-            "year": 2016,
-            "text": "Hottest year on record"
-        },
-        {
-            "year": 2020,
-            "text": "Second hottest year on record"
-        },
-        {
-            "year": 2019,
-            "text": "Third hottest year on record"
+            "text": "10th hottest year on record"
         },
         {
             "year": 2015,
-            "text": "Fourth hottest year on record"
+            "text": "6th hottest year on record"
+        },
+        {
+            "year": 2016,
+            "text": "2nd hottest year on record"
         },
         {
             "year": 2017,
-            "text": "Fifth hottest year on record"
+            "text": "5th hottest year on record"
+        },
+        {
+            "year": 2018,
+            "text": "8th hottest year on record"
+        },
+        {
+            "year": 2019,
+            "text": "4th hottest year on record"
+        },
+        {
+            "year": 2020,
+            "text": "3rd hottest year on record"
+        },
+        {
+            "year": 2021,
+            "text": "8th hottest year on record (tied)"
+        },
+        {
+            "year": 2022,
+            "text": "7th hottest year on record"
+        },
+        {
+            "year": 2023,
+            "text": "hottest year on record"
         }
     ]
 }
