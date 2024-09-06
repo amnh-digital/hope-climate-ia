@@ -2,7 +2,7 @@
   "graphics": {
     "el": "#graphics",
     "minYearsDisplay": 1,
-    "monthYearsDisplay": 3,
+    "monthYearsDisplay": 5,
     "monthTransitionStep": 0.04,
     "targetWidth": 1920,
     "targetHeight": 1080,

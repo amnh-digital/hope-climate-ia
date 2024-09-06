@@ -614,7 +614,7 @@ var Graphics = (function() {
           label.style = baselineTextStyle;
           label.x = 0;
           label.y = y;
-          label.anchor.set(0.0, 0.5);
+          label.anchor.set(-0.25, 0.5);
           labelIndex += 1;
         }
 
