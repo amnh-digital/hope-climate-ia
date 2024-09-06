@@ -825,7 +825,7 @@ var Graphics = (function() {
     var marginX = cw * 0.02;
     var marginY = cw * 0.008;
 
-    var rectSmall = 0.23;
+    var rectSmall = 0.3;
     var rectBig = 0.33;
     var rectW = cw * rectSmall;
     if (showAnnotation) rectW = cw * rectBig;
@@ -854,7 +854,6 @@ var Graphics = (function() {
     var rectX = x + markerW/2;
     if (time > 0.5) {
       rectX = x - rectW - markerW/2;
-      marginX *= 1.5;
     }
 
     // label bg
@@ -912,21 +911,20 @@ var Graphics = (function() {
 
     // set x position
     yLabel.x = labelX;
+    aLabel.x = labelX+ yLabel.width + marginX;
     cLabel.x = labelX;
-    fLabel.x = labelX + yLabel.width + marginX * 1.3;
-    aLabel.x = labelX;
-    lLabel.x = labelX;
+    fLabel.x = labelX + cLabel.width + marginX;
+    lLabel.x = labelX + cLabel.width + fLabel.width + marginX * 2;
 
     // set y position
     yLabel.y = cy + marginY * 1.5;
+    aLabel.y = yLabel.y * 1.25;
     cLabel.y = yLabel.y + yLabel.height + marginY * 2;
     fLabel.y = cLabel.y;
-    lLabel.y = cLabel.y + cLabel.height + marginY;
-    aLabel.y = lLabel.y + lLabel.height + marginY * 2;
+    lLabel.y = cLabel.y  * 1.04;
 
     // draw rectangles
-    var rectH = marginY * 5 + yLabel.height + cLabel.height + lLabel.height;
-    if (showAnnotation) rectH += marginY * 4 + aLabel.height;
+    var rectH = marginY * 5 + yLabel.height + cLabel.height;
     var imageW, imageH;
     var images = this.images;
     if (showAnnotationImage) {
