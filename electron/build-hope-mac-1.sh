@@ -7,6 +7,7 @@ rsync -avz electron/main.js -avz electron/hope-mac-1/main.js
 rsync -avz electron/package.json -avz electron/hope-mac-1/package.json
 cd electron/hope-mac-1
 sed -i .bak 's/APP_NAME/hope-mac-1/g' package.json # replace app name in package
+sed -i .bak 's/APP_VERSION/3.2.0/g' package.json # replace app version in package
 
 # install dependencies
 sudo npm install --unsafe-perm=true --allow-root

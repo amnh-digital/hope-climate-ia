@@ -1,6 +1,7 @@
 {
   "name": "APP_NAME",
   "productName": "APP_NAME",
+  "version": "APP_VERSION",
   "main": "main.js",
   "dependencies": {
     "express": "^4.17.1"
