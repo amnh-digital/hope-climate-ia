@@ -5,7 +5,6 @@ const { app, BrowserWindow, globalShortcut } = electron;
 const express = require('express');
 const config = require('./config.json');
 const browserWindowSettings = config.windows || [{ fullscreen: true }];
-const robot = require("robotjs");
 const fs = require('fs');
 const path = require('path');
 
@@ -91,7 +90,7 @@ function createWindow (browserWindowSetting, index) {
     mainWindow.on('blur', function(e){
       if (isDebug) {
         // mainWindow.webContents.send('debug', 'event: blur');
-        robot.keyTap("b");
+        // robot.keyTap("b");
       }
       if (isPageLoaded) {
         setTimeout(function(){
@@ -104,7 +103,7 @@ function createWindow (browserWindowSetting, index) {
     mainWindow.on('focus', function(e){
       if (isDebug) {
         // mainWindow.webContents.send('debug', 'event: focus');
-        robot.keyTap("f");
+        // robot.keyTap("f");
       }
       if (isPageLoaded) {
         setTimeout(function(){
@@ -186,10 +185,10 @@ function focusWindow(contents){
   var y = 100;
 
   setTimeout(function(){
-    robot.moveMouse(x, y);
+    // robot.moveMouse(x, y);
 
     setTimeout(function(){
-      robot.mouseClick();
+      // robot.mouseClick();
     }, clickDelay);
   }, delay);
 };
