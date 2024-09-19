@@ -1,6 +1,5 @@
 build/
 *.bak
-electron-packager/
 package-lock.json
 
 oversize-assets/*
@@ -20,7 +19,8 @@ node_modules/
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

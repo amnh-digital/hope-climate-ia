@@ -36,15 +36,14 @@ In order to update the apps, you will need:
 3. [Node.js](https://nodejs.org/en/) installed.
     - This app was developed using Node.JS version 10; to avoid conflicts when building, install this version:
       ```
-      brew install node@10
+      brew install node@20
       ```
       and if necessary, add this to your bash profile, e.g.:
       ```
       echo 'export PATH="/usr/local/Cellar/node@10/10.24.1_1/bin:$PATH"' >> ~/.bash_profile
       ```
-4. [Electron packager](https://github.com/electron/electron-packager). If you installed Node, you can run: `npm install electron-packager -g`. [Electron](https://www.electronjs.org/) is used to wrap the web apps into executable desktop apps.
-5. [Python 3](https://www.python.org/) installed. (This is only required if you are processing new data for the apps)
-    - And if you don't already have it installed, NumPY: `pip install numpy`
+4. [Python 3](https://www.python.org/) installed. (This is only required if you are processing new data for the apps)
+    - And if you don't already have it installed, NumPY: `pip3 install numpy`
 
 ### 3.b. The codebase
 

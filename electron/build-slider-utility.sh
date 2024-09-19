@@ -10,9 +10,8 @@ sed -i .bak 's/APP_NAME/slider-utility/g' package.json # replace app name in pac
 
 # install dependencies
 npm install
-npm rebuild --runtime=electron --target=3.1.8 --disturl=https://atom.io/download/atom-shell --abi=48 # for robotjs, we need to indicate the electron version
 cd ../..
-electron-packager electron/slider-utility slider-utility --platform=darwin --arch=x64 --out=build/mac/ --overwrite
+npx electron-packager electron/slider-utility slider-utility --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
 # Copy app files over
 mkdir -p build/mac/slider-utility-darwin-x64/slider-utility.app/Contents/Resources/app/shared

@@ -12,7 +12,7 @@ sed -i .bak 's/APP_VERSION/3.2.0/g' package.json # replace app version in packag
 # install dependencies
 sudo npm install --unsafe-perm=true --allow-root
 cd ../..
-electron-packager electron/hope-mac-4 hope-mac-4 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
+npx electron-packager electron/hope-mac-4 hope-mac-4 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
 # Copy app files over
 rm -f build/mac/hope-mac-4-darwin-x64/hope-mac-4.app/Contents/Resources/app/controls.json
