@@ -16,10 +16,11 @@ If you don't have it already, you'll need to install [NetCDF](https://www.unidat
 
 ```
 brew install netcdf    (if Mac, otherwise download .exe from URL)
-pip3 install netCDF4
+pip3 install netCDF4   (you might need to add --break-system-packages if you get an error)
 ```
 
 Download and unpack the latest "Land-Ocean Temperature Index, ERSSTv5, 1200km smoothing" data from [NASA GISS](https://data.giss.nasa.gov/gistemp/) (you can also just do this manually).
+
 ```
 cd temperature-regions
 wget -O ../oversize-assets/gistemp1200_GHCNv4_ERSSTv5.nc.gz "https://data.giss.nasa.gov/pub/gistemp/gistemp1200_GHCNv4_ERSSTv5.nc.gz"
@@ -49,7 +50,7 @@ The above script uses reference files with the correct baseline generated from t
 **NOTE**: replace YYYY with whatever the latest (fully available) year you are processing:
 
 ```
-python3 scripts/process_data.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end YYYY
+python3 scripts/process_data.py -in ../oversize-assets/gistemp1200_GHCNv4_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end YYYY
 ```
 
 This will process the new data through 2018 and create a new `./data/current.json` file that the app will read.
@@ -65,7 +66,7 @@ pip3 install pyproj
 Lastly, you generate new images by running (again, replace **YYYY** with whatever the latest year you are processing):
 
 ```
-python3 scripts/process_images.py -in ../oversize-assets/gistemp1200_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end YYYY
+python3 scripts/process_images.py -in ../oversize-assets/gistemp1200_GHCNv4_ERSSTv5_annual_1901-2000_baseline.nc -start 1880 -end YYYY
 ```
 
 Now locally, you can view this here: [localhost:8080/temperature-regions](http://localhost:8080/temperature-regions/).
