@@ -2,8 +2,6 @@ build/
 *.bak
 package-lock.json
 
-oversize-assets/*
-!oversize-assets/README.md
 /controls.json
 
 *.pyc
