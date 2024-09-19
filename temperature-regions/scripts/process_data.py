@@ -74,7 +74,7 @@ for zone in range(ZONES):
                     arr += values
             value = mean(arr)
             # add data
-            zoneData.append(value)
+            zoneData.append(float(value))
     data.append(list(zoneData))
     print("Zone %s complete" % (zone+1))
 data = list(reversed(data))
