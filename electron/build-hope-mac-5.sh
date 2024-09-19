@@ -10,9 +10,8 @@ sed -i .bak 's/APP_NAME/hope-mac-5/g' package.json # replace app name in package
 
 # install dependencies
 sudo npm install --unsafe-perm=true --allow-root
-sudo npm rebuild --runtime=electron --target=3.1.8 --disturl=https://atom.io/download/atom-shell --abi=64 # for robotjs, we need to indicate the electron and abi version; find your correct abi number here: https://github.com/mapbox/node-pre-gyp/blob/master/lib/util/abi_crosswalk.json
 cd ../..
-electron-packager electron/hope-mac-5 hope-mac-5 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
+npx electron-packager electron/hope-mac-5 hope-mac-5 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
 # Copy app files over
 rm -f build/mac/hope-mac-5-darwin-x64/hope-mac-5.app/Contents/Resources/app/controls.json

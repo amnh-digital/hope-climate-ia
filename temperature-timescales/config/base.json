@@ -2,11 +2,11 @@
   "graphics": {
     "el": "#graphics",
     "minYearsDisplay": 1,
-    "monthYearsDisplay": 3,
+    "monthYearsDisplay": 5,
     "monthTransitionStep": 0.04,
     "targetWidth": 1920,
     "targetHeight": 1080,
-    "margin": [0.1, 0.05, 0.02, 0.115],
+    "margin": [0.14, 0.05, 0.02, 0.115],
     "time": 0.5,
     "scale": 0.5,
     "highlightMs": 1000,

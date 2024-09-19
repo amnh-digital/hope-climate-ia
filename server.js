@@ -24,15 +24,15 @@ app.post('/config/save', function (req, res) {
   var dataOut = Object.assign({}, dataFileIn, dataIn);
 
   // write to file
-  fs.writeFile(filename, JSON.stringify(dataOut, null, 2), 'utf8', function(err, data){
+  fs.writeFile(filename, JSON.stringify(dataOut, null, 2), 'utf8', function (err, data) {
     console.log('Wrote data to file');
   });
 
   // return response
   res.send({
     status: 1,
-    message: "Success"
+    message: 'Success',
   });
 });
 
-app.listen(port, () => console.log('Listening on port '+port));
+app.listen(port, () => console.log('Listening on port ' + port));

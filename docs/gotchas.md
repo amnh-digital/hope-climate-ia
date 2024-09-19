@@ -8,7 +8,7 @@ Solution: add a delay before launching app. This can be configured in the Electr
 
 **Problem: app sometimes loses focus**
 
-Solution Part I: [Robot.js](https://github.com/Robot/robot-js) is used to manually click on the app after launch and whenever app loses focus.
+Solution Part I (disabled): [Robot.js](https://github.com/Robot/robot-js) is used to manually click on the app after launch and whenever app loses focus.
 
 Solution Part II: For dual screens, if each screen has it's own space, focus sometimes switches to the other one. To resolve this, we had to disable this feature (System Preferences > Mission Control > uncheck Displays have separate Spaces.) Then configure the app to be a single window that stretches across the two screens. In this case, two separate apps are embedded as iframes on a single page.
 

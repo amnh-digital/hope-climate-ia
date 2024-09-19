@@ -113,21 +113,22 @@ with open(OUTPUT_FILE, 'w') as f:
     print("Wrote %s years to %s" % (len(annualData), OUTPUT_FILE))
 
 # Process annotations
-content = readJSON(args.CONTENT_FILE)
-hottestAnnotations = [
-    "Hottest year on record",
-    "Second hottest year on record",
-    "Third hottest year on record",
-    "Fourth hottest year on record",
-    "Fifth hottest year on record"
-]
-annotations = [a for a in content["annotations"] if a["text"] not in hottestAnnotations]
-annualData = sorted(annualData, key=lambda d: -d["Value"])
-for i, text in enumerate(hottestAnnotations):
-    d = annualData[i]
-    annotations.append({
-        "year": d["Year"],
-        "text": text
-    })
-content["annotations"] = annotations
-writeJSON(args.CONTENT_FILE, content)
+# done manually in json file itself (logic/highlights changed)
+# content = readJSON(args.CONTENT_FILE)
+# hottestAnnotations = [
+#     "Hottest year on record",
+#     "Second hottest year on record",
+#     "Third hottest year on record",
+#     "Fourth hottest year on record",
+#     "Fifth hottest year on record"
+# ]
+# annotations = [a for a in content["annotations"] if a["text"] not in hottestAnnotations]
+# annualData = sorted(annualData, key=lambda d: -d["Value"])
+# for i, text in enumerate(hottestAnnotations):
+#     d = annualData[i]
+#     annotations.append({
+#         "year": d["Year"],
+#         "text": text
+#     })
+# content["annotations"] = annotations
+# writeJSON(args.CONTENT_FILE, content)

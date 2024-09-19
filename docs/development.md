@@ -66,7 +66,7 @@ See the [deployment document](deployment.md) for more details. Also, each intera
 
 ## Updating Electron
 
-First, update the Electron version in [./electron/package.json](../electron/package.json). Since one of the dependencies ([robot.js](https://github.com/Robot/robot-js)) requires us to specify the specific Electron version, we must also update the Electron version in each of the shell scripts that build the Electron app, e.g. [./electron/build-hope-mac-1.sh](../electron/build-hope-mac-1.sh).  Once you do that, whenever you run a build command (e.g. `sudo npm run build:mac1`), it will build the Electron app with the specified version.
+First, update the Electron version in [./electron/package.json](../electron/package.json).  Once you do that, whenever you run a build command (e.g. `sudo npm run build:mac1`), it will build the Electron app with the specified version.
 
 ## Updating colors
 

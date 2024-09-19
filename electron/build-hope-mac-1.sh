@@ -7,12 +7,12 @@ rsync -avz electron/main.js -avz electron/hope-mac-1/main.js
 rsync -avz electron/package.json -avz electron/hope-mac-1/package.json
 cd electron/hope-mac-1
 sed -i .bak 's/APP_NAME/hope-mac-1/g' package.json # replace app name in package
+sed -i .bak 's/APP_VERSION/3.2.0/g' package.json # replace app version in package
 
 # install dependencies
 sudo npm install --unsafe-perm=true --allow-root
-sudo npm rebuild --runtime=electron --target=3.1.8 --disturl=https://atom.io/download/atom-shell --abi=64 # for robotjs, we need to indicate the electron and abi version; find your correct abi number here: https://github.com/mapbox/node-pre-gyp/blob/master/lib/util/abi_crosswalk.json
 cd ../..
-electron-packager electron/hope-mac-1 hope-mac-1 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
+npx electron-packager electron/hope-mac-1 hope-mac-1 --platform=darwin --arch=x64 --out=build/mac/ --overwrite
 
 # Copy app files over
 rm -f build/mac/hope-mac-1-darwin-x64/hope-mac-1.app/Contents/Resources/app/controls.json
