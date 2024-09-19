@@ -3,23 +3,23 @@
     {
       "lat": [90, 60],
       "label": "Northern high latitudes",
-      "text": "The Arctic is warming nearly twice as fast as the rest of the world."
+      "text": "<i>Rate of warming: The fastest!</i> As Arctic air currents are destabilized, North America, Europe and Asia are experiencing more extreme weather events."
     },{
       "lat": [60, 30],
       "label": "Northern mid-latitudes",
-      "text": "Seasonal extremes are becoming more common, including reduced snow cover in winter and longer forest fire seasons."
+      "text": "<i>Rate of warming: Faster than average.</i> Seasonal extremes are becoming more common, including reduced snow cover in winter and longer forest fire seasons."
     },{
       "lat": [30, -30],
       "label": "Tropics",
-      "text": "Relatively modest warming around the equator significantly impacts tropical species."
+      "text": "<i>Rate of warming: About average.</i> In Earth’s hottest region, even modest warming can have big impacts on plant, animal and human life."
     },{
       "lat": [-30, -60],
       "label": "Southern mid-latitudes",
-      "text": "Patterns of air and ocean circulation are changing, carrying more heat toward Antarctica."
+      "text": "<i>Rate of warming: About average.</i> Patterns of air and ocean circulation are changing, carrying more heat toward Antarctica."
     },{
       "lat": [-60, -90],
       "label": "Southern high latitudes",
-      "text": "Even in Antarctica, unusually warm years are becoming more frequent."
+      "text": "<i>Rate of warming: Slower than average.</i> Even in Antarctica, unusually warm years are becoming more frequent."
     }
   ],
   "cities": [
