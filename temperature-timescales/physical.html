@@ -1,19 +1,18 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>What can we say about global temperature at different timescales?</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Rising Global Temperature</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-    <link rel="stylesheet" href="../shared/css/vendor/normalize-8.0.1.min.css">
-    <link rel="stylesheet" href="../shared/css/base.css">
-    <link rel="stylesheet" href="../shared/css/kiosk.css">
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="../shared/css/vendor/normalize-8.0.1.min.css" />
+    <link rel="stylesheet" href="../shared/css/base.css" />
+    <link rel="stylesheet" href="../shared/css/kiosk.css" />
+    <link rel="stylesheet" href="css/app.css" />
   </head>
   <body>
-
     <div id="app" class="app">
       <div id="view" class="view">
         <div class="title">
@@ -25,23 +24,32 @@
           <div class="message-status">
             <div>
               <svg class="bracket" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1433 30.5">
-                <polygon points="1433 0 1431 0 1431 10.9 304.3 10.9 291.8 23.5 279.2 10.9 2 10.9 2 0 0 0 0 13.4 0 13.4 0 15.9 277.2 15.9 291.8 30.5 306.4 15.9 1433 15.9 1433 13.4 1433 13.4 1433 0"/>
+                <polygon
+                  points="1433 0 1431 0 1431 10.9 304.3 10.9 291.8 23.5 279.2 10.9 2 10.9 2 0 0 0 0 13.4 0 13.4 0 15.9 277.2 15.9 291.8 30.5 306.4 15.9 1433 15.9 1433 13.4 1433 13.4 1433 0"
+                />
               </svg>
-              <h2 aria-live="polite">You are viewing <strong id="yearString"></strong><br />of global temperature records.</h2>
+              <h2 aria-live="polite">
+                You are viewing <strong id="yearString"></strong><br />of global temperature records.
+              </h2>
             </div>
           </div>
-          <div id="messages" class="messages" aria-live="polite">
-
-          </div>
+          <div id="messages" class="messages" aria-live="polite"></div>
         </div>
         <div class="sidebar active">
           <div>
             <h3>Baseline temperature</h3>
-            <p>Global temperature change is usually shown compared to an average, or "baseline," temperature. The horizontal line across the middle of the graph onscreen represents average global temperature for the years 1901-2000.</p>
+            <p>
+              Global temperature change is usually shown compared to an average, or "baseline," temperature. The
+              horizontal line across the middle of the graph onscreen represents average global temperature for the
+              years 1901-2000.
+            </p>
           </div>
           <div>
             <h3>Change from average</h3>
-            <p>Expressing temperature in relation to a baseline is useful because it most effectively shows how the temperature has changed through time.</p>
+            <p>
+              Expressing temperature in relation to a baseline is useful because it most effectively shows how the
+              temperature has changed through time.
+            </p>
           </div>
         </div>
         <div class="sleepMode">
@@ -49,25 +57,25 @@
           <p>to explore the warming trend</p>
         </div>
         <div class="credits">
-          Data source: NOAA National Centers for Environmental Information.
-          Climate at a Glance: Global Time Series, 2018.
+          Data source: NOAA National Centers for Environmental Information. Climate at a Glance: Global Time Series,
+          2018.
         </div>
       </div>
     </div>
 
     <script type="x-shader/x-fragment" id="resting-fragment-shader">
-    varying vec2 vTextureCoord;
-    uniform sampler2D uSampler;
+      varying vec2 vTextureCoord;
+      uniform sampler2D uSampler;
 
-    uniform float progress;
+      uniform float progress;
 
-    void main() {
-      float threshold = 0.2;
-      vec4 color = texture2D(uSampler, vTextureCoord.xy);
-      vec4 targetColor = vec4(5.0/255.0, 133.0/255.0, 153.0/255.0, 1.0);
-      if (color.r < threshold && color.g < threshold && color.b < threshold) targetColor = color;
-      gl_FragColor = mix(color, targetColor, progress);
-    }
+      void main() {
+        float threshold = 0.2;
+        vec4 color = texture2D(uSampler, vTextureCoord.xy);
+        vec4 targetColor = vec4(5.0/255.0, 133.0/255.0, 153.0/255.0, 1.0);
+        if (color.r < threshold && color.g < threshold && color.b < threshold) targetColor = color;
+        gl_FragColor = mix(color, targetColor, progress);
+      }
     </script>
 
     <script src="../shared/js/vendor/jquery-3.2.1.min.js"></script>

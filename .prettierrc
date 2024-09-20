@@ -3,5 +3,13 @@
     "semi": true,
     "singleQuote": true,
     "tabWidth": 2,
-    "printWidth": 100
+    "printWidth": 100,
+    "overrides": [
+        {
+            "files": "*.html",
+            "options": {
+                "printWidth": 120
+            }
+        }
+    ]
 }
